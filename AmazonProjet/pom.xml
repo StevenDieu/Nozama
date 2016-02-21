@@ -4,10 +4,10 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.objectdb.tutorial.spring</groupId>
-	<artifactId>kaszucarProjet</artifactId>
+	<artifactId>amazonProjet</artifactId>
 	<packaging>war</packaging>
 	<version>1.0</version>
-	<name>kaszucarProjet</name>
+	<name>amazonProjet</name>
 	<url>http://maven.apache.org</url>
 
 	<parent>

@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Implementation-Title: kaszucarProjet
+Implementation-Title: amazonProjet
 Implementation-Version: 1.0
 Built-By: steven
 Implementation-Vendor-Id: com.objectdb.tutorial.spring
