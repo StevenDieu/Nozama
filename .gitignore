@@ -1,0 +1,6 @@
+.metadata/
+Servers/
+RemoteSystemsTempFiles
+kaszucarProject/src/main/resources/hibernate.cfg.xml
+
+kaszucarProject/.classpath
