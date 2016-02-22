@@ -1,0 +1,84 @@
+.menu-lateral {
+	display: inline-flex;
+	width: 800px;
+}
+
+.blockMusique {
+	width: 380px;
+	float: left;
+}
+
+.blockFilm {
+	width: 380px;
+	float: left;
+}
+
+ol.ssMenu {
+	padding-left: 20px;
+	padding-bottom: 16px;
+	float: left;
+	width: 190px;
+}
+
+.ssMenu li {
+	padding-bottom: 3px;
+}
+
+.ssMenu li a {
+	color: #777;
+	text-decoration: none;
+}
+
+.clearBoth {
+	clear: both;
+}
+
+.titleMenu a {
+	color: #777;
+	text-decoration: none;
+}
+
+.ssMenu li a:HOVER {
+	color: #FF9800;
+	font-size: 14px;
+}
+
+.titleMenu a:HOVER {
+	color: #5e5e5e;
+}
+
+.blockSsMenu {
+	max-width: 380px;
+	margin: 0 auto;
+}
+
+@media screen and (max-width: 767px) {
+	.menu-lateral {
+		display: block;
+		width: 100%;
+	}
+	ol.ssMenu {
+		padding-top: 15px;
+		padding-left: 0px;
+		padding-bottom: 0px;
+	}
+	.blockMusique {
+		float: none;
+		width: 100%;
+		text-align: center;
+	}
+	.blockFilm {
+		float: none;
+		width: 100%;
+		text-align: center;
+	}
+}
+
+@media screen and (max-width: 400px) {
+	ol.ssMenu {
+		padding-left: 0px;
+		padding-bottom: 0px;
+		float: none;
+		width: 100%;
+	}
+}

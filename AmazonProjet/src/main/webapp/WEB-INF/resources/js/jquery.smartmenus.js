@@ -973,7 +973,6 @@
 							}
 							if (this.opts.subMenusMaxWidth) {
 							 	var noMaxWidth = this.getWidth($sub);
-							 	$sub.css('max-width', this.opts.subMenusMaxWidth);
 								if (noMaxWidth > this.getWidth($sub)) {
 									$sub.removeClass('sm-nowrap').css('width', this.opts.subMenusMaxWidth);
 								}

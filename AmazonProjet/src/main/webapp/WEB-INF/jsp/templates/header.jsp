@@ -23,9 +23,12 @@
 		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-					<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="/">Enozama</a>
+				<a class="navbar-brand" href="/">Nozama</a>
 			</div>
 			<div class="navbar-collapse collapse">
 
@@ -33,40 +36,64 @@
 				<ul class="nav navbar-nav">
 					<li>
 						<a href="#">Tous les produits <span class="caret"></span></a>
+
 						<ul class="dropdown-menu">
-							<li>
-								<a href="liste-toutes-les-musiques">Musique <span class="caret"></span></a>
-								<ul class="dropdown-menu">
-									<li>
-										<a href="#">Exemple</a>
-									</li>
-									<li>
-										<a href="#">Exemple</a>
-									</li>
-									<li>
-										<a href="#">Exemple</a>
-									</li>
-									<li>
-										<a href="#">Exemple</a>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<a href="#">Film <span class="caret"></span></a>
-								<ul class="dropdown-menu">
-									<li>
-										<a href="#">Exemple</a>
-									</li>
-									<li>
-										<a href="#">Exemple</a>
-									</li>
-									<li>
-										<a href="#">Exemple</a>
-									</li>
-									<li>
-										<a href="#">Exemple</a>
-									</li>
-								</ul>
+							<li class="menu-lateral">
+								<div class="blockMusique">
+									<h3 class="text-center titleMenu">
+										<a href="liste-toutes-les-musiques">Musique</a>
+									</h3>
+									<div class="blockSsMenu">
+										<ol class="list-unstyled ssMenu">
+											<li>
+												<a href="#"> Variété française </a>
+											</li>
+											<li>
+												<a href="#"> Pop-rock indé </a>
+											</li>
+											<li>
+												<a href="#"> Musique classique </a>
+											</li>
+											<li>
+												<a href="#"> Hard rock, métal </a>
+											</li>
+											<li>
+												<a href="#"> Jazz, blues </a>
+											</li>
+											<li>
+												<a href="#"> R&amp;B, soul, funk </a>
+											</li>
+										</ol>
+										<ol class="list-unstyled ssMenu">
+
+											<li>
+												<a href="#"> Musiques du monde </a>
+											</li>
+											<li>
+												<a href="#"> Rap </a>
+											</li>
+											<li>
+												<a href="#"> Musique pour enfants </a>
+											</li>
+											<li>
+												<a href="#"> Electro </a>
+											</li>
+											<li>
+												<a href="#"> Opéra </a>
+											</li>
+											<li>
+												<a href="#"> BO, musiques de film </a>
+											</li>
+										</ol>
+									</div>
+								</div>
+								<div class="clearBoth"></div>
+								<div class="blockFilm">
+									<h3 class="text-center titleMenu">
+										<a href="liste-toutes-les-musiques">Film </a>
+									</h3>
+
+								</div>
 							</li>
 						</ul>
 					</li>
