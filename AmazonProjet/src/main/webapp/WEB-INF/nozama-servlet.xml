@@ -17,7 +17,7 @@
        http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
 	<!-- Use @Component annotations for bean definitions -->
-	<context:component-scan base-package="amazon" />
+	<context:component-scan base-package="nozama" />
 
 	<!-- Use @Controller annotations for MVC controller definitions -->
 	<mvc:annotation-driven />

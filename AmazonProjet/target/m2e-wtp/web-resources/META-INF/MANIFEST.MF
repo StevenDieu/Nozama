@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Implementation-Title: amazonProjet
+Implementation-Title: nozamaProjet
 Implementation-Version: 1.0
 Built-By: steven
 Implementation-Vendor-Id: com.objectdb.tutorial.spring

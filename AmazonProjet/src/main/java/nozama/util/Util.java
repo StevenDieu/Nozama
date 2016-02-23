@@ -1,4 +1,4 @@
-package amazon.util;
+package nozama.util;
 
 public final class Util {
 

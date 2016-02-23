@@ -3,6 +3,6 @@
 <jsp:include page="templates/header.jsp"/>
 
 
-Bienvenue sur la page Amazon
+Bienvenue sur la page Nozama
 
 <jsp:include page="templates/footer.jsp"/>
