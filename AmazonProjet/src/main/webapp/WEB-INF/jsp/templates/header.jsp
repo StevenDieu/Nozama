@@ -2,7 +2,7 @@
 <html>
 <head lang="fr">
 <meta charset="UTF-8" />
-<title>Amazon</title>
+<title>Nozama</title>
 <meta name="description" content="Site d'association" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="robots" content="index, follow" />
@@ -23,10 +23,7 @@
 		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
+					<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
 				</button>
 				<a class="navbar-brand" href="/">Nozama</a>
 			</div>
@@ -88,11 +85,90 @@
 									</div>
 								</div>
 								<div class="clearBoth"></div>
+								<div class="legend"></div>
 								<div class="blockFilm">
 									<h3 class="text-center titleMenu">
 										<a href="liste-toutes-les-musiques">Film </a>
 									</h3>
+									<div class="blockSsMenu">
 
+										<ol class="list-unstyled ssMenu">
+											<li>
+												<a href="#">Action</a>
+											</li>
+											<li>
+												<a href="#">Animation</a>
+											</li>
+											<li>
+												<a href="#">Arts Martiaux</a>
+											</li>
+											<li>
+												<a href="#">Aventure</a>
+											</li>
+											<li>
+												<a href="#">Biopic</a>
+											</li>
+											<li>
+												<a href="#">Comédie dramatique</a>
+											</li>
+											<li>
+												<a href="#">Comédie musicale</a>
+											</li>
+											<li>
+												<a href="#">Comédie</a>
+											</li>
+											<li>
+												<a href="#">Divers</a>
+											</li>
+											<li>
+												<a href="#">Documentaire</a>
+											</li>
+											<li>
+												<a href="#">Drame</a>
+											</li>
+											<li>
+												<a href="#">Epouvante-horreur</a>
+											</li>
+										</ol>
+										<ol class="list-unstyled ssMenu">
+											<li>
+												<a href="#">Espionnage</a>
+											</li>
+											<li>
+												<a href="#">Famille</a>
+											</li>
+											<li>
+												<a href="#">Fantastique</a>
+											</li>
+											<li>
+												<a href="#">Guerre</a>
+											</li>
+											<li>
+												<a href="#">Historique</a>
+											</li>
+											<li>
+												<a href="#">Musical</a>
+											</li>
+											<li>
+												<a href="#">Péplum</a>
+											</li>
+											<li>
+												<a href="#">Policier</a>
+											</li>
+											<li>
+												<a href="#">Romance</a>
+											</li>
+											<li>
+												<a href="#">Science fiction</a>
+											</li>
+											<li>
+												<a href="#">Thriller</a>
+											</li>
+											<li>
+												<a href="#">Western</a>
+											</li>
+										</ol>
+									</div>
 								</div>
 							</li>
 						</ul>

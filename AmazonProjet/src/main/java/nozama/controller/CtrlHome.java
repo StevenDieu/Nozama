@@ -1,4 +1,4 @@
-package amazon.controller;
+package nozama.controller;
 
 import javax.servlet.http.HttpServletRequest;
 

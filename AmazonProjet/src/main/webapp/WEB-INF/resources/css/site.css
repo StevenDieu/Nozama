@@ -1,6 +1,6 @@
 .menu-lateral {
 	display: inline-flex;
-	width: 800px;
+	width: 760px;
 }
 
 .blockMusique {
@@ -14,8 +14,9 @@
 }
 
 ol.ssMenu {
-	padding-left: 20px;
-	padding-bottom: 16px;
+	padding-left: 45px;
+	padding-bottom: 15px;
+	padding-top: 15px;
 	float: left;
 	width: 190px;
 }
@@ -52,13 +53,19 @@ ol.ssMenu {
 	margin: 0 auto;
 }
 
+.legend {
+	position: absolute;
+	height: 338px;
+	border-right: 1px solid #B6B6B6;
+	margin: 12px 0 0 16px;
+}
+
 @media screen and (max-width: 767px) {
 	.menu-lateral {
 		display: block;
 		width: 100%;
 	}
 	ol.ssMenu {
-		padding-top: 15px;
 		padding-left: 0px;
 		padding-bottom: 0px;
 	}
@@ -71,6 +78,9 @@ ol.ssMenu {
 		float: none;
 		width: 100%;
 		text-align: center;
+	}
+	.legend{
+	display:  none;
 	}
 }
 
