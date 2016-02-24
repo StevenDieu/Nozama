@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import nozama.model.Product;
+import nozama.model.Single;
 import nozama.util.HibernateUtil;
 
 @SuppressWarnings("unchecked")
@@ -16,9 +16,11 @@ public class ProductRepository {
 	
 	Session openSession = HibernateUtil.getSessionFactory().openSession();
 
-	public List<Product> getProductByTypeProduct(String typeProduct) {
-		Criteria cr = openSession.createCriteria(Product.class);
-		cr.add(Restrictions.eq("typeProduct", typeProduct));
+	public List<Product> getSingle() {
+		Criteria cr = openSession.createCriteria(Single.class);
+		cr.createAlias("product", "prod");
+		cr.createAlias("typeSupportSingles", "tss");
+
 		return cr.list();
 	}
 

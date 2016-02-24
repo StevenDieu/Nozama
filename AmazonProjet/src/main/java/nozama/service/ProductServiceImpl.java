@@ -15,8 +15,8 @@ public class ProductServiceImpl implements ProductService {
 	private ProductRepository PR;
 
 	@Override
-	public List<Product> getAllProductByTypeProduct(String typeProduct) {
-		return PR.getProductByTypeProduct(typeProduct);
+	public List<Product> getSingle() {
+		return PR.getSingle();
 	}
 
 }

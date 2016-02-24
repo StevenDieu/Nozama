@@ -25,7 +25,7 @@ public class CtrlProduct {
 		modelAndView.setViewName("listProductMusic");
 		
 		Map<String, Object> product = new HashMap<String, Object>();
-		product.put("products", PS.getAllProductByTypeProduct("MUSIQUE"));
+		product.put("products", PS.getSingle());
 		
 		return new ModelAndView("listProduct", product);
 	}
