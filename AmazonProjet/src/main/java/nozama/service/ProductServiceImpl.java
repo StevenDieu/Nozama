@@ -15,8 +15,13 @@ public class ProductServiceImpl implements ProductService {
 	private ProductRepository PR;
 
 	@Override
-	public List<Product> getSingle() {
-		return PR.getSingle();
+	public List<Product> getAllSingleBySupport(String support) {
+		return PR.getAllSingleBySupport(support);
+	}
+	
+	@Override
+	public List<Product> getAllMovieBySupport(String support) {
+		return PR.getAllMovieBySupport(support);
 	}
 
 }

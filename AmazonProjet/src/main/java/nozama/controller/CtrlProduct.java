@@ -20,14 +20,31 @@ public class CtrlProduct {
 
 	@RequestMapping(value = "/liste-toutes-les-musiques")
 	public ModelAndView listAllMusic(HttpServletRequest request) {
-
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("listProductMusic");
+		
+		String support = request.getParameter("support");
+		if(support == null){
+			support = "CD";
+		}
 		
 		Map<String, Object> product = new HashMap<String, Object>();
-		product.put("products", PS.getSingle());
+		product.put("products", PS.getAllSingleBySupport(support));
 		
-		return new ModelAndView("listProduct", product);
+		return new ModelAndView("listProductSingle", product);
+	}
+	
+	
+	@RequestMapping(value = "/liste-tous-les-films")
+	public ModelAndView listAllMovies(HttpServletRequest request) {
+		
+		String support = request.getParameter("support");
+		if(support == null){
+			support = "DVD";
+		}
+		
+		Map<String, Object> product = new HashMap<String, Object>();
+		product.put("products", PS.getAllMovieBySupport(support));
+		
+		return new ModelAndView("listProductMovie", product);
 	}
 
 }

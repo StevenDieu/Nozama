@@ -11,7 +11,6 @@
 <meta name="viewport" content="width=device-width" />
 <link type="text/css" rel="stylesheet" href="resources/css/bootstrap.min.css">
 <link type="text/css" rel="stylesheet" href="resources/css/jquery.smartmenus.bootstrap.css">
-
 <link type="text/css" rel="stylesheet" href="resources/css/site.css">
 <script src="resources/js/jquery.js"></script>
 
@@ -88,7 +87,7 @@
 								<div class="legend"></div>
 								<div class="blockFilm">
 									<h3 class="text-center titleMenu">
-										<a href="liste-toutes-les-musiques">Film </a>
+										<a href="liste-tous-les-films">Film </a>
 									</h3>
 									<div class="blockSsMenu">
 
