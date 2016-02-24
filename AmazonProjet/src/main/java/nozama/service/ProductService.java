@@ -8,5 +8,7 @@ import nozama.model.Product;
 
 @Service
 public interface ProductService {
-	public List<Product> getAllProductByTypeProduct(String typeProduct);
+	public List<Product> getAllSingleBySupport(String support);
+	public List<Product> getAllMovieBySupport(String support);
+
 }

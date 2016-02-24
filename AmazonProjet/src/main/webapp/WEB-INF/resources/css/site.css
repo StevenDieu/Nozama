@@ -1,3 +1,23 @@
+body {
+	min-height: 100vh;
+	background-color: #F3F3F3;
+}
+
+a{
+	color: black;
+	text-decoration: none;
+}
+
+a:hover{
+	color: black;
+	text-decoration: none;
+}
+
+a:focus{
+	color: black;
+	text-decoration: none;
+}
+
 .menu-lateral {
 	display: inline-flex;
 	width: 760px;
@@ -60,6 +80,66 @@ ol.ssMenu {
 	margin: 12px 0 0 16px;
 }
 
+.titleProduct {
+	text-align: center;
+	margin-top: 15px;
+	font-size: 29px;
+}
+
+.imageProduct {
+	text-align: center;
+	width: 200px;
+	margin: 8px auto 20px auto;
+	height: 200px;
+	background-attachment: fixed;
+	overflow: hidden;
+}
+
+.descriptionProduct {
+	max-width: 295px;
+	margin: 0 auto;
+}
+
+img {
+	text-align: center;
+	background-attachment: fixed;
+	min-height: 100%;
+	min-width: 100%;
+}
+
+.product {
+    height: 430px;
+    	width: 342px;
+	position: relative;
+	float: left;
+	background-color: white;
+	margin-right: 10px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	border-radius: 5px;
+}
+
+.product:hover {
+	-moz-box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
+	-webkit-box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
+	box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+.buttonAddCart {
+	position: absolute;
+	right: 25px;
+	bottom: 20px;
+}
+
+.priceProduct {
+	position: absolute;
+	left: 28px;
+	bottom: 19px;
+	font-size: 25px;
+	color: #c94242;
+	white-space: nowrap;
+}
+
 @media screen and (max-width: 767px) {
 	.menu-lateral {
 		display: block;
@@ -79,8 +159,8 @@ ol.ssMenu {
 		width: 100%;
 		text-align: center;
 	}
-	.legend{
-	display:  none;
+	.legend {
+		display: none;
 	}
 }
 
@@ -90,5 +170,12 @@ ol.ssMenu {
 		padding-bottom: 0px;
 		float: none;
 		width: 100%;
+	}
+}
+
+@media screen and (max-width: 755px) {
+	.rowProduct {
+		width: 342px;
+		margin: 0 auto;
 	}
 }

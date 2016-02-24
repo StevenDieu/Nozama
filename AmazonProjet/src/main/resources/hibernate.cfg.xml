@@ -11,6 +11,14 @@
 		<property name="format_sql">true</property> <!-- GESTION DE LA BASE DE DONNEES -->
 		<property name="hbm2ddl.auto">update</property> <!-- FICHIERS DE MAPPING -->
 		<property name="hibernate.current_session_context_class">thread</property>
+		<mapping class="nozama.model.Album" />
+		<mapping class="nozama.model.AlbumHasSingle" />
+		<mapping class="nozama.model.Artiste" />
+		<mapping class="nozama.model.Movie" />
 		<mapping class="nozama.model.Product" />
+		<mapping class="nozama.model.Single" />
+		<mapping class="nozama.model.TypeSupportAlbm" />
+		<mapping class="nozama.model.TypeSupportMovie" />
+		<mapping class="nozama.model.TypeSupportSingle" />
 	</session-factory>
 </hibernate-configuration>

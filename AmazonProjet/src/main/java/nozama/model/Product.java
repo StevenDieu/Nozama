@@ -1,11 +1,15 @@
 package nozama.model;
-// Generated 23 f�vr. 2016 08:09:21 by Hibernate Tools 4.3.1.Final
+// Generated 24 f�vr. 2016 08:23:00 by Hibernate Tools 4.3.1.Final
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -18,19 +22,26 @@ public class Product implements java.io.Serializable {
 	private Integer idProduct;
 	private String name;
 	private String description;
-	private int price;
 	private String urlPicture;
-	private String typeProduct;
+	private Set<Movie> movies = new HashSet<Movie>(0);
+	private Set<Album> albums = new HashSet<Album>(0);
+	private Set<Single> singles = new HashSet<Single>(0);
 
 	public Product() {
 	}
 
-	public Product(String name, String description, int price, String urlPicture, String typeProduct) {
+	public Product(String name, String urlPicture) {
+		this.name = name;
+		this.urlPicture = urlPicture;
+	}
+
+	public Product(String name, String description, String urlPicture, Set<Movie> movies, Set<Album> albums, Set<Single> singles) {
 		this.name = name;
 		this.description = description;
-		this.price = price;
 		this.urlPicture = urlPicture;
-		this.typeProduct = typeProduct;
+		this.movies = movies;
+		this.albums = albums;
+		this.singles = singles;
 	}
 
 	@Id
@@ -54,22 +65,13 @@ public class Product implements java.io.Serializable {
 		this.name = name;
 	}
 
-	@Column(name = "description", nullable = false, length = 65535)
+	@Column(name = "description", length = 65535)
 	public String getDescription() {
 		return this.description;
 	}
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	@Column(name = "price", nullable = false)
-	public int getPrice() {
-		return this.price;
-	}
-
-	public void setPrice(int price) {
-		this.price = price;
 	}
 
 	@Column(name = "url_picture", nullable = false, length = 1024)
@@ -81,13 +83,31 @@ public class Product implements java.io.Serializable {
 		this.urlPicture = urlPicture;
 	}
 
-	@Column(name = "type_product", nullable = false, length = 45)
-	public String getTypeProduct() {
-		return this.typeProduct;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
+	public Set<Movie> getMovies() {
+		return this.movies;
 	}
 
-	public void setTypeProduct(String typeProduct) {
-		this.typeProduct = typeProduct;
+	public void setMovies(Set<Movie> movies) {
+		this.movies = movies;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
+	public Set<Album> getAlbums() {
+		return this.albums;
+	}
+
+	public void setAlbums(Set<Album> albums) {
+		this.albums = albums;
+	}
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
+	public Set<Single> getSingles() {
+		return this.singles;
+	}
+
+	public void setSingles(Set<Single> singles) {
+		this.singles = singles;
 	}
 
 }
