@@ -1,5 +1,5 @@
 package nozama.model;
-// Generated 24 f�vr. 2016 08:23:00 by Hibernate Tools 4.3.1.Final
+// Generated 25 f�vr. 2016 15:17:06 by Hibernate Tools 4.3.1.Final
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,17 +23,20 @@ public class Movie implements java.io.Serializable {
 
 	private Integer idMovie;
 	private Product product;
+	private String type;
 	private Set<TypeSupportMovie> typeSupportMovies = new HashSet<TypeSupportMovie>(0);
 
 	public Movie() {
 	}
 
-	public Movie(Product product) {
+	public Movie(Product product, String type) {
 		this.product = product;
+		this.type = type;
 	}
 
-	public Movie(Product product, Set<TypeSupportMovie> typeSupportMovies) {
+	public Movie(Product product, String type, Set<TypeSupportMovie> typeSupportMovies) {
 		this.product = product;
+		this.type = type;
 		this.typeSupportMovies = typeSupportMovies;
 	}
 
@@ -57,6 +60,15 @@ public class Movie implements java.io.Serializable {
 
 	public void setProduct(Product product) {
 		this.product = product;
+	}
+
+	@Column(name = "type", nullable = false)
+	public String getType() {
+		return this.type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "movie")
