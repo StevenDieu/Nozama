@@ -146,6 +146,7 @@ img {
 	background-color: white;
 	margin-bottom: 25px;
 	border-radius: 5px;
+	padding: 15px;
 }
 
 .buttonWithoutBackground {
@@ -169,10 +170,28 @@ img {
 	border: 1px solid transparent;
 	border-radius: 4px;
 	cursor: pointer;
+	border: 1px solid #929292;
+}
+
+.texteFiltre {
+	font-size: 25px;
+	font-weight: bold;
+	font-style: italic;
+	margin-bottom: 11px;
+}
+
+.blocFiltre {
+	float: left;
+	display: block;
+	min-height: 35px;
+	vertical-align: middle;
+	line-height: 34px;
+	margin-right: 40px;
+	margin-bottom: 10px;
 }
 
 .buttonWithoutBackground:hover {
-	border: 1px solid #929292;
+	background-color: #F7F7F7;
 }
 
 .selectedFormat {
@@ -185,6 +204,7 @@ img {
 .selectedFormat:hover {
 	border: 1px solid #DC5555;
 	font-weight: 600;
+	background-color: #FAEBD7;
 }
 
 @media screen and (max-width: 767px) {
@@ -224,5 +244,17 @@ img {
 	.rowProduct {
 		width: 342px;
 		margin: 0 auto;
+	}
+	.blocFiltre {
+		float: none;
+		margin: 0 auto 10px auto;
+		text-align: center;
+		width: 220px;
+	}
+	.blocFiltre {
+		float: none;
+		margin: 0 auto 10px auto;
+		text-align: center;
+		width: 220px;
 	}
 }

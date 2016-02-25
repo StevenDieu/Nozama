@@ -8,49 +8,54 @@
 <jsp:include page="templates/header.jsp" />
 <div class="filtre">
 	<form action="/liste-tous-les-films" class="formFilm" method="get">
-		Filtre :
-		<br />
-		<br />
+		<div class="texteFiltre">Filtre :</div>
 
-		Support :
-		<select id="support" name="support">
-			<option value="DVD" <c:if test="${support == 'CD' }">selected</c:if>>DVD</option>
-			<option value="BLUERAY" <c:if test="${support == 'BLUERAY' }">selected</c:if>>Blu-ray</option>
-			<option value="DOWNLOAD" <c:if test="${support == 'DOWNLOAD' }">selected</c:if>>Téléchargement</option>
-		</select>
+		<div class="blocFiltre">
+			Support :
+			<select id="support" name="support">
+				<option value="DVD" <c:if test="${support == 'CD' }">selected</c:if>>DVD</option>
+				<option value="BLUERAY" <c:if test="${support == 'BLUERAY' }">selected</c:if>>Blu-ray</option>
+				<option value="DOWNLOAD" <c:if test="${support == 'DOWNLOAD' }">selected</c:if>>Téléchargement</option>
+			</select>
+		</div>
 
-		Genre de film :
-		<select id="type" name="type">
-			<option value="ALL">Toutes les genres de films</option>
-			<option value="Action" <c:if test="${type == 'Action' }">selected</c:if>>Action</option>
-			<option value="Animation" <c:if test="${type == 'Animation' }">selected</c:if>>Animation</option>
-			<option value="ArtsMartiaux" <c:if test="${type == 'ArtsMartiaux' }">selected</c:if>>Arts Martiaux</option>
-			<option value="Aventure" <c:if test="${type == '"Aventure"' }">selected</c:if>>Aventure</option>
-			<option value="Biopic" <c:if test="${type == 'Biopic' }">selected</c:if>>Biopic</option>
-			<option value="ComedieDramatique" <c:if test="${type == 'ComedieDramatique' }">selected</c:if>>Comédie dramatique</option>
-			<option value="ComedieMusicale" <c:if test="${type == 'ComedieMusicale' }">selected</c:if>>Comédie musicale</option>
-			<option value="Comedie" <c:if test="${type == 'Comedie' }">selected</c:if>>Comédie</option>
-			<option value="Divers" <c:if test="${type == 'Divers' }">selected</c:if>>Divers</option>
-			<option value="Documentaire" <c:if test="${type == 'Documentaire' }">selected</c:if>>Documentaire</option>
-			<option value="Drame" <c:if test="${type == 'Drame' }">selected</c:if>>Drame</option>
-			<option value="EpouvanteHorreur" <c:if test="${type == 'EpouvanteHorreur' }">selected</c:if>>Epouvante-horreur</option>
-			<option value="Espionnage" <c:if test="${type == 'Espionnage' }">selected</c:if>>Espionnage</option>
-			<option value="Famille" <c:if test="${type == 'Famille' }">selected</c:if>>Famille</option>
-			<option value="Fantastique" <c:if test="${type == 'Fantastique' }">selected</c:if>>Fantastique</option>
-			<option value="Guerre" <c:if test="${type == 'Guerre' }">selected</c:if>>Guerre</option>
-			<option value="Historique" <c:if test="${type == 'Historique' }">selected</c:if>>Historique</option>
-			<option value="Musical" <c:if test="${type == 'Musical' }">selected</c:if>>Musical</option>
-			<option value="Peplum" <c:if test="${type == 'Peplum' }">selected</c:if>>Péplum</option>
-			<option value="Policier" <c:if test="${type == 'Policier' }">selected</c:if>>Policier</option>
-			<option value="Romance" <c:if test="${type == 'Romance' }">selected</c:if>>Romance</option>
-			<option value="ScienceFiction" <c:if test="${type == 'ScienceFiction' }">selected</c:if>>Science fiction</option>
-			<option value="Thriller" <c:if test="${type == 'Thriller' }">selected</c:if>>Thriller</option>
-			<option value="Western" <c:if test="${type == 'Western' }">selected</c:if>>Western</option>
-		</select>
+		<div class="blocFiltre">
+			Genre de film :
+			<select id="type" name="type">
+				<option value="ALL">Toutes les genres de films</option>
+				<option value="Action" <c:if test="${type == 'Action' }">selected</c:if>>Action</option>
+				<option value="Animation" <c:if test="${type == 'Animation' }">selected</c:if>>Animation</option>
+				<option value="ArtsMartiaux" <c:if test="${type == 'ArtsMartiaux' }">selected</c:if>>Arts Martiaux</option>
+				<option value="Aventure" <c:if test="${type == '"Aventure"' }">selected</c:if>>Aventure</option>
+				<option value="Biopic" <c:if test="${type == 'Biopic' }">selected</c:if>>Biopic</option>
+				<option value="ComedieDramatique" <c:if test="${type == 'ComedieDramatique' }">selected</c:if>>Comédie dramatique</option>
+				<option value="ComedieMusicale" <c:if test="${type == 'ComedieMusicale' }">selected</c:if>>Comédie musicale</option>
+				<option value="Comedie" <c:if test="${type == 'Comedie' }">selected</c:if>>Comédie</option>
+				<option value="Divers" <c:if test="${type == 'Divers' }">selected</c:if>>Divers</option>
+				<option value="Documentaire" <c:if test="${type == 'Documentaire' }">selected</c:if>>Documentaire</option>
+				<option value="Drame" <c:if test="${type == 'Drame' }">selected</c:if>>Drame</option>
+				<option value="EpouvanteHorreur" <c:if test="${type == 'EpouvanteHorreur' }">selected</c:if>>Epouvante-horreur</option>
+				<option value="Espionnage" <c:if test="${type == 'Espionnage' }">selected</c:if>>Espionnage</option>
+				<option value="Famille" <c:if test="${type == 'Famille' }">selected</c:if>>Famille</option>
+				<option value="Fantastique" <c:if test="${type == 'Fantastique' }">selected</c:if>>Fantastique</option>
+				<option value="Guerre" <c:if test="${type == 'Guerre' }">selected</c:if>>Guerre</option>
+				<option value="Historique" <c:if test="${type == 'Historique' }">selected</c:if>>Historique</option>
+				<option value="Musical" <c:if test="${type == 'Musical' }">selected</c:if>>Musical</option>
+				<option value="Peplum" <c:if test="${type == 'Peplum' }">selected</c:if>>Péplum</option>
+				<option value="Policier" <c:if test="${type == 'Policier' }">selected</c:if>>Policier</option>
+				<option value="Romance" <c:if test="${type == 'Romance' }">selected</c:if>>Romance</option>
+				<option value="ScienceFiction" <c:if test="${type == 'ScienceFiction' }">selected</c:if>>Science fiction</option>
+				<option value="Thriller" <c:if test="${type == 'Thriller' }">selected</c:if>>Thriller</option>
+				<option value="Western" <c:if test="${type == 'Western' }">selected</c:if>>Western</option>
+			</select>
+		</div>
+		
 
+		<div class="blocFiltre">
+			<input type="submit" class="btn btn-primary" value="Filtrer" />
+		</div>
 
-		<input type="submit" class="btn btn-primary" value="Lancer" />
-
+		<div class="clearBoth"></div>
 	</form>
 
 </div>
