@@ -8,7 +8,6 @@ import nozama.model.Product;
 
 @Service
 public interface ProductService {
-	public List<Product> getAllSingleBySupport(String support);
-	public List<Product> getAllMovieBySupport(String support);
-
+	public List<Product> getAllMusicsBySupport(String support, String recordType, int years);
+	public List<Product> getAllMovieBySupport(String support, int years);
 }

@@ -3,17 +3,17 @@ body {
 	background-color: #F3F3F3;
 }
 
-a{
+a {
 	color: black;
 	text-decoration: none;
 }
 
-a:hover{
+a:hover {
 	color: black;
 	text-decoration: none;
 }
 
-a:focus{
+a:focus {
 	color: black;
 	text-decoration: none;
 }
@@ -108,8 +108,8 @@ img {
 }
 
 .product {
-    height: 430px;
-    	width: 342px;
+	height: 430px;
+	width: 342px;
 	position: relative;
 	float: left;
 	background-color: white;
@@ -138,6 +138,53 @@ img {
 	font-size: 25px;
 	color: #c94242;
 	white-space: nowrap;
+}
+
+.filtre {
+	min-height: 40px;
+	width: 100%;
+	background-color: white;
+	margin-bottom: 25px;
+	border-radius: 5px;
+}
+
+.buttonWithoutBackground {
+	display: inline-block;
+	padding: 6px 12px;
+	margin-bottom: 0;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1.42857143;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-image: none;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.buttonWithoutBackground:hover {
+	border: 1px solid #929292;
+}
+
+.selectedFormat {
+	border: 1px solid #DC5555;
+	font-weight: 600;
+	cursor: default;
+	background-color: #FAEBD7;
+}
+
+.selectedFormat:hover {
+	border: 1px solid #DC5555;
+	font-weight: 600;
 }
 
 @media screen and (max-width: 767px) {
