@@ -1,5 +1,5 @@
 package nozama.model;
-// Generated 24 f�vr. 2016 08:23:00 by Hibernate Tools 4.3.1.Final
+// Generated 25 f�vr. 2016 15:17:06 by Hibernate Tools 4.3.1.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -28,21 +28,24 @@ public class Single implements java.io.Serializable {
 	private Artiste artiste;
 	private Product product;
 	private Date dateReleased;
+	private String type;
 	private Set<AlbumHasSingle> albumHasSingles = new HashSet<AlbumHasSingle>(0);
 	private Set<TypeSupportSingle> typeSupportSingles = new HashSet<TypeSupportSingle>(0);
 
 	public Single() {
 	}
 
-	public Single(Artiste artiste, Product product) {
+	public Single(Artiste artiste, Product product, String type) {
 		this.artiste = artiste;
 		this.product = product;
+		this.type = type;
 	}
 
-	public Single(Artiste artiste, Product product, Date dateReleased, Set<AlbumHasSingle> albumHasSingles, Set<TypeSupportSingle> typeSupportSingles) {
+	public Single(Artiste artiste, Product product, Date dateReleased, String type, Set<AlbumHasSingle> albumHasSingles, Set<TypeSupportSingle> typeSupportSingles) {
 		this.artiste = artiste;
 		this.product = product;
 		this.dateReleased = dateReleased;
+		this.type = type;
 		this.albumHasSingles = albumHasSingles;
 		this.typeSupportSingles = typeSupportSingles;
 	}
@@ -87,6 +90,15 @@ public class Single implements java.io.Serializable {
 
 	public void setDateReleased(Date dateReleased) {
 		this.dateReleased = dateReleased;
+	}
+
+	@Column(name = "type", nullable = false)
+	public String getType() {
+		return this.type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "single")

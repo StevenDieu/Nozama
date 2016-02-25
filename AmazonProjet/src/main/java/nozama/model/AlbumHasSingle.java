@@ -1,5 +1,5 @@
 package nozama.model;
-// Generated 24 f�vr. 2016 08:23:00 by Hibernate Tools 4.3.1.Final
+// Generated 25 f�vr. 2016 15:17:06 by Hibernate Tools 4.3.1.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

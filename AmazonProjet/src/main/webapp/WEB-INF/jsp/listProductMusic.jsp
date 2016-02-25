@@ -8,31 +8,26 @@
 <jsp:include page="templates/header.jsp" />
 
 <div class="filtre">
-	<form action="liste-toutes-les-musiques" method="get">
+	<form action="/liste-toutes-les-musiques" class="formMusic" method="get">
 		Filtre :
 		<br />
 		<br />
-		<input type="hidden" name="recordType" value="${recordType}" />
+		<input type="hidden" id="recordType" name="recordType" value="${recordType}" />
 		Format :
-		<span data-value="single" class="buttonWithoutBackground 
-<c:choose>
-	<c:when test="${recordType == 'single'}">
-		selectedFormat
-	</c:when>
-</c:choose>"> Single </span>
-		<span data-value="album" class="buttonWithoutBackground
-<c:choose>
-	<c:when test="${recordType == 'album'}">
-		selectedFormat
-	</c:when>
-</c:choose>"> Album </span>
+		<span data-value="single" class="buttonWithoutBackground <c:if test="${recordType == 'single'}">selectedFormat</c:if>"> Single </span>
+		<span data-value="album" class="buttonWithoutBackground <c:if test="${recordType == 'album'}">selectedFormat</c:if>"> Album </span>
 
-		Support : <select name="support">
+		Support :
+		<select id="support" name="support">
 			<option value="CD" <c:if test="${support == 'CD' }">selected</c:if>>CD</option>
 			<option value="VINYLE" <c:if test="${support == 'VINYLE' }">selected</c:if>>Vinyle</option>
 			<option value="DOWLOAD" <c:if test="${support == 'DOWLOAD' }">selected</c:if>>Téléchargement</option>
 
-		</select> Année : <select name="years">
+		</select>
+
+
+		Année :
+		<select id="years" name="years">
 			<option value="-1">Toutes les années</option>
 			<option value="1940" <c:if test="${years == '1940' }">selected</c:if>>Année 40</option>
 			<option value="1950" <c:if test="${years == '1950' }">selected</c:if>>Année 50</option>
@@ -43,6 +38,23 @@
 			<option value="2000" <c:if test="${years == '2000' }">selected</c:if>>Année 2000</option>
 		</select>
 
+		Genre de musique :
+		<select id="type" name="type">
+			<option value="ALL">Toutes les genres de musique</option>
+			<option value="VarieteFrancaise" <c:if test="${type == 'VarieteFrancaise' }">selected</c:if>>Variété française</option>
+			<option value="PopRockInde" <c:if test="${type == 'PopRockInde' }">selected</c:if>>Pop-rock indé</option>
+			<option value="MusiqueClassqie" <c:if test="${type == 'MusiqueClassqie' }">selected</c:if>>Musique classique</option>
+			<option value="HarRockMetal" <c:if test="${type == 'HarRockMetal' }">selected</c:if>>Hard rock, métal</option>
+			<option value="JassBlues" <c:if test="${type == 'JassBlues' }">selected</c:if>>Jazz, blues</option>
+			<option value="RBSoulFunk" <c:if test="${type == 'RBSoulFunk' }">selected</c:if>>R&amp;B, soul, funk</option>
+			<option value="MusiqueDuMonde" <c:if test="${type == 'MusiqueDuMonde' }">selected</c:if>>Musiques du monde</option>
+			<option value="Rap" <c:if test="${type == 'Rap' }">selected</c:if>>Rap</option>
+			<option value="MusiquePourEnfant" <c:if test="${type == 'MusiquePourEnfant' }">selected</c:if>>Musique pour enfants</option>
+			<option value="Electro" <c:if test="${type == 'Electro' }">selected</c:if>>Electro</option>
+			<option value="Opera" <c:if test="${type == 'Opera' }">selected</c:if>>Opéra</option>
+			<option value="BoMusiqueFilm" <c:if test="${type == 'BoMusiqueFilm' }">selected</c:if>>BO, musiques de film</option>
+		</select>
+
 
 		<input type="submit" class="btn btn-primary" value="Lancer" />
 
@@ -51,30 +63,40 @@
 </div>
 
 <c:set var="listAdherent" value="${products}" />
-<c:forEach var="product" items="${listAdherent}" varStatus="counter">
+<c:forEach var="typeSupport" items="${listAdherent}" varStatus="counter">
+
+	<c:if test="${recordType == 'single'}">
+		<c:set var="single" value="${typeSupport.single}" />
+		<c:set var="product" value="${typeSupport.single.product}" />
+	</c:if>
+	<c:if test="${recordType == 'album'}">
+		<c:set var="single" value="${typeSupport.album}" />
+		<c:set var="product" value="${typeSupport.album.product}" />
+	</c:if>
+
 	<c:if test="${counter.count - 1 % 4 == 0}">
 		<div class="rowProduct">
 	</c:if>
 
 	<a href="#" class="product">
 		<div class="titleProduct">
-			<c:out value="${product.single.product.name}" />
+			<c:out value="${product.name}" />
 		</div>
 		<div class="imageProduct">
-			<img src="resources/img/product/<c:out value="${product.single.product.urlPicture}" />" alt="${product.single.product.name}" />
+			<img src="${baseURL}/resources/img/product/<c:out value="${product.urlPicture}" />" alt="${product.name}" />
 		</div>
 
 		<div class="descriptionProduct">
-			<c:if test="${fn:length(product.single.product.description) == 0}">
+			<c:if test="${fn:length(product.description) == 0}">
 				Pas de description...
 			</c:if>
-			<c:out value="${fn:substring(product.single.product.description, 0, 87)}" />
-			<c:if test="${fn:length(product.single.product.description) > 87}">
+			<c:out value="${fn:substring(product.description, 0, 87)}" />
+			<c:if test="${fn:length(product.description) > 87}">
 				...
 			</c:if>
 		</div>
 		<div class="priceProduct">
-			<fmt:formatNumber value="${product.price}" type="currency" />
+			<fmt:formatNumber value="${typeSupport.price}" type="currency" />
 		</div>
 		<div class="buttonAddCart">
 			<input type="button" class="btn btn-primary" value="Ajouter au panier" />
@@ -87,6 +109,6 @@
 
 </c:forEach>
 
-<script src="resources/js/listeProduct.js"></script>
+<script src="/resources/js/listeProduct.js"></script>
 
 <jsp:include page="templates/footer.jsp" />

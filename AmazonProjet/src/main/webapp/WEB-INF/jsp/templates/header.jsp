@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head lang="fr">
@@ -9,10 +10,10 @@
 <meta name="googlebot" content="index, follow" />
 <meta name="google" content="notranslate" />
 <meta name="viewport" content="width=device-width" />
-<link type="text/css" rel="stylesheet" href="resources/css/bootstrap.min.css">
-<link type="text/css" rel="stylesheet" href="resources/css/jquery.smartmenus.bootstrap.css">
-<link type="text/css" rel="stylesheet" href="resources/css/site.css">
-<script src="resources/js/jquery.js"></script>
+<link type="text/css" rel="stylesheet" href="/resources/css/bootstrap.min.css">
+<link type="text/css" rel="stylesheet" href="/resources/css/jquery.smartmenus.bootstrap.css">
+<link type="text/css" rel="stylesheet" href="/resources/css/site.css">
+<script src="/resources/js/jquery.js"></script>
 
 </head>
 <body>
@@ -24,61 +25,61 @@
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 					<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="/">Nozama</a>
+				<a class="navbar-brand" href="//">Nozama</a>
 			</div>
 			<div class="navbar-collapse collapse">
 
 				<!-- Left nav -->
 				<ul class="nav navbar-nav">
 					<li>
-						<a href="#">Tous les produits <span class="caret"></span></a>
+						<a href="/#">Tous les produits <span class="caret"></span></a>
 
 						<ul class="dropdown-menu">
 							<li class="menu-lateral">
 								<div class="blockMusique">
 									<h3 class="text-center titleMenu">
-										<a href="liste-toutes-les-musiques">Musique</a>
+										<a href="/liste-toutes-les-musiques">Musique</a>
 									</h3>
 									<div class="blockSsMenu">
 										<ol class="list-unstyled ssMenu">
 											<li>
-												<a href="#"> Variété française </a>
+												<a href="/liste-toutes-les-musiques/VarieteFrancaise"> Variété française </a>
 											</li>
 											<li>
-												<a href="#"> Pop-rock indé </a>
+												<a href="/liste-toutes-les-musiques/PopRockInde"> Pop-rock indé </a>
 											</li>
 											<li>
-												<a href="#"> Musique classique </a>
+												<a href="/liste-toutes-les-musiques/MusiqueClassqie"> Musique classique </a>
 											</li>
 											<li>
-												<a href="#"> Hard rock, métal </a>
+												<a href="/liste-toutes-les-musiques/HarRockMetal"> Hard rock, métal </a>
 											</li>
 											<li>
-												<a href="#"> Jazz, blues </a>
+												<a href="/liste-toutes-les-musiques/JassBlues"> Jazz, blues </a>
 											</li>
 											<li>
-												<a href="#"> R&amp;B, soul, funk </a>
+												<a href="/liste-toutes-les-musiques/RBSoulFunk"> R&amp;B, soul, funk </a>
 											</li>
 										</ol>
 										<ol class="list-unstyled ssMenu">
 
 											<li>
-												<a href="#"> Musiques du monde </a>
+												<a href="/liste-toutes-les-musiques/MusiqueDuMonde"> Musiques du monde </a>
 											</li>
 											<li>
-												<a href="#"> Rap </a>
+												<a href="/liste-toutes-les-musiques/Rap"> Rap </a>
 											</li>
 											<li>
-												<a href="#"> Musique pour enfants </a>
+												<a href="/liste-toutes-les-musiques/MusiquePourEnfant"> Musique pour enfants </a>
 											</li>
 											<li>
-												<a href="#"> Electro </a>
+												<a href="/liste-toutes-les-musiques/Electro"> Electro </a>
 											</li>
 											<li>
-												<a href="#"> Opéra </a>
+												<a href="/liste-toutes-les-musiques/Opera"> Opéra </a>
 											</li>
 											<li>
-												<a href="#"> BO, musiques de film </a>
+												<a href="/liste-toutes-les-musiques/BoMusiqueFilm"> BO, musiques de film </a>
 											</li>
 										</ol>
 									</div>
@@ -87,84 +88,84 @@
 								<div class="legend"></div>
 								<div class="blockFilm">
 									<h3 class="text-center titleMenu">
-										<a href="liste-tous-les-films">Film </a>
+										<a href="/liste-tous-les-films">Film </a>
 									</h3>
 									<div class="blockSsMenu">
 
 										<ol class="list-unstyled ssMenu">
 											<li>
-												<a href="#">Action</a>
+												<a href="/liste-tous-les-films/Action">Action</a>
 											</li>
 											<li>
-												<a href="#">Animation</a>
+												<a href="/liste-tous-les-films/Animation">Animation</a>
 											</li>
 											<li>
-												<a href="#">Arts Martiaux</a>
+												<a href="/liste-tous-les-films/ArtsMartiaux">Arts Martiaux</a>
 											</li>
 											<li>
-												<a href="#">Aventure</a>
+												<a href="/liste-tous-les-films/Aventure">Aventure</a>
 											</li>
 											<li>
-												<a href="#">Biopic</a>
+												<a href="/liste-tous-les-films/Biopic">Biopic</a>
 											</li>
 											<li>
-												<a href="#">Comédie dramatique</a>
+												<a href="/liste-tous-les-films/ComedieDramatique">Comédie dramatique</a>
 											</li>
 											<li>
-												<a href="#">Comédie musicale</a>
+												<a href="/liste-tous-les-films/ComedieMusicale">Comédie musicale</a>
 											</li>
 											<li>
-												<a href="#">Comédie</a>
+												<a href="/liste-tous-les-films/Comedie">Comédie</a>
 											</li>
 											<li>
-												<a href="#">Divers</a>
+												<a href="/liste-tous-les-films/Divers">Divers</a>
 											</li>
 											<li>
-												<a href="#">Documentaire</a>
+												<a href="/liste-tous-les-films/Documentaire">Documentaire</a>
 											</li>
 											<li>
-												<a href="#">Drame</a>
+												<a href="/liste-tous-les-films/Drame">Drame</a>
 											</li>
 											<li>
-												<a href="#">Epouvante-horreur</a>
+												<a href="/liste-tous-les-films/EpouvanteHorreur">Epouvante-horreur</a>
 											</li>
 										</ol>
 										<ol class="list-unstyled ssMenu">
 											<li>
-												<a href="#">Espionnage</a>
+												<a href="/liste-tous-les-films/Espionnage">Espionnage</a>
 											</li>
 											<li>
-												<a href="#">Famille</a>
+												<a href="/liste-tous-les-films/Famille">Famille</a>
 											</li>
 											<li>
-												<a href="#">Fantastique</a>
+												<a href="/liste-tous-les-films/Fantastique">Fantastique</a>
 											</li>
 											<li>
-												<a href="#">Guerre</a>
+												<a href="/liste-tous-les-films/Guerre">Guerre</a>
 											</li>
 											<li>
-												<a href="#">Historique</a>
+												<a href="/liste-tous-les-films/Historique">Historique</a>
 											</li>
 											<li>
-												<a href="#">Musical</a>
+												<a href="/liste-tous-les-films/Musical">Musical</a>
 											</li>
 											<li>
-												<a href="#">Péplum</a>
+												<a href="/liste-tous-les-films/Peplum">Péplum</a>
 											</li>
 											<li>
-												<a href="#">Policier</a>
+												<a href="/liste-tous-les-films/Policier">Policier</a>
 											</li>
 											<li>
-												<a href="#">Romance</a>
+												<a href="/liste-tous-les-films/Romance">Romance</a>
 											</li>
 											<li>
-												<a href="#">Science fiction</a>
+												<a href="/liste-tous-les-films/ScienceFiction">Science fiction</a>
 											</li>
 											<li>
-												<a href="#">Thriller</a>
+												<a href="/liste-tous-les-films/Thriller">Thriller</a>
 											</li>
 											<li>
-												<a href="#">Western</a>
+												<a href="/liste-tous-les-films/Western">Western</a>
 											</li>
 										</ol>
 									</div>
@@ -177,10 +178,10 @@
 				<!-- Right nav -->
 				<ul class="nav navbar-nav navbar-right">
 					<li>
-						<a href="connexion">Connexion</a>
+						<a href="/connexion">Connexion</a>
 					</li>
 					<li>
-						<a href="inscription">Inscription</a>
+						<a href="/inscription">Inscription</a>
 					</li>
 				</ul>
 

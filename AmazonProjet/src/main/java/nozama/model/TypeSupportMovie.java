@@ -1,5 +1,5 @@
 package nozama.model;
-// Generated 24 f�vr. 2016 08:23:00 by Hibernate Tools 4.3.1.Final
+// Generated 25 f�vr. 2016 15:17:06 by Hibernate Tools 4.3.1.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -49,7 +49,7 @@ public class TypeSupportMovie implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "movie_id_movie", nullable = false)
+	@JoinColumn(name = "id_movie", nullable = false)
 	public Movie getMovie() {
 		return this.movie;
 	}

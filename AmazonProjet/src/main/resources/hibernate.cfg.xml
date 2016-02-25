@@ -2,7 +2,7 @@
 <hibernate-configuration>
 	<session-factory> <!-- INFORMATIONS DE CONNEXION A LA BASE DE DONNEES -->
 		<property name="connection.url">jdbc:mysql://localhost/nozama</property>
-		<property name="connection.username">mysql</property>
+		<property name="connection.username">root</property>
 		<property name="connection.password">123456</property>
 		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
 		<property name="dialect">org.hibernate.dialect.MySQLDialect</property> <!-- POOL DE CONNEXION (nombre maximim de connection simultanées) -->
@@ -17,7 +17,7 @@
 		<mapping class="nozama.model.Movie" />
 		<mapping class="nozama.model.Product" />
 		<mapping class="nozama.model.Single" />
-		<mapping class="nozama.model.TypeSupportAlbm" />
+		<mapping class="nozama.model.TypeSupportAlbum" />
 		<mapping class="nozama.model.TypeSupportMovie" />
 		<mapping class="nozama.model.TypeSupportSingle" />
 	</session-factory>
