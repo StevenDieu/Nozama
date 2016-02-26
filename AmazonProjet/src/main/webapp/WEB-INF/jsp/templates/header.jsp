@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <html>
@@ -23,7 +24,10 @@
 		<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-					<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
 				</button>
 				<a class="navbar-brand" href="/">Nozama</a>
 			</div>
@@ -175,15 +179,29 @@
 					</li>
 				</ul>
 
-				<!-- Right nav -->
-				<ul class="nav navbar-nav navbar-right">
-					<li>
-						<a href="/connexion">Connexion</a>
-					</li>
-					<li>
-						<a href="/inscription">Inscription</a>
-					</li>
-				</ul>
+				<c:choose>
+					<c:when test="${sessionScope.User != null}">
+						<ul class="nav navbar-nav navbar-right">
+							<li>
+								<a href="/mon-compte">Mon compte</a>
+							</li>
+							<li>
+								<a href="/se-deconnecter">Se deconnecter</a>
+							</li>
+						</ul>
+					</c:when>
+					<c:when test="${sessionScope.User == null}">
+						<ul class="nav navbar-nav navbar-right">
+							<li>
+								<a href="/connexion">Connexion</a>
+							</li>
+							<li>
+								<a href="/inscription">Inscription</a>
+							</li>
+						</ul>
+					</c:when>
+				</c:choose>
+
 
 			</div>
 			<!--/.nav-collapse -->

@@ -7,37 +7,40 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
-import nozama.model.Users;
+import nozama.model.User;
 import nozama.util.HibernateUtil;
 
 @SuppressWarnings("unchecked")
 @Repository
 public class UserRepository {
-	
+
 	Session openSession = HibernateUtil.getSessionFactory().openSession();
 
-	
-	public List<Users> getUserByEmailAndPwd(String email, String password) {
-		Criteria cr = openSession.createCriteria(Users.class);
+	public List<User> getUserByEmailAndPwd(String email, String password) {
+		Criteria cr = openSession.createCriteria(User.class);
 		cr.add(Restrictions.eq("emailAdress", email));
 		cr.add(Restrictions.eq("password", password));
-		return cr.list();
-	}
-	
-	public List<Users> getUserByEmail(String email) {
-		Criteria cr = openSession.createCriteria(Users.class);
-		cr.add(Restrictions.eq("emailAdress", email));
+		HibernateUtil.shutdown();
+
 		return cr.list();
 	}
 
-	public void insertUser(Users users) {
+	public List<User> getUserByEmail(String email) {
+		Criteria cr = openSession.createCriteria(User.class);
+		cr.add(Restrictions.eq("emailAdress", email));
+		HibernateUtil.shutdown();
+
+		return cr.list();
+	}
+
+	public void insertUser(User users) {
 		Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-                 
-        session.save(users);
- 
-        session.getTransaction().commit();
-        HibernateUtil.shutdown();
+		session.beginTransaction();
+
+		session.save(users);
+
+		session.getTransaction().commit();
+		HibernateUtil.shutdown();
 	}
 
 }

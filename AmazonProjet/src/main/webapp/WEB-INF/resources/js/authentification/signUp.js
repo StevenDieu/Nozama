@@ -2,7 +2,7 @@ var boolProgress = true;
 
 function signUp() {
 	var gender = $('input[name=gender]:checked').val()
-
+	$(".alert").hide();
 	if (boolProgress) {
 		if (gender !== undefined && $(".lastName").val() !== "" && $(".email").val() !== "" && $(".password").val() !== "") {
 			if ($(".password").val() === $(".confirmPassword").val()) {
@@ -18,32 +18,47 @@ function signUp() {
 							success : function(t) {
 								t = JSON.parse(t);
 								if (t.statut == "ok") {
-
+									window.location.replace(t.redirect);
 								} else if (t.statut == "nok") {
-									$(".errorConnexion").html(t.message);
+									$(".alert").show();
+									$(".errorMessage").html(t.message);
 								}
 								self.boolProgress = true;
 							}
 							});
 						} else {
-							$(".errorConnexion").html("Les conditions d'utilisation doivent être acceptés.");
+							$(".alert").show();
+							$(".errorMessage").html("Les conditions d'utilisation doivent \352tre accept\351s.");
 						}
 					} else {
-						$(".errorConnexion").html("Le mot de passe doit être compris entre 6 et 54 charatères.");
+						$(".alert").show();
+						$(".errorMessage").html("Le mot de passe doit être compris entre 6 et 54 charat\350res.");
 					}
 				} else {
-					$(".errorConnexion").html("L'adresse mail n'est pas valide.");
+					$(".alert").show();
+					$(".errorMessage").html("L'adresse mail n'est pas valide.");
 				}
 			} else {
-				$(".errorConnexion").html("Les mots de passe ne sont pas identiques.");
+				$(".alert").show();
+				$(".errorMessage").html("Les mots de passe ne sont pas identiques.");
 			}
 		} else {
-			$(".errorConnexion").html("Aucun champ ne doit \352tre vide.");
+			$(".alert").show();
+			$(".errorMessage").html("Aucun champ ne doit \352tre vide.");
 		}
 
 	}
 
 	return false;
+}
+
+function isAdressMail(email) {
+	var reg = new RegExp('^[a-z0-9]+([_|\.|-]{1}[a-z0-9]+)*@[a-z0-9]+([_|\.|-]{1}[a-z0-9]+)*[\.]{1}[a-z]{2,6}$', 'i');
+	if (reg.test(email)) {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 $(document).ready(function() {

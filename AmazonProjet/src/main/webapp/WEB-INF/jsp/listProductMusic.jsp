@@ -30,7 +30,7 @@
 		<div class="blocFiltre">
 			Année :
 			<select id="years" name="years">
-				<option value="-1">Toutes les années</option>
+				<option value="AllYears">Toutes les années</option>
 				<option value="1940" <c:if test="${years == '1940' }">selected</c:if>>Année 40</option>
 				<option value="1950" <c:if test="${years == '1950' }">selected</c:if>>Année 50</option>
 				<option value="1960" <c:if test="${years == '1960' }">selected</c:if>>Année 60</option>

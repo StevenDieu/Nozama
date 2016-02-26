@@ -1,8 +1,5 @@
 package nozama.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
-import nozama.model.Users;
+import nozama.model.User;
 import nozama.service.UserService;
 
 @Controller
@@ -23,12 +19,18 @@ public class CtrlUser {
 
 	@RequestMapping(value = "/inscription")
 	public String signUp(HttpServletRequest request) {
+		if (request.getSession().getAttribute("User") != null) {
+			return "redirect:/";
+		}
 		return "authentication/signUp";
 	}
 
 	@RequestMapping(value = "/connexion")
-	public ModelAndView signIn(HttpServletRequest request) {
-		return new ModelAndView("authentication/signIn");
+	public String signIn(HttpServletRequest request) {
+		if (request.getSession().getAttribute("User") != null) {
+			return "redirect:/";
+		}
+		return "authentication/signIn";
 	}
 
 	@RequestMapping(value = "/ajaxConnexion", method = RequestMethod.POST)
@@ -47,15 +49,14 @@ public class CtrlUser {
 		} else if (!US.checkEmail(email)) {
 			return "{\"statut\": \"nok\",\"message\":  \"Cette adresse email n'existe pas.\"}";
 		}
-		Users user = US.connexion(email, password);
+		User user = US.connexion(email, password);
 		if (user == null) {
 			return "{\"statut\": \"nok\",\"message\":  \"Le mot de passe est incorrect.\"}";
 		}
 
 		request.getSession().setAttribute("User", user);
-		
 
-		return "{\"statut\": \"ok\"}";
+		return "{\"statut\": \"ok\",\"redirect\": \"/\"}";
 
 	}
 
@@ -82,14 +83,15 @@ public class CtrlUser {
 			return "{\"statut\": \"nok\",\"message\":  \"Cette adresse email est déja utilisé.\"}";
 		}
 
-		Users user = US.register(gender, name, lastName, email, password, US.getIpAdresse(request));
+		User user = US.register(gender, name, lastName, email, password, US.getIpAdresse(request));
 		request.getSession().setAttribute("User", user);
 
-		return "{\"statut\": \"ok\"}";
+		return "{\"statut\": \"ok\",\"redirect\": \"/\"}";
 	}
-	
-	@RequestMapping(value = "/ajaxDisconnect", method = RequestMethod.POST)
-	public void ajaxDisconnect(HttpServletRequest request) {
+
+	@RequestMapping(value = "/se-deconnecter")
+	public String ajaxDisconnect(HttpServletRequest request) {
 		request.getSession().setAttribute("User", null);
+		return "redirect:/";
 	}
 }

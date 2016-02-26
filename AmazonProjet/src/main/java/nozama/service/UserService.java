@@ -1,7 +1,6 @@
 package nozama.service;
 
 import java.security.MessageDigest;
-import java.util.Calendar;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import nozama.model.Users;
+import nozama.model.User;
 import nozama.repository.UserRepository;
 
 @Service
@@ -20,8 +19,8 @@ public class UserService {
 	@Autowired
 	private UserRepository UR;
 
-	public Users connexion(String email, String password) {
-		List<Users> users = UR.getUserByEmailAndPwd(email, sha256(password));
+	public User connexion(String email, String password) {
+		List<User> users = UR.getUserByEmailAndPwd(email, sha256(password));
 		if (users.size() == 1) {
 			return users.get(0);
 		} else {
@@ -29,11 +28,11 @@ public class UserService {
 		}
 	}
 
-	public Users register(String gender, String name, String lastName, String emailAdress, String password, String ipAdress) {
-		Users user = new Users();
+	public User register(String gender, String name, String lastName, String emailAdress, String password, String ipAdress) {
+		User user = new User();
 		user.setGenre(gender);
 		user.setName(name);
-		user.setLastName(lastName);
+		user.setLastname(lastName);
 		user.setEmailAdress(emailAdress);
 		user.setPassword(sha256(password));
 		user.setIpAddress(ipAdress);
@@ -43,7 +42,7 @@ public class UserService {
 	}
 
 	public boolean checkEmail(String email) {
-		List<Users> users = UR.getUserByEmail(email);
+		List<User> users = UR.getUserByEmail(email);
 		if (users.size() == 1) {
 			return true;
 		} else {
