@@ -28,9 +28,7 @@ public class CtrlUser {
 
 	@RequestMapping(value = "/connexion")
 	public ModelAndView signIn(HttpServletRequest request) {
-		Map<String, Object> infoCovoit = new HashMap<String, Object>();
-		infoCovoit.put("redirect", request.getParameter("redirect"));
-		return new ModelAndView("authentication/signIn", infoCovoit);
+		return new ModelAndView("authentication/signIn");
 	}
 
 	@RequestMapping(value = "/ajaxConnexion", method = RequestMethod.POST)
