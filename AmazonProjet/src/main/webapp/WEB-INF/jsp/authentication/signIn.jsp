@@ -1,7 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="../templates/header.jsp"/>
 
-	<form class="singnIn col-lg-3 col-lg-offset-4" name="singnIn" method="post">
+	<form class="singnIn col-lg-3 col-lg-offset-4" action="/connexion" name="singnIn" method="post">
 		<h2>Connexion</h2>
 		<span class="errorConnexion"></span><br/>
 		<input type="hidden" class="redirect" value="{{redirect}}" />

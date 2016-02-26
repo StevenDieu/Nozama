@@ -1,7 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="../templates/header.jsp"/>
 
-	<form class="signUp col-lg-3 col-lg-offset-4"  method="post">
+	<form class="signUp col-lg-3 col-lg-offset-4" action="/inscription"  method="post">
 		<h2>Inscription</h2>
 		<span class="errorConnexion"></span><br/>
 		<input type="radio" name="gender" id="genre"  value="H"> Homme 
