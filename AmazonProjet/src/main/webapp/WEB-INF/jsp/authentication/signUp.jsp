@@ -1,7 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="../templates/header.jsp"/>
 
-	<form class="signUp col-lg-3 col-lg-offset-4" action="/inscription"  method="post">
+	<form class="signUp col-lg-3 col-lg-offset-4"  method="post">
 		<h2>Inscription</h2>
 		<span class="errorConnexion"></span><br/>
 		<input type="radio" name="gender" id="genre"  value="H"> Homme 
@@ -14,5 +14,6 @@
 		<input type="checkbox" class="cgv checkbox">J'ai lu et j'accepte les <a href="#">conditions g&eacute;n&eacute;rales d'utilisation du Site et du Service Nozama.</a><br/><br/>
 		<input type="submit" class="btn btn-default submitSearch" value="S'incrire" />
 	</form>
+	<script src="resources/js/authentification/signUp.js"></script>
 
 <jsp:include page="../templates/footer.jsp"/>
