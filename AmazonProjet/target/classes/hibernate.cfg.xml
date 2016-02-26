@@ -20,5 +20,6 @@
 		<mapping class="nozama.model.TypeSupportAlbum" />
 		<mapping class="nozama.model.TypeSupportMovie" />
 		<mapping class="nozama.model.TypeSupportSingle" />
+		<mapping class="nozama.model.Users" />
 	</session-factory>
 </hibernate-configuration>
