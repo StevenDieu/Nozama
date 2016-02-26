@@ -59,11 +59,10 @@
 	</form>
 
 </div>
+<div class="rowProduct">
+
 <c:set var="listAdherent" value="${products}" />
 <c:forEach var="product" items="${listAdherent}" varStatus="counter">
-	<c:if test="${counter.count - 1 % 4 == 0}">
-		<div class="rowProduct">
-	</c:if>
 
 	<a href="#" class="product">
 		<div class="titleProduct">
@@ -90,12 +89,16 @@
 		</div>
 	</a>
 
-	<c:if test="${counter.count % 4 == 0}">
-		</div>
-	</c:if>
-
 </c:forEach>
 
+</div>
+<div class="paginationFilm center100"></div>
+<script>
+	var varNumberPage = ${numberPage};
+	var varStartPage = ${startPage};
+</script>
+
+<script src="/resources/js/jquery.twbsPagination.min.js"></script>
 <script src="/resources/js/listeProduct.js"></script>
 
 

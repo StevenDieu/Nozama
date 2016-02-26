@@ -69,6 +69,7 @@
 	</form>
 
 </div>
+<div class="rowProduct">
 
 <c:set var="listAdherent" value="${products}" />
 <c:forEach var="typeSupport" items="${listAdherent}" varStatus="counter">
@@ -82,9 +83,6 @@
 		<c:set var="product" value="${typeSupport.album.product}" />
 	</c:if>
 
-	<c:if test="${counter.count - 1 % 4 == 0}">
-		<div class="rowProduct">
-	</c:if>
 
 	<a href="#" class="product">
 		<div class="titleProduct">
@@ -111,12 +109,15 @@
 		</div>
 	</a>
 
-	<c:if test="${counter.count % 4 == 0}">
-		</div>
-	</c:if>
-
 </c:forEach>
+</div>
+<div class="paginationMusic center100"></div>
+<script>
+	var varNumberPage = ${numberPage};
+	var varStartPage = ${startPage};
+</script>
 
+<script src="/resources/js/jquery.twbsPagination.min.js"></script>
 <script src="/resources/js/listeProduct.js"></script>
 
 <jsp:include page="templates/footer.jsp" />

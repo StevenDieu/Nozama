@@ -18,14 +18,14 @@ public class ProductServiceImpl implements ProductService {
 	private ProductRepository PR;
 
 	@Override
-	public List<Product> getAllMusicsBySupport(String support, String recordType, int years, String type) {
+	public List<Product> getAllMusicsBySupport(String support, String recordType, int years, String type, int startResult) {
 		boolean useDate = true;
 		boolean useType = true;
 
 		Calendar cal = Calendar.getInstance();
 		Date dateYearsAfter = null;
 		Date dateYears = null;
-		
+
 		if (years == -1) {
 			useDate = false;
 		} else {
@@ -45,22 +45,22 @@ public class ProductServiceImpl implements ProductService {
 		}
 
 		if (recordType.equals("single")) {
-			return PR.getAllSingleBySupportAndTypeBetweenYears(support, useDate, useType, dateYears, dateYearsAfter, type);
+			return PR.getAllSingleBySupportAndTypeBetweenYears(support, useDate, useType, dateYears, dateYearsAfter, type, startResult);
 		} else {
-			return PR.getAllAlbumBySupportAndTypBetweenYears(support, useDate, useType, dateYears, dateYearsAfter, type);
+			return PR.getAllAlbumBySupportAndTypBetweenYears(support, useDate, useType, dateYears, dateYearsAfter, type, startResult);
 		}
 
 	}
 
 	@Override
-	public List<Product> getAllMovieBySupport(String support, String type) {
+	public List<Product> getAllMovieBySupport(String support, String type, int startResult) {
 		boolean useType = true;
 
 		if (type.equals("ALL")) {
 			useType = false;
 		}
 
-		return PR.getAllMovieBySupport(support, useType, type);
+		return PR.getAllMovieBySupport(support, useType, type, startResult);
 	}
 
 	@Override
@@ -72,6 +72,51 @@ public class ProductServiceImpl implements ProductService {
 			stringParameters = stringDefault;
 		}
 		return stringParameters;
+	}
+
+	@Override
+	public int getCountAllMusicBySupport(String support, String recordType, int years, String type) {
+		boolean useDate = true;
+		boolean useType = true;
+
+		Calendar cal = Calendar.getInstance();
+		Date dateYearsAfter = null;
+		Date dateYears = null;
+
+		if (years == -1) {
+			useDate = false;
+		} else {
+			cal.set(Calendar.YEAR, years);
+			dateYears = cal.getTime();
+			if (years == 2000) {
+				Calendar calNow = Calendar.getInstance();
+				dateYearsAfter = calNow.getTime();
+			} else {
+				cal.set(Calendar.YEAR, years + 10);
+				dateYearsAfter = cal.getTime();
+			}
+		}
+
+		if (type.equals("ALL")) {
+			useType = false;
+		}
+
+		if (recordType.equals("single")) {
+			return PR.getCountAllMusicBySupport(support, useDate, useType, dateYears, dateYearsAfter, type);
+		} else {
+			return PR.getCountAllAlbumBySupport(support, useDate, useType, dateYears, dateYearsAfter, type);
+		}
+	}
+
+	@Override
+	public int getCountMovieBySupport(String support, String type) {
+		boolean useType = true;
+
+		if (type.equals("ALL")) {
+			useType = false;
+		}
+
+		return PR.getCountAllLovieBySupport(support, useType, type);
 	}
 
 }

@@ -109,11 +109,11 @@ img {
 
 .product {
 	height: 430px;
-	width: 342px;
+	width: 360px;
 	position: relative;
 	float: left;
 	background-color: white;
-	margin-right: 10px;
+	margin-left: 10px;
 	margin-right: 10px;
 	margin-bottom: 10px;
 	border-radius: 5px;
@@ -207,6 +207,15 @@ img {
 	background-color: #FAEBD7;
 }
 
+.replaceCarousel {
+	margin-top: -20px;
+}
+
+.center100 {
+	margin: 0 auto;
+	text-align: center;
+	width: 100%;
+}
 
 @media screen and (max-width: 767px) {
 	.menu-lateral {
@@ -241,9 +250,24 @@ img {
 	}
 }
 
+@media screen and (max-width: 1200px) {
+	.rowProduct {
+		width: 760px;
+		margin: 0 auto;
+	}
+}
+
+@media screen and (max-width: 992px) {
+	.product {
+		margin-left: 0;
+				margin-right: 0;
+		
+	}
+}
+
 @media screen and (max-width: 755px) {
 	.rowProduct {
-		width: 342px;
+		width: 360px;
 		margin: 0 auto;
 	}
 	.blocFiltre {
@@ -259,6 +283,7 @@ img {
 		width: 220px;
 	}
 }
-#genre{
-	margin: 0 16px 16px; 	
+
+#genre {
+	margin: 0 16px 16px;
 }
