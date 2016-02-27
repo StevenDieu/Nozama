@@ -31,9 +31,12 @@ public class ProductServiceImpl implements ProductService {
 		} else {
 			cal.set(Calendar.YEAR, years);
 			dateYears = cal.getTime();
-			if (years == 2000) {
+			if (years == 1939) {
 				Calendar calNow = Calendar.getInstance();
-				dateYearsAfter = calNow.getTime();
+				cal.set(Calendar.YEAR, 0);
+				dateYears = calNow.getTime();
+				cal.set(Calendar.YEAR, years);
+				dateYearsAfter = cal.getTime();
 			} else {
 				cal.set(Calendar.YEAR, years + 10);
 				dateYearsAfter = cal.getTime();

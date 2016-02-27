@@ -31,13 +31,15 @@
 			Année :
 			<select id="years" name="years">
 				<option value="AllYears">Toutes les années</option>
-				<option value="1940" <c:if test="${years == '1940' }">selected</c:if>>Année 40</option>
-				<option value="1950" <c:if test="${years == '1950' }">selected</c:if>>Année 50</option>
-				<option value="1960" <c:if test="${years == '1960' }">selected</c:if>>Année 60</option>
-				<option value="1970" <c:if test="${years == '1970' }">selected</c:if>>Année 70</option>
-				<option value="1980" <c:if test="${years == '1980' }">selected</c:if>>Année 80</option>
-				<option value="1990" <c:if test="${years == '1990' }">selected</c:if>>Année 90</option>
+				<option value="2010" <c:if test="${years == '2010' }">selected</c:if>>Année 2010</option>
 				<option value="2000" <c:if test="${years == '2000' }">selected</c:if>>Année 2000</option>
+				<option value="1990" <c:if test="${years == '1990' }">selected</c:if>>Année 90</option>
+				<option value="1980" <c:if test="${years == '1980' }">selected</c:if>>Année 80</option>
+				<option value="1970" <c:if test="${years == '1970' }">selected</c:if>>Année 70</option>
+				<option value="1960" <c:if test="${years == '1960' }">selected</c:if>>Année 60</option>
+				<option value="1950" <c:if test="${years == '1950' }">selected</c:if>>Année 50</option>
+				<option value="1940" <c:if test="${years == '1940' }">selected</c:if>>Année 40</option>
+				<option value="1939" <c:if test="${years == '1939' }">selected</c:if>>Antérieur</option>
 			</select>
 		</div>
 
@@ -71,50 +73,56 @@
 </div>
 <div class="rowProduct">
 
-<c:set var="listAdherent" value="${products}" />
-<c:forEach var="typeSupport" items="${listAdherent}" varStatus="counter">
+	<c:set var="listAdherent" value="${products}" />
+	<c:forEach var="typeSupport" items="${listAdherent}" varStatus="counter">
 
-	<c:if test="${recordType == 'single'}">
-		<c:set var="single" value="${typeSupport.single}" />
-		<c:set var="product" value="${typeSupport.single.product}" />
-	</c:if>
-	<c:if test="${recordType == 'album'}">
-		<c:set var="single" value="${typeSupport.album}" />
-		<c:set var="product" value="${typeSupport.album.product}" />
-	</c:if>
+		<c:if test="${recordType == 'single'}">
+			<c:set var="single" value="${typeSupport.single}" />
+			<c:set var="product" value="${typeSupport.single.product}" />
+		</c:if>
+		<c:if test="${recordType == 'album'}">
+			<c:set var="single" value="${typeSupport.album}" />
+			<c:set var="product" value="${typeSupport.album.product}" />
+		</c:if>
 
 
-	<a href="#" class="product">
-		<div class="titleProduct">
-			<c:out value="${product.name}" />
-		</div>
-		<div class="imageProduct">
-			<img src="${baseURL}/resources/img/product/<c:out value="${product.urlPicture}" />" alt="${product.name}" />
-		</div>
+		<a href="#" class="product">
+			<div class="titleProduct">
+				<c:out value="${product.name}" />
+			</div>
+			<div class="imageProduct">
+				<img src="${baseURL}/resources/img/product/<c:out value="${product.urlPicture}" />" alt="${product.name}" />
+			</div>
 
-		<div class="descriptionProduct">
-			<c:if test="${fn:length(product.description) == 0}">
+			<div class="descriptionProduct">
+				<c:if test="${fn:length(product.description) == 0}">
 				Pas de description...
 			</c:if>
-			<c:out value="${fn:substring(product.description, 0, 87)}" />
-			<c:if test="${fn:length(product.description) > 87}">
+				<c:out value="${fn:substring(product.description, 0, 87)}" />
+				<c:if test="${fn:length(product.description) > 87}">
 				...
 			</c:if>
-		</div>
-		<div class="priceProduct">
-			<fmt:formatNumber value="${typeSupport.price}" type="currency" />
-		</div>
-		<div class="buttonAddCart">
-			<input type="button" class="btn btn-primary" value="Ajouter au panier" />
-		</div>
-	</a>
+			</div>
+			<div class="priceProduct">
+				<fmt:formatNumber value="${typeSupport.price}" type="currency" />
+			</div>
+			<div class="buttonAddCart">
+				<input type="button" class="btn btn-primary" value="Ajouter au panier" />
+			</div>
+		</a>
 
-</c:forEach>
+	</c:forEach>
 </div>
 <div class="paginationMusic center100"></div>
 <script>
-	var varNumberPage = ${numberPage};
-	var varStartPage = ${startPage};
+	var varNumberPage = $
+	{
+		numberPage
+	};
+	var varStartPage = $
+	{
+		startPage
+	};
 </script>
 
 <script src="/resources/js/jquery.twbsPagination.min.js"></script>

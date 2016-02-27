@@ -252,24 +252,21 @@ img {
 
 @media screen and (max-width: 1200px) {
 	.rowProduct {
-		width: 760px;
+		width: 100%;
 		margin: 0 auto;
 	}
 }
 
 @media screen and (max-width: 992px) {
 	.product {
+		width: 100%;
 		margin-left: 0;
-				margin-right: 0;
-		
+		margin-right: 0;
+		margin-left: 0;
 	}
 }
 
 @media screen and (max-width: 755px) {
-	.rowProduct {
-		width: 360px;
-		margin: 0 auto;
-	}
 	.blocFiltre {
 		float: none;
 		margin: 0 auto 10px auto;
