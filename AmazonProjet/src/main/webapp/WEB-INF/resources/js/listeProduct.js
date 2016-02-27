@@ -1,5 +1,23 @@
 var actif = false;
 
+function redirigeUrlMovie() {
+	var url = $(".formFilm").attr("action");
+	url = url + "/" + $("#support").val();
+	url = url + "/" + $("#years").val();
+	url = url + "/" + $("#type").val();
+	document.location.href = url;
+}
+
+function redirigeUrlMusic() {
+	var url = $(".formMusic").attr("action");
+	url = url + "/" + $("#support").val();
+	url = url + "/" + $("#recordType").val();
+	url = url + "/" + $("#years").val();
+	url = url + "/" + $("#type").val();
+
+	document.location.href = url;
+}
+
 $(document).ready(function() {
 	$(window).load(function() {
 		actif = true;
@@ -13,21 +31,12 @@ $(document).ready(function() {
 	});
 
 	$(".formFilm").on("submit", function() {
-		var url = $(".formFilm").attr("action");
-		url = url + "/" + $("#support").val();
-		url = url + "/" + $("#type").val();
-		document.location.href = url;
+		redirigeUrlMovie();
 		return false;
 	});
 
 	$(".formMusic").on("submit", function() {
-		var url = $(".formMusic").attr("action");
-		url = url + "/" + $("#support").val();
-		url = url + "/" + $("#recordType").val();
-		url = url + "/" + $("#years").val();
-		url = url + "/" + $("#type").val();
-
-		document.location.href = url;
+		redirigeUrlMusic();
 		return false;
 	});
 
@@ -38,12 +47,7 @@ $(document).ready(function() {
 		startPage : varStartPage,
 		onPageClick : function(event, page) {
 			if (actif) {
-				var url = $(".formFilm").attr("action");
-				url = url + "/" + $("#support").val();
-				url = url + "/" + $("#type").val();
-				url = url + "/" + page;
-
-				document.location.href = url;
+				redirigeUrlMovie();
 			}
 		}
 		});
@@ -53,14 +57,7 @@ $(document).ready(function() {
 		startPage : varStartPage,
 		onPageClick : function(event, page) {
 			if (actif) {
-				var url = $(".formMusic").attr("action");
-				url = url + "/" + $("#support").val();
-				url = url + "/" + $("#recordType").val();
-				url = url + "/" + $("#years").val();
-				url = url + "/" + $("#type").val();
-				url = url + "/" + page;
-
-				document.location.href = url;
+				redirigeUrlMusic();
 			}
 		}
 		});

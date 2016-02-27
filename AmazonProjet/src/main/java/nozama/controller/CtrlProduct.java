@@ -46,9 +46,8 @@ public class CtrlProduct {
 			startResult = Integer.parseInt(startResultString);
 		}
 
-
 		Map<String, Object> product = new HashMap<String, Object>();
-		product.put("products", PS.getAllMusicsBySupport(support, recordType, years, type, startResult ));
+		product.put("products", PS.getAllMusicsBySupport(support, recordType, years, type, startResult));
 		product.put("recordType", recordType);
 		product.put("support", support);
 		product.put("years", years);
@@ -59,22 +58,34 @@ public class CtrlProduct {
 		return new ModelAndView("listProductMusic", product);
 	}
 
-	@RequestMapping(value = { "/liste-tous-les-films", "/liste-tous-les-films/{type}", "/liste-tous-les-films/{support}/{type}", "/liste-tous-les-films/{support}/{startResult}" }, method = RequestMethod.GET)
-	public ModelAndView listAllMovies(HttpServletRequest request, @PathVariable("support") Optional<String> supportUrl, @PathVariable("type") Optional<String> typeUrl, @PathVariable("startResult") Optional<String> startResultUrl) {
+	@RequestMapping(value = { "/liste-tous-les-films", "/liste-tous-les-films/{type}", "/liste-tous-les-films/{support}/{years}/{type}", "/liste-tous-les-films/{support}/{years}/{type}/{startResult}" }, method = RequestMethod.GET)
+	public ModelAndView listAllMovies(HttpServletRequest request,
+			@PathVariable("support") Optional<String> supportUrl,
+			@PathVariable("type") Optional<String> typeUrl,
+			@PathVariable("years") Optional<String> yearsUrl,
+			@PathVariable("startResult") Optional<String> startResultUrl) {
+
 		String support = PS.getParametersString(supportUrl, "DVD");
 		String type = PS.getParametersString(typeUrl, "ALL");
 		String startResultString = PS.getParametersString(startResultUrl, "1");
+		String stringYears = PS.getParametersString(yearsUrl, "default");
 
 		int startResult = 1;
 		if (Util.convertToInt(startResultString)) {
 			startResult = Integer.parseInt(startResultString);
 		}
 
+		int years = -1;
+		if (Util.convertToInt(stringYears)) {
+			years = Integer.parseInt(stringYears);
+		}
+
 		Map<String, Object> product = new HashMap<String, Object>();
-		product.put("products", PS.getAllMovieBySupport(support, type, startResult));
+		product.put("products", PS.getAllMovieBySupport(support, type, startResult, years));
 		product.put("support", support);
+		product.put("years", years);
 		product.put("type", type);
-		product.put("numberPage", (PS.getCountMovieBySupport(support, type) / 12));
+		product.put("numberPage", (PS.getCountMovieBySupport(support, type, years) / 12));
 		product.put("startPage", startResult);
 
 		return new ModelAndView("listProductMovie", product);

@@ -21,7 +21,7 @@ public class ProductRepository {
 
 	Session openSession = HibernateUtil.getSessionFactory().openSession();
 
-	public List<Product> getAllMovieBySupport(String support, boolean useType, String type, int startResult) {
+	public List<Product> getAllMovieBySupport(String support, boolean useDate, boolean useType, Date dateYears, Date dateYearsAfter, String type, int startResult) {
 		Criteria cr = openSession.createCriteria(TypeSupportMovie.class);
 		cr.createAlias("movie", "m");
 		cr.createAlias("m.product", "prod");
@@ -29,6 +29,9 @@ public class ProductRepository {
 		int startResultNumber = (startResult - 1) * 12;
 		cr.setFirstResult(startResultNumber);
 		cr.setMaxResults(startResultNumber + 12);
+		if (useDate) {
+			cr.add(Restrictions.between("m.dateReleased", dateYears, dateYearsAfter));
+		}
 		if (useType) {
 			cr.add(Restrictions.eq("m.type", type));
 		}
@@ -72,12 +75,14 @@ public class ProductRepository {
 		return cr.list();
 	}
 
-	public int getCountAllLovieBySupport(String support, boolean useType, String type) {
+	public int getCountAllLovieBySupport(String support, boolean useDate, boolean useType, Date dateYears, Date dateYearsAfter, String type) {
 		Criteria cr = openSession.createCriteria(TypeSupportMovie.class);
 		cr.createAlias("movie", "m");
 		cr.createAlias("m.product", "prod");
 		cr.add(Restrictions.eq("nameSupport", support));
-
+		if (useDate) {
+			cr.add(Restrictions.between("m.dateReleased", dateYears, dateYearsAfter));
+		}
 		if (useType) {
 			cr.add(Restrictions.eq("m.type", type));
 		}
