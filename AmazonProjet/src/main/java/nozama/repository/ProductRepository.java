@@ -120,7 +120,7 @@ public class ProductRepository {
 		return ((Long) cr.setProjection(Projections.rowCount()).uniqueResult()).intValue();
 	}
 
-	public List<Product> getAllMovieByDate(boolean useDate,Date dateYears,Date dateYearsAfter) {
+	public List<TypeSupportMovie> getAllMovieByDate(boolean useDate,Date dateYears,Date dateYearsAfter) {
 		Criteria cr = openSession.createCriteria(TypeSupportMovie.class);
 		cr.createAlias("movie", "m");
 		cr.createAlias("m.product", "prod");
@@ -131,7 +131,7 @@ public class ProductRepository {
 		return cr.list();
 	}
 	
-	public List<Product> getAllAlbumByDate(boolean useDate,Date dateYears,Date dateYearsAfter) {
+	public List<TypeSupportAlbum> getAllAlbumByDate(boolean useDate,Date dateYears,Date dateYearsAfter) {
 		Criteria cr = openSession.createCriteria(TypeSupportAlbum.class);
 		cr.createAlias("album", "a");
 		cr.createAlias("a.product", "prod");
@@ -142,7 +142,7 @@ public class ProductRepository {
 		return cr.list();
 	}
 	
-	public List<Product> getAllSingleByDate(boolean useDate,Date dateYears,Date dateYearsAfter) {
+	public List<TypeSupportSingle> getAllSingleByDate(boolean useDate,Date dateYears,Date dateYearsAfter) {
 		Criteria cr = openSession.createCriteria(TypeSupportSingle.class);
 		cr.createAlias("single", "s");
 		cr.createAlias("s.product", "prod");

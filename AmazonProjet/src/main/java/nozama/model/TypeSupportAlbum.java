@@ -16,7 +16,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "type_support_album", catalog = "nozama")
-public class TypeSupportAlbum implements java.io.Serializable {
+public class TypeSupportAlbum implements java.io.Serializable,TypeSupport {
 
 	private Integer idTypeSupport;
 	private Album album;

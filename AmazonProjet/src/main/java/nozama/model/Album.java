@@ -22,7 +22,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "album", catalog = "nozama")
-public class Album implements java.io.Serializable {
+public class Album implements java.io.Serializable,Categorie {
 
 	private Integer idAlbum;
 	private Artiste artiste;

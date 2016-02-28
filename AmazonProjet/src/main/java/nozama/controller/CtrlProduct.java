@@ -22,12 +22,12 @@ public class CtrlProduct {
 	@Autowired
 	private ProductService PS;
 
-	@RequestMapping(value = { "/liste-toutes-les-musiques", "/liste-toutes-les-musiques/{type}", "/liste-toutes-les-musiques/{support}/{recordType}/{years}/{type}", "/liste-toutes-les-musiques/{support}/{recordType}/{years}/{type}/{startResult}" }, method = RequestMethod.GET)
-	public ModelAndView listAllMusic(HttpServletRequest request,
-			@PathVariable("support") Optional<String> supportUrl,
+	@RequestMapping(value = { "/liste-toutes-les-musiques", "/liste-toutes-les-musiques/{type}",
+			"/liste-toutes-les-musiques/{support}/{recordType}/{years}/{type}",
+			"/liste-toutes-les-musiques/{support}/{recordType}/{years}/{type}/{startResult}" }, method = RequestMethod.GET)
+	public ModelAndView listAllMusic(HttpServletRequest request, @PathVariable("support") Optional<String> supportUrl,
 			@PathVariable("recordType") Optional<String> recordTypeUrl,
-			@PathVariable("years") Optional<String> yearsUrl,
-			@PathVariable("type") Optional<String> typeUrl,
+			@PathVariable("years") Optional<String> yearsUrl, @PathVariable("type") Optional<String> typeUrl,
 			@PathVariable("startResult") Optional<String> startResultUrl) {
 
 		String support = PS.getParametersString(supportUrl, "CD");
@@ -58,10 +58,12 @@ public class CtrlProduct {
 		return new ModelAndView("listProductMusic", product);
 	}
 
-	@RequestMapping(value = { "/liste-tous-les-films", "/liste-tous-les-films/{type}", "/liste-tous-les-films/{support}/{years}/{type}", "/liste-tous-les-films/{support}/{years}/{type}/{startResult}" }, method = RequestMethod.GET)
-	public ModelAndView listAllMovies(HttpServletRequest request,
+	@RequestMapping(value = { "/liste-tous-les-films", "/liste-tous-les-films/{type}",
+			"/liste-tous-les-films/{support}/{years}/{type}",
+			"/liste-tous-les-films/{support}/{years}/{type}/{startResult}" }, method = RequestMethod.GET)
+	public ModelAndView listAllMovies(HttpServletRequest request, 
 			@PathVariable("support") Optional<String> supportUrl,
-			@PathVariable("type") Optional<String> typeUrl,
+			@PathVariable("type") Optional<String> typeUrl, 
 			@PathVariable("years") Optional<String> yearsUrl,
 			@PathVariable("startResult") Optional<String> startResultUrl) {
 
@@ -90,20 +92,27 @@ public class CtrlProduct {
 
 		return new ModelAndView("listProductMovie", product);
 	}
-	
-	@RequestMapping(value = "/tous-les-produits" , method = RequestMethod.GET)
-	public ModelAndView allProduct(HttpServletRequest request,
+
+	@RequestMapping(value = "/tous-les-produits", method = RequestMethod.GET)
+	public ModelAndView allProduct(HttpServletRequest request, 
 			@PathVariable("years") Optional<String> yearsUrl,
 			@PathVariable("startResult") Optional<String> startResultUrl) {
 		String stringYears = PS.getParametersString(yearsUrl, "default");
+		String startResultString = PS.getParametersString(startResultUrl, "1");
+
+		int startResult = 1;
+		if (Util.convertToInt(startResultString)) {
+			startResult = Integer.parseInt(startResultString);
+		}
+
 		int years = -1;
 		if (Util.convertToInt(stringYears)) {
 			years = Integer.parseInt(stringYears);
 		}
-		
-		PS.getAllProduct(years);
-		
+
+
 		Map<String, Object> product = new HashMap<String, Object>();
+		product.put("products", PS.getAllProduct(years, startResult));
 		product.put("years", years);
 
 		return new ModelAndView("listAll", product);
