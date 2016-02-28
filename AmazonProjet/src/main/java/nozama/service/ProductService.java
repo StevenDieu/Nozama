@@ -14,4 +14,5 @@ public interface ProductService {
 	public String getParametersString(Optional<String> supportUrl, String stringDefault);
 	public int getCountAllMusicBySupport(String support, String recordType, int years, String type);
 	public int getCountMovieBySupport(String support, String type, int years);
+	public void getAllProduct(int years);
 }

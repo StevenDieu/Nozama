@@ -90,5 +90,23 @@ public class CtrlProduct {
 
 		return new ModelAndView("listProductMovie", product);
 	}
+	
+	@RequestMapping(value = "/tous-les-produits" , method = RequestMethod.GET)
+	public ModelAndView allProduct(HttpServletRequest request,
+			@PathVariable("years") Optional<String> yearsUrl,
+			@PathVariable("startResult") Optional<String> startResultUrl) {
+		String stringYears = PS.getParametersString(yearsUrl, "default");
+		int years = -1;
+		if (Util.convertToInt(stringYears)) {
+			years = Integer.parseInt(stringYears);
+		}
+		
+		PS.getAllProduct(years);
+		
+		Map<String, Object> product = new HashMap<String, Object>();
+		product.put("years", years);
+
+		return new ModelAndView("listAll", product);
+	}
 
 }

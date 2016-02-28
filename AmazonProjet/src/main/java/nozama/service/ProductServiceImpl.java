@@ -89,6 +89,16 @@ public class ProductServiceImpl implements ProductService {
 		return stringParameters;
 	}
 
+	@Override
+	public void getAllProduct(int years) {
+		Map<String, Object> mapForDate = new HashMap<String, Object>();
+		setMapForDate(years, mapForDate);
+		
+		PR.getAllAlbumByDate((boolean) mapForDate.get("useDate"), (Date) mapForDate.get("dateYears"), (Date) mapForDate.get("dateYearsAfter"));
+		PR.getAllMovieByDate((boolean) mapForDate.get("useDate"), (Date) mapForDate.get("dateYears"), (Date) mapForDate.get("dateYearsAfter"));
+		PR.getAllSingleByDate((boolean) mapForDate.get("useDate"), (Date) mapForDate.get("dateYears"), (Date) mapForDate.get("dateYearsAfter"));
+	}
+
 	public void setMapForDate(int years, Map<String, Object> mapForDate) {
 		boolean useDate = true;
 
@@ -106,7 +116,7 @@ public class ProductServiceImpl implements ProductService {
 				dateYearsAfter = getDate(years + 10);
 			}
 		}
-		
+
 		mapForDate.put("useDate", useDate);
 		mapForDate.put("dateYearsAfter", dateYearsAfter);
 		mapForDate.put("dateYears", dateYears);

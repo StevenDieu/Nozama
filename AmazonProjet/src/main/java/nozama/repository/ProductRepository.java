@@ -120,4 +120,37 @@ public class ProductRepository {
 		return ((Long) cr.setProjection(Projections.rowCount()).uniqueResult()).intValue();
 	}
 
+	public List<Product> getAllMovieByDate(boolean useDate,Date dateYears,Date dateYearsAfter) {
+		Criteria cr = openSession.createCriteria(TypeSupportMovie.class);
+		cr.createAlias("movie", "m");
+		cr.createAlias("m.product", "prod");
+		if (useDate) {
+			cr.add(Restrictions.between("m.dateReleased", dateYears, dateYearsAfter));
+		}
+
+		return cr.list();
+	}
+	
+	public List<Product> getAllAlbumByDate(boolean useDate,Date dateYears,Date dateYearsAfter) {
+		Criteria cr = openSession.createCriteria(TypeSupportAlbum.class);
+		cr.createAlias("album", "a");
+		cr.createAlias("a.product", "prod");
+		if (useDate) {
+			cr.add(Restrictions.between("a.dateReleased", dateYears, dateYearsAfter));
+		}
+
+		return cr.list();
+	}
+	
+	public List<Product> getAllSingleByDate(boolean useDate,Date dateYears,Date dateYearsAfter) {
+		Criteria cr = openSession.createCriteria(TypeSupportSingle.class);
+		cr.createAlias("single", "s");
+		cr.createAlias("s.product", "prod");
+		if (useDate) {
+			cr.add(Restrictions.between("s.dateReleased", dateYears, dateYearsAfter));
+		}
+
+		return cr.list();
+	}
+
 }
