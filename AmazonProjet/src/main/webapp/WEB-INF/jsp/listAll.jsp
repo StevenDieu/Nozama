@@ -85,16 +85,13 @@
 	</c:forEach>
 
 </div>
+
+<div class="clearBoth"></div>
 <div class="paginationAll center100"></div>
+
 <script>
-	var varNumberPage = $
-	{
-		numberPage
-	};
-	var varStartPage = $
-	{
-		startPage
-	};
+	var varNumberPage = ${numberPage};
+	var varStartPage = ${startPage};
 </script>
 
 <script src="/resources/js/jquery.twbsPagination.min.js"></script>

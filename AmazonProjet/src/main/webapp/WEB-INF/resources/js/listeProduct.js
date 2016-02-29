@@ -63,7 +63,7 @@ $(document).ready(function() {
 		return false;
 	});
 
-	if (varNumberPage > 0) {
+	if (varNumberPage > 1) {
 		$('.paginationFilm').twbsPagination({
 		totalPages : varNumberPage,
 		visiblePages : 7,

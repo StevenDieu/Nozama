@@ -10,7 +10,6 @@ import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
-import nozama.model.Product;
 import nozama.model.TypeSupportAlbum;
 import nozama.model.TypeSupportMovie;
 import nozama.model.TypeSupportSingle;

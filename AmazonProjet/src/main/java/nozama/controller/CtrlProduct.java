@@ -1,6 +1,7 @@
 package nozama.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -22,13 +23,8 @@ public class CtrlProduct {
 	@Autowired
 	private ProductService PS;
 
-	@RequestMapping(value = { "/liste-toutes-les-musiques", "/liste-toutes-les-musiques/{type}",
-			"/liste-toutes-les-musiques/{support}/{recordType}/{years}/{type}",
-			"/liste-toutes-les-musiques/{support}/{recordType}/{years}/{type}/{startResult}" }, method = RequestMethod.GET)
-	public ModelAndView listAllMusic(HttpServletRequest request, @PathVariable("support") Optional<String> supportUrl,
-			@PathVariable("recordType") Optional<String> recordTypeUrl,
-			@PathVariable("years") Optional<String> yearsUrl, @PathVariable("type") Optional<String> typeUrl,
-			@PathVariable("startResult") Optional<String> startResultUrl) {
+	@RequestMapping(value = { "/liste-toutes-les-musiques", "/liste-toutes-les-musiques/{type}", "/liste-toutes-les-musiques/{support}/{recordType}/{years}/{type}", "/liste-toutes-les-musiques/{support}/{recordType}/{years}/{type}/{startResult}" }, method = RequestMethod.GET)
+	public ModelAndView listAllMusic(HttpServletRequest request, @PathVariable("support") Optional<String> supportUrl, @PathVariable("recordType") Optional<String> recordTypeUrl, @PathVariable("years") Optional<String> yearsUrl, @PathVariable("type") Optional<String> typeUrl, @PathVariable("startResult") Optional<String> startResultUrl) {
 
 		String support = PS.getParametersString(supportUrl, "AllSupport");
 		String recordType = PS.getParametersString(recordTypeUrl, "AllType");
@@ -52,20 +48,14 @@ public class CtrlProduct {
 		product.put("support", support);
 		product.put("years", years);
 		product.put("type", type);
-		product.put("numberPage", (PS.getCountAllMusicBySupport(support, recordType, years, type) / 12));
+		product.put("numberPage", Math.ceil(((double) PS.getCountAllMusicBySupport(support, recordType, years, type) / 12)));
 		product.put("startPage", startResult);
 
 		return new ModelAndView("listProductMusic", product);
 	}
 
-	@RequestMapping(value = { "/liste-tous-les-films", "/liste-tous-les-films/{type}",
-			"/liste-tous-les-films/{support}/{years}/{type}",
-			"/liste-tous-les-films/{support}/{years}/{type}/{startResult}" }, method = RequestMethod.GET)
-	public ModelAndView listAllMovies(HttpServletRequest request,
-			@PathVariable("support") Optional<String> supportUrl,
-			@PathVariable("type") Optional<String> typeUrl,
-			@PathVariable("years") Optional<String> yearsUrl,
-			@PathVariable("startResult") Optional<String> startResultUrl) {
+	@RequestMapping(value = { "/liste-tous-les-films", "/liste-tous-les-films/{type}", "/liste-tous-les-films/{support}/{years}/{type}", "/liste-tous-les-films/{support}/{years}/{type}/{startResult}" }, method = RequestMethod.GET)
+	public ModelAndView listAllMovies(HttpServletRequest request, @PathVariable("support") Optional<String> supportUrl, @PathVariable("type") Optional<String> typeUrl, @PathVariable("years") Optional<String> yearsUrl, @PathVariable("startResult") Optional<String> startResultUrl) {
 
 		String support = PS.getParametersString(supportUrl, "AllSupport");
 		String type = PS.getParametersString(typeUrl, "ALL");
@@ -87,16 +77,14 @@ public class CtrlProduct {
 		product.put("support", support);
 		product.put("years", years);
 		product.put("type", type);
-		product.put("numberPage", (PS.getCountMovieBySupport(support, type, years) / 12));
+		product.put("numberPage", Math.ceil(((double) PS.getCountMovieBySupport(support, type, years) / 12)));
 		product.put("startPage", startResult);
 
 		return new ModelAndView("listProductMovie", product);
 	}
 
-	@RequestMapping(value =  { "/liste-tous-les-produits", "/liste-tous-les-produits/{years}", "/liste-tous-les-produits/{years}/{startResult}" }, method = RequestMethod.GET)
-	public ModelAndView allProduct(HttpServletRequest request,
-			@PathVariable("years") Optional<String> yearsUrl,
-			@PathVariable("startResult") Optional<String> startResultUrl) {
+	@RequestMapping(value = { "/liste-tous-les-produits", "/liste-tous-les-produits/{years}", "/liste-tous-les-produits/{years}/{startResult}" }, method = RequestMethod.GET)
+	public ModelAndView allProduct(HttpServletRequest request, @PathVariable("years") Optional<String> yearsUrl, @PathVariable("startResult") Optional<String> startResultUrl) {
 		String stringYears = PS.getParametersString(yearsUrl, "default");
 		String startResultString = PS.getParametersString(startResultUrl, "1");
 
@@ -110,11 +98,20 @@ public class CtrlProduct {
 			years = Integer.parseInt(stringYears);
 		}
 
+		List<Map<String, Object>> allProduct = PS.getAllProduct(years, startResult);
+
+		if (((startResult - 1) * 12) > allProduct.size() - 1 || startResult <= 0) {
+			startResult = 1;
+		}
+
 		Map<String, Object> product = new HashMap<String, Object>();
-		product.put("products", PS.getAllProduct(years, startResult));
+		int toIndexEndPagination = (startResult * 12) > allProduct.size() ? allProduct.size() : (startResult * 12);
+
+		product.put("products", allProduct.subList(((startResult - 1) * 12), toIndexEndPagination));
 		product.put("years", years);
+		product.put("numberPage", Math.ceil((double) allProduct.size() / 12));
+		product.put("startPage", startResult);
 
 		return new ModelAndView("listAll", product);
 	}
-
 }

@@ -6,8 +6,6 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import nozama.model.Product;
-
 @Service
 public interface ProductService {
 	public List<Map<String, Object>> getAllMusicsBySupport(String support, String recordType, int years, String type, int startResult);
