@@ -5,7 +5,7 @@ function redirigeUrlMovie() {
 	url = url + "/" + $("#support").val();
 	url = url + "/" + $("#years").val();
 	url = url + "/" + $("#type").val();
-	document.location.href = url;
+	return url;
 }
 
 function redirigeUrlMusic() {
@@ -15,7 +15,14 @@ function redirigeUrlMusic() {
 	url = url + "/" + $("#years").val();
 	url = url + "/" + $("#type").val();
 
-	document.location.href = url;
+	return url;
+}
+
+function redirigeUrlAll() {
+	var url = $(".formAll").attr("action");
+	url = url + "/" + $("#years").val();
+
+	return url;
 }
 
 $(document).ready(function() {
@@ -31,12 +38,17 @@ $(document).ready(function() {
 	});
 
 	$(".formFilm").on("submit", function() {
-		redirigeUrlMovie();
+		document.location.href = redirigeUrlMusic();
 		return false;
 	});
 
 	$(".formMusic").on("submit", function() {
-		redirigeUrlMusic();
+		document.location.href = redirigeUrlMusic();
+		return false;
+	});
+	
+	$(".formAll").on("submit", function() {
+		document.location.href = redirigeUrlAll();
 		return false;
 	});
 
@@ -47,7 +59,10 @@ $(document).ready(function() {
 		startPage : varStartPage,
 		onPageClick : function(event, page) {
 			if (actif) {
-				redirigeUrlMovie();
+				var url = redirigeUrlMovie();
+				url = url + "/" + page;
+				document.location.href = url;
+
 			}
 		}
 		});
@@ -57,7 +72,22 @@ $(document).ready(function() {
 		startPage : varStartPage,
 		onPageClick : function(event, page) {
 			if (actif) {
-				redirigeUrlMusic();
+				var url = redirigeUrlMusic();
+				url = url + "/" + page;
+				document.location.href = url;
+			}
+		}
+		});
+
+		$('.paginationAll').twbsPagination({
+		totalPages : varNumberPage,
+		visiblePages : 7,
+		startPage : varStartPage,
+		onPageClick : function(event, page) {
+			if (actif) {
+				var url = redirigeUrlAll();
+				url = url + "/" + page;
+				document.location.href = url;
 			}
 		}
 		});

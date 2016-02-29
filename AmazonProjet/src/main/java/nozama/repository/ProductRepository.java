@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -120,32 +121,37 @@ public class ProductRepository {
 		return ((Long) cr.setProjection(Projections.rowCount()).uniqueResult()).intValue();
 	}
 
-	public List<TypeSupportMovie> getAllMovieByDate(boolean useDate,Date dateYears,Date dateYearsAfter) {
+	public List<TypeSupportMovie> getAllMovieByDate(boolean useDate, Date dateYears, Date dateYearsAfter) {
 		Criteria cr = openSession.createCriteria(TypeSupportMovie.class);
 		cr.createAlias("movie", "m");
 		cr.createAlias("m.product", "prod");
+		cr.addOrder(Property.forName("nameSupport").asc());
 		if (useDate) {
 			cr.add(Restrictions.between("m.dateReleased", dateYears, dateYearsAfter));
 		}
 
 		return cr.list();
 	}
-	
-	public List<TypeSupportAlbum> getAllAlbumByDate(boolean useDate,Date dateYears,Date dateYearsAfter) {
+
+	public List<TypeSupportAlbum> getAllAlbumByDate(boolean useDate, Date dateYears, Date dateYearsAfter) {
 		Criteria cr = openSession.createCriteria(TypeSupportAlbum.class);
 		cr.createAlias("album", "a");
 		cr.createAlias("a.product", "prod");
+		cr.addOrder(Property.forName("nameSupport").asc());
+
 		if (useDate) {
 			cr.add(Restrictions.between("a.dateReleased", dateYears, dateYearsAfter));
 		}
 
 		return cr.list();
 	}
-	
-	public List<TypeSupportSingle> getAllSingleByDate(boolean useDate,Date dateYears,Date dateYearsAfter) {
+
+	public List<TypeSupportSingle> getAllSingleByDate(boolean useDate, Date dateYears, Date dateYearsAfter) {
 		Criteria cr = openSession.createCriteria(TypeSupportSingle.class);
 		cr.createAlias("single", "s");
 		cr.createAlias("s.product", "prod");
+		cr.addOrder(Property.forName("nameSupport").asc());
+
 		if (useDate) {
 			cr.add(Restrictions.between("s.dateReleased", dateYears, dateYearsAfter));
 		}

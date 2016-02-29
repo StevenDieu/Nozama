@@ -4,8 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="templates/header.jsp" />
 <div class="panel panel-default">
 	<div class="panel-heading">
@@ -13,31 +12,21 @@
 	</div>
 	<div class="panel-body">
 
-		<form action="/liste-tous-les-films" class="formFilm" method="get">
+		<form action="/liste-tous-les-produits" class="formAll" method="get">
 
 			<div class="blocFiltre">
-				Année : <select id="years" name="years">
+				Année :
+				<select id="years" name="years">
 					<option value="AllYears">Toutes les années</option>
-					<option value="2010"
-						<c:if test="${years == '2010' }">selected</c:if>>Année
-						2010</option>
-					<option value="2000"
-						<c:if test="${years == '2000' }">selected</c:if>>Année
-						2000</option>
-					<option value="1990"
-						<c:if test="${years == '1990' }">selected</c:if>>Année 90</option>
-					<option value="1980"
-						<c:if test="${years == '1980' }">selected</c:if>>Année 80</option>
-					<option value="1970"
-						<c:if test="${years == '1970' }">selected</c:if>>Année 70</option>
-					<option value="1960"
-						<c:if test="${years == '1960' }">selected</c:if>>Année 60</option>
-					<option value="1950"
-						<c:if test="${years == '1950' }">selected</c:if>>Année 50</option>
-					<option value="1940"
-						<c:if test="${years == '1940' }">selected</c:if>>Année 40</option>
-					<option value="1939"
-						<c:if test="${years == '1939' }">selected</c:if>>Antérieur</option>
+					<option value="2010" <c:if test="${years == '2010' }">selected</c:if>>Année 2010</option>
+					<option value="2000" <c:if test="${years == '2000' }">selected</c:if>>Année 2000</option>
+					<option value="1990" <c:if test="${years == '1990' }">selected</c:if>>Année 90</option>
+					<option value="1980" <c:if test="${years == '1980' }">selected</c:if>>Année 80</option>
+					<option value="1970" <c:if test="${years == '1970' }">selected</c:if>>Année 70</option>
+					<option value="1960" <c:if test="${years == '1960' }">selected</c:if>>Année 60</option>
+					<option value="1950" <c:if test="${years == '1950' }">selected</c:if>>Année 50</option>
+					<option value="1940" <c:if test="${years == '1940' }">selected</c:if>>Année 40</option>
+					<option value="1939" <c:if test="${years == '1939' }">selected</c:if>>Antérieur</option>
 				</select>
 			</div>
 
@@ -60,9 +49,7 @@
 				<c:out value="${product.name}" />
 			</div>
 			<div class="imageProduct">
-				<img
-					src="/resources/img/product/<c:out value="${product.urlPicture}" />"
-					alt="${product.name}" />
+				<img src="/resources/img/product/<c:out value="${product.urlPicture}" />" alt="${product.name}" />
 			</div>
 
 			<div class="descriptionProduct">
@@ -74,25 +61,31 @@
 				...
 			</c:if>
 
-			</div> 
-			
-			<c:set var="listType" value="${product.listType}" /> 
-			<c:forEach var="type" items="${listType}" varStatus="counter">
-				<div class="priceProduct">
-					<fmt:formatNumber value="${type.price}" type="currency" />
-				</div>
-				<div class="buttonAddCart">
-					<input type="button" class="btn btn-primary"
-						value="Ajouter au panier" />
-				</div>
-			</c:forEach>
+			</div>
 
+			<div class="allBlockProductBottom">
+				<c:set var="listType" value="${product.listType}" />
+				<c:forEach var="type" items="${listType}">
+					<div class="blockProductBottom">
+
+						<div class="priceProduct">
+							<img src="/resources/img/${type.support}.png" />
+							<fmt:formatNumber value="${type.price}" type="currency" />
+						</div>
+						<div class="buttonAddCart">
+							<input type="button" class="btn btn-primary" value="Ajouter au panier" />
+						</div>
+					</div>
+
+				</c:forEach>
+			</div>
 		</a>
+
 
 	</c:forEach>
 
 </div>
-<div class="paginationFilm center100"></div>
+<div class="paginationAll center100"></div>
 <script>
 	var varNumberPage = $
 	{

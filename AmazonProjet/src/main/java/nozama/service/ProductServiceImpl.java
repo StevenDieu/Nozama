@@ -2,6 +2,8 @@ package nozama.service;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -119,9 +121,19 @@ public class ProductServiceImpl implements ProductService {
 		margeAllResultTypeSupportAlbum(typeSupportAlbums, allProduct);
 		margeAllResultTypeSupportMovie(typeSupportMovie, allProduct);
 		margeAllResultTypeSupportSignle(typeSupportSingle, allProduct);
+		
 
+
+		Collections.sort(allProduct, mapComparator);
 		return allProduct;
 	}
+	
+	public Comparator<Map<String, String>> mapComparator = new Comparator<Map<String, String>>() {
+	    public int compare(Map<String, String> m1, Map<String, String> m2) {
+	        return m1.get("name").compareTo(m2.get("name"));
+	    }
+	};
+	
 
 	private void margeAllResultTypeSupportAlbum(List<TypeSupportAlbum> typeSupportAlbums,
 			List<Map<String, Object>> allProduct) {

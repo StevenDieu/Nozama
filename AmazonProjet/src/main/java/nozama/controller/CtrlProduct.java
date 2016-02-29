@@ -61,9 +61,9 @@ public class CtrlProduct {
 	@RequestMapping(value = { "/liste-tous-les-films", "/liste-tous-les-films/{type}",
 			"/liste-tous-les-films/{support}/{years}/{type}",
 			"/liste-tous-les-films/{support}/{years}/{type}/{startResult}" }, method = RequestMethod.GET)
-	public ModelAndView listAllMovies(HttpServletRequest request, 
+	public ModelAndView listAllMovies(HttpServletRequest request,
 			@PathVariable("support") Optional<String> supportUrl,
-			@PathVariable("type") Optional<String> typeUrl, 
+			@PathVariable("type") Optional<String> typeUrl,
 			@PathVariable("years") Optional<String> yearsUrl,
 			@PathVariable("startResult") Optional<String> startResultUrl) {
 
@@ -93,8 +93,8 @@ public class CtrlProduct {
 		return new ModelAndView("listProductMovie", product);
 	}
 
-	@RequestMapping(value = "/tous-les-produits", method = RequestMethod.GET)
-	public ModelAndView allProduct(HttpServletRequest request, 
+	@RequestMapping(value =  { "/liste-tous-les-produits", "/liste-tous-les-produits/{years}", "/liste-tous-les-produits/{years}/{startResult}" }, method = RequestMethod.GET)
+	public ModelAndView allProduct(HttpServletRequest request,
 			@PathVariable("years") Optional<String> yearsUrl,
 			@PathVariable("startResult") Optional<String> startResultUrl) {
 		String stringYears = PS.getParametersString(yearsUrl, "default");
@@ -109,7 +109,6 @@ public class CtrlProduct {
 		if (Util.convertToInt(stringYears)) {
 			years = Integer.parseInt(stringYears);
 		}
-
 
 		Map<String, Object> product = new HashMap<String, Object>();
 		product.put("products", PS.getAllProduct(years, startResult));

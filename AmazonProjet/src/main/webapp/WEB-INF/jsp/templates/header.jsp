@@ -36,7 +36,7 @@
 				<!-- Left nav -->
 				<ul class="nav navbar-nav">
 					<li>
-						<a href="/tous-les-produits">Tous les produits <span class="caret"></span></a>
+						<a href="/liste-tous-les-produits">Tous les produits <span class="caret"></span></a>
 
 						<ul class="dropdown-menu">
 							<li class="menu-lateral">
