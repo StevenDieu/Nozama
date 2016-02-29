@@ -14,16 +14,15 @@
 	<div class="panel-body">
 
 		<div class="blocFiltre">
-			<input type="hidden" id="recordType" name="recordType" value="${recordType}" />
-			Format :
-			<span data-value="single" class="buttonWithoutBackground <c:if test="${recordType == 'single'}">selectedFormat</c:if>"> Single </span>
-			<span data-value="album" class="buttonWithoutBackground <c:if test="${recordType == 'album'}">selectedFormat</c:if>"> Album </span>
+			<input type="hidden" id="recordType" name="recordType" value="${recordType}" /> Format :
+			<span data-value="single" class="buttonWithoutBackground <c:if test="${recordType == 'single' || recordType == 'AllType'}">selectedFormat</c:if>"> Single </span>
+			<span data-value="album" class="buttonWithoutBackground <c:if test="${recordType == 'album' || recordType == 'AllType' }">selectedFormat</c:if>"> Album </span>
 		</div>
 		<form action="/liste-toutes-les-musiques" class="formMusic" method="get">
 
 			<div class="blocFiltre">
-				Support :
-				<select id="support" name="support">
+				Support : <select id="support" name="support">
+					<option value="AllSupport" <c:if test="${support == 'AllSupport' }">selected</c:if>>Tous les supports</option>
 					<option value="CD" <c:if test="${support == 'CD' }">selected</c:if>>CD</option>
 					<option value="VINYLE" <c:if test="${support == 'VINYLE' }">selected</c:if>>Vinyle</option>
 					<option value="DOWLOAD" <c:if test="${support == 'DOWLOAD' }">selected</c:if>>Téléchargement</option>
@@ -31,8 +30,7 @@
 			</div>
 
 			<div class="blocFiltre">
-				Année :
-				<select id="years" name="years">
+				Année : <select id="years" name="years">
 					<option value="AllYears">Toutes les années</option>
 					<option value="2010" <c:if test="${years == '2010' }">selected</c:if>>Année 2010</option>
 					<option value="2000" <c:if test="${years == '2000' }">selected</c:if>>Année 2000</option>
@@ -47,9 +45,8 @@
 			</div>
 
 			<div class="blocFiltre">
-				Genre de musique :
-				<select id="type" name="type">
-					<option value="ALL">Toutes les genres de musique</option>
+				Genre de musique : <select id="type" name="type">
+					<option value="ALL">Tous les genres de musique</option>
 					<option value="VarieteFrancaise" <c:if test="${type == 'VarieteFrancaise' }">selected</c:if>>Variété française</option>
 					<option value="PopRockInde" <c:if test="${type == 'PopRockInde' }">selected</c:if>>Pop-rock indé</option>
 					<option value="MusiqueClassqie" <c:if test="${type == 'MusiqueClassqie' }">selected</c:if>>Musique classique</option>
@@ -76,25 +73,15 @@
 
 <div class="rowProduct">
 
-	<c:set var="listAdherent" value="${products}" />
-	<c:forEach var="typeSupport" items="${listAdherent}" varStatus="counter">
-
-		<c:if test="${recordType == 'single'}">
-			<c:set var="single" value="${typeSupport.single}" />
-			<c:set var="product" value="${typeSupport.single.product}" />
-		</c:if>
-		<c:if test="${recordType == 'album'}">
-			<c:set var="single" value="${typeSupport.album}" />
-			<c:set var="product" value="${typeSupport.album.product}" />
-		</c:if>
-
+	<c:set var="listProducts" value="${products}" />
+	<c:forEach var="product" items="${listProducts}" varStatus="counter">
 
 		<a href="#" class="product">
 			<div class="titleProduct">
 				<c:out value="${product.name}" />
 			</div>
 			<div class="imageProduct">
-				<img src="${baseURL}/resources/img/product/<c:out value="${product.urlPicture}" />" alt="${product.name}" />
+				<img src="/resources/img/product/<c:out value="${product.urlPicture}" />" alt="${product.name}" />
 			</div>
 
 			<div class="descriptionProduct">
@@ -105,27 +92,34 @@
 				<c:if test="${fn:length(product.description) > 87}">
 				...
 			</c:if>
+
 			</div>
-			<div class="priceProduct">
-				<fmt:formatNumber value="${typeSupport.price}" type="currency" />
-			</div>
-			<div class="buttonAddCart">
-				<input type="button" class="btn btn-primary" value="Ajouter au panier" />
+
+			<div class="allBlockProductBottom">
+				<c:set var="listType" value="${product.listType}" />
+				<c:forEach var="type" items="${listType}">
+					<div class="blockProductBottom">
+
+						<div class="priceProduct">
+							<img src="/resources/img/${type.support}.png" />
+							<fmt:formatNumber value="${type.price}" type="currency" />
+						</div>
+						<div class="buttonAddCart">
+							<input type="button" class="btn btn-primary" value="Ajouter au panier" />
+						</div>
+					</div>
+
+				</c:forEach>
 			</div>
 		</a>
+
 
 	</c:forEach>
 </div>
 <div class="paginationMusic center100"></div>
 <script>
-	var varNumberPage = $
-	{
-		numberPage
-	};
-	var varStartPage = $
-	{
-		startPage
-	};
+	var varNumberPage = ${numberPage};
+	var varStartPage = ${startPage};
 </script>
 
 <script src="/resources/js/jquery.twbsPagination.min.js"></script>

@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import nozama.model.Categorie;
-import nozama.model.Product;
 import nozama.model.TypeSupport;
 import nozama.model.TypeSupportAlbum;
 import nozama.model.TypeSupportMovie;
@@ -28,9 +27,12 @@ public class ProductServiceImpl implements ProductService {
 	private ProductRepository PR;
 
 	@Override
-	public List<Product> getAllMusicsBySupport(String support, String recordType, int years, String type,
-			int startResult) {
+	public List<Map<String, Object>> getAllMusicsBySupport(String support, String recordType, int years, String type, int startResult) {
 		boolean useType = true;
+		boolean useSupport = true;
+
+		List<Map<String, Object>> allProduct = new ArrayList<Map<String, Object>>();
+
 		Map<String, Object> mapForDate = new HashMap<String, Object>();
 		setMapForDate(years, mapForDate);
 
@@ -38,19 +40,37 @@ public class ProductServiceImpl implements ProductService {
 			useType = false;
 		}
 
+		if (support.equals("AllSupport")) {
+			useSupport = false;
+		}
+
 		if (recordType.equals("single")) {
-			return PR.getAllSingleBySupportAndTypeBetweenYears(support, (boolean) mapForDate.get("useDate"), useType,
-					(Date) mapForDate.get("dateYears"), (Date) mapForDate.get("dateYearsAfter"), type, startResult);
+			List<TypeSupportSingle> typeSupportSingle = PR.getAllSingleBySupportAndTypeBetweenYears(support, useSupport, (boolean) mapForDate.get("useDate"), useType, (Date) mapForDate.get("dateYears"), (Date) mapForDate.get("dateYearsAfter"), type, startResult);
+			margeAllResultTypeSupportSignle(typeSupportSingle, allProduct);
+			Collections.sort(allProduct, mapComparator);
+			return allProduct;
+		} else if (recordType.equals("album")) {
+			List<TypeSupportAlbum> typeSupportAlbum = PR.getAllAlbumBySupportAndTypBetweenYears(support, useSupport, (boolean) mapForDate.get("useDate"), useType, (Date) mapForDate.get("dateYears"), (Date) mapForDate.get("dateYearsAfter"), type, startResult);
+			margeAllResultTypeSupportAlbum(typeSupportAlbum, allProduct);
+			Collections.sort(allProduct, mapComparator);
+			return allProduct;
 		} else {
-			return PR.getAllAlbumBySupportAndTypBetweenYears(support, (boolean) mapForDate.get("useDate"), useType,
-					(Date) mapForDate.get("dateYears"), (Date) mapForDate.get("dateYearsAfter"), type, startResult);
+			List<TypeSupportSingle> typeSupportSingle = PR.getAllSingleBySupportAndTypeBetweenYears(support, useSupport, (boolean) mapForDate.get("useDate"), useType, (Date) mapForDate.get("dateYears"), (Date) mapForDate.get("dateYearsAfter"), type, startResult);
+			List<TypeSupportAlbum> typeSupportAlbum = PR.getAllAlbumBySupportAndTypBetweenYears(support, useSupport, (boolean) mapForDate.get("useDate"), useType, (Date) mapForDate.get("dateYears"), (Date) mapForDate.get("dateYearsAfter"), type, startResult);
+			margeAllResultTypeSupportAlbum(typeSupportAlbum, allProduct);
+			margeAllResultTypeSupportSignle(typeSupportSingle, allProduct);
+			Collections.sort(allProduct, mapComparator);
+			return allProduct;
 		}
 
 	}
 
 	@Override
-	public List<Product> getAllMovieBySupport(String support, String type, int startResult, int years) {
+	public List<Map<String, Object>> getAllMovieBySupport(String support, String type, int startResult, int years) {
 		boolean useType = true;
+		boolean useSupport = true;
+
+		List<Map<String, Object>> allProduct = new ArrayList<Map<String, Object>>();
 		Map<String, Object> mapForDate = new HashMap<String, Object>();
 		setMapForDate(years, mapForDate);
 
@@ -58,13 +78,22 @@ public class ProductServiceImpl implements ProductService {
 			useType = false;
 		}
 
-		return PR.getAllMovieBySupport(support, (boolean) mapForDate.get("useDate"), useType,
-				(Date) mapForDate.get("dateYears"), (Date) mapForDate.get("dateYearsAfter"), type, startResult);
+		if (support.equals("AllSupport")) {
+			useSupport = false;
+		}
+
+		List<TypeSupportMovie> typeSupportMovies = PR.getAllMovieBySupport(support, useSupport, (boolean) mapForDate.get("useDate"), useType, (Date) mapForDate.get("dateYears"), (Date) mapForDate.get("dateYearsAfter"), type, startResult);
+
+		margeAllResultTypeSupportMovie(typeSupportMovies, allProduct);
+		Collections.sort(allProduct, mapComparator);
+
+		return allProduct;
 	}
 
 	@Override
 	public int getCountAllMusicBySupport(String support, String recordType, int years, String type) {
 		boolean useType = true;
+		boolean useSupport = true;
 
 		Map<String, Object> mapForDate = new HashMap<String, Object>();
 		setMapForDate(years, mapForDate);
@@ -73,24 +102,32 @@ public class ProductServiceImpl implements ProductService {
 			useType = false;
 		}
 
+		if (support.equals("AllSupport")) {
+			useSupport = false;
+		}
+
 		if (recordType.equals("single")) {
-			return PR.getCountAllMusicBySupport(support, (boolean) mapForDate.get("useDate"), useType,
-					(Date) mapForDate.get("dateYears"), (Date) mapForDate.get("dateYearsAfter"), type);
+			return PR.getCountAllMusicBySupport(support, useSupport, (boolean) mapForDate.get("useDate"), useType, (Date) mapForDate.get("dateYears"), (Date) mapForDate.get("dateYearsAfter"), type);
+		} else if (recordType.equals("album")) {
+			return PR.getCountAllAlbumBySupport(support, useSupport, (boolean) mapForDate.get("useDate"), useType, (Date) mapForDate.get("dateYears"), (Date) mapForDate.get("dateYearsAfter"), type);
 		} else {
-			return PR.getCountAllAlbumBySupport(support, (boolean) mapForDate.get("useDate"), useType,
-					(Date) mapForDate.get("dateYears"), (Date) mapForDate.get("dateYearsAfter"), type);
+			return PR.getCountAllMusicBySupport(support, useSupport, (boolean) mapForDate.get("useDate"), useType, (Date) mapForDate.get("dateYears"), (Date) mapForDate.get("dateYearsAfter"), type) + PR.getCountAllAlbumBySupport(support, useSupport, (boolean) mapForDate.get("useDate"), useType, (Date) mapForDate.get("dateYears"), (Date) mapForDate.get("dateYearsAfter"), type);
 		}
 	}
 
 	@Override
 	public int getCountMovieBySupport(String support, String type, int years) {
 		boolean useType = true;
+		boolean useSupport = true;
 
 		Map<String, Object> mapForDate = new HashMap<String, Object>();
 		setMapForDate(years, mapForDate);
 
-		return PR.getCountAllLovieBySupport(support, (boolean) mapForDate.get("useDate"), useType,
-				(Date) mapForDate.get("dateYears"), (Date) mapForDate.get("dateYearsAfter"), type);
+		if (support.equals("AllSupport")) {
+			useSupport = false;
+		}
+
+		return PR.getCountAllLovieBySupport(support, useSupport, (boolean) mapForDate.get("useDate"), useType, (Date) mapForDate.get("dateYears"), (Date) mapForDate.get("dateYearsAfter"), type);
 	}
 
 	@Override
@@ -111,32 +148,27 @@ public class ProductServiceImpl implements ProductService {
 		Map<String, Object> mapForDate = new HashMap<String, Object>();
 		setMapForDate(years, mapForDate);
 
-		List<TypeSupportAlbum> typeSupportAlbums = PR.getAllAlbumByDate((boolean) mapForDate.get("useDate"),
-				(Date) mapForDate.get("dateYears"), (Date) mapForDate.get("dateYearsAfter"));
-		List<TypeSupportMovie> typeSupportMovie = PR.getAllMovieByDate((boolean) mapForDate.get("useDate"),
-				(Date) mapForDate.get("dateYears"), (Date) mapForDate.get("dateYearsAfter"));
-		List<TypeSupportSingle> typeSupportSingle = PR.getAllSingleByDate((boolean) mapForDate.get("useDate"),
-				(Date) mapForDate.get("dateYears"), (Date) mapForDate.get("dateYearsAfter"));
+		List<TypeSupportAlbum> typeSupportAlbums = PR.getAllAlbumByDate((boolean) mapForDate.get("useDate"), (Date) mapForDate.get("dateYears"), (Date) mapForDate.get("dateYearsAfter"));
+		List<TypeSupportMovie> typeSupportMovie = PR.getAllMovieByDate((boolean) mapForDate.get("useDate"), (Date) mapForDate.get("dateYears"), (Date) mapForDate.get("dateYearsAfter"));
+		List<TypeSupportSingle> typeSupportSingle = PR.getAllSingleByDate((boolean) mapForDate.get("useDate"), (Date) mapForDate.get("dateYears"), (Date) mapForDate.get("dateYearsAfter"));
 
 		margeAllResultTypeSupportAlbum(typeSupportAlbums, allProduct);
 		margeAllResultTypeSupportMovie(typeSupportMovie, allProduct);
 		margeAllResultTypeSupportSignle(typeSupportSingle, allProduct);
-		
-
 
 		Collections.sort(allProduct, mapComparator);
 		return allProduct;
 	}
-	
-	public Comparator<Map<String, String>> mapComparator = new Comparator<Map<String, String>>() {
-	    public int compare(Map<String, String> m1, Map<String, String> m2) {
-	        return m1.get("name").compareTo(m2.get("name"));
-	    }
-	};
-	
 
-	private void margeAllResultTypeSupportAlbum(List<TypeSupportAlbum> typeSupportAlbums,
-			List<Map<String, Object>> allProduct) {
+	public Comparator<Map<String, Object>> mapComparator = new Comparator<Map<String, Object>>() {
+		public int compare(Map<String, Object> m1, Map<String, Object> m2) {
+			Date firstCompare = (Date) m1.get("dateReleased");
+			Date secondeCompare = (Date) m2.get("dateReleased");
+			return secondeCompare.compareTo(firstCompare);
+		}
+	};
+
+	private void margeAllResultTypeSupportAlbum(List<TypeSupportAlbum> typeSupportAlbums, List<Map<String, Object>> allProduct) {
 
 		for (TypeSupportAlbum typeSupportAlbum : typeSupportAlbums) {
 			margeAllResultSupport(allProduct, "album", typeSupportAlbum, typeSupportAlbum.getAlbum());
@@ -144,8 +176,7 @@ public class ProductServiceImpl implements ProductService {
 
 	}
 
-	private void margeAllResultTypeSupportMovie(List<TypeSupportMovie> typeSupportMovies,
-			List<Map<String, Object>> allProduct) {
+	private void margeAllResultTypeSupportMovie(List<TypeSupportMovie> typeSupportMovies, List<Map<String, Object>> allProduct) {
 
 		for (TypeSupportMovie typeSupportMovie : typeSupportMovies) {
 			margeAllResultSupport(allProduct, "movie", typeSupportMovie, typeSupportMovie.getMovie());
@@ -153,8 +184,7 @@ public class ProductServiceImpl implements ProductService {
 
 	}
 
-	private void margeAllResultTypeSupportSignle(List<TypeSupportSingle> typeSupportSingles,
-			List<Map<String, Object>> allProduct) {
+	private void margeAllResultTypeSupportSignle(List<TypeSupportSingle> typeSupportSingles, List<Map<String, Object>> allProduct) {
 
 		for (TypeSupportSingle typeSupportSingle : typeSupportSingles) {
 			margeAllResultSupport(allProduct, "single", typeSupportSingle, typeSupportSingle.getSingle());
@@ -163,8 +193,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void margeAllResultSupport(List<Map<String, Object>> allProduct, String Type, TypeSupport typeSupport,
-			Categorie typeSupportCategorie) {
+	private void margeAllResultSupport(List<Map<String, Object>> allProduct, String Type, TypeSupport typeSupport, Categorie typeSupportCategorie) {
 		boolean flagExisteAlbumInList = false;
 		for (Map<String, Object> product : allProduct) {
 			if (typeSupportCategorie == product.get(Type)) {
@@ -178,19 +207,16 @@ public class ProductServiceImpl implements ProductService {
 		}
 	}
 
-	private void insertInProducts(List<Map<String, Object>> allProduct, String Type, TypeSupport typeSupport,
-			Categorie typeSupportCategorie) {
+	private void insertInProducts(List<Map<String, Object>> allProduct, String Type, TypeSupport typeSupport, Categorie typeSupportCategorie) {
 		Map<String, Object> newProduct = new HashMap<String, Object>();
 		newProduct.put(Type, typeSupportCategorie);
 		newProduct.put("name", typeSupportCategorie.getProduct().getName());
 		newProduct.put("description", typeSupportCategorie.getProduct().getDescription());
 		newProduct.put("urlPicture", typeSupportCategorie.getProduct().getUrlPicture());
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(typeSupportCategorie.getDateReleased());
-		newProduct.put("dateReleased", Integer.toString(calendar.get(Calendar.YEAR)));
+		newProduct.put("dateReleased", typeSupportCategorie.getDateReleased());
 		List<Map<String, String>> listType = new ArrayList<Map<String, String>>();
 
-		insertTypeInProducts(typeSupport, newProduct,listType);
+		insertTypeInProducts(typeSupport, newProduct, listType);
 		allProduct.add(newProduct);
 	}
 

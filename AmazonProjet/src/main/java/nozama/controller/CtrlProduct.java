@@ -30,8 +30,8 @@ public class CtrlProduct {
 			@PathVariable("years") Optional<String> yearsUrl, @PathVariable("type") Optional<String> typeUrl,
 			@PathVariable("startResult") Optional<String> startResultUrl) {
 
-		String support = PS.getParametersString(supportUrl, "CD");
-		String recordType = PS.getParametersString(recordTypeUrl, "single");
+		String support = PS.getParametersString(supportUrl, "AllSupport");
+		String recordType = PS.getParametersString(recordTypeUrl, "AllType");
 		String stringYears = PS.getParametersString(yearsUrl, "default");
 		String type = PS.getParametersString(typeUrl, "ALL");
 		String startResultString = PS.getParametersString(startResultUrl, "1");
@@ -67,7 +67,7 @@ public class CtrlProduct {
 			@PathVariable("years") Optional<String> yearsUrl,
 			@PathVariable("startResult") Optional<String> startResultUrl) {
 
-		String support = PS.getParametersString(supportUrl, "DVD");
+		String support = PS.getParametersString(supportUrl, "AllSupport");
 		String type = PS.getParametersString(typeUrl, "ALL");
 		String startResultString = PS.getParametersString(startResultUrl, "1");
 		String stringYears = PS.getParametersString(yearsUrl, "default");

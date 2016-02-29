@@ -32,13 +32,24 @@ $(document).ready(function() {
 	});
 
 	$(".buttonWithoutBackground").on("click", function() {
-		$(".selectedFormat").removeClass("selectedFormat");
-		$(this).addClass("selectedFormat");
-		$("input[name='recordType']").val($(this).data("value"))
+		var checkSelectedFormat = $(this).attr('class').search("selectedFormat")
+		if(checkSelectedFormat == -1){
+			$(this).addClass("selectedFormat");
+		}else{
+			if($(".selectedFormat").size() != 1){
+				$(this).removeClass("selectedFormat");
+			}
+		}
+
+		if($(".selectedFormat").size() >= 2){
+			$("input[name='recordType']").val("AllType")
+		}else{
+			$("input[name='recordType']").val($(".selectedFormat").data("value"))
+		}
 	});
 
 	$(".formFilm").on("submit", function() {
-		document.location.href = redirigeUrlMusic();
+		document.location.href = redirigeUrlMovie();
 		return false;
 	});
 

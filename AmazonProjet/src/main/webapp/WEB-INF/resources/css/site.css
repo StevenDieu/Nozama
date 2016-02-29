@@ -190,7 +190,7 @@ ol.ssMenu {
 	min-height: 35px;
 	vertical-align: middle;
 	line-height: 34px;
-	margin-right: 40px;
+	margin-right: 3%;
 	margin-bottom: 10px;
 }
 
@@ -201,7 +201,6 @@ ol.ssMenu {
 .selectedFormat {
 	border: 1px solid #DC5555;
 	font-weight: 600;
-	cursor: default;
 	background-color: #FAEBD7;
 }
 
