@@ -27,12 +27,15 @@
 			<div class="form-group">
 				<input type="text" class="name form-control" placeholder="Prenom" />
 			</div>
+
 			<div class="form-group">
 				<input type="text" class="lastName form-control" placeholder="Nom" />
 			</div>
+
 			<div class="form-group">
 				<input type="text" class="email form-control" placeholder="Adresse email" />
 			</div>
+
 			<div class="form-group">
 				<input type="password" class="password form-control" placeholder="Mot de passe" />
 			</div>

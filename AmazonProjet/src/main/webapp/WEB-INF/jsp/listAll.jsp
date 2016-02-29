@@ -6,31 +6,17 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="templates/header.jsp" />
-
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<h3 class="panel-title">Filtre :</h3>
 	</div>
 	<div class="panel-body">
 
-		<div class="blocFiltre">
-			<input type="hidden" id="recordType" name="recordType" value="${recordType}" /> Format :
-			<span data-value="single" class="buttonWithoutBackground <c:if test="${recordType == 'single' || recordType == 'AllType'}">selectedFormat</c:if>"> Single </span>
-			<span data-value="album" class="buttonWithoutBackground <c:if test="${recordType == 'album' || recordType == 'AllType' }">selectedFormat</c:if>"> Album </span>
-		</div>
-		<form action="/liste-toutes-les-musiques" class="formMusic" method="get">
+		<form action="/liste-tous-les-produits" class="formAll" method="get">
 
 			<div class="blocFiltre">
-				Support : <select id="support" name="support">
-					<option value="AllSupport" <c:if test="${support == 'AllSupport' }">selected</c:if>>Tous les supports</option>
-					<option value="CD" <c:if test="${support == 'CD' }">selected</c:if>>CD</option>
-					<option value="VINYLE" <c:if test="${support == 'VINYLE' }">selected</c:if>>Vinyle</option>
-					<option value="DOWLOAD" <c:if test="${support == 'DOWLOAD' }">selected</c:if>>Téléchargement</option>
-				</select>
-			</div>
-
-			<div class="blocFiltre">
-				Année : <select id="years" name="years">
+				Année :
+				<select id="years" name="years">
 					<option value="AllYears">Toutes les années</option>
 					<option value="2010" <c:if test="${years == '2010' }">selected</c:if>>Année 2010</option>
 					<option value="2000" <c:if test="${years == '2000' }">selected</c:if>>Année 2000</option>
@@ -45,30 +31,12 @@
 			</div>
 
 			<div class="blocFiltre">
-				Genre de musique : <select id="type" name="type">
-					<option value="ALL">Tous les genres de musique</option>
-					<option value="VarieteFrancaise" <c:if test="${type == 'VarieteFrancaise' }">selected</c:if>>Variété française</option>
-					<option value="PopRockInde" <c:if test="${type == 'PopRockInde' }">selected</c:if>>Pop-rock indé</option>
-					<option value="MusiqueClassqie" <c:if test="${type == 'MusiqueClassqie' }">selected</c:if>>Musique classique</option>
-					<option value="HarRockMetal" <c:if test="${type == 'HarRockMetal' }">selected</c:if>>Hard rock, métal</option>
-					<option value="JassBlues" <c:if test="${type == 'JassBlues' }">selected</c:if>>Jazz, blues</option>
-					<option value="RBSoulFunk" <c:if test="${type == 'RBSoulFunk' }">selected</c:if>>R&amp;B, soul, funk</option>
-					<option value="MusiqueDuMonde" <c:if test="${type == 'MusiqueDuMonde' }">selected</c:if>>Musiques du monde</option>
-					<option value="Rap" <c:if test="${type == 'Rap' }">selected</c:if>>Rap</option>
-					<option value="MusiquePourEnfant" <c:if test="${type == 'MusiquePourEnfant' }">selected</c:if>>Musique pour enfants</option>
-					<option value="Electro" <c:if test="${type == 'Electro' }">selected</c:if>>Electro</option>
-					<option value="Opera" <c:if test="${type == 'Opera' }">selected</c:if>>Opéra</option>
-					<option value="BoMusiqueFilm" <c:if test="${type == 'BoMusiqueFilm' }">selected</c:if>>BO, musiques de film</option>
-				</select>
-			</div>
-
-			<div class="blocFiltre">
 				<input type="submit" class="btn btn-primary" value="Filtrer" />
 			</div>
 		</form>
-
 	</div>
 </div>
+
 <div class="clearBoth"></div>
 
 <div class="rowProduct">
@@ -115,14 +83,22 @@
 
 
 	</c:forEach>
+
 </div>
-<div class="paginationMusic center100"></div>
+<div class="paginationAll center100"></div>
 <script>
-	var varNumberPage = ${numberPage};
-	var varStartPage = ${startPage};
+	var varNumberPage = $
+	{
+		numberPage
+	};
+	var varStartPage = $
+	{
+		startPage
+	};
 </script>
 
 <script src="/resources/js/jquery.twbsPagination.min.js"></script>
 <script src="/resources/js/listeProduct.js"></script>
+
 
 <jsp:include page="templates/footer.jsp" />

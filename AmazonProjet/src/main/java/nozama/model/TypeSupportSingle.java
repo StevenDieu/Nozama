@@ -16,12 +16,12 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "type_support_single", catalog = "nozama")
-public class TypeSupportSingle implements java.io.Serializable {
+public class TypeSupportSingle implements java.io.Serializable,TypeSupport {
 
 	private Integer idTypeSupport;
 	private Single single;
 	private String nameSupport;
-	private Integer price;
+	private int price;
 
 	public TypeSupportSingle() {
 	}
@@ -67,12 +67,12 @@ public class TypeSupportSingle implements java.io.Serializable {
 		this.nameSupport = nameSupport;
 	}
 
-	@Column(name = "price")
-	public Integer getPrice() {
+	@Column(name = "price", nullable = false)
+	public int getPrice() {
 		return this.price;
 	}
 
-	public void setPrice(Integer price) {
+	public void setPrice(int price) {
 		this.price = price;
 	}
 

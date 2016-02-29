@@ -84,6 +84,7 @@ ol.ssMenu {
 	text-align: center;
 	margin-top: 15px;
 	font-size: 29px;
+	min-height: 82px;
 }
 
 .imageProduct {
@@ -98,9 +99,10 @@ ol.ssMenu {
 .descriptionProduct {
 	max-width: 295px;
 	margin: 0 auto;
+	height: 70px;
 }
 
-img {
+.imageProduct img {
 	text-align: center;
 	background-attachment: fixed;
 	min-height: 100%;
@@ -108,7 +110,7 @@ img {
 }
 
 .product {
-	height: 430px;
+	min-height: 530px;
 	width: 360px;
 	position: relative;
 	float: left;
@@ -126,18 +128,20 @@ img {
 }
 
 .buttonAddCart {
-	position: absolute;
-	right: 25px;
-	bottom: 20px;
+	float: right;
 }
 
 .priceProduct {
-	position: absolute;
-	left: 28px;
-	bottom: 19px;
+	float: left;
 	font-size: 25px;
 	color: #c94242;
 	white-space: nowrap;
+	margin-top: 1px;
+}
+
+.priceProduct img {
+	width: 35px;
+	margin-bottom: 4px;
 }
 
 .filtre {
@@ -186,7 +190,7 @@ img {
 	min-height: 35px;
 	vertical-align: middle;
 	line-height: 34px;
-	margin-right: 40px;
+	margin-right: 3%;
 	margin-bottom: 10px;
 }
 
@@ -197,7 +201,6 @@ img {
 .selectedFormat {
 	border: 1px solid #DC5555;
 	font-weight: 600;
-	cursor: default;
 	background-color: #FAEBD7;
 }
 
@@ -215,6 +218,13 @@ img {
 	margin: 0 auto;
 	text-align: center;
 	width: 100%;
+}
+
+.blockProductBottom {
+	width: 100%;
+	display: inline-block;
+	padding-left: 20px;
+	padding-right: 20px;
 }
 
 @media screen and (max-width: 767px) {
@@ -251,6 +261,24 @@ img {
 		float: none;
 		width: 100%;
 	}
+	.priceProduct {
+		font-size: 20px;
+		margin-top: 4px;
+	}
+	.priceProduct img {
+		width: 30px;
+	}
+	.blockProductBottom {
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+}
+
+.allBlockProductBottom {
+	min-height: 45px;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
 }
 
 @media screen and (max-width: 1200px) {
