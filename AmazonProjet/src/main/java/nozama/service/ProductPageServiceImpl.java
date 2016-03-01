@@ -37,42 +37,52 @@ public class ProductPageServiceImpl implements ProductPageService {
 		return product;
 	}
 
-	private void margeAllResultTypeSupportAlbum(List<TypeSupportAlbum> typeSupportAlbums, Map<String, Object> product) {
+	@SuppressWarnings("unchecked")
+	private void margeAllResultTypeSupportAlbum(List<TypeSupportAlbum> typeSupportAlbums, Map<String, Object> product) {		
+		TypeSupportAlbum typeSupport = typeSupportAlbums.get(0);
+		margeAllResultSupport(product, "single", typeSupport, typeSupport.getAlbum());
+
 		for (TypeSupportAlbum typeSupportAlbum : typeSupportAlbums) {
-			margeAllResultSupport(product, "album", typeSupportAlbum, typeSupportAlbum.getAlbum());
+			insertTypeInProducts(typeSupportAlbum, product,  (List<Map<String, String>>) product.get("listType"));
 		}
-	}
-
-	private void margeAllResultTypeSupportMovie(List<TypeSupportMovie> typeSupportMovies, Map<String, Object> product) {
-		for (TypeSupportMovie typeSupportMovie : typeSupportMovies) {
-			margeAllResultSupport(product, "movie", typeSupportMovie, typeSupportMovie.getMovie());
-		}
-	}
-
-	private void margeAllResultTypeSupportSingle(List<TypeSupportSingle> typeSupportSingles, Map<String, Object> product) {
-
-		for (TypeSupportSingle typeSupportSingle : typeSupportSingles) {
-			margeAllResultSupport(product, "single", typeSupportSingle, typeSupportSingle.getSingle());
-		}
+		product.put("artisteName", typeSupport.getAlbum().getArtiste().getName());
 	}
 
 	@SuppressWarnings("unchecked")
-	private void margeAllResultSupport(Map<String, Object> product, String Type, TypeSupport typeSupport, Categorie typeSupportCategorie) {
-		if(product.get("type") == null  ){
-			product.put(Type, typeSupportCategorie);
-			product.put("type", Type);
-			product.put("name", typeSupportCategorie.getProduct().getName());
-			product.put("description", typeSupportCategorie.getProduct().getDescription());
-			product.put("urlPicture", typeSupportCategorie.getProduct().getUrlPicture());
-			product.put("dateReleased", typeSupportCategorie.getProduct().getDateReleased());
-			product.put("nameTagDateReleased", typeSupportCategorie.getProduct().getNameTagDateReleased());
-			List<Map<String, String>> listType = new ArrayList<Map<String, String>>();
-
-			insertTypeInProducts(typeSupport, product, listType);
-		}else{
-			insertTypeInProducts(typeSupport, product,  (List<Map<String, String>>) product.get("listType"));
+	private void margeAllResultTypeSupportMovie(List<TypeSupportMovie> typeSupportMovies, Map<String, Object> product) {
+		 
+		
+		TypeSupportMovie typeSupport = typeSupportMovies.get(0);
+		margeAllResultSupport(product, "movie", typeSupport, typeSupport.getMovie());
+		
+		for (TypeSupportMovie typeSupportMovie : typeSupportMovies) {
+			insertTypeInProducts(typeSupportMovie, product,  (List<Map<String, String>>) product.get("listType"));
 		}
 		
+	}
+
+	@SuppressWarnings("unchecked")
+	private void margeAllResultTypeSupportSingle(List<TypeSupportSingle> typeSupportSingles, Map<String, Object> product) {
+
+		TypeSupportSingle typeSupport = typeSupportSingles.get(0);
+		margeAllResultSupport(product, "single", typeSupport, typeSupport.getSingle());
+
+		for (TypeSupportSingle typeSupportSingle : typeSupportSingles) {
+			insertTypeInProducts(typeSupportSingle, product,  (List<Map<String, String>>) product.get("listType"));
+		}
+		product.put("artisteName", typeSupport.getSingle().getArtiste().getName());
+	}
+
+	private void margeAllResultSupport(Map<String, Object> product, String Type, TypeSupport typeSupport, Categorie typeSupportCategorie) {
+		product.put(Type, typeSupportCategorie);
+		product.put("type", Type);
+		product.put("name", typeSupportCategorie.getProduct().getName());
+		product.put("description", typeSupportCategorie.getProduct().getDescription());
+		product.put("urlPicture", typeSupportCategorie.getProduct().getUrlPicture());
+		product.put("dateReleased", typeSupportCategorie.getProduct().getDateReleased());
+		product.put("nameTagDateReleased", typeSupportCategorie.getProduct().getNameTagDateReleased());
+		List<Map<String, String>> listType = new ArrayList<Map<String, String>>();
+		product.put("listType", listType);
 	}
 	
 	private void insertTypeInProducts(TypeSupport typeSupport, Map<String, Object> product, List<Map<String, String>> listType) {

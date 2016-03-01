@@ -184,6 +184,8 @@ public class ProductRepository {
 	public List<TypeSupportSingle> getProductSingle(String nameTagDateReleased) {
 		Criteria cr = openSession.createCriteria(TypeSupportSingle.class);
 		cr.createAlias("single", "s");
+		cr.createAlias("s.artiste", "art");
+
 		cr.createAlias("s.product", "prod");
 		cr.add(Restrictions.eq("prod.nameTagDateReleased", nameTagDateReleased));
 
@@ -193,6 +195,8 @@ public class ProductRepository {
 	public List<TypeSupportAlbum> getProductAlbum(String nameTagDateReleased) {
 		Criteria cr = openSession.createCriteria(TypeSupportAlbum.class);
 		cr.createAlias("album", "a");
+		cr.createAlias("a.artiste", "art");
+
 		cr.createAlias("a.product", "prod");
 		cr.add(Restrictions.eq("prod.nameTagDateReleased", nameTagDateReleased));
 

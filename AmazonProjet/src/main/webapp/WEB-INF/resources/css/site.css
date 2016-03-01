@@ -235,6 +235,23 @@ ol.ssMenu {
   float:left;
 }
 
+.price-product button {
+    margin-left: 16px;
+}
+
+.img-product{
+	width: 100%
+}
+
+.artist-product a{
+	 color: #c94242;
+	 
+}
+
+.artist-product{
+	 font-size: 17px;
+	 margin-bottom: 10px;
+}
 
 @media screen and (max-width: 767px) {
 	.menu-lateral {

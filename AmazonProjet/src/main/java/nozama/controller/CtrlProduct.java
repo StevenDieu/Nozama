@@ -138,7 +138,10 @@ public class CtrlProduct {
 		Map<String, Object> product = new HashMap<String, Object>();
 		product.put("products", productItem);
 
-		
-		return new ModelAndView("pageProductMusic",product);
+		if(type == "movie"){
+			return new ModelAndView("pageProductMovie",product);
+		}else{
+			return new ModelAndView("pageProductMusic",product);
+		}
 	}
 }

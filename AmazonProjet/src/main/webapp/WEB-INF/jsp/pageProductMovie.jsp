@@ -11,9 +11,6 @@
 	<li>
 		<a href="/liste-toutes-les-musiques"><span>Musique</span></a>
 	</li>
-	<li>
-		<a href="/liste-toutes-les-musiques"><span>${products.type}</span></a>
-	</li>
 	<li class="active">
 		<span>${products.name} </span>
 	</li>
@@ -28,7 +25,7 @@
 				<c:out value="${products.name}" />
 			</h2>
 			<div class="artist-product">
-				<a href="/artiste/${products.artisteName}">${products.artisteName}</a>
+				<a href="/artiste/"></a>
 				<span>
 					- Date de sortie
 					<fmt:formatDate pattern="dd/MM/yyyy" value="${products.dateReleased}" />
