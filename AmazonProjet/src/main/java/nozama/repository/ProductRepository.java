@@ -181,7 +181,7 @@ public class ProductRepository {
 		return cr.list();
 	}
 
-	public List<TypeSupport> getProductSingle(String nameTagDateReleased) {
+	public List<TypeSupportSingle> getProductSingle(String nameTagDateReleased) {
 		Criteria cr = openSession.createCriteria(TypeSupportSingle.class);
 		cr.createAlias("single", "s");
 		cr.createAlias("s.product", "prod");
@@ -190,7 +190,7 @@ public class ProductRepository {
 		return cr.list();
 	}
 
-	public List<TypeSupport> getProductAlbum(String nameTagDateReleased) {
+	public List<TypeSupportAlbum> getProductAlbum(String nameTagDateReleased) {
 		Criteria cr = openSession.createCriteria(TypeSupportAlbum.class);
 		cr.createAlias("album", "a");
 		cr.createAlias("a.product", "prod");
@@ -199,7 +199,7 @@ public class ProductRepository {
 		return cr.list();		
 	}
 
-	public List<TypeSupport> getProductMovie(String nameTagDateReleased) {
+	public List<TypeSupportMovie> getProductMovie(String nameTagDateReleased) {
 		Criteria cr = openSession.createCriteria(TypeSupportMovie.class);
 		cr.createAlias("movie", "m");
 		cr.createAlias("m.product", "prod");

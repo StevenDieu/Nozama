@@ -139,6 +139,6 @@ public class CtrlProduct {
 		product.put("products", productItem);
 
 		
-		return new ModelAndView("pageProduct",product);
+		return new ModelAndView("pageProductMusic",product);
 	}
 }
