@@ -1,5 +1,5 @@
 package nozama.model;
-// Generated 26 f�vr. 2016 19:41:07 by Hibernate Tools 4.3.1.Final
+// Generated 29 f�vr. 2016 19:25:52 by Hibernate Tools 4.3.1.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,11 +26,7 @@ public class TypeSupportSingle implements java.io.Serializable,TypeSupport {
 	public TypeSupportSingle() {
 	}
 
-	public TypeSupportSingle(Single single) {
-		this.single = single;
-	}
-
-	public TypeSupportSingle(Single single, String nameSupport, Integer price) {
+	public TypeSupportSingle(Single single, String nameSupport, int price) {
 		this.single = single;
 		this.nameSupport = nameSupport;
 		this.price = price;
@@ -58,7 +54,7 @@ public class TypeSupportSingle implements java.io.Serializable,TypeSupport {
 		this.single = single;
 	}
 
-	@Column(name = "name_support", length = 45)
+	@Column(name = "name_support", nullable = false, length = 45)
 	public String getNameSupport() {
 		return this.nameSupport;
 	}

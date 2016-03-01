@@ -1,5 +1,5 @@
 package nozama.model;
-// Generated 26 f�vr. 2016 19:41:07 by Hibernate Tools 4.3.1.Final
+// Generated 29 f�vr. 2016 19:25:52 by Hibernate Tools 4.3.1.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,11 +26,7 @@ public class TypeSupportMovie implements java.io.Serializable,TypeSupport {
 	public TypeSupportMovie() {
 	}
 
-	public TypeSupportMovie(Movie movie) {
-		this.movie = movie;
-	}
-
-	public TypeSupportMovie(Movie movie, String nameSupport, Integer price) {
+	public TypeSupportMovie(Movie movie, String nameSupport, int price) {
 		this.movie = movie;
 		this.nameSupport = nameSupport;
 		this.price = price;
@@ -58,7 +54,7 @@ public class TypeSupportMovie implements java.io.Serializable,TypeSupport {
 		this.movie = movie;
 	}
 
-	@Column(name = "name_support", length = 45)
+	@Column(name = "name_support", nullable = false, length = 45)
 	public String getNameSupport() {
 		return this.nameSupport;
 	}

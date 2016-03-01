@@ -21,7 +21,7 @@ import nozama.model.TypeSupportSingle;
 import nozama.repository.ProductRepository;
 
 @Service
-public class ProductServiceImpl implements ProductService {
+public class ProductListServiceImpl implements ProductListService {
 
 	@Autowired
 	private ProductRepository PR;
@@ -210,10 +210,12 @@ public class ProductServiceImpl implements ProductService {
 	private void insertInProducts(List<Map<String, Object>> allProduct, String Type, TypeSupport typeSupport, Categorie typeSupportCategorie) {
 		Map<String, Object> newProduct = new HashMap<String, Object>();
 		newProduct.put(Type, typeSupportCategorie);
+		newProduct.put("type", Type);
 		newProduct.put("name", typeSupportCategorie.getProduct().getName());
 		newProduct.put("description", typeSupportCategorie.getProduct().getDescription());
 		newProduct.put("urlPicture", typeSupportCategorie.getProduct().getUrlPicture());
-		newProduct.put("dateReleased", typeSupportCategorie.getDateReleased());
+		newProduct.put("dateReleased", typeSupportCategorie.getProduct().getDateReleased());
+		newProduct.put("nameTagDateReleased", typeSupportCategorie.getProduct().getNameTagDateReleased());
 		List<Map<String, String>> listType = new ArrayList<Map<String, String>>();
 
 		insertTypeInProducts(typeSupport, newProduct, listType);
@@ -263,5 +265,6 @@ public class ProductServiceImpl implements ProductService {
 
 		return cal.getTime();
 	}
+
 
 }

@@ -10,6 +10,7 @@ import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
+import nozama.model.TypeSupport;
 import nozama.model.TypeSupportAlbum;
 import nozama.model.TypeSupportMovie;
 import nozama.model.TypeSupportSingle;
@@ -21,7 +22,7 @@ public class ProductRepository {
 
 	Session openSession = HibernateUtil.getSessionFactory().openSession();
 
-	public List<TypeSupportMovie> getAllMovieBySupport(String support, boolean useSupport,boolean useDate, boolean useType, Date dateYears, Date dateYearsAfter, String type, int startResult) {
+	public List<TypeSupportMovie> getAllMovieBySupport(String support, boolean useSupport, boolean useDate, boolean useType, Date dateYears, Date dateYearsAfter, String type, int startResult) {
 		Criteria cr = openSession.createCriteria(TypeSupportMovie.class);
 		cr.createAlias("movie", "m");
 		cr.createAlias("m.product", "prod");
@@ -32,7 +33,7 @@ public class ProductRepository {
 			cr.add(Restrictions.eq("nameSupport", support));
 		}
 		if (useDate) {
-			cr.add(Restrictions.between("m.dateReleased", dateYears, dateYearsAfter));
+			cr.add(Restrictions.between("prod.dateReleased", dateYears, dateYearsAfter));
 		}
 		if (useType) {
 			cr.add(Restrictions.eq("m.type", type));
@@ -53,7 +54,7 @@ public class ProductRepository {
 			cr.add(Restrictions.eq("nameSupport", support));
 		}
 		if (useDate) {
-			cr.add(Restrictions.between("s.dateReleased", dateYears, dateYearsAfter));
+			cr.add(Restrictions.between("prod.dateReleased", dateYears, dateYearsAfter));
 		}
 		if (useType) {
 			cr.add(Restrictions.eq("s.type", type));
@@ -75,7 +76,7 @@ public class ProductRepository {
 			cr.add(Restrictions.eq("nameSupport", support));
 		}
 		if (useDate) {
-			cr.add(Restrictions.between("a.dateReleased", dateYears, dateYearsAfter));
+			cr.add(Restrictions.between("prod.dateReleased", dateYears, dateYearsAfter));
 		}
 		if (useType) {
 			cr.add(Restrictions.eq("a.type", type));
@@ -93,7 +94,7 @@ public class ProductRepository {
 			cr.add(Restrictions.eq("nameSupport", support));
 		}
 		if (useDate) {
-			cr.add(Restrictions.between("m.dateReleased", dateYears, dateYearsAfter));
+			cr.add(Restrictions.between("prod.dateReleased", dateYears, dateYearsAfter));
 		}
 		if (useType) {
 			cr.add(Restrictions.eq("m.type", type));
@@ -111,7 +112,7 @@ public class ProductRepository {
 			cr.add(Restrictions.eq("nameSupport", support));
 		}
 		if (useDate) {
-			cr.add(Restrictions.between("a.dateReleased", dateYears, dateYearsAfter));
+			cr.add(Restrictions.between("prod.dateReleased", dateYears, dateYearsAfter));
 		}
 		if (useType) {
 			cr.add(Restrictions.eq("a.type", type));
@@ -129,7 +130,7 @@ public class ProductRepository {
 			cr.add(Restrictions.eq("nameSupport", support));
 		}
 		if (useDate) {
-			cr.add(Restrictions.between("s.dateReleased", dateYears, dateYearsAfter));
+			cr.add(Restrictions.between("prod.dateReleased", dateYears, dateYearsAfter));
 		}
 		if (useType) {
 			cr.add(Restrictions.eq("s.type", type));
@@ -145,7 +146,7 @@ public class ProductRepository {
 		cr.createAlias("m.product", "prod");
 		cr.addOrder(Property.forName("nameSupport").asc());
 		if (useDate) {
-			cr.add(Restrictions.between("m.dateReleased", dateYears, dateYearsAfter));
+			cr.add(Restrictions.between("prod.dateReleased", dateYears, dateYearsAfter));
 		}
 		HibernateUtil.shutdown();
 
@@ -159,7 +160,7 @@ public class ProductRepository {
 		cr.addOrder(Property.forName("nameSupport").asc());
 
 		if (useDate) {
-			cr.add(Restrictions.between("a.dateReleased", dateYears, dateYearsAfter));
+			cr.add(Restrictions.between("prod.dateReleased", dateYears, dateYearsAfter));
 		}
 		HibernateUtil.shutdown();
 
@@ -173,11 +174,38 @@ public class ProductRepository {
 		cr.addOrder(Property.forName("nameSupport").asc());
 
 		if (useDate) {
-			cr.add(Restrictions.between("s.dateReleased", dateYears, dateYearsAfter));
+			cr.add(Restrictions.between("prod.dateReleased", dateYears, dateYearsAfter));
 		}
 		HibernateUtil.shutdown();
 
 		return cr.list();
+	}
+
+	public List<TypeSupport> getProductSingle(String nameTagDateReleased) {
+		Criteria cr = openSession.createCriteria(TypeSupportSingle.class);
+		cr.createAlias("single", "s");
+		cr.createAlias("s.product", "prod");
+		cr.add(Restrictions.eq("prod.nameTagDateReleased", nameTagDateReleased));
+
+		return cr.list();
+	}
+
+	public List<TypeSupport> getProductAlbum(String nameTagDateReleased) {
+		Criteria cr = openSession.createCriteria(TypeSupportAlbum.class);
+		cr.createAlias("album", "a");
+		cr.createAlias("a.product", "prod");
+		cr.add(Restrictions.eq("prod.nameTagDateReleased", nameTagDateReleased));
+
+		return cr.list();		
+	}
+
+	public List<TypeSupport> getProductMovie(String nameTagDateReleased) {
+		Criteria cr = openSession.createCriteria(TypeSupportMovie.class);
+		cr.createAlias("movie", "m");
+		cr.createAlias("m.product", "prod");
+		cr.add(Restrictions.eq("prod.nameTagDateReleased", nameTagDateReleased));
+
+		return cr.list();		
 	}
 
 }

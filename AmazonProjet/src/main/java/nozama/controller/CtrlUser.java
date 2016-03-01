@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import nozama.model.User;
-import nozama.service.UserService;
+import nozama.service.UserServiceImpl;
 
 @Controller
 public class CtrlUser {
 
 	@Autowired
-	private UserService US;
+	private UserServiceImpl US;
 
 	@RequestMapping(value = "/inscription")
 	public String signUp(HttpServletRequest request) {
