@@ -1,6 +1,9 @@
 package nozama.service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,7 +11,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import nozama.model.Album;
+import nozama.model.AlbumHasSingle;
 import nozama.model.Categorie;
+import nozama.model.Single;
 import nozama.model.TypeSupport;
 import nozama.model.TypeSupportAlbum;
 import nozama.model.TypeSupportMovie;
@@ -38,40 +44,53 @@ public class ProductPageServiceImpl implements ProductPageService {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void margeAllResultTypeSupportAlbum(List<TypeSupportAlbum> typeSupportAlbums, Map<String, Object> product) {		
-		TypeSupportAlbum typeSupport = typeSupportAlbums.get(0);
-		margeAllResultSupport(product, "single", typeSupport, typeSupport.getAlbum());
+	private void margeAllResultTypeSupportAlbum(List<TypeSupportAlbum> typeSupportAlbums, Map<String, Object> product) {
+		if (typeSupportAlbums.size() >= 1) {
+			TypeSupportAlbum typeSupport = typeSupportAlbums.get(0);
+			margeAllResultSupport(product, "single", typeSupport, typeSupport.getAlbum());
 
-		for (TypeSupportAlbum typeSupportAlbum : typeSupportAlbums) {
-			insertTypeInProducts(typeSupportAlbum, product,  (List<Map<String, String>>) product.get("listType"));
+			for (TypeSupportAlbum typeSupportAlbum : typeSupportAlbums) {
+				insertTypeInProducts(typeSupportAlbum, product, (List<Map<String, String>>) product.get("listType"));
+			}
+			List<AlbumHasSingle> allSingle = PR.getAllSingle(typeSupport.getAlbum().getIdAlbum());
+
+			product.put("artisteName", typeSupport.getAlbum().getArtiste().getName());
+			product.put("label", typeSupport.getAlbum().getLabel());
+			product.put("allSingle", allSingle);
+			product.put("totalTime", getTimeAlbum(allSingle));
 		}
-		product.put("artisteName", typeSupport.getAlbum().getArtiste().getName());
-		product.put("allSingle", PR.getAllSingle(typeSupport.getAlbum().getIdAlbum()));
 	}
 
 	@SuppressWarnings("unchecked")
 	private void margeAllResultTypeSupportMovie(List<TypeSupportMovie> typeSupportMovies, Map<String, Object> product) {
-		 
-		
-		TypeSupportMovie typeSupport = typeSupportMovies.get(0);
-		margeAllResultSupport(product, "movie", typeSupport, typeSupport.getMovie());
-		
-		for (TypeSupportMovie typeSupportMovie : typeSupportMovies) {
-			insertTypeInProducts(typeSupportMovie, product,  (List<Map<String, String>>) product.get("listType"));
+		if (typeSupportMovies.size() >= 1) {
+
+			TypeSupportMovie typeSupport = typeSupportMovies.get(0);
+			margeAllResultSupport(product, "movie", typeSupport, typeSupport.getMovie());
+
+			for (TypeSupportMovie typeSupportMovie : typeSupportMovies) {
+				insertTypeInProducts(typeSupportMovie, product, (List<Map<String, String>>) product.get("listType"));
+			}
 		}
-		
 	}
 
 	@SuppressWarnings("unchecked")
 	private void margeAllResultTypeSupportSingle(List<TypeSupportSingle> typeSupportSingles, Map<String, Object> product) {
+		if (typeSupportSingles.size() >= 1) {
 
-		TypeSupportSingle typeSupport = typeSupportSingles.get(0);
-		margeAllResultSupport(product, "single", typeSupport, typeSupport.getSingle());
+			TypeSupportSingle typeSupport = typeSupportSingles.get(0);
+			margeAllResultSupport(product, "single", typeSupport, typeSupport.getSingle());
 
-		for (TypeSupportSingle typeSupportSingle : typeSupportSingles) {
-			insertTypeInProducts(typeSupportSingle, product,  (List<Map<String, String>>) product.get("listType"));
+			for (TypeSupportSingle typeSupportSingle : typeSupportSingles) {
+				insertTypeInProducts(typeSupportSingle, product, (List<Map<String, String>>) product.get("listType"));
+			}
+			List<AlbumHasSingle> allAlbum = PR.getNameAlbumBySingle(typeSupport.getSingle().getIdSingle());
+
+			product.put("artisteName", typeSupport.getSingle().getArtiste().getName());
+			product.put("label", typeSupport.getSingle().getLabel());
+			product.put("totalTime", typeSupport.getSingle().getTotalTime());
+			product.put("albumName", allAlbum);
 		}
-		product.put("artisteName", typeSupport.getSingle().getArtiste().getName());
 	}
 
 	private void margeAllResultSupport(Map<String, Object> product, String Type, TypeSupport typeSupport, Categorie typeSupportCategorie) {
@@ -86,9 +105,27 @@ public class ProductPageServiceImpl implements ProductPageService {
 		product.put("listType", listType);
 	}
 	
+	private Date getTimeAlbum(List<AlbumHasSingle> allSingle) {
+		Calendar cal = Calendar.getInstance();
+
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+
+		for(AlbumHasSingle albumHasSingle : allSingle){
+			Calendar calSingle = Calendar.getInstance();
+			calSingle.setTime(albumHasSingle.getSingle().getTotalTime());
+			cal.add(Calendar.HOUR_OF_DAY, calSingle.get(Calendar.HOUR_OF_DAY));
+			cal.add(Calendar.MINUTE, calSingle.get(Calendar.MINUTE));
+			cal.add(Calendar.SECOND, calSingle.get(Calendar.SECOND));
+		}
+		
+		return cal.getTime();
+	}
+
 	private void insertTypeInProducts(TypeSupport typeSupport, Map<String, Object> product, List<Map<String, String>> listType) {
 		Map<String, String> insertTypeSupportAlbum = new HashMap<String, String>();
-		insertTypeSupportAlbum.put("price", Integer.toString(typeSupport.getPrice()));
+		insertTypeSupportAlbum.put("price", Float.toString(typeSupport.getPrice()));
 		insertTypeSupportAlbum.put("support", typeSupport.getNameSupport());
 		insertTypeSupportAlbum.put("id", Integer.toString(typeSupport.getIdTypeSupport()));
 		listType.add(insertTypeSupportAlbum);

@@ -1,5 +1,5 @@
 package nozama.model;
-// Generated 29 f�vr. 2016 19:25:52 by Hibernate Tools 4.3.1.Final
+// Generated 2 mars 2016 20:06:10 by Hibernate Tools 4.3.1.Final
 
 import java.util.HashSet;
 import java.util.Set;

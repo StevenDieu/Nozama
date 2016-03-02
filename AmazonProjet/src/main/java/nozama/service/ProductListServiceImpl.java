@@ -171,7 +171,7 @@ public class ProductListServiceImpl implements ProductListService {
 	private void margeAllResultTypeSupportAlbum(List<TypeSupportAlbum> typeSupportAlbums, List<Map<String, Object>> allProduct) {
 
 		for (TypeSupportAlbum typeSupportAlbum : typeSupportAlbums) {
-			margeAllResultSupport(allProduct, "album", typeSupportAlbum, typeSupportAlbum.getAlbum(),"/liste-toutes-les-musiques/AllSupport/album/AllYears/ALL");
+			margeAllResultSupport(allProduct, "album","album", typeSupportAlbum, typeSupportAlbum.getAlbum(),"/liste-toutes-les-musiques/AllSupport/album/AllYears/ALL");
 		}
 
 	}
@@ -179,7 +179,7 @@ public class ProductListServiceImpl implements ProductListService {
 	private void margeAllResultTypeSupportMovie(List<TypeSupportMovie> typeSupportMovies, List<Map<String, Object>> allProduct) {
 
 		for (TypeSupportMovie typeSupportMovie : typeSupportMovies) {
-			margeAllResultSupport(allProduct, "movie", typeSupportMovie, typeSupportMovie.getMovie(),"/liste-tous-les-films");
+			margeAllResultSupport(allProduct, "movie","film",  typeSupportMovie, typeSupportMovie.getMovie(),"/liste-tous-les-films");
 		}
 
 	}
@@ -187,30 +187,31 @@ public class ProductListServiceImpl implements ProductListService {
 	private void margeAllResultTypeSupportSignle(List<TypeSupportSingle> typeSupportSingles, List<Map<String, Object>> allProduct) {
 
 		for (TypeSupportSingle typeSupportSingle : typeSupportSingles) {
-			margeAllResultSupport(allProduct, "single", typeSupportSingle, typeSupportSingle.getSingle(),"/liste-toutes-les-musiques/AllSupport/single/AllYears/ALL");
+			margeAllResultSupport(allProduct, "single","single",  typeSupportSingle, typeSupportSingle.getSingle(),"/liste-toutes-les-musiques/AllSupport/single/AllYears/ALL");
 		}
 
 	}
 
 	@SuppressWarnings("unchecked")
-	private void margeAllResultSupport(List<Map<String, Object>> allProduct, String Type, TypeSupport typeSupport, Categorie typeSupportCategorie, String urlType) {
+	private void margeAllResultSupport(List<Map<String, Object>> allProduct, String type,String typeHtml, TypeSupport typeSupport, Categorie typeSupportCategorie, String urlType) {
 		boolean flagExisteAlbumInList = false;
 		for (Map<String, Object> product : allProduct) {
-			if (typeSupportCategorie == product.get(Type)) {
+			if (typeSupportCategorie == product.get(type)) {
 				flagExisteAlbumInList = true;
 				insertTypeInProducts(typeSupport, product, (List<Map<String, String>>) product.get("listType"));
 			}
 		}
 
 		if (!flagExisteAlbumInList) {
-			insertInProducts(allProduct, Type, typeSupport, typeSupportCategorie, urlType);
+			insertInProducts(allProduct, type,typeHtml, typeSupport, typeSupportCategorie, urlType);
 		}
 	}
 
-	private void insertInProducts(List<Map<String, Object>> allProduct, String Type, TypeSupport typeSupport, Categorie typeSupportCategorie, String urlType) {
+	private void insertInProducts(List<Map<String, Object>> allProduct, String type, String typeHtml, TypeSupport typeSupport, Categorie typeSupportCategorie, String urlType) {
 		Map<String, Object> newProduct = new HashMap<String, Object>();
-		newProduct.put(Type, typeSupportCategorie);
-		newProduct.put("type", Type);
+		newProduct.put(type, typeSupportCategorie);
+		newProduct.put("type", type);
+		newProduct.put("typeHtml", typeHtml);
 		newProduct.put("urlType", urlType);
 		newProduct.put("name", typeSupportCategorie.getProduct().getName());
 		newProduct.put("description", typeSupportCategorie.getProduct().getDescription());
@@ -225,7 +226,7 @@ public class ProductListServiceImpl implements ProductListService {
 
 	private void insertTypeInProducts(TypeSupport typeSupport, Map<String, Object> product, List<Map<String, String>> listType) {
 		Map<String, String> insertTypeSupportAlbum = new HashMap<String, String>();
-		insertTypeSupportAlbum.put("price", Integer.toString(typeSupport.getPrice()));
+		insertTypeSupportAlbum.put("price", Float.toString(typeSupport.getPrice()));
 		insertTypeSupportAlbum.put("support", typeSupport.getNameSupport());
 		insertTypeSupportAlbum.put("id", Integer.toString(typeSupport.getIdTypeSupport()));
 		listType.add(insertTypeSupportAlbum);

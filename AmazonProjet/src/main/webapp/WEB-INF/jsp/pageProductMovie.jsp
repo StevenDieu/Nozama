@@ -43,6 +43,7 @@
 			</p>
 
 			<div class="row">
+
 				<c:set var="listType" value="${products.listType}" />
 
 				<c:forEach var="type" items="${listType}">
@@ -50,7 +51,7 @@
 
 						<div class="col-md-12 price-product">
 							<div class="priceProduct">
-								<img src="/resources/img/${type.support}.png" />
+								<img data-toggle="tooltip" data-placement="left" title="Format : ${type.support}" src="/resources/img/${type.support}.png" />
 								<fmt:formatNumber value="${type.price}" type="currency" />
 							</div>
 							<button class="btn btn-primary" type="button">Ajouter au panier</button>
@@ -66,45 +67,7 @@
 		<h3>Détail du produit</h3>
 	</div>
 	<p>Temps total :</p>
-	<p>Label :</p>
-	<div class="media">
-		<div class="media-body">
-			<h4>Love this!</h4>
-			<div>
-				<span class="fa fa-star"></span>
-				<span class="fa fa-star"></span>
-				<span class="fa fa-star"></span>
-				<span class="fa fa-star"></span>
-				<span class="fa fa-star-half"></span>
-			</div>
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus nisl ac diam feugiat, non vestibulum libero posuere. Vivamus pharetra leo non nulla egestas, nec malesuada orci finibus.</p>
-			<p>
-				<span class="reviewer-name">
-					<strong>John Doe</strong>
-				</span>
-				<span class="review-date">7 Oct 2015</span>
-			</p>
-		</div>
-	</div>
-	<div class="media">
-		<div class="media-body">
-			<h4>Fantastic product</h4>
-			<div>
-				<span class="fa fa-star"></span>
-				<span class="fa fa-star"></span>
-				<span class="fa fa-star"></span>
-				<span class="fa fa-star"></span>
-				<span class="fa fa-star"></span>
-			</div>
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus nisl ac diam feugiat, non vestibulum libero posuere. Vivamus pharetra leo non nulla egestas, nec malesuada orci finibus.</p>
-			<p>
-				<span class="reviewer-name">
-					<strong>Jane Doe</strong>
-				</span>
-				<span class="review-date">7 Oct 2015</span>
-			</p>
-		</div>
-	</div>
+	<p>Producteur :</p>
 </div>
 
 <jsp:include page="templates/footer.jsp" />

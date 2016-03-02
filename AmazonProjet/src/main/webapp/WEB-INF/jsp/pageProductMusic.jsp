@@ -7,13 +7,19 @@
 
 <ol class="breadcrumb">
 	<li>
-		<a href="/"><span>Accueil </span></a>
+		<a href="/">
+			<span>Accueil </span>
+		</a>
 	</li>
 	<li>
-		<a href="/liste-toutes-les-musiques"><span>Musique</span></a>
+		<a href="/liste-toutes-les-musiques">
+			<span>Musique</span>
+		</a>
 	</li>
 	<li>
-		<a href="/liste-toutes-les-musiques/AllSupport/${products.type}/AllYears/ALL"><span class="first-letter" >${products.type}</span></a>
+		<a href="/liste-toutes-les-musiques/AllSupport/${products.type}/AllYears/ALL">
+			<span class="first-letter">${products.type}</span>
+		</a>
 	</li>
 	<li class="active">
 		<span>${products.name} </span>
@@ -42,7 +48,7 @@
 				<c:if test="${fn:length(products.description) == 0}">
 					Pas de description...
 				</c:if>
-				<c:out value="${products.description}" />
+				<c:out escapeXml="false" value="${products.description}" />
 			</p>
 			<div class="row">
 				<c:set var="listType" value="${products.listType}" />
@@ -52,7 +58,7 @@
 
 						<div class="col-md-12 price-product">
 							<div class="priceProduct">
-								<img src="/resources/img/${type.support}.png" />
+								<img data-toggle="tooltip" data-placement="left" title="Format : ${type.support}" src="/resources/img/${type.support}.png" />
 								<fmt:formatNumber value="${type.price}" type="currency" />
 							</div>
 							<button class="btn btn-primary" type="button">Ajouter au panier</button>
@@ -67,72 +73,56 @@
 	<div class="page-header">
 		<h3>Détail du produit</h3>
 	</div>
-	<p>Temps total :</p>
-	<p>Label :</p>
-	<div class="table-responsive">
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>Nom Single</th>
-					<th>Temps</th>
-					<th>Prix à l'unité</th>
-				</tr>
-			</thead>
-			<tbody>
-			
-				<c:set var="singles" value="${allSingle}" />
-				<c:forEach var="single" items="${singles}" varStatus="counter">
+	<c:if test="${not empty products.albumName}">
+		<c:set var="albumHasSingles" value="${products.albumName}" />
+		<c:forEach var="albumHasSingle" items="${albumHasSingles}" varStatus="counter">
+			<p>
+				Album :
+				<a href="/product/album/${albumHasSingle.album.product.nameTagDateReleased}"><c:out value="${albumHasSingle.album.product.name}" /></a>
+			</p>
+		</c:forEach>
+	</c:if>
+	<c:if test="${not empty products.totalTime}">
+		<p>
+			Temps total :
+			<fmt:formatDate type="time" value="${products.totalTime}" />
+		</p>
+	</c:if>
+	<c:if test="${not empty products.label}">
+		<p>
+			Label :
+			<c:out value="${products.label}" />
+		</p>
+	</c:if>
 
-				<tr>
-					<td><a href="http://www.amazon.fr/dp/B01C2BZHMA/ref=pm_ws_tlw_trk1"><strong>Dame Love/strong></a></td>
-					<td>3:02</td>
-					<td>149.90
-						<button class="btn btn-primary btn-sm" type="button">Ajouter au panier</button>
-					</td>
-				</tr>	
-	
-				</c:forEach>
-			</tbody>
-		</table>
-	</div>
-	<div class="media">
-		<div class="media-body">
-			<h4>Love this!</h4>
-			<div>
-				<span class="fa fa-star"></span>
-				<span class="fa fa-star"></span>
-				<span class="fa fa-star"></span>
-				<span class="fa fa-star"></span>
-				<span class="fa fa-star-half"></span>
-			</div>
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus nisl ac diam feugiat, non vestibulum libero posuere. Vivamus pharetra leo non nulla egestas, nec malesuada orci finibus.</p>
-			<p>
-				<span class="reviewer-name">
-					<strong>John Doe</strong>
-				</span>
-				<span class="review-date">7 Oct 2015</span>
-			</p>
+	<c:if test="${not empty products.allSingle}">
+		<div class="table-responsive">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Nom Single</th>
+						<th>Temps</th>
+						<th>Date de sortie</th>
+					</tr>
+				</thead>
+				<tbody>
+
+					<c:set var="AlbumHasSingles" value="${products.allSingle}" />
+					<c:forEach var="AlbumHasSingle" items="${AlbumHasSingles}" varStatus="counter">
+
+						<tr>
+							<td><a href="/product/single/${AlbumHasSingle.single.product.nameTagDateReleased}">
+									<strong>${AlbumHasSingle.single.product.name}</strong>
+								</a></td>
+							<td>${AlbumHasSingle.single.totalTime}</td>
+							<td><fmt:formatDate pattern="dd/MM/yyyy" value="${AlbumHasSingle.single.product.dateReleased}" /></td>
+						</tr>
+
+					</c:forEach>
+				</tbody>
+			</table>
 		</div>
-	</div>
-	<div class="media">
-		<div class="media-body">
-			<h4>Fantastic product</h4>
-			<div>
-				<span class="fa fa-star"></span>
-				<span class="fa fa-star"></span>
-				<span class="fa fa-star"></span>
-				<span class="fa fa-star"></span>
-				<span class="fa fa-star"></span>
-			</div>
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus nisl ac diam feugiat, non vestibulum libero posuere. Vivamus pharetra leo non nulla egestas, nec malesuada orci finibus.</p>
-			<p>
-				<span class="reviewer-name">
-					<strong>Jane Doe</strong>
-				</span>
-				<span class="review-date">7 Oct 2015</span>
-			</p>
-		</div>
-	</div>
+	</c:if>
 </div>
 
 <jsp:include page="templates/footer.jsp" />

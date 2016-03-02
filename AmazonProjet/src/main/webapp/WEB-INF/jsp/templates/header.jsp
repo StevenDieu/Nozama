@@ -15,6 +15,7 @@
 <link type="text/css" rel="stylesheet" href="/resources/css/jquery.smartmenus.bootstrap.css">
 <link type="text/css" rel="stylesheet" href="/resources/css/site.css">
 <script src="/resources/js/jquery.js"></script>
+<script src="/resources/js/site.js"></script>
 
 </head>
 <body>

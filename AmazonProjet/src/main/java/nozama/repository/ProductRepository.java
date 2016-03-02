@@ -10,6 +10,8 @@ import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
+import nozama.model.Album;
+import nozama.model.AlbumHasSingle;
 import nozama.model.Single;
 import nozama.model.TypeSupport;
 import nozama.model.TypeSupportAlbum;
@@ -213,10 +215,24 @@ public class ProductRepository {
 		return cr.list();		
 	}
 
-	public List<Single> getAllSingle(Integer idAlbum) {
-		Criteria cr = openSession.createCriteria(Single.class);
-		cr.createAlias("albumHasSingles", "ahs");
-		cr.createAlias("product", "prod");
+	public List<AlbumHasSingle> getAllSingle(Integer idAlbum) {
+		Criteria cr = openSession.createCriteria(AlbumHasSingle.class);
+		cr.createAlias("album", "a");
+		cr.createAlias("single", "s");
+		
+		cr.createAlias("s.product", "prod");
+		cr.add(Restrictions.eq("a.idAlbum", idAlbum));
+
+		return cr.list();
+	}
+
+	public List<AlbumHasSingle> getNameAlbumBySingle(Integer idSIngle) {
+		Criteria cr = openSession.createCriteria(AlbumHasSingle.class);
+		cr.createAlias("album", "a");
+		cr.createAlias("single", "s");
+
+		cr.createAlias("a.product", "prod");
+		cr.add(Restrictions.eq("s.idSingle", idSIngle));
 
 		return cr.list();
 	}

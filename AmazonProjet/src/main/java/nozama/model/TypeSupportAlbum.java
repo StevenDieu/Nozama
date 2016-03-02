@@ -1,5 +1,5 @@
 package nozama.model;
-// Generated 29 f�vr. 2016 19:25:52 by Hibernate Tools 4.3.1.Final
+// Generated 2 mars 2016 20:06:10 by Hibernate Tools 4.3.1.Final
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,17 +21,17 @@ public class TypeSupportAlbum implements java.io.Serializable,TypeSupport {
 	private Integer idTypeSupport;
 	private Album album;
 	private String nameSupport;
-	private int price;
+	private float price;
 
 	public TypeSupportAlbum() {
 	}
 
-	public TypeSupportAlbum(Album album, int price) {
+	public TypeSupportAlbum(Album album, float price) {
 		this.album = album;
 		this.price = price;
 	}
 
-	public TypeSupportAlbum(Album album, String nameSupport, int price) {
+	public TypeSupportAlbum(Album album, String nameSupport, float price) {
 		this.album = album;
 		this.nameSupport = nameSupport;
 		this.price = price;
@@ -68,12 +68,12 @@ public class TypeSupportAlbum implements java.io.Serializable,TypeSupport {
 		this.nameSupport = nameSupport;
 	}
 
-	@Column(name = "price", nullable = false)
-	public int getPrice() {
+	@Column(name = "price", nullable = false, precision = 12, scale = 0)
+	public float getPrice() {
 		return this.price;
 	}
 
-	public void setPrice(int price) {
+	public void setPrice(float price) {
 		this.price = price;
 	}
 

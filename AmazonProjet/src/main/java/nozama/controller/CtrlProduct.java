@@ -134,7 +134,9 @@ public class CtrlProduct {
 			return new ModelAndView("redirect:/");
 		}
 		Map<String, Object> productItem = PPS.getProduct(nameTagDateReleased,type);
-		
+		if(productItem.size() <= 0){
+			return new ModelAndView("redirect:/");
+		}
 		Map<String, Object> product = new HashMap<String, Object>();
 		product.put("products", productItem);
 

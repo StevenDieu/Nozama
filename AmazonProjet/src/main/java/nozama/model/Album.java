@@ -1,16 +1,13 @@
 package nozama.model;
-// Generated 29 f�vr. 2016 19:25:52 by Hibernate Tools 4.3.1.Final
+// Generated 2 mars 2016 20:06:10 by Hibernate Tools 4.3.1.Final
 
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-
 import static javax.persistence.GenerationType.IDENTITY;
-
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -28,6 +25,7 @@ public class Album implements java.io.Serializable,Categorie {
 	private Artiste artiste;
 	private Product product;
 	private String type;
+	private String label;
 	private Set<TypeSupportAlbum> typeSupportAlbums = new HashSet<TypeSupportAlbum>(0);
 	private Set<AlbumHasSingle> albumHasSingles = new HashSet<AlbumHasSingle>(0);
 
@@ -39,10 +37,11 @@ public class Album implements java.io.Serializable,Categorie {
 		this.product = product;
 	}
 
-	public Album(Artiste artiste, Product product, String type, Set<TypeSupportAlbum> typeSupportAlbums, Set<AlbumHasSingle> albumHasSingles) {
+	public Album(Artiste artiste, Product product, String type, String label, Set<TypeSupportAlbum> typeSupportAlbums, Set<AlbumHasSingle> albumHasSingles) {
 		this.artiste = artiste;
 		this.product = product;
 		this.type = type;
+		this.label = label;
 		this.typeSupportAlbums = typeSupportAlbums;
 		this.albumHasSingles = albumHasSingles;
 	}
@@ -86,6 +85,15 @@ public class Album implements java.io.Serializable,Categorie {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	@Column(name = "label")
+	public String getLabel() {
+		return this.label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "album")
