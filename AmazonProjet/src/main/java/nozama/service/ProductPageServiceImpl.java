@@ -46,6 +46,7 @@ public class ProductPageServiceImpl implements ProductPageService {
 			insertTypeInProducts(typeSupportAlbum, product,  (List<Map<String, String>>) product.get("listType"));
 		}
 		product.put("artisteName", typeSupport.getAlbum().getArtiste().getName());
+		product.put("allSingle", PR.getAllSingle(typeSupport.getAlbum().getIdAlbum()));
 	}
 
 	@SuppressWarnings("unchecked")

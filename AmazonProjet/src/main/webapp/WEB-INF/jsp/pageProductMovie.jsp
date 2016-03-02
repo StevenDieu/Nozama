@@ -10,7 +10,7 @@
 		<a href="/"><span>Accueil </span></a>
 	</li>
 	<li>
-		<a href="/liste-toutes-les-musiques"><span>Musique</span></a>
+		<a href="/liste-tous-les-films"><span>Movie</span></a>
 	</li>
 	<li class="active">
 		<span>${products.name} </span>
@@ -28,7 +28,7 @@
 			<div class="artist-product">
 				<a href="/artiste/"></a>
 				<span>
-					- Date de sortie
+					Date de sortie
 					<fmt:formatDate pattern="dd/MM/yyyy" value="${products.dateReleased}" />
 				</span>
 
@@ -41,6 +41,7 @@
 				</c:if>
 				<c:out value="${products.description}" />
 			</p>
+
 			<div class="row">
 				<c:set var="listType" value="${products.listType}" />
 
@@ -66,47 +67,6 @@
 	</div>
 	<p>Temps total :</p>
 	<p>Label :</p>
-	<div class="table-responsive">
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>Nom Single</th>
-					<th>Temps</th>
-					<th>Prix à l'unité</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td><a href="http://www.amazon.fr/dp/B01C2BZHMA/ref=pm_ws_tlw_trk1"><strong>Dame Love</strong></a></td>
-					<td>3:02</td>
-					<td>149.90
-						<button class="btn btn-primary btn-sm" type="button">Ajouter au panier</button>
-					</td>
-				</tr>
-				<tr>
-					<td><a href="http://www.amazon.fr/dp/B01C2BZJD2/ref=pm_ws_tlw_trk2"><strong>Pas ÃÂ  pas</strong></a></td>
-					<td>3:02</td>
-					<td>149.90
-						<button class="btn btn-primary btn-sm" type="button">Ajouter au panier</button>
-					</td>
-				</tr>
-				<tr>
-					<td><a href="http://www.amazon.fr/dp/B01C2BZKP4/ref=pm_ws_tlw_trk3"><strong>Lost</strong></a></td>
-					<td>3:02</td>
-					<td>149.90
-						<button class="btn btn-primary btn-sm" type="button">Ajouter au panier</button>
-					</td>
-				</tr>
-				<tr>
-					<td><a href="http://www.amazon.fr/dp/B01C2BZM5C/ref=pm_ws_tlw_trk4"><strong>L'oiseau vert</strong></a></td>
-					<td>3:02</td>
-					<td>149.90
-						<button class="btn btn-primary btn-sm" type="button">Ajouter au panier</button>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
 	<div class="media">
 		<div class="media-body">
 			<h4>Love this!</h4>

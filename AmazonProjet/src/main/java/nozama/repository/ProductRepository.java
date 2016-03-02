@@ -10,6 +10,7 @@ import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
+import nozama.model.Single;
 import nozama.model.TypeSupport;
 import nozama.model.TypeSupportAlbum;
 import nozama.model.TypeSupportMovie;
@@ -210,6 +211,14 @@ public class ProductRepository {
 		cr.add(Restrictions.eq("prod.nameTagDateReleased", nameTagDateReleased));
 
 		return cr.list();		
+	}
+
+	public List<Single> getAllSingle(Integer idAlbum) {
+		Criteria cr = openSession.createCriteria(Single.class);
+		cr.createAlias("albumHasSingles", "ahs");
+		cr.createAlias("product", "prod");
+
+		return cr.list();
 	}
 
 }

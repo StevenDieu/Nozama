@@ -46,30 +46,31 @@ INSERT INTO `nozama`.`album` (`id_album`, `id_product`, `id_artiste`,`type`) VAL
 INSERT INTO `nozama`.`type_support_movie` (`id_type_support`,`name_support`,`price`,`id_movie`) VALUES (1,'DVD',15,1);
 INSERT INTO `nozama`.`type_support_movie` (`id_type_support`,`name_support`,`price`,`id_movie`) VALUES (2,'DVD',5,2);
 
-INSERT INTO `nozama`.`type_support_single` (`id_type_support`, `name_support`, `price`, `id_single`) VALUES ('5', 'CD', '1.29', '3');
-INSERT INTO `nozama`.`type_support_single` (`id_type_support`, `name_support`, `price`, `id_single`) VALUES ('6', 'CD', '1.29', '4');
-INSERT INTO `nozama`.`type_support_single` (`id_type_support`, `name_support`, `price`, `id_single`) VALUES ('7', 'CD', '1.29', '5');
-INSERT INTO `nozama`.`type_support_single` (`id_type_support`, `name_support`, `price`, `id_single`) VALUES ('8', 'CD', '1.29', '6');
-INSERT INTO `nozama`.`type_support_single` (`id_type_support`, `name_support`, `price`, `id_single`) VALUES ('9', 'CD', '1.29', '7');
-INSERT INTO `nozama`.`type_support_single` (`id_type_support`, `name_support`, `price`, `id_single`) VALUES ('10', 'CD', '1.29', '8');
-INSERT INTO `nozama`.`type_support_single` (`id_type_support`, `name_support`, `price`, `id_single`) VALUES ('11', 'CD', '1.29', '9');
-INSERT INTO `nozama`.`type_support_single` (`id_type_support`, `name_support`, `price`, `id_single`) VALUES ('12', 'CD', '1.29', '10');
-INSERT INTO `nozama`.`type_support_single` (`id_type_support`, `name_support`, `price`, `id_single`) VALUES ('13', 'CD', '1.29', '11');
-INSERT INTO `nozama`.`type_support_single` (`id_type_support`, `name_support`, `price`, `id_single`) VALUES ('14', 'CD', '1.29', '12');
-INSERT INTO `nozama`.`type_support_single` (`id_type_support`, `name_support`, `price`, `id_single`) VALUES ('15', 'CD', '1.29', '13');
+
 
 
 INSERT INTO `nozama`.`type_support_single` (`id_type_support`, `name_support`, `price`, `id_single`) VALUES ('1', 'CD', '1', '1');
 INSERT INTO `nozama`.`type_support_single` (`id_type_support`, `name_support`, `price`, `id_single`) VALUES ('2', 'CD', '1', '2');
-INSERT INTO `nozama`.`type_support_single` (`id_type_support`, `name_support`, `price`, `id_single`) VALUES ('3', 'VINYLE', '3', '1');
-INSERT INTO `nozama`.`type_support_single` (`id_type_support`, `name_support`, `price`, `id_single`) VALUES ('4', 'VINYLE', '3', '2');
+INSERT INTO `nozama`.`type_support_single` (`id_type_support`, `name_support`, `price`, `id_single`) VALUES ('3', 'Vinyle', '3', '1');
+INSERT INTO `nozama`.`type_support_single` (`id_type_support`, `name_support`, `price`, `id_single`) VALUES ('4', 'Vinyle', '3', '2');
+-- adele
+INSERT INTO `nozama`.`type_support_single` (`id_type_support`, `name_support`, `price`, `id_single`) VALUES ('5', 'Telechargement', '1.29', '3');
+INSERT INTO `nozama`.`type_support_single` (`id_type_support`, `name_support`, `price`, `id_single`) VALUES ('6', 'Telechargement', '1.29', '4');
+INSERT INTO `nozama`.`type_support_single` (`id_type_support`, `name_support`, `price`, `id_single`) VALUES ('7', 'Telechargement', '1.29', '5');
+INSERT INTO `nozama`.`type_support_single` (`id_type_support`, `name_support`, `price`, `id_single`) VALUES ('8', 'Telechargement', '1.29', '6');
+INSERT INTO `nozama`.`type_support_single` (`id_type_support`, `name_support`, `price`, `id_single`) VALUES ('9', 'Telechargement', '1.29', '7');
+INSERT INTO `nozama`.`type_support_single` (`id_type_support`, `name_support`, `price`, `id_single`) VALUES ('10', 'Telechargement', '1.29', '8');
+INSERT INTO `nozama`.`type_support_single` (`id_type_support`, `name_support`, `price`, `id_single`) VALUES ('11', 'Telechargement', '1.29', '9');
+INSERT INTO `nozama`.`type_support_single` (`id_type_support`, `name_support`, `price`, `id_single`) VALUES ('12', 'Telechargement', '1.29', '10');
+INSERT INTO `nozama`.`type_support_single` (`id_type_support`, `name_support`, `price`, `id_single`) VALUES ('13', 'Telechargement', '1.29', '11');
+INSERT INTO `nozama`.`type_support_single` (`id_type_support`, `name_support`, `price`, `id_single`) VALUES ('14', 'Telechargement', '1.29', '12');
+INSERT INTO `nozama`.`type_support_single` (`id_type_support`, `name_support`, `price`, `id_single`) VALUES ('15', 'Telechargement', '1.29', '13');
 
-INSERT INTO `nozama`.`type_support_album` (`id_type_support`, `name_support`, `price`, `id_album`) VALUES ('5', 'DONWLOAD', '12.80', '5');
-INSERT INTO `nozama`.`type_support_album` (`id_type_support`, `name_support`, `price`, `id_album`) VALUES ('1', 'CD', '10', '1');
-INSERT INTO `nozama`.`type_support_album` (`id_type_support`, `name_support`, `price`, `id_album`) VALUES ('2', 'CD', '10', '2');
-INSERT INTO `nozama`.`type_support_album` (`id_type_support`, `name_support`, `price`, `id_album`) VALUES ('3', 'VINYLE', '20', '1');
-INSERT INTO `nozama`.`type_support_album` (`id_type_support`, `name_support`, `price`, `id_album`) VALUES ('4', 'VINYLE', '20', '2');
+-- [ADELE] Type support album
+INSERT INTO `nozama`.`type_support_album` (`id_type_support`, `name_support`, `price`, `id_album`) VALUES ('5', 'Telechargement', '12.80', '3');
+INSERT INTO `nozama`.`type_support_album` (`id_type_support`, `name_support`, `price`, `id_album`) VALUES ('6', 'CD', '17.80', '3');
 
+-- [ADELE] Album has single
 INSERT INTO `nozama`.`album_has_single` (`id_album_has_single`, `id_single`, `id_album`) VALUES ('1', '3', '3');
 INSERT INTO `nozama`.`album_has_single` (`id_album_has_single`, `id_single`, `id_album`) VALUES ('2', '4', '3');
 INSERT INTO `nozama`.`album_has_single` (`id_album_has_single`, `id_single`, `id_album`) VALUES ('3', '5', '3');

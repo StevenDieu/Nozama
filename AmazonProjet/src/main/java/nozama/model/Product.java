@@ -4,11 +4,14 @@ package nozama.model;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+
 import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -138,5 +141,6 @@ public class Product implements java.io.Serializable {
 	public void setSingles(Set<Single> singles) {
 		this.singles = singles;
 	}
+
 
 }

@@ -17,7 +17,7 @@
 		</div>
 
 		<div class="item">
-			<a href="/liste-toutes-les-musiques/VINYLE/single/AllYears/ALL">
+			<a href="/liste-toutes-les-musiques/Vinyle/single/AllYears/ALL">
 				<img src="/resources/img/home/music_vinyle.jpg" alt="music vinyle">
 			</a>
 		</div>

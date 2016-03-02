@@ -79,36 +79,19 @@
 				</tr>
 			</thead>
 			<tbody>
+			
+				<c:set var="singles" value="${allSingle}" />
+				<c:forEach var="single" items="${singles}" varStatus="counter">
+
 				<tr>
-					<td><a href="http://www.amazon.fr/dp/B01C2BZHMA/ref=pm_ws_tlw_trk1"><strong>Dame Love</strong></a></td>
+					<td><a href="http://www.amazon.fr/dp/B01C2BZHMA/ref=pm_ws_tlw_trk1"><strong>Dame Love/strong></a></td>
 					<td>3:02</td>
 					<td>149.90
 						<button class="btn btn-primary btn-sm" type="button">Ajouter au panier</button>
 					</td>
-				</tr>
-				<tr>
-					<td><a href="http://www.amazon.fr/dp/B01C2BZJD2/ref=pm_ws_tlw_trk2"><strong>Pas à pas</strong></a></td>
-					<td>3:02</td>
-					<td>149.90
-						<button class="btn btn-primary btn-sm" type="button">Ajouter au panier</button>
-					</td>
-				</tr>
-				<tr>
-					<td><a href="http://www.amazon.fr/dp/B01C2BZKP4/ref=pm_ws_tlw_trk3"><strong>Lost</strong></a></td>
-					<td>3:02</td>
-					<td>149.90
-						<button class="btn btn-primary btn-sm" type="button">Ajouter au panier</button>
-					</td>
-				</tr>
-				<tr>
-				<a href="http://www.amazon.fr/dp/B01C2BZM5C/ref=pm_ws_tlw_trk4">
-					<td><strong>L'oiseau vert</strong></td>
-					<td>3:02</td>
-					<td>149.90
-						<button class="btn btn-primary btn-sm" type="button">Ajouter au panier</button>
-					</td>
-					</a>
-				</tr>
+				</tr>	
+	
+				</c:forEach>
 			</tbody>
 		</table>
 	</div>

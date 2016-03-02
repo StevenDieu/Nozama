@@ -21,8 +21,8 @@
 				Support : <select id="support" name="support">
 					<option value="AllSupport" <c:if test="${support == 'AllSupport' }">selected</c:if>>Tous les supports</option>
 					<option value="CD" <c:if test="${support == 'CD' }">selected</c:if>>CD</option>
-					<option value="VINYLE" <c:if test="${support == 'VINYLE' }">selected</c:if>>Vinyle</option>
-					<option value="DOWLOAD" <c:if test="${support == 'DOWLOAD' }">selected</c:if>>Téléchargement</option>
+					<option value="Vinyle" <c:if test="${support == 'Vinyle' }">selected</c:if>>Vinyle</option>
+					<option value="Telechargement" <c:if test="${support == 'Telechargement' }">selected</c:if>>Téléchargement</option>
 				</select>
 			</div>
 
@@ -68,11 +68,10 @@
 </div>
 <div class="clearBoth"></div>
 
-<div class="rowProduct">
 
 	<jsp:include page="listProduct.jsp" />
 
-</div>
+
 <div class="paginationMusic center100"></div>
 <script>
 	var varNumberPage = ${numberPage};

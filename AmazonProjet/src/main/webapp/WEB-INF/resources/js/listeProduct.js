@@ -26,9 +26,16 @@ function redirigeUrlAll() {
 }
 
 $(document).ready(function() {
+	
+	$(".btn-link").on("click",function(){
+		document.location.href = $(this).data("redirect");
+		return false;
+	});
+	
+	$('[data-toggle="tooltip"]').tooltip()
+	
 	$(window).load(function() {
 		actif = true;
-
 	});
 
 	$(".buttonWithoutBackground").on("click", function() {

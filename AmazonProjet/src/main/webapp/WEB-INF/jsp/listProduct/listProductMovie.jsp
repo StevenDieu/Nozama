@@ -16,7 +16,7 @@
 					<option value="AllSupport" <c:if test="${support == 'AllSupport' }">selected</c:if>>Tous les supports</option>
 					<option value="DVD" <c:if test="${support == 'DVD' }">selected</c:if>>DVD</option>
 					<option value="BLUERAY" <c:if test="${support == 'BLUERAY' }">selected</c:if>>Blu-ray</option>
-					<option value="DOWNLOAD" <c:if test="${support == 'DOWNLOAD' }">selected</c:if>>Téléchargement</option>
+					<option value="Telechargement" <c:if test="${support == 'Telechargement' }">selected</c:if>>Téléchargement</option>
 				</select>
 			</div>
 
@@ -75,11 +75,9 @@
 
 <div class="clearBoth"></div>
 
-<div class="rowProduct">
 
 	<jsp:include page="listProduct.jsp" />
 
-</div>
 <div class="paginationFilm center100"></div>
 <script>
 	var varNumberPage = ${numberPage};

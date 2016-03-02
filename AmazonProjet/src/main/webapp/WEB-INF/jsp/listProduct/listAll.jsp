@@ -36,13 +36,11 @@
 
 <div class="clearBoth"></div>
 
-<div class="rowProduct">
 
 
 	<jsp:include page="listProduct.jsp" />
 
 
-</div>
 
 <div class="clearBoth"></div>
 <div class="paginationAll center100"></div>

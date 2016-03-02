@@ -171,7 +171,7 @@ public class ProductListServiceImpl implements ProductListService {
 	private void margeAllResultTypeSupportAlbum(List<TypeSupportAlbum> typeSupportAlbums, List<Map<String, Object>> allProduct) {
 
 		for (TypeSupportAlbum typeSupportAlbum : typeSupportAlbums) {
-			margeAllResultSupport(allProduct, "album", typeSupportAlbum, typeSupportAlbum.getAlbum());
+			margeAllResultSupport(allProduct, "album", typeSupportAlbum, typeSupportAlbum.getAlbum(),"/liste-toutes-les-musiques/AllSupport/album/AllYears/ALL");
 		}
 
 	}
@@ -179,7 +179,7 @@ public class ProductListServiceImpl implements ProductListService {
 	private void margeAllResultTypeSupportMovie(List<TypeSupportMovie> typeSupportMovies, List<Map<String, Object>> allProduct) {
 
 		for (TypeSupportMovie typeSupportMovie : typeSupportMovies) {
-			margeAllResultSupport(allProduct, "movie", typeSupportMovie, typeSupportMovie.getMovie());
+			margeAllResultSupport(allProduct, "movie", typeSupportMovie, typeSupportMovie.getMovie(),"/liste-tous-les-films");
 		}
 
 	}
@@ -187,13 +187,13 @@ public class ProductListServiceImpl implements ProductListService {
 	private void margeAllResultTypeSupportSignle(List<TypeSupportSingle> typeSupportSingles, List<Map<String, Object>> allProduct) {
 
 		for (TypeSupportSingle typeSupportSingle : typeSupportSingles) {
-			margeAllResultSupport(allProduct, "single", typeSupportSingle, typeSupportSingle.getSingle());
+			margeAllResultSupport(allProduct, "single", typeSupportSingle, typeSupportSingle.getSingle(),"/liste-toutes-les-musiques/AllSupport/single/AllYears/ALL");
 		}
 
 	}
 
 	@SuppressWarnings("unchecked")
-	private void margeAllResultSupport(List<Map<String, Object>> allProduct, String Type, TypeSupport typeSupport, Categorie typeSupportCategorie) {
+	private void margeAllResultSupport(List<Map<String, Object>> allProduct, String Type, TypeSupport typeSupport, Categorie typeSupportCategorie, String urlType) {
 		boolean flagExisteAlbumInList = false;
 		for (Map<String, Object> product : allProduct) {
 			if (typeSupportCategorie == product.get(Type)) {
@@ -203,14 +203,15 @@ public class ProductListServiceImpl implements ProductListService {
 		}
 
 		if (!flagExisteAlbumInList) {
-			insertInProducts(allProduct, Type, typeSupport, typeSupportCategorie);
+			insertInProducts(allProduct, Type, typeSupport, typeSupportCategorie, urlType);
 		}
 	}
 
-	private void insertInProducts(List<Map<String, Object>> allProduct, String Type, TypeSupport typeSupport, Categorie typeSupportCategorie) {
+	private void insertInProducts(List<Map<String, Object>> allProduct, String Type, TypeSupport typeSupport, Categorie typeSupportCategorie, String urlType) {
 		Map<String, Object> newProduct = new HashMap<String, Object>();
 		newProduct.put(Type, typeSupportCategorie);
 		newProduct.put("type", Type);
+		newProduct.put("urlType", urlType);
 		newProduct.put("name", typeSupportCategorie.getProduct().getName());
 		newProduct.put("description", typeSupportCategorie.getProduct().getDescription());
 		newProduct.put("urlPicture", typeSupportCategorie.getProduct().getUrlPicture());
@@ -265,6 +266,5 @@ public class ProductListServiceImpl implements ProductListService {
 
 		return cal.getTime();
 	}
-
 
 }
