@@ -2,6 +2,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <jsp:include page="templates/header.jsp" />
 
 <ol class="breadcrumb">
@@ -61,7 +62,7 @@
 		</div>
 	</div>
 	<div class="page-header">
-		<h3>D�tail du produit</h3>
+		<h3>Détail du produit</h3>
 	</div>
 	<p>Temps total :</p>
 	<p>Label :</p>
@@ -71,7 +72,7 @@
 				<tr>
 					<th>Nom Single</th>
 					<th>Temps</th>
-					<th>Prix � l'unit�</th>
+					<th>Prix à l'unité</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -83,7 +84,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td><a href="http://www.amazon.fr/dp/B01C2BZJD2/ref=pm_ws_tlw_trk2"><strong>Pas Ã  pas</strong></a></td>
+					<td><a href="http://www.amazon.fr/dp/B01C2BZJD2/ref=pm_ws_tlw_trk2"><strong>Pas ÃÂ  pas</strong></a></td>
 					<td>3:02</td>
 					<td>149.90
 						<button class="btn btn-primary btn-sm" type="button">Ajouter au panier</button>
