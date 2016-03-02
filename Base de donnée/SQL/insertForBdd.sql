@@ -64,6 +64,7 @@ INSERT INTO `nozama`.`type_support_single` (`id_type_support`, `name_support`, `
 INSERT INTO `nozama`.`type_support_single` (`id_type_support`, `name_support`, `price`, `id_single`) VALUES ('3', 'VINYLE', '3', '1');
 INSERT INTO `nozama`.`type_support_single` (`id_type_support`, `name_support`, `price`, `id_single`) VALUES ('4', 'VINYLE', '3', '2');
 
+INSERT INTO `nozama`.`type_support_album` (`id_type_support`, `name_support`, `price`, `id_album`) VALUES ('5', 'DONWLOAD', '12.80', '5');
 INSERT INTO `nozama`.`type_support_album` (`id_type_support`, `name_support`, `price`, `id_album`) VALUES ('1', 'CD', '10', '1');
 INSERT INTO `nozama`.`type_support_album` (`id_type_support`, `name_support`, `price`, `id_album`) VALUES ('2', 'CD', '10', '2');
 INSERT INTO `nozama`.`type_support_album` (`id_type_support`, `name_support`, `price`, `id_album`) VALUES ('3', 'VINYLE', '20', '1');
