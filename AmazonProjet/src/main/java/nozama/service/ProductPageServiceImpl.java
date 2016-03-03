@@ -11,10 +11,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import nozama.model.Album;
 import nozama.model.AlbumHasSingle;
 import nozama.model.Categorie;
-import nozama.model.Single;
 import nozama.model.TypeSupport;
 import nozama.model.TypeSupportAlbum;
 import nozama.model.TypeSupportMovie;
@@ -47,7 +45,7 @@ public class ProductPageServiceImpl implements ProductPageService {
 	private void margeAllResultTypeSupportAlbum(List<TypeSupportAlbum> typeSupportAlbums, Map<String, Object> product) {
 		if (typeSupportAlbums.size() >= 1) {
 			TypeSupportAlbum typeSupport = typeSupportAlbums.get(0);
-			margeAllResultSupport(product, "single", typeSupport, typeSupport.getAlbum());
+			margeAllResultSupport(product, "album", typeSupport, typeSupport.getAlbum());
 
 			for (TypeSupportAlbum typeSupportAlbum : typeSupportAlbums) {
 				insertTypeInProducts(typeSupportAlbum, product, (List<Map<String, String>>) product.get("listType"));
@@ -66,7 +64,7 @@ public class ProductPageServiceImpl implements ProductPageService {
 		if (typeSupportMovies.size() >= 1) {
 
 			TypeSupportMovie typeSupport = typeSupportMovies.get(0);
-			margeAllResultSupport(product, "movie", typeSupport, typeSupport.getMovie());
+			margeAllResultSupport(product, "film", typeSupport, typeSupport.getMovie());
 
 			for (TypeSupportMovie typeSupportMovie : typeSupportMovies) {
 				insertTypeInProducts(typeSupportMovie, product, (List<Map<String, String>>) product.get("listType"));

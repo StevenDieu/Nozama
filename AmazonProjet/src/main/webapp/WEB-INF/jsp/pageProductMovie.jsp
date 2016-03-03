@@ -10,7 +10,7 @@
 		<a href="/"><span>Accueil </span></a>
 	</li>
 	<li>
-		<a href="/liste-tous-les-films"><span>Movie</span></a>
+		<a href="/liste-tous-les-films"><span class="first-letter">${products.type}</span></a>
 	</li>
 	<li class="active">
 		<span>${products.name} </span>
