@@ -42,7 +42,7 @@
 					<option value="Action" <c:if test="${type == 'Action' }">selected</c:if>>Action</option>
 					<option value="Animation" <c:if test="${type == 'Animation' }">selected</c:if>>Animation</option>
 					<option value="ArtsMartiaux" <c:if test="${type == 'ArtsMartiaux' }">selected</c:if>>Arts Martiaux</option>
-					<option value="Aventure" <c:if test="${type == '"Aventure"' }">selected</c:if>>Aventure</option>
+					<option value="Aventure" <c:if test="${type == 'Aventure' }">selected</c:if>>Aventure</option>
 					<option value="Biopic" <c:if test="${type == 'Biopic' }">selected</c:if>>Biopic</option>
 					<option value="ComedieDramatique" <c:if test="${type == 'ComedieDramatique' }">selected</c:if>>Comédie dramatique</option>
 					<option value="ComedieMusicale" <c:if test="${type == 'ComedieMusicale' }">selected</c:if>>Comédie musicale</option>
