@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class CtrlHome {
+public class CtrlCart {
 
-	@RequestMapping(value = "/")
+	@RequestMapping(value = "/mon-panier")
 	public ModelAndView index(HttpServletRequest request) {
 
 
-		return new ModelAndView("index");
+		return new ModelAndView("myCart");
 	}
 	
 	

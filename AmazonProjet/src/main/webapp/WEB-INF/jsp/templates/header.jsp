@@ -37,7 +37,10 @@
 				<!-- Left nav -->
 				<ul class="nav navbar-nav">
 					<li>
-						<a href="/liste-tous-les-produits">Tous les produits <span class="caret"></span></a>
+						<a href="/liste-tous-les-produits">
+							Tous les produits
+							<span class="caret"></span>
+						</a>
 
 						<ul class="dropdown-menu">
 							<li class="menu-lateral">
@@ -180,28 +183,30 @@
 					</li>
 				</ul>
 
-				<c:choose>
-					<c:when test="${sessionScope.User != null}">
-						<ul class="nav navbar-nav navbar-right">
+				<ul class="nav navbar-nav navbar-right">
+					<c:choose>
+						<c:when test="${sessionScope.User != null}">
 							<li>
 								<a href="/mon-compte">Mon compte</a>
 							</li>
 							<li>
 								<a href="/se-deconnecter">Se deconnecter</a>
 							</li>
-						</ul>
-					</c:when>
-					<c:when test="${sessionScope.User == null}">
-						<ul class="nav navbar-nav navbar-right">
+						</c:when>
+						<c:when test="${sessionScope.User == null}">
 							<li>
 								<a href="/connexion">Connexion</a>
 							</li>
 							<li>
 								<a href="/inscription">Inscription</a>
 							</li>
-						</ul>
-					</c:when>
-				</c:choose>
+						</c:when>
+					</c:choose>
+					<li>
+					
+						<a href="/inscription"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+					</li>
+				</ul>
 
 
 			</div>
