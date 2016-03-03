@@ -1,11 +1,8 @@
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<jsp:include page="templates/header.jsp" />
+<jsp:include page="../templates/header.jsp" />
 
 <div class="panel panel-default">
 	<div class="panel-heading">
@@ -24,8 +21,8 @@
 				Support : <select id="support" name="support">
 					<option value="AllSupport" <c:if test="${support == 'AllSupport' }">selected</c:if>>Tous les supports</option>
 					<option value="CD" <c:if test="${support == 'CD' }">selected</c:if>>CD</option>
-					<option value="VINYLE" <c:if test="${support == 'VINYLE' }">selected</c:if>>Vinyle</option>
-					<option value="DOWLOAD" <c:if test="${support == 'DOWLOAD' }">selected</c:if>>Téléchargement</option>
+					<option value="Vinyle" <c:if test="${support == 'Vinyle' }">selected</c:if>>Vinyle</option>
+					<option value="Telechargement" <c:if test="${support == 'Telechargement' }">selected</c:if>>Téléchargement</option>
 				</select>
 			</div>
 
@@ -71,51 +68,10 @@
 </div>
 <div class="clearBoth"></div>
 
-<div class="rowProduct">
 
-	<c:set var="listProducts" value="${products}" />
-	<c:forEach var="product" items="${listProducts}" varStatus="counter">
-
-		<a href="#" class="product">
-			<div class="titleProduct">
-				<c:out value="${product.name}" />
-			</div>
-			<div class="imageProduct">
-				<img src="/resources/img/product/<c:out value="${product.urlPicture}" />" alt="${product.name}" />
-			</div>
-
-			<div class="descriptionProduct">
-				<c:if test="${fn:length(product.description) == 0}">
-				Pas de description...
-			</c:if>
-				<c:out value="${fn:substring(product.description, 0, 87)}" />
-				<c:if test="${fn:length(product.description) > 87}">
-				...
-			</c:if>
-
-			</div>
-
-			<div class="allBlockProductBottom">
-				<c:set var="listType" value="${product.listType}" />
-				<c:forEach var="type" items="${listType}">
-					<div class="blockProductBottom">
-
-						<div class="priceProduct">
-							<img src="/resources/img/${type.support}.png" />
-							<fmt:formatNumber value="${type.price}" type="currency" />
-						</div>
-						<div class="buttonAddCart">
-							<input type="button" class="btn btn-primary" value="Ajouter au panier" />
-						</div>
-					</div>
-
-				</c:forEach>
-			</div>
-		</a>
+	<jsp:include page="listProduct.jsp" />
 
 
-	</c:forEach>
-</div>
 <div class="paginationMusic center100"></div>
 <script>
 	var varNumberPage = ${numberPage};
@@ -125,4 +81,4 @@
 <script src="/resources/js/jquery.twbsPagination.min.js"></script>
 <script src="/resources/js/listeProduct.js"></script>
 
-<jsp:include page="templates/footer.jsp" />
+<jsp:include page="../templates/footer.jsp" />

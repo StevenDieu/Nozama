@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import nozama.model.User;
-import nozama.service.UserService;
+import nozama.service.UserServiceImpl;
 
 @Controller
 public class CtrlUser {
 
 	@Autowired
-	private UserService US;
+	private UserServiceImpl US;
 
 	@RequestMapping(value = "/inscription")
 	public String signUp(HttpServletRequest request) {
@@ -46,12 +46,11 @@ public class CtrlUser {
 			return "{\"statut\": \"nok\",\"message\":  \"L'adresse email n'est pas valide.\"}";
 		} else if (email == "" || password == "") {
 			return "{\"statut\": \"nok\",\"message\":  \"Tout les champs sont obligatoires.\"}";
-		} else if (!US.checkEmail(email)) {
-			return "{\"statut\": \"nok\",\"message\":  \"Cette adresse email n'existe pas.\"}";
-		}
+		} 
+		
 		User user = US.connexion(email, password);
 		if (user == null) {
-			return "{\"statut\": \"nok\",\"message\":  \"Le mot de passe est incorrect.\"}";
+			return "{\"statut\": \"nok\",\"message\":  \"une erreur est survenue.\"}";
 		}
 
 		request.getSession().setAttribute("User", user);

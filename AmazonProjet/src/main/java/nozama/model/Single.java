@@ -1,5 +1,5 @@
 package nozama.model;
-// Generated 26 f�vr. 2016 19:41:07 by Hibernate Tools 4.3.1.Final
+// Generated 2 mars 2016 20:06:10 by Hibernate Tools 4.3.1.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -27,8 +27,9 @@ public class Single implements java.io.Serializable,Categorie {
 	private Integer idSingle;
 	private Artiste artiste;
 	private Product product;
-	private Date dateReleased;
 	private String type;
+	private String label;
+	private Date totalTime;
 	private Set<AlbumHasSingle> albumHasSingles = new HashSet<AlbumHasSingle>(0);
 	private Set<TypeSupportSingle> typeSupportSingles = new HashSet<TypeSupportSingle>(0);
 
@@ -41,11 +42,12 @@ public class Single implements java.io.Serializable,Categorie {
 		this.type = type;
 	}
 
-	public Single(Artiste artiste, Product product, Date dateReleased, String type, Set<AlbumHasSingle> albumHasSingles, Set<TypeSupportSingle> typeSupportSingles) {
+	public Single(Artiste artiste, Product product, String type, String label, Date totalTime, Set<AlbumHasSingle> albumHasSingles, Set<TypeSupportSingle> typeSupportSingles) {
 		this.artiste = artiste;
 		this.product = product;
-		this.dateReleased = dateReleased;
 		this.type = type;
+		this.label = label;
+		this.totalTime = totalTime;
 		this.albumHasSingles = albumHasSingles;
 		this.typeSupportSingles = typeSupportSingles;
 	}
@@ -82,16 +84,6 @@ public class Single implements java.io.Serializable,Categorie {
 		this.product = product;
 	}
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "date_released", length = 10)
-	public Date getDateReleased() {
-		return this.dateReleased;
-	}
-
-	public void setDateReleased(Date dateReleased) {
-		this.dateReleased = dateReleased;
-	}
-
 	@Column(name = "type", nullable = false)
 	public String getType() {
 		return this.type;
@@ -99,6 +91,25 @@ public class Single implements java.io.Serializable,Categorie {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	@Column(name = "label")
+	public String getLabel() {
+		return this.label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	@Temporal(TemporalType.TIME)
+	@Column(name = "total_time", length = 8)
+	public Date getTotalTime() {
+		return this.totalTime;
+	}
+
+	public void setTotalTime(Date totalTime) {
+		this.totalTime = totalTime;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "single")

@@ -2,7 +2,7 @@ package nozama.model;
 
 public interface TypeSupport {
 	public String getNameSupport();
-	public int getPrice();
+	public float getPrice();
 	public Integer getIdTypeSupport();
 
 }

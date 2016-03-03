@@ -1,5 +1,5 @@
 package nozama.model;
-// Generated 26 f�vr. 2016 19:41:07 by Hibernate Tools 4.3.1.Final
+// Generated 2 mars 2016 20:06:10 by Hibernate Tools 4.3.1.Final
 
 import java.util.Date;
 import java.util.HashSet;
@@ -27,22 +27,21 @@ public class Movie implements java.io.Serializable,Categorie {
 	private Integer idMovie;
 	private Product product;
 	private String type;
-	private Date dateReleased;
+	private Date totalTime;
 	private Set<TypeSupportMovie> typeSupportMovies = new HashSet<TypeSupportMovie>(0);
 
 	public Movie() {
 	}
 
-	public Movie(Product product, String type, Date dateReleased) {
+	public Movie(Product product, String type) {
 		this.product = product;
 		this.type = type;
-		this.dateReleased = dateReleased;
 	}
 
-	public Movie(Product product, String type, Date dateReleased, Set<TypeSupportMovie> typeSupportMovies) {
+	public Movie(Product product, String type, Date totalTime, Set<TypeSupportMovie> typeSupportMovies) {
 		this.product = product;
 		this.type = type;
-		this.dateReleased = dateReleased;
+		this.totalTime = totalTime;
 		this.typeSupportMovies = typeSupportMovies;
 	}
 
@@ -78,13 +77,13 @@ public class Movie implements java.io.Serializable,Categorie {
 	}
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "date_released", nullable = false, length = 10)
-	public Date getDateReleased() {
-		return this.dateReleased;
+	@Column(name = "total_time", length = 10)
+	public Date getTotalTime() {
+		return this.totalTime;
 	}
 
-	public void setDateReleased(Date dateReleased) {
-		this.dateReleased = dateReleased;
+	public void setTotalTime(Date totalTime) {
+		this.totalTime = totalTime;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "movie")

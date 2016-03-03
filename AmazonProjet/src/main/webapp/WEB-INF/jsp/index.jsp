@@ -1,6 +1,3 @@
-
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="templates/header.jsp" />
 
 <div id="carousel-example-generic" class="carousel slide replaceCarousel" data-ride="carousel">
@@ -20,7 +17,7 @@
 		</div>
 
 		<div class="item">
-			<a href="/liste-toutes-les-musiques/VINYLE/single/AllYears/ALL">
+			<a href="/liste-toutes-les-musiques/Vinyle/single/AllYears/ALL">
 				<img src="/resources/img/home/music_vinyle.jpg" alt="music vinyle">
 			</a>
 		</div>
