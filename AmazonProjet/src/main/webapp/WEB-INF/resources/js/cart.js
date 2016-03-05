@@ -67,7 +67,7 @@ function deleteProduct(element,id,type){
 $(document).ready(function() {
 	var totalPrice = 0;
 	$(".totalProduct").each(function(index) {
-		totalPrice = totalPrice + parseFloat($(this).data("price"));
+		totalPrice = totalPrice + parseFloat($(this).data("price").replace(",", "."));
 	});
 	$(".priceTotal").html(totalPrice.toFixed(2));
 

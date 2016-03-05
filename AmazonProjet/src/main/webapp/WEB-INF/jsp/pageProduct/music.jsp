@@ -89,7 +89,7 @@
 		<c:forEach var="albumHasSingle" items="${albumHasSingles}" varStatus="counter">
 			<p>
 				Album :
-				<a href="/product/album/${albumHasSingle.album.product.nameTagDateReleased}">
+				<a href="/product/album/${albumHasSingle.album.product.nameTagDateReleased}" class="linkBold">
 					<c:out value="${albumHasSingle.album.product.name}" />
 				</a>
 			</p>

@@ -325,6 +325,14 @@ ol.ssMenu {
 	font-size: 24px;
 }
 
+.alert{
+	display: none;
+}
+
+.linkBold{
+	font-weight: 600;
+}
+
 @media screen and (max-width: 767px) {
 	.menu-lateral {
 		display: block;

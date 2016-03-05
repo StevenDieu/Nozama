@@ -2,6 +2,7 @@ var boolProgress = true;
 var timeOut;
 
 function showMessage(type, message) {
+	$(".alert").css({display: "inline-block"});
 	clearTimeout(timeOut); 
 	$(".alert").removeClass("alert-danger alert-success");
 	if (type === "error") {
@@ -12,6 +13,8 @@ function showMessage(type, message) {
 		$(".message").html("<strong>Succès !</strong> " + message);
 	}
 	timeOut = setTimeout('$(".alert").removeClass("in")', 3000); 
+	timeOut = setTimeout('$(".alert").hide()', 3500); 
+
 }
 
 function addInCart(id, typeData) {
