@@ -41,12 +41,12 @@
 				<c:forEach var="type" items="${listType}">
 					<div class="blockProductBottom">
 						<div class="priceProduct">
-						
+
 							<img data-toggle="tooltip" data-placement="left" title="Format : ${type.support}" src="/resources/img/${type.support}.png" />
 							<fmt:formatNumber value="${type.price}" type="currency" />
 						</div>
 						<div class="buttonAddCart">
-							<input type="button" class="btn btn-primary" value="Ajouter au panier" />
+							<input type="button" class="addCart btn btn-primary" data-id="${type.id}" data-type="${product.type}" value="Ajouter au panier" />
 						</div>
 					</div>
 

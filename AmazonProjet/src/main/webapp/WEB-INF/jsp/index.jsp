@@ -11,7 +11,7 @@
 	<!-- Wrapper for slides -->
 	<div class="carousel-inner" role="listbox">
 		<div class="item active">
-			<a href="/liste-toutes-les-musiques/MusiqueClassqie">
+			<a href="/liste-toutes-les-musiques/MusiqueClassique">
 				<img src="/resources/img/home/music_classique.jpg" alt="music classique">
 			</a>
 		</div>

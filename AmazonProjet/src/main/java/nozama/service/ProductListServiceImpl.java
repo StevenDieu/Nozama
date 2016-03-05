@@ -168,7 +168,7 @@ public class ProductListServiceImpl implements ProductListService {
 		}
 	};
 
-	private void margeAllResultTypeSupportAlbum(List<TypeSupportAlbum> typeSupportAlbums, List<Map<String, Object>> allProduct) {
+	public void margeAllResultTypeSupportAlbum(List<TypeSupportAlbum> typeSupportAlbums, List<Map<String, Object>> allProduct) {
 
 		for (TypeSupportAlbum typeSupportAlbum : typeSupportAlbums) {
 			margeAllResultSupport(allProduct, "album","album", typeSupportAlbum, typeSupportAlbum.getAlbum(),"/liste-toutes-les-musiques/AllSupport/album/AllYears/ALL");
@@ -176,7 +176,7 @@ public class ProductListServiceImpl implements ProductListService {
 
 	}
 
-	private void margeAllResultTypeSupportMovie(List<TypeSupportMovie> typeSupportMovies, List<Map<String, Object>> allProduct) {
+	public void margeAllResultTypeSupportMovie(List<TypeSupportMovie> typeSupportMovies, List<Map<String, Object>> allProduct) {
 
 		for (TypeSupportMovie typeSupportMovie : typeSupportMovies) {
 			margeAllResultSupport(allProduct, "movie","film",  typeSupportMovie, typeSupportMovie.getMovie(),"/liste-tous-les-films");
@@ -184,7 +184,7 @@ public class ProductListServiceImpl implements ProductListService {
 
 	}
 
-	private void margeAllResultTypeSupportSignle(List<TypeSupportSingle> typeSupportSingles, List<Map<String, Object>> allProduct) {
+	public void margeAllResultTypeSupportSignle(List<TypeSupportSingle> typeSupportSingles, List<Map<String, Object>> allProduct) {
 
 		for (TypeSupportSingle typeSupportSingle : typeSupportSingles) {
 			margeAllResultSupport(allProduct, "single","single",  typeSupportSingle, typeSupportSingle.getSingle(),"/liste-toutes-les-musiques/AllSupport/single/AllYears/ALL");

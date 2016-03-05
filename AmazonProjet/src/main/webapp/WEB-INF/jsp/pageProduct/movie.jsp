@@ -3,14 +3,18 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<jsp:include page="templates/header.jsp" />
+<jsp:include page="../templates/header.jsp" />
 
 <ol class="breadcrumb">
 	<li>
-		<a href="/"><span>Accueil </span></a>
+		<a href="/">
+			<span>Accueil </span>
+		</a>
 	</li>
 	<li>
-		<a href="/liste-tous-les-films"><span class="first-letter">${products.type}</span></a>
+		<a href="/liste-tous-les-films">
+			<span class="first-letter">${products.type}</span>
+		</a>
 	</li>
 	<li class="active">
 		<span>${products.name} </span>
@@ -54,7 +58,7 @@
 								<img data-toggle="tooltip" data-placement="left" title="Format : ${type.support}" src="/resources/img/${type.support}.png" />
 								<fmt:formatNumber value="${type.price}" type="currency" />
 							</div>
-							<button class="btn btn-primary" type="button">Ajouter au panier</button>
+							<button class="addCart btn btn-primary" data-id="${type.id}" data-type="${products.type}">Ajouter au panier</button>
 						</div>
 					</div>
 
@@ -66,8 +70,20 @@
 	<div class="page-header">
 		<h3>Détail du produit</h3>
 	</div>
-	<p>Temps total :</p>
-	<p>Producteur :</p>
+
+
+	<a target="_blank" title="Twitter" href="https://twitter.com/share?url=${url}&text=${products.name}&via=nozama" rel="nofollow" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=700');return false;">
+		<img src="http://korben.info/wp-content/themes/korben2013/hab/twitter_icon.png" alt="Twitter" />
+	</a>
+	<a target="_blank" title="Facebook" href="https://www.facebook.com/sharer.php?u=${url}.&t=${products.name}" rel="nofollow" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=500,width=700');return false;">
+		<img src="http://korben.info/wp-content/themes/korben2013/hab/facebook_icon.png" alt="Facebook" />
+	</a>
+	<a target="_blank" title="Google +" href="https://plus.google.com/share?url=${url}.&hl=fr" rel="nofollow" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=650');return false;">
+		<img src="http://korben.info/wp-content/themes/korben2013/hab/gplus_icon.png" alt="Google Plus" />
+	</a>
+	<br />
+	<br />
+
 </div>
 
-<jsp:include page="templates/footer.jsp" />
+<jsp:include page="../templates/footer.jsp" />

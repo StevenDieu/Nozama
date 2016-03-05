@@ -43,14 +43,14 @@ public class CtrlUser {
 		if (request.getSession().getAttribute("User") != null) {
 			return "{\"statut\": \"ok\"}";
 		} else if (!US.isEmailAdress(email)) {
-			return "{\"statut\": \"nok\",\"message\":  \"L'adresse email n'est pas valide.\"}";
+			return "{\"statut\": \"error\",\"message\":  \"L'adresse email n'est pas valide.\"}";
 		} else if (email == "" || password == "") {
-			return "{\"statut\": \"nok\",\"message\":  \"Tout les champs sont obligatoires.\"}";
+			return "{\"statut\": \"error\",\"message\":  \"Tout les champs sont obligatoires.\"}";
 		} 
 		
 		User user = US.connexion(email, password);
 		if (user == null) {
-			return "{\"statut\": \"nok\",\"message\":  \"une erreur est survenue.\"}";
+			return "{\"statut\": \"error\",\"message\":  \"une erreur est survenue.\"}";
 		}
 
 		request.getSession().setAttribute("User", user);
@@ -73,11 +73,11 @@ public class CtrlUser {
 		if (request.getSession().getAttribute("User") != null) {
 			return "{\"statut\": \"ok\"}";
 		} else if (password.length() < 6 || password.length() > 54) {
-			return "{\"statut\": \"nok\",\"message\":  \"Votre mot de passe doit contenir entre 6 et 54 charactères.\"}";
+			return "{\"statut\": \"error\",\"message\":  \"Votre mot de passe doit contenir entre 6 et 54 charactères.\"}";
 		} else if (gender == "" || name == "" || lastName == "" || email == "" || password == "" || cgv == "") {
-			return "{\"statut\": \"nok\",\"message\":  \"Tout les champs sont obligatoires.\"}";
+			return "{\"statut\": \"error\",\"message\":  \"Tout les champs sont obligatoires.\"}";
 		} else if (!US.isEmailAdress(email)) {
-			return "{\"statut\": \"nok\",\"message\":  \"L'adresse email n'est pas valide.\"}";
+			return "{\"statut\": \"error\",\"message\":  \"L'adresse email n'est pas valide.\"}";
 		} else if (US.checkEmail(email)) {
 			return "{\"statut\": \"nok\",\"message\":  \"Cette adresse email est déja utilisé.\"}";
 		}

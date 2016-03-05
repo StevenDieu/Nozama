@@ -2,7 +2,6 @@ var boolProgress = true;
 
 function signUp() {
 	var gender = $('input[name=gender]:checked').val()
-	$(".alert").hide();
 	if (boolProgress) {
 		if (gender !== undefined && $(".lastName").val() !== "" && $(".email").val() !== "" && $(".password").val() !== "") {
 			if ($(".password").val() === $(".confirmPassword").val()) {
@@ -19,32 +18,27 @@ function signUp() {
 								t = JSON.parse(t);
 								if (t.statut == "ok") {
 									window.location.replace(t.redirect);
-								} else if (t.statut == "nok") {
-									$(".alert").show();
-									$(".errorMessage").html(t.message);
+								} else {
+									self.showMessage(t.statut, t.message)
 								}
+
 								self.boolProgress = true;
 							}
 							});
 						} else {
-							$(".alert").show();
-							$(".errorMessage").html("Les conditions d'utilisation doivent \352tre accept\351s.");
+							showMessage("error", "Les conditions d'utilisation doivent \352tre accept\351s.");
 						}
 					} else {
-						$(".alert").show();
-						$(".errorMessage").html("Le mot de passe doit être compris entre 6 et 54 charat\350res.");
+						showMessage("error", "Le mot de passe doit être compris entre 6 et 54 charat\350res.");
 					}
 				} else {
-					$(".alert").show();
-					$(".errorMessage").html("L'adresse mail n'est pas valide.");
+					showMessage("error", "L'adresse mail n'est pas valide.");
 				}
 			} else {
-				$(".alert").show();
-				$(".errorMessage").html("Les mots de passe ne sont pas identiques.");
+				showMessage("error", "Les mots de passe ne sont pas identiques.");
 			}
 		} else {
-			$(".alert").show();
-			$(".errorMessage").html("Aucun champ ne doit \352tre vide.");
+			showMessage("error", "Aucun champ ne doit \352tre vide.");
 		}
 
 	}

@@ -8,14 +8,6 @@
 		</div>
 		<div class="panel-body">
 
-			<div class="alert alert-danger alert-dismissible hide" role="alert">
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					<span aria-hidden="true">×</span>
-				</button>
-				<strong>Erreur !! </strong>
-				<p class="errorMessage"></p>
-				<p>
-			</div>
 			</br>
 
 			<input type="hidden" class="redirect" value="${redirect}" />
@@ -35,10 +27,6 @@
 			
 			<div class="form-group">
 				<input type="submit" class="btn btn-default" placeholder="Se connecter" />
-			</div>
-			
-			<div class="form-group">
-				<a href="mot-de-passe-oublie">Mot de passe oubli&eacute;?</a>
 			</div>
 			
 			<div class="form-group">

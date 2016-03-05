@@ -57,7 +57,7 @@
 												<a href="/liste-toutes-les-musiques/PopRockInde"> Pop-rock indé </a>
 											</li>
 											<li>
-												<a href="/liste-toutes-les-musiques/MusiqueClassqie"> Musique classique </a>
+												<a href="/liste-toutes-les-musiques/MusiqueClassique"> Musique classique </a>
 											</li>
 											<li>
 												<a href="/liste-toutes-les-musiques/HarRockMetal"> Hard rock, métal </a>
@@ -203,8 +203,21 @@
 						</c:when>
 					</c:choose>
 					<li>
-					
-						<a href="/inscription"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+
+						<a href="/mon-panier">
+							<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+							<span class="badge nbCart">
+								<c:choose>
+									<c:when test="${sessionScope.nbCart != null}">
+										<c:out value="${sessionScope.nbCart}" />
+									</c:when>
+									<c:when test="${sessionScope.nbCart == null}">
+										0
+									</c:when>
+								</c:choose>
+							</span>
+
+						</a>
 					</li>
 				</ul>
 
@@ -214,3 +227,9 @@
 		</div>
 	</div>
 	<div class="container">
+
+		<div class="block-alert-fixe">
+			<div class="alert alert-dismissible fade alert-fixed" role="alert">
+				<span class="message">test</span>
+			</div>
+		</div>

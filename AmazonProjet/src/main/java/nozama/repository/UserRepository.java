@@ -20,7 +20,6 @@ public class UserRepository {
 		Criteria cr = openSession.createCriteria(User.class);
 		cr.add(Restrictions.eq("emailAdress", email));
 		cr.add(Restrictions.eq("password", password));
-		HibernateUtil.shutdown();
 
 		return cr.list();
 	}
@@ -28,7 +27,6 @@ public class UserRepository {
 	public List<User> getUserByEmail(String email) {
 		Criteria cr = openSession.createCriteria(User.class);
 		cr.add(Restrictions.eq("emailAdress", email));
-		HibernateUtil.shutdown();
 
 		return cr.list();
 	}

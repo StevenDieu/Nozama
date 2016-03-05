@@ -99,7 +99,7 @@ ol.ssMenu {
 .descriptionProduct {
 	max-width: 295px;
 	margin: 0 auto;
-	height: 70px;
+	height: 200px;
 }
 
 .imageProduct img {
@@ -259,6 +259,70 @@ ol.ssMenu {
 	margin-left: 40px;
 	margin-bottom: 20px;
 	font-weight: 600;
+}
+
+.imageCart {
+	width: 100px;
+	height: 100px;
+}
+
+.center {
+	text-align: center;
+	margin: 0 auto;
+}
+
+.centerVerticale {
+	vertical-align: middle !important;
+}
+
+.centerVerticale a {
+	
+}
+
+.centerVerticale a {
+	font-weight: 600;
+}
+
+.totalCart {
+	background: #fbfbfb;
+	font-weight: bold; 600 18 px /22px "Roboto", sans-serif;
+	color: #555454;
+	text-transform: uppercase;
+	text-align: right;
+	padding: 13px;
+	font-size: 18px;
+}
+
+.alert-fixed {
+	display: inline-block;
+}
+
+.block-alert-fixe {
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 60px;
+	z-index: 999;
+	text-align: center;
+}
+
+.input-number-cart {
+	width: 70px;
+	margin: 0 auto 3px auto;
+	text-align: center;
+	float: none;
+}
+
+.input-number-cart input{
+	text-align: center;
+}
+
+.input-cart{
+	float: right;
+}
+
+.priceTotal{
+	font-size: 24px;
 }
 
 @media screen and (max-width: 767px) {

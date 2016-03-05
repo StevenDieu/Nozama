@@ -3,7 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<jsp:include page="templates/header.jsp" />
+<jsp:include page="../templates/header.jsp" />
 
 <ol class="breadcrumb">
 	<li>
@@ -61,7 +61,7 @@
 								<img data-toggle="tooltip" data-placement="left" title="Format : ${type.support}" src="/resources/img/${type.support}.png" />
 								<fmt:formatNumber value="${type.price}" type="currency" />
 							</div>
-							<button class="btn btn-primary" type="button">Ajouter au panier</button>
+							<button class="addCart btn btn-primary" data-id="${type.id}" data-type="${products.type}">Ajouter au panier</button>
 						</div>
 					</div>
 
@@ -73,12 +73,25 @@
 	<div class="page-header">
 		<h3>Détail du produit</h3>
 	</div>
+	<a target="_blank" title="Twitter" href="https://twitter.com/share?url=${url}&text=${products.name}&via=nozama" rel="nofollow" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=400,width=700');return false;">
+		<img src="http://korben.info/wp-content/themes/korben2013/hab/twitter_icon.png" alt="Twitter" />
+	</a>
+	<a target="_blank" title="Facebook" href="https://www.facebook.com/sharer.php?u=${url}.&t=${products.name}" rel="nofollow" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=500,width=700');return false;">
+		<img src="http://korben.info/wp-content/themes/korben2013/hab/facebook_icon.png" alt="Facebook" />
+	</a>
+	<a target="_blank" title="Google +" href="https://plus.google.com/share?url=${url}.&hl=fr" rel="nofollow" onclick="javascript:window.open(this.href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=450,width=650');return false;">
+		<img src="http://korben.info/wp-content/themes/korben2013/hab/gplus_icon.png" alt="Google Plus" />
+	</a>
+	<br />
+	<br />
 	<c:if test="${not empty products.albumName}">
 		<c:set var="albumHasSingles" value="${products.albumName}" />
 		<c:forEach var="albumHasSingle" items="${albumHasSingles}" varStatus="counter">
 			<p>
 				Album :
-				<a href="/product/album/${albumHasSingle.album.product.nameTagDateReleased}"><c:out value="${albumHasSingle.album.product.name}" /></a>
+				<a href="/product/album/${albumHasSingle.album.product.nameTagDateReleased}">
+					<c:out value="${albumHasSingle.album.product.name}" />
+				</a>
 			</p>
 		</c:forEach>
 	</c:if>
@@ -111,11 +124,15 @@
 					<c:forEach var="AlbumHasSingle" items="${AlbumHasSingles}" varStatus="counter">
 
 						<tr>
-							<td><a href="/product/single/${AlbumHasSingle.single.product.nameTagDateReleased}">
+							<td>
+								<a href="/product/single/${AlbumHasSingle.single.product.nameTagDateReleased}">
 									<strong>${AlbumHasSingle.single.product.name}</strong>
-								</a></td>
+								</a>
+							</td>
 							<td>${AlbumHasSingle.single.totalTime}</td>
-							<td><fmt:formatDate pattern="dd/MM/yyyy" value="${AlbumHasSingle.single.product.dateReleased}" /></td>
+							<td>
+								<fmt:formatDate pattern="dd/MM/yyyy" value="${AlbumHasSingle.single.product.dateReleased}" />
+							</td>
 						</tr>
 
 					</c:forEach>
@@ -125,4 +142,4 @@
 	</c:if>
 </div>
 
-<jsp:include page="templates/footer.jsp" />
+<jsp:include page="../templates/footer.jsp" />

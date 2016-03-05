@@ -139,11 +139,14 @@ public class CtrlProduct {
 		}
 		Map<String, Object> product = new HashMap<String, Object>();
 		product.put("products", productItem);
+		product.put("url", request.getRequestURL() );
+
+		
 
 		if(type.equals("movie")){
-			return new ModelAndView("pageProductMovie",product);
+			return new ModelAndView("pageProduct/movie",product);
 		}else{
-			return new ModelAndView("pageProductMusic",product);
+			return new ModelAndView("pageProduct/music",product);
 		}
 	}
 }

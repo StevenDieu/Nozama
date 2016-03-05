@@ -7,14 +7,6 @@
 			<h3 class="panel-title">Inscription</h3>
 		</div>
 		<div class="panel-body">
-			<div class="alert alert-danger alert-dismissible hide" role="alert">
-				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					<span aria-hidden="true">×</span>
-				</button>
-				<strong>Erreur !! </strong>
-				<p class="errorMessage"></p>
-				<p>
-			</div>
 			<br />
 
 			<div class="form-group">

@@ -1,10 +1,10 @@
 var boolProgress = true;
 
 function signIn() {
-	$(".alert").hide();
 	if (boolProgress) {
 		if ($(".email").val() !== "" && $(".pwd").val() !== "") {
 			boolProgress = false;
+
 			var self = this;
 			$.ajax({
 			type : "post",
@@ -18,16 +18,15 @@ function signIn() {
 					}
 					window.location.replace(t.redirect);
 
-				} else if (t.statut == "nok") {
-					$(".alert").show();
-					$(".errorMessage").html(t.message);
+				} else {
+					self.showMessage(t.statut, t.message)
 				}
+
 				self.boolProgress = true;
 			}
 			});
 		} else {
-			$(".alert").show();
-			$(".errorMessage").html("Aucun champ ne doit \352tre vide.");
+			showMessage("error", "Aucun champ ne doit \352tre vide.");
 		}
 	}
 	return false;

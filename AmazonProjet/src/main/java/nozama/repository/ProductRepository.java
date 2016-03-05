@@ -10,10 +10,7 @@ import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
-import nozama.model.Album;
 import nozama.model.AlbumHasSingle;
-import nozama.model.Single;
-import nozama.model.TypeSupport;
 import nozama.model.TypeSupportAlbum;
 import nozama.model.TypeSupportMovie;
 import nozama.model.TypeSupportSingle;
@@ -203,7 +200,7 @@ public class ProductRepository {
 		cr.createAlias("a.product", "prod");
 		cr.add(Restrictions.eq("prod.nameTagDateReleased", nameTagDateReleased));
 
-		return cr.list();		
+		return cr.list();
 	}
 
 	public List<TypeSupportMovie> getProductMovie(String nameTagDateReleased) {
@@ -212,14 +209,14 @@ public class ProductRepository {
 		cr.createAlias("m.product", "prod");
 		cr.add(Restrictions.eq("prod.nameTagDateReleased", nameTagDateReleased));
 
-		return cr.list();		
+		return cr.list();
 	}
 
 	public List<AlbumHasSingle> getAllSingle(Integer idAlbum) {
 		Criteria cr = openSession.createCriteria(AlbumHasSingle.class);
 		cr.createAlias("album", "a");
 		cr.createAlias("single", "s");
-		
+
 		cr.createAlias("s.product", "prod");
 		cr.add(Restrictions.eq("a.idAlbum", idAlbum));
 
@@ -233,6 +230,32 @@ public class ProductRepository {
 
 		cr.createAlias("a.product", "prod");
 		cr.add(Restrictions.eq("s.idSingle", idSIngle));
+
+		return cr.list();
+	}
+
+	public List<TypeSupportSingle> getAllSingle(List<Integer> allIdSingle) {
+		Criteria cr = openSession.createCriteria(TypeSupportSingle.class);
+		cr.createAlias("single", "s");
+		cr.createAlias("s.product", "prod");
+		cr.add(Restrictions.in("idTypeSupport", allIdSingle));
+
+		return cr.list();
+	}
+
+	public List<TypeSupportAlbum> getAllAlbum(List<Integer> allIdAlbum) {
+		Criteria cr = openSession.createCriteria(TypeSupportAlbum.class);
+		cr.createAlias("album", "a");
+		cr.createAlias("a.product", "prod");
+		cr.add(Restrictions.in("idTypeSupport", allIdAlbum));
+		return cr.list();
+	}
+
+	public List<TypeSupportMovie> getAllMovie(List<Integer> allIdMovie) {
+		Criteria cr = openSession.createCriteria(TypeSupportMovie.class);
+		cr.createAlias("movie", "m");
+		cr.createAlias("m.product", "prod");
+		cr.add(Restrictions.in("idTypeSupport", allIdMovie));
 
 		return cr.list();
 	}
