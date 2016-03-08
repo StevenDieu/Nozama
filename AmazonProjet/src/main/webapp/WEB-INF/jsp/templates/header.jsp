@@ -30,7 +30,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="/">Nozama</a>
+				<a class="navbar-brand" id="nozama" href="/">Nozama</a>
 			</div>
 			<div class="navbar-collapse collapse">
 

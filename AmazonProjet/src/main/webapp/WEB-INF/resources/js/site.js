@@ -10,7 +10,7 @@ function showMessage(type, message) {
 		$(".message").html("<strong>Erreur !</strong> " + message);
 	} else {
 		$(".alert").addClass("alert-success in");
-		$(".message").html("<strong>Succès !</strong> " + message);
+		$(".message").html("<strong>Succ&#232;s !</strong> " + message);
 	}
 	timeOut = setTimeout('$(".alert").removeClass("in")', 3000); 
 	timeOut = setTimeout('$(".alert").hide()', 3500); 
