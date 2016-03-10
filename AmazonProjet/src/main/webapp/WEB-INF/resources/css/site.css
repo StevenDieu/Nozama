@@ -198,7 +198,7 @@ ol.ssMenu {
 	margin-bottom: 10px;
 }
 
-.buttonWithoutBackground:hover {
+.buttonWithoutBackground:hover, .btn.btn-default {
 	border: 1px solid #2e6da4;
 	font-weight: 400;
 	background-color: #337ab7;
@@ -342,6 +342,13 @@ ol.ssMenu {
 
 .linkBold{
 	font-weight: 600;
+}
+
+.navbar-right li a:hover{
+	color: #337ab7;
+}
+.glyphicon-chevron-left:before, .glyphicon-chevron-right:before{
+	color: #337ab7;
 }
 
 @media screen and (max-width: 767px) {
