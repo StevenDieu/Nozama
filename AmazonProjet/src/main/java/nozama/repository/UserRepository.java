@@ -31,14 +31,12 @@ public class UserRepository {
 		return cr.list();
 	}
 
-	public void insertUser(User users) {
-		Session session = HibernateUtil.getSessionFactory().openSession();
-		session.beginTransaction();
+	public void insertUser(User users) {		
+		openSession.beginTransaction();
 
-		session.save(users);
+		openSession.save(users);
 
-		session.getTransaction().commit();
-		HibernateUtil.shutdown();
+		openSession.getTransaction().commit();
 	}
 
 }

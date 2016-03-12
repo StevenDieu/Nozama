@@ -1,6 +1,8 @@
 body {
 	min-height: 100vh;
 	background-color: #F3F3F3;
+	position: relative;
+	padding-bottom: 60px;
 }
 
 a {
@@ -313,23 +315,45 @@ ol.ssMenu {
 	float: none;
 }
 
-.input-number-cart input{
+.input-number-cart input {
 	text-align: center;
 }
 
-.input-cart{
+.input-cart {
 	float: right;
 }
 
-.priceTotal{
+.priceTotal {
 	font-size: 24px;
 }
 
-.alert{
+.alert {
 	display: none;
 }
 
-.linkBold{
+.linkBold {
+	font-weight: 600;
+}
+
+.logo {
+	width: 115px;
+	margin-top: -6px;
+}
+
+.footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 60px;
+	background-color: #464646;
+	border-color: #e7e7e7;
+	color: #fff;
+	padding-top: 20px;
+	padding-bottom: 30px
+}
+
+.footer a {
+	color: #fff;
 	font-weight: 600;
 }
 
