@@ -57,7 +57,7 @@ ol.ssMenu {
 }
 
 .titleMenu a {
-	color: #777;
+	color: #337ab7;
 	text-decoration: none;
 }
 
@@ -67,7 +67,7 @@ ol.ssMenu {
 }
 
 .titleMenu a:HOVER {
-	color: #5e5e5e;
+	color: #2e6da4;
 }
 
 .blockSsMenu {
@@ -108,7 +108,7 @@ ol.ssMenu {
 	text-align: center;
 	background-attachment: fixed;
 	height: 100%;
-	width: 100%;
+	width: auto;
 }
 
 .product {
@@ -145,7 +145,9 @@ ol.ssMenu {
 	width: 35px;
 	margin-bottom: 4px;
 }
-
+.breadcrumb .active, #nozama{
+	color:#337ab7
+}
 .filtre {
 	min-height: 40px;
 	width: 100%;
@@ -154,7 +156,9 @@ ol.ssMenu {
 	border-radius: 5px;
 	padding: 15px;
 }
-
+.carousel-inner{
+	margin-top: 1%;
+}
 .buttonWithoutBackground {
 	display: inline-block;
 	padding: 6px 12px;
@@ -196,20 +200,27 @@ ol.ssMenu {
 	margin-bottom: 10px;
 }
 
-.buttonWithoutBackground:hover {
-	background-color: #F7F7F7;
+.buttonWithoutBackground:hover, .btn.btn-default {
+	border: 1px solid #2e6da4;
+	font-weight: 400;
+	background-color: #337ab7;
+	text-decoration: none;
+	color: #fff;
 }
 
 .selectedFormat {
-	border: 1px solid #DC5555;
-	font-weight: 600;
-	background-color: #FAEBD7;
+	border: 1px solid #2e6da4;
+	font-weight: 400;
+	background-color: #337ab7;
+	text-decoration: none;
+	color: #fff;
 }
 
 .selectedFormat:hover {
-	border: 1px solid #DC5555;
-	font-weight: 600;
-	background-color: #FAEBD7;
+	border: 1px solid #929292;
+	color: #000;
+    font-weight: 400;
+	background-color: #F7F7F7;
 }
 
 .replaceCarousel {
@@ -355,6 +366,13 @@ ol.ssMenu {
 .footer a {
 	color: #fff;
 	font-weight: 600;
+}
+
+.navbar-right li a:hover{
+	color: #337ab7;
+}
+.glyphicon-chevron-left:before, .glyphicon-chevron-right:before{
+	color: #337ab7;
 }
 
 @media screen and (max-width: 767px) {
