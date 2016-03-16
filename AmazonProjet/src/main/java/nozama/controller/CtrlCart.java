@@ -20,140 +20,154 @@ import nozama.util.Util;
 @Controller
 public class CtrlCart {
 
-	@Autowired
-	private ProductCartServiceImpl PCS;
+  @Autowired
+  private ProductCartServiceImpl PCS;
 
-	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/mon-panier")
-	public ModelAndView myCart(HttpServletRequest request) {
+  @SuppressWarnings("unchecked")
+  @RequestMapping(value = "/mon-panier")
+  public ModelAndView myCart(HttpServletRequest request) {
 
-		Map<String, Object> product = new HashMap<String, Object>();
+    Map<String, Object> product = new HashMap<String, Object>();
 
-		if (request.getSession().getAttribute("cart") != null && request.getSession().getAttribute("cart") != "") {
+    if (request.getSession().getAttribute("cart") != null
+        && request.getSession().getAttribute("cart") != "") {
 
-			List<Map<String, Object>> allProduct = PCS.getAllCart((List<Map<String, Object>>) request.getSession().getAttribute("cart"));
-			product.put("products", allProduct);
-		}
+      List<Map<String, Object>> allProduct =
+          PCS.getAllCart((List<Map<String, Object>>) request.getSession().getAttribute("cart"));
+      product.put("products", allProduct);
+    }
 
-		return new ModelAndView("myCart", product);
-	}
+    return new ModelAndView("myCart", product);
+  }
 
-	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/ajaxDeleteProductCart", method = RequestMethod.POST)
-	@ResponseBody
-	public String deleteProductCart(HttpServletRequest request) {
-		String idString = request.getParameter("id");
-		String type = request.getParameter("type");
-		List<Map<String, Object>> listMapCart = new ArrayList<Map<String, Object>>();
+  @SuppressWarnings("unchecked")
+  @RequestMapping(value = "/ajaxDeleteProductCart", method = RequestMethod.POST)
+  @ResponseBody
+  public String deleteProductCart(HttpServletRequest request) {
+    String idString = request.getParameter("id");
+    String type = request.getParameter("type");
+    List<Map<String, Object>> listMapCart = new ArrayList<Map<String, Object>>();
 
-		if (idString != "" && Util.convertToInt(idString) && type != "") {
-			int id = Integer.parseInt(idString);
+    if (idString != "" && Util.convertToInt(idString) && type != "") {
+      int id = Integer.parseInt(idString);
 
-			if (request.getSession().getAttribute("cart") != null && request.getSession().getAttribute("cart") != "") {
-				List<Map<String, Object>> allCart = (List<Map<String, Object>>) request.getSession().getAttribute("cart");
+      if (request.getSession().getAttribute("cart") != null
+          && request.getSession().getAttribute("cart") != "") {
+        List<Map<String, Object>> allCart =
+            (List<Map<String, Object>>) request.getSession().getAttribute("cart");
 
-				for (Map<String, Object> cart : allCart) {
-					int idSession = (int) cart.get("id");
+        for (Map<String, Object> cart : allCart) {
+          int idSession = (int) cart.get("id");
 
-					if (!(idSession == id && cart.get("type").equals(type))) {
+          if (!(idSession == id && cart.get("type").equals(type))) {
 
-						Map<String, Object> listCart = new HashMap<>();
-						listCart.put("id", idSession);
-						listCart.put("type", cart.get("type"));
-						listCart.put("number", (int) cart.get("number"));
-						listMapCart.add(listCart);
+            Map<String, Object> listCart = new HashMap<>();
+            listCart.put("id", idSession);
+            listCart.put("type", cart.get("type"));
+            listCart.put("number", (int) cart.get("number"));
+            listMapCart.add(listCart);
 
-					}
-				}
-				request.getSession().setAttribute("nbCart", listMapCart.size());
-				request.getSession().setAttribute("cart", listMapCart);
-			}
-		}
-		return Integer.toString(listMapCart.size());
-	}
+          }
+        }
+        request.getSession().setAttribute("nbCart", listMapCart.size());
+        request.getSession().setAttribute("cart", listMapCart);
+      }
+    }
+    return Integer.toString(listMapCart.size());
+  }
 
-	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/ajaxChangeNumberProductCart", method = RequestMethod.POST)
-	@ResponseBody
-	public String changeNumberProductCart(HttpServletRequest request) {
-		String idString = request.getParameter("id");
-		String numberString = request.getParameter("number");
-		String type = request.getParameter("type");
+  @RequestMapping(value = "/ajaxDeleteAllProductCart", method = RequestMethod.POST)
+  @ResponseBody
+  public void deleteAllProductCart(HttpServletRequest request) {
+    request.getSession().setAttribute("nbCart", 0);
+    request.getSession().setAttribute("cart", null);
+  }
 
-		int number = 1;
+  @SuppressWarnings("unchecked")
+  @RequestMapping(value = "/ajaxChangeNumberProductCart", method = RequestMethod.POST)
+  @ResponseBody
+  public String changeNumberProductCart(HttpServletRequest request) {
+    String idString = request.getParameter("id");
+    String numberString = request.getParameter("number");
+    String type = request.getParameter("type");
 
-		if (idString != "" && Util.convertToInt(idString) &&
-				numberString != "" && Util.convertToInt(numberString) &&
-				type != "") {
-			int id = Integer.parseInt(idString);
-			number = Integer.parseInt(numberString);
-			if (number < 0) {
-				number = 1;
-			} else if (number > 100) {
-				number = 1;
-			}
-			if (request.getSession().getAttribute("cart") != null && request.getSession().getAttribute("cart") != "") {
-				List<Map<String, Object>> allCart = (List<Map<String, Object>>) request.getSession().getAttribute("cart");
-				List<Map<String, Object>> listMapCart = new ArrayList<Map<String, Object>>();
+    int number = 1;
 
-				for (Map<String, Object> cart : allCart) {
-					Map<String, Object> listCart = new HashMap<>();
-					int idSession = (int) cart.get("id");
-					listCart.put("id", idSession);
-					listCart.put("type", cart.get("type"));
-					if (idSession == id && cart.get("type").equals(type)) {
-						listCart.put("number", number);
-					} else {
-						listCart.put("number", (int) cart.get("number"));
-					}
-					listMapCart.add(listCart);
-				}
+    if (idString != "" && Util.convertToInt(idString) && numberString != ""
+        && Util.convertToInt(numberString) && type != "") {
+      int id = Integer.parseInt(idString);
+      number = Integer.parseInt(numberString);
+      if (number < 0) {
+        number = 1;
+      } else if (number > 100) {
+        number = 1;
+      }
+      if (request.getSession().getAttribute("cart") != null
+          && request.getSession().getAttribute("cart") != "") {
+        List<Map<String, Object>> allCart =
+            (List<Map<String, Object>>) request.getSession().getAttribute("cart");
+        List<Map<String, Object>> listMapCart = new ArrayList<Map<String, Object>>();
 
-				request.getSession().setAttribute("cart", listMapCart);
-			}
-		}
+        for (Map<String, Object> cart : allCart) {
+          Map<String, Object> listCart = new HashMap<>();
+          int idSession = (int) cart.get("id");
+          listCart.put("id", idSession);
+          listCart.put("type", cart.get("type"));
+          if (idSession == id && cart.get("type").equals(type)) {
+            listCart.put("number", number);
+          } else {
+            listCart.put("number", (int) cart.get("number"));
+          }
+          listMapCart.add(listCart);
+        }
 
-		return "{\"number\": " + number + "}";
-	}
+        request.getSession().setAttribute("cart", listMapCart);
+      }
+    }
 
-	@SuppressWarnings("unchecked")
-	@RequestMapping(value = "/ajaxAddCart", method = RequestMethod.POST)
-	@ResponseBody
-	public String addInMyCart(HttpServletRequest request) {
+    return "{\"number\": " + number + "}";
+  }
 
-		String idString = request.getParameter("id");
-		String type = request.getParameter("typeData");
+  @SuppressWarnings("unchecked")
+  @RequestMapping(value = "/ajaxAddCart", method = RequestMethod.POST)
+  @ResponseBody
+  public String addInMyCart(HttpServletRequest request) {
 
-		if (idString != "" && type != "" && Util.convertToInt(idString)) {
-			int id = Integer.parseInt(idString);
-			List<Map<String, Object>> listMapCart;
+    String idString = request.getParameter("id");
+    String type = request.getParameter("typeData");
 
-			if (request.getSession().getAttribute("cart") == null || request.getSession().getAttribute("cart") == "") {
-				listMapCart = new ArrayList<Map<String, Object>>();
-			} else {
-				listMapCart = (List<Map<String, Object>>) request.getSession().getAttribute("cart");
-				for (Map<String, Object> mapCart : listMapCart) {
-					if (((int) mapCart.get("id")) == id && mapCart.get("type").equals(type)) {
-						return "{\"statut\": \"error\",\"message\":  \"Ce produit est déjà dans votre panier.\"}";
-					}
-				}
+    if (idString != "" && type != "" && Util.convertToInt(idString)) {
+      int id = Integer.parseInt(idString);
+      List<Map<String, Object>> listMapCart;
 
-			}
+      if (request.getSession().getAttribute("cart") == null
+          || request.getSession().getAttribute("cart") == "") {
+        listMapCart = new ArrayList<Map<String, Object>>();
+      } else {
+        listMapCart = (List<Map<String, Object>>) request.getSession().getAttribute("cart");
+        for (Map<String, Object> mapCart : listMapCart) {
+          if (((int) mapCart.get("id")) == id && mapCart.get("type").equals(type)) {
+            return "{\"statut\": \"error\",\"message\":  \"Ce produit est déjà dans votre panier.\"}";
+          }
+        }
 
-			Map<String, Object> listCart = new HashMap<>();
-			listCart.put("id", id);
-			listCart.put("type", type);
-			listCart.put("number", 1);
-			listMapCart.add(listCart);
-			request.getSession().setAttribute("cart", listMapCart);
+      }
 
-			request.getSession().setAttribute("nbCart", listMapCart.size());
+      Map<String, Object> listCart = new HashMap<>();
+      listCart.put("id", id);
+      listCart.put("type", type);
+      listCart.put("number", 1);
+      listMapCart.add(listCart);
+      request.getSession().setAttribute("cart", listMapCart);
 
-			return "{\"statut\": \"succes\",\"nbCart\" : " + listMapCart.size() + ",\"message\":  \"Votre produit à été ajouté au panier.\"}";
-		} else {
-			return "{\"statut\": \"error\",\"message\":  \"Une erreur est survenue.\"}";
-		}
+      request.getSession().setAttribute("nbCart", listMapCart.size());
 
-	}
+      return "{\"statut\": \"succes\",\"nbCart\" : " + listMapCart.size()
+          + ",\"message\":  \"Votre produit à été ajouté au panier.\"}";
+    } else {
+      return "{\"statut\": \"error\",\"message\":  \"Une erreur est survenue.\"}";
+    }
+
+  }
 
 }
