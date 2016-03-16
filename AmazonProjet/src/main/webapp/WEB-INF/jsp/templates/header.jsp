@@ -30,7 +30,9 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="/"><img src="/resources/img/Misys_logo.png" alt="logo" class="logo"/></a>
+				<a class="navbar-brand" href="/">
+					<img src="/resources/img/Misys_logo.png" alt="logo" class="logo" />
+				</a>
 			</div>
 			<div class="navbar-collapse collapse">
 
@@ -228,8 +230,4 @@
 	</div>
 	<div class="container">
 
-		<div class="block-alert-fixe">
-			<div class="alert alert-dismissible fade alert-fixed" role="alert">
-				<span class="message">test</span>
-			</div>
-		</div>
+		<div id="alert" class="block-alert-fixe"></div>

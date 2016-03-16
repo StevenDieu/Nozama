@@ -1,20 +1,23 @@
 var boolProgress = true;
-var timeOut;
-
+var numberAlert = 0;
 function showMessage(type, message) {
-	$(".alert").css({display: "inline-block"});
-	clearTimeout(timeOut); 
-	$(".alert").removeClass("alert-danger alert-success");
+
+	var html = '<div class="blockAlert' + numberAlert + '"><div class="alert alert' + numberAlert + ' alert-dismissible fade alert-fixed" role="alert"><span class="message"></span></div><br/></div>';
+	$("#alert").append(html);
+	
+	$(".alert" + numberAlert).css({
+		display : "inline-block"
+	});
+	$(".alert" + numberAlert).removeClass("alert-danger alert-success");
 	if (type === "error") {
-		$(".alert").addClass("alert-danger in");
+		$(".alert" + numberAlert).addClass("alert-danger in");
 		$(".message").html("<strong>Erreur !</strong> " + message);
 	} else {
-		$(".alert").addClass("alert-success in");
+		$(".alert" + numberAlert).addClass("alert-success in");
 		$(".message").html("<strong>Succ&#232;s !</strong> " + message);
 	}
-	timeOut = setTimeout('$(".alert").removeClass("in")', 3000); 
-	timeOut = setTimeout('$(".alert").hide()', 3500); 
-
+	setTimeout('$(".blockAlert" + ' + numberAlert + ').remove()', 2000);
+	numberAlert++;
 }
 
 function addInCart(id, typeData) {
@@ -29,7 +32,7 @@ function addInCart(id, typeData) {
 				t = JSON.parse(t);
 				if (t.statut == "succes") {
 					$(".nbCart").html(t.nbCart);
-				} 
+				}
 				showMessage(t.statut, t.message)
 
 				self.boolProgress = true;

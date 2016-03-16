@@ -375,6 +375,10 @@ ol.ssMenu {
 	color: #337ab7;
 }
 
+.alert{
+	margin-bottom: 5px;
+}
+
 @media screen and (max-width: 767px) {
 	.menu-lateral {
 		display: block;

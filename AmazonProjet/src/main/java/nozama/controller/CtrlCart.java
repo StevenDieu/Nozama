@@ -136,7 +136,7 @@ public class CtrlCart {
     String idString = request.getParameter("id");
     String type = request.getParameter("typeData");
     Boolean newProduct = true;
-    
+
     if (idString != "" && type != "" && Util.convertToInt(idString)) {
       int id = Integer.parseInt(idString);
       List<Map<String, Object>> listMapCart;
@@ -149,7 +149,10 @@ public class CtrlCart {
         for (Map<String, Object> mapCart : listMapCart) {
           if (((int) mapCart.get("id")) == id && mapCart.get("type").equals(type)) {
             newProduct = false;
-            mapCart.put("number", ((int) mapCart.get("number")) + 1);
+            int number = ((int) mapCart.get("number")) + 1;
+            if (number <= 100) {
+              mapCart.put("number", number);
+            }
           }
         }
 
