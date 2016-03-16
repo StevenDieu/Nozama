@@ -135,6 +135,7 @@ public class CtrlCart {
 
     String idString = request.getParameter("id");
     String type = request.getParameter("typeData");
+    Boolean newProduct = true;
 
     if (idString != "" && type != "" && Util.convertToInt(idString)) {
       int id = Integer.parseInt(idString);
@@ -147,17 +148,24 @@ public class CtrlCart {
         listMapCart = (List<Map<String, Object>>) request.getSession().getAttribute("cart");
         for (Map<String, Object> mapCart : listMapCart) {
           if (((int) mapCart.get("id")) == id && mapCart.get("type").equals(type)) {
-            return "{\"statut\": \"error\",\"message\":  \"Ce produit est déjà dans votre panier.\"}";
+            newProduct = false;
+            int number = ((int) mapCart.get("number")) + 1;
+            if (number <= 100) {
+              mapCart.put("number", number);
+            }
           }
         }
 
       }
 
-      Map<String, Object> listCart = new HashMap<>();
-      listCart.put("id", id);
-      listCart.put("type", type);
-      listCart.put("number", 1);
-      listMapCart.add(listCart);
+      if (newProduct) {
+        Map<String, Object> listCart = new HashMap<>();
+        listCart.put("id", id);
+        listCart.put("type", type);
+        listCart.put("number", 1);
+        listMapCart.add(listCart);
+      }
+
       request.getSession().setAttribute("cart", listMapCart);
 
       request.getSession().setAttribute("nbCart", listMapCart.size());

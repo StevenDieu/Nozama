@@ -80,7 +80,6 @@ function deleteCart() {
 			$(".nbCart").html(0);
 			var totalPrice = 0;
 			$(".priceTotal").html(totalPrice.toFixed(2));
-
 			self.boolProgress = true;
 		}
 		});
