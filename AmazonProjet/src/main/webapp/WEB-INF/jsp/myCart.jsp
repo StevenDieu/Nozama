@@ -13,20 +13,26 @@
 			<table class="table table-bordered">
 				<thead>
 					<tr>
-						<th><strong>Produit</strong></th>
-						<th>Nom</th>
-						<th>Type</th>
-						<th class="center">Support</th>
-						<th>Prix unitaire</th>
-						<th class="center">Quantité</th>
-						<th><strong>Total</strong></th>
-						<th></th>
+						<th class="center centerVerticale">
+							<strong>Produit</strong>
+						</th>
+						<th class="centerVerticale">Nom</th>
+						<th class="centerVerticale">Type</th>
+						<th class="center centerVerticale">Support</th>
+						<th class="centerVerticale">Prix unitaire</th>
+						<th class="center centerVerticale">Quantité</th>
+						<th class="centerVerticale">
+							<strong>Total</strong>
+						</th>
+						<th class="center">
+							<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#popUpDeletePanier">Supprimer tout le panier</button>
+						</th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:set var="listProducts" value="${products}" />
 					<c:forEach var="product" items="${listProducts}" varStatus="counter">
-						<tr>
+						<tr class="productCart">
 							<td class="center">
 								<a href="/product/${product.type}/${product.nameTagDateReleased}">
 									<img src="/resources/img/product/<c:out value="${product.urlPicture}" />" class="imageCart">
@@ -81,7 +87,23 @@
 
 	</div>
 </div>
-
+<div class="modal fade" id="popUpDeletePanier" tabindex="-1" role="dialog" aria-labelledby="popUpDeletePanier">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Suppression du panier</h4>
+      </div>
+      <div class="modal-body">
+        Voulez-vous réellement supprimer le panier ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger suppressionPanier" data-dismiss="modal">Oui</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Non</button>
+      </div>
+    </div>
+  </div>
+</div>
 <script src="/resources/js/cart.js"></script>
 
 <jsp:include page="templates/footer.jsp" />

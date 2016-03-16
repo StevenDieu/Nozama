@@ -1,6 +1,11 @@
 var boolProgress = true;
 
 function testNumber(id, type, idtype) {
+
+	var self = this;
+
+	boolProgress = false;
+
 	var number = $(".numberProduct" + idtype).val();
 
 	if (isNaN(number)) {
@@ -13,8 +18,6 @@ function testNumber(id, type, idtype) {
 		$(".numberProduct" + idtype).val(parseInt(number) + 1);
 	}
 	number = $(".numberProduct" + idtype).val();
-	boolProgress = false;
-
 	$.ajax({
 	type : "post",
 	url : "ajaxChangeNumberProductCart",
@@ -35,16 +38,17 @@ function testNumber(id, type, idtype) {
 		self.boolProgress = true;
 	}
 	});
-
 }
 
 function isNotInt(n) {
 	return n % 1 != 0;
 }
 
-function deleteProduct(element,id,type){
-	boolProgress = false;
-	$.ajax({
+function deleteProduct(element, id, type) {
+	if (boolProgress) {
+		boolProgress = false;
+		var self = this;
+		$.ajax({
 		type : "post",
 		url : "ajaxDeleteProductCart",
 		data : "id=" + id + "&type=" + type,
@@ -56,12 +60,31 @@ function deleteProduct(element,id,type){
 				totalPrice = totalPrice + parseFloat($(this).data("price"));
 			});
 			$(".priceTotal").html(totalPrice.toFixed(2));
-			self.boolProgress = true;
-			
-			$(".nbCart").html(t);
 
+			$(".nbCart").html(t);
+			self.boolProgress = true;
 		}
 		});
+	}
+}
+
+function deleteCart() {
+	if (boolProgress) {
+		boolProgress = false;
+		var self = this;
+		$.ajax({
+		type : "post",
+		url : "ajaxDeleteAllProductCart",
+		success : function() {
+			$(".productCart").remove();
+			$(".nbCart").html(0);
+			var totalPrice = 0;
+			$(".priceTotal").html(totalPrice.toFixed(2));
+
+			self.boolProgress = true;
+		}
+		});
+	}
 }
 
 $(document).ready(function() {
@@ -73,7 +96,7 @@ $(document).ready(function() {
 
 	$(".deleteProduct").on("click", function() {
 		if (boolProgress) {
-			deleteProduct($(this),$(this).data("id"),$(this).data("type"));
+			deleteProduct($(this), $(this).data("id"), $(this).data("type"));
 		}
 	});
 
@@ -110,4 +133,8 @@ $(document).ready(function() {
 			}
 		}
 	});
+
+	$(".suppressionPanier").on("click", function() {
+		deleteCart();
+	})
 });
