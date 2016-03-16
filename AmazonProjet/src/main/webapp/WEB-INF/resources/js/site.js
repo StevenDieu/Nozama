@@ -2,22 +2,24 @@ var boolProgress = true;
 var numberAlert = 0;
 function showMessage(type, message) {
 
-	var html = '<div class="blockAlert' + numberAlert + '"><div class="alert alert' + numberAlert + ' alert-dismissible fade alert-fixed" role="alert"><span class="message"></span></div><br/></div>';
-	$("#alert").append(html);
-	
-	$(".alert" + numberAlert).css({
-		display : "inline-block"
-	});
-	$(".alert" + numberAlert).removeClass("alert-danger alert-success");
-	if (type === "error") {
-		$(".alert" + numberAlert).addClass("alert-danger in");
-		$(".message").html("<strong>Erreur !</strong> " + message);
-	} else {
-		$(".alert" + numberAlert).addClass("alert-success in");
-		$(".message").html("<strong>Succ&#232;s !</strong> " + message);
+	if ($(".alert").length < 3) {
+		var html = '<div class="blockAlert' + numberAlert + '"><div class="alert alert' + numberAlert + ' alert-dismissible fade alert-fixed" role="alert"><span class="message"></span></div><br/></div>';
+		$("#alert").append(html);
+		$(".alert" + numberAlert).css({
+			display : "inline-block"
+		});
+		$(".alert" + numberAlert).removeClass("alert-info alert-success");
+		if (type === "error") {
+			$(".alert" + numberAlert).addClass("alert-info in");
+			$(".message").html("<strong>Oups !</strong> " + message);
+		} else {
+			$(".alert" + numberAlert).addClass("alert-success in");
+			$(".message").html("<strong>Succ&#232;s !</strong> " + message);
+		}
+		setTimeout('$(".blockAlert" + ' + numberAlert + ').remove()', 2000);
+		numberAlert++;
 	}
-	setTimeout('$(".blockAlert" + ' + numberAlert + ').remove()', 2000);
-	numberAlert++;
+
 }
 
 function addInCart(id, typeData) {
