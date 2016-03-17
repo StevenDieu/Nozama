@@ -1,5 +1,6 @@
 package nozama.model;
-// Generated 2 mars 2016 20:06:10 by Hibernate Tools 4.3.1.Final
+// Generated 17 mars 2016 14:12:54 by Hibernate Tools 4.3.1.Final
+
 
 import java.util.Date;
 import java.util.HashSet;
@@ -22,112 +23,121 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "single", catalog = "nozama")
-public class Single implements java.io.Serializable,Categorie {
+public class Single implements java.io.Serializable, Categorie {
 
-	private Integer idSingle;
-	private Artiste artiste;
-	private Product product;
-	private String type;
-	private String label;
-	private Date totalTime;
-	private Set<AlbumHasSingle> albumHasSingles = new HashSet<AlbumHasSingle>(0);
-	private Set<TypeSupportSingle> typeSupportSingles = new HashSet<TypeSupportSingle>(0);
 
-	public Single() {
-	}
+  private Integer idSingle;
+  private Artiste artiste;
+  private Product product;
+  private String type;
+  private String label;
+  private Date totalTime;
+  private Set<AlbumHasSingle> albumHasSingles = new HashSet<AlbumHasSingle>(0);
+  private Set<TypeSupportSingle> typeSupportSingles = new HashSet<TypeSupportSingle>(0);
 
-	public Single(Artiste artiste, Product product, String type) {
-		this.artiste = artiste;
-		this.product = product;
-		this.type = type;
-	}
+  public Single() {}
 
-	public Single(Artiste artiste, Product product, String type, String label, Date totalTime, Set<AlbumHasSingle> albumHasSingles, Set<TypeSupportSingle> typeSupportSingles) {
-		this.artiste = artiste;
-		this.product = product;
-		this.type = type;
-		this.label = label;
-		this.totalTime = totalTime;
-		this.albumHasSingles = albumHasSingles;
-		this.typeSupportSingles = typeSupportSingles;
-	}
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
+  public Single(Artiste artiste, Product product, String type) {
+    this.artiste = artiste;
+    this.product = product;
+    this.type = type;
+  }
 
-	@Column(name = "id_single", unique = true, nullable = false)
-	public Integer getIdSingle() {
-		return this.idSingle;
-	}
+  public Single(Artiste artiste, Product product, String type, String label, Date totalTime,
+      Set<AlbumHasSingle> albumHasSingles, Set<TypeSupportSingle> typeSupportSingles) {
+    this.artiste = artiste;
+    this.product = product;
+    this.type = type;
+    this.label = label;
+    this.totalTime = totalTime;
+    this.albumHasSingles = albumHasSingles;
+    this.typeSupportSingles = typeSupportSingles;
+  }
 
-	public void setIdSingle(Integer idSingle) {
-		this.idSingle = idSingle;
-	}
+  @Id
+  @GeneratedValue(strategy = IDENTITY)
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_artiste", nullable = false)
-	public Artiste getArtiste() {
-		return this.artiste;
-	}
 
-	public void setArtiste(Artiste artiste) {
-		this.artiste = artiste;
-	}
+  @Column(name = "id_single", unique = true, nullable = false)
+  public Integer getIdSingle() {
+    return this.idSingle;
+  }
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_product", nullable = false)
-	public Product getProduct() {
-		return this.product;
-	}
+  public void setIdSingle(Integer idSingle) {
+    this.idSingle = idSingle;
+  }
 
-	public void setProduct(Product product) {
-		this.product = product;
-	}
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "id_artiste", nullable = false)
+  public Artiste getArtiste() {
+    return this.artiste;
+  }
 
-	@Column(name = "type", nullable = false)
-	public String getType() {
-		return this.type;
-	}
+  public void setArtiste(Artiste artiste) {
+    this.artiste = artiste;
+  }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "id_product", nullable = false)
+  public Product getProduct() {
+    return this.product;
+  }
 
-	@Column(name = "label")
-	public String getLabel() {
-		return this.label;
-	}
+  public void setProduct(Product product) {
+    this.product = product;
+  }
 
-	public void setLabel(String label) {
-		this.label = label;
-	}
 
-	@Temporal(TemporalType.TIME)
-	@Column(name = "total_time", length = 8)
-	public Date getTotalTime() {
-		return this.totalTime;
-	}
+  @Column(name = "type", nullable = false)
+  public String getType() {
+    return this.type;
+  }
 
-	public void setTotalTime(Date totalTime) {
-		this.totalTime = totalTime;
-	}
+  public void setType(String type) {
+    this.type = type;
+  }
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "single")
-	public Set<AlbumHasSingle> getAlbumHasSingles() {
-		return this.albumHasSingles;
-	}
 
-	public void setAlbumHasSingles(Set<AlbumHasSingle> albumHasSingles) {
-		this.albumHasSingles = albumHasSingles;
-	}
+  @Column(name = "label")
+  public String getLabel() {
+    return this.label;
+  }
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "single")
-	public Set<TypeSupportSingle> getTypeSupportSingles() {
-		return this.typeSupportSingles;
-	}
+  public void setLabel(String label) {
+    this.label = label;
+  }
 
-	public void setTypeSupportSingles(Set<TypeSupportSingle> typeSupportSingles) {
-		this.typeSupportSingles = typeSupportSingles;
-	}
+  @Temporal(TemporalType.TIME)
+  @Column(name = "total_time", length = 8)
+  public Date getTotalTime() {
+    return this.totalTime;
+  }
+
+  public void setTotalTime(Date totalTime) {
+    this.totalTime = totalTime;
+  }
+
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "single")
+  public Set<AlbumHasSingle> getAlbumHasSingles() {
+    return this.albumHasSingles;
+  }
+
+  public void setAlbumHasSingles(Set<AlbumHasSingle> albumHasSingles) {
+    this.albumHasSingles = albumHasSingles;
+  }
+
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "single")
+  public Set<TypeSupportSingle> getTypeSupportSingles() {
+    return this.typeSupportSingles;
+  }
+
+  public void setTypeSupportSingles(Set<TypeSupportSingle> typeSupportSingles) {
+    this.typeSupportSingles = typeSupportSingles;
+  }
+
+
 
 }
+
+

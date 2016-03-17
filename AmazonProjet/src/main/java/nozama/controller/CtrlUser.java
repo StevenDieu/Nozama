@@ -1,5 +1,7 @@
 package nozama.controller;
 
+import java.io.UnsupportedEncodingException;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +37,8 @@ public class CtrlUser {
 
   @RequestMapping(value = "/ajaxConnexion", method = RequestMethod.POST)
   @ResponseBody
-  public String ajaxSignIn(HttpServletRequest request) {
+  public String ajaxSignIn(HttpServletRequest request) throws UnsupportedEncodingException {
+    request.setCharacterEncoding("UTF-8");
 
     String email = request.getParameter("email");
     String password = request.getParameter("pwd");
@@ -61,7 +64,8 @@ public class CtrlUser {
 
   @RequestMapping(value = "/ajaxInscription", method = RequestMethod.POST)
   @ResponseBody
-  public String ajaxSignUp(HttpServletRequest request) {
+  public String ajaxSignUp(HttpServletRequest request) throws UnsupportedEncodingException {
+    request.setCharacterEncoding("UTF-8");
 
     String gender = request.getParameter("gender");
     String name = request.getParameter("name");

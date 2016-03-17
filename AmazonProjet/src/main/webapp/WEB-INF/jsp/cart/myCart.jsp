@@ -121,7 +121,7 @@
 			</table>
 
 		</div>
-		<a href="/mon-panier-etape-connexion" class="btn btn-primary input-cart input-100">Valider mon panier</a>
+		<a href="/mon-panier-validation-panier" class="btn btn-primary input-cart input-100">Valider mon panier</a>
 	</div>
 </div>
 <div class="modal fade" id="popUpDeletePanier" tabindex="-1" role="dialog" aria-labelledby="popUpDeletePanier">

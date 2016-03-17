@@ -1,5 +1,6 @@
 package nozama.model;
-// Generated 2 mars 2016 20:06:10 by Hibernate Tools 4.3.1.Final
+// Generated 17 mars 2016 14:12:54 by Hibernate Tools 4.3.1.Final
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,48 +19,53 @@ import javax.persistence.Table;
 @Table(name = "album_has_single", catalog = "nozama")
 public class AlbumHasSingle implements java.io.Serializable {
 
-	private Integer idAlbumHasSingle;
-	private Album album;
-	private Single single;
 
-	public AlbumHasSingle() {
-	}
+  private Integer idAlbumHasSingle;
+  private Album album;
+  private Single single;
 
-	public AlbumHasSingle(Album album, Single single) {
-		this.album = album;
-		this.single = single;
-	}
+  public AlbumHasSingle() {}
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
+  public AlbumHasSingle(Album album, Single single) {
+    this.album = album;
+    this.single = single;
+  }
 
-	@Column(name = "id_album_has_single", unique = true, nullable = false)
-	public Integer getIdAlbumHasSingle() {
-		return this.idAlbumHasSingle;
-	}
+  @Id
+  @GeneratedValue(strategy = IDENTITY)
 
-	public void setIdAlbumHasSingle(Integer idAlbumHasSingle) {
-		this.idAlbumHasSingle = idAlbumHasSingle;
-	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_album", nullable = false)
-	public Album getAlbum() {
-		return this.album;
-	}
+  @Column(name = "id_album_has_single", unique = true, nullable = false)
+  public Integer getIdAlbumHasSingle() {
+    return this.idAlbumHasSingle;
+  }
 
-	public void setAlbum(Album album) {
-		this.album = album;
-	}
+  public void setIdAlbumHasSingle(Integer idAlbumHasSingle) {
+    this.idAlbumHasSingle = idAlbumHasSingle;
+  }
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_single", nullable = false)
-	public Single getSingle() {
-		return this.single;
-	}
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "id_album", nullable = false)
+  public Album getAlbum() {
+    return this.album;
+  }
 
-	public void setSingle(Single single) {
-		this.single = single;
-	}
+  public void setAlbum(Album album) {
+    this.album = album;
+  }
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "id_single", nullable = false)
+  public Single getSingle() {
+    return this.single;
+  }
+
+  public void setSingle(Single single) {
+    this.single = single;
+  }
+
+
 
 }
+
+

@@ -86,6 +86,46 @@ function deleteCart() {
 	}
 }
 
+function addInputAdress(selectId) {
+	if (selectId.val() == "") {
+		$(".name").val("")
+		$(".nameLastName").val("")
+		$(".adressPrincipal").val("")
+		$(".adressSecondaire").val("")
+		$(".region").val("")
+		$(".codePostal").val("")
+		$(".pays").val("FR")
+		$(".numberPhone").val("")
+
+		$(".name").attr("disabled", false);
+		$(".nameLastName").attr("disabled", false);
+		$(".adressPrincipal").attr("disabled", false);
+		$(".adressSecondaire").attr("disabled", false);
+		$(".region").attr("disabled", false);
+		$(".codePostal").attr("disabled", false);
+		$(".pays").attr("disabled", false);
+		$(".numberPhone").attr("disabled", false);
+	} else {
+		$(".name").val(selectId.find(':selected').data("name"))
+		$(".nameLastName").val(selectId.find(':selected').data("namelastname"))
+		$(".adressPrincipal").val(selectId.find(':selected').data("adressprincipal"))
+		$(".adressSecondaire").val(selectId.find(':selected').data("adresssecondaire"))
+		$(".region").val(selectId.find(':selected').data("region"))
+		$(".codePostal").val(selectId.find(':selected').data("codepostal"))
+		$(".pays").val(selectId.find(':selected').data("pays"))
+		$(".numberPhone").val(selectId.find(':selected').data("numberphone"))
+
+		$(".name").attr("disabled", true);
+		$(".nameLastName").attr("disabled", true);
+		$(".adressPrincipal").attr("disabled", true);
+		$(".adressSecondaire").attr("disabled", true);
+		$(".region").attr("disabled", true);
+		$(".codePostal").attr("disabled", true);
+		$(".pays").attr("disabled", true);
+		$(".numberPhone").attr("disabled", true);
+	}
+}
+
 $(document).ready(function() {
 	var totalPrice = 0;
 	$(".totalProduct").each(function(index) {
@@ -135,5 +175,9 @@ $(document).ready(function() {
 
 	$(".suppressionPanier").on("click", function() {
 		deleteCart();
-	})
+	});
+
+	$(".selectAdress").on("change", function() {
+		addInputAdress($(this));
+	});
 });

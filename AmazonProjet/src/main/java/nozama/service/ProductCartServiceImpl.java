@@ -14,6 +14,7 @@ import nozama.model.TypeSupport;
 import nozama.model.TypeSupportAlbum;
 import nozama.model.TypeSupportMovie;
 import nozama.model.TypeSupportSingle;
+import nozama.model.User;
 import nozama.repository.ProductRepository;
 
 @Service

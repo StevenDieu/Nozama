@@ -1,5 +1,6 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<form class="formAdresse" action="mon-panier-etape-livraison" name="singnIn" method="post">
+<form class="formAdresse" action="mon-panier-etape-validation-adress" name="singnIn" method="post">
 
 	<div class="panel panel-default">
 		<div class="panel-heading">
@@ -7,20 +8,46 @@
 		</div>
 		<div class="panel-body">
 
-			</br>
+
+			<br />
+			<c:set var="messageInfos" value="${message}" />
+			<c:forEach var="messageInfo" items="${messageInfos}" varStatus="counter">
+				<div class="alert alert-info" style="display: block" role="alert">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<strong>Aie !</strong>
+					<c:out value="${messageInfo}" />
+				</div>
+			</c:forEach>
+
+			<br />
 
 			<input type="hidden" class="redirectSignIn" value="${redirect}" />
+			<c:set var="listeAdress" value="${adresss}" />
 
 			<div class="form-group">
-				<select class="form-control" name="idCovoit">
-					<option value="-1">Créer une nouvelle adresse</option>
+				<select class="form-control selectAdress" name="idAdress">
+					<option value="">Créer une nouvelle adresse</option>
+					<c:forEach var="adress" items="${listeAdress}" varStatus="counter">
+						<option value="${adress.idAdress}" data-name="${adress.name}" data-nameLastName="${adress.nameLastName}" data-adressPrincipal="${adress.adressPrincipal}" data-adressSecondaire="${adress.adressSecondaire}" data-region="${adress.region}" data-codePostal="${adress.codePostal}" data-pays="${adress.pays}" data-numberPhone="${adress.numberPhone}">${adress.name}</option>
+					</c:forEach>
+
 				</select>
+			</div>
+
+			<div class="form-group">
+				<label>Nom de votre adresse * </label>
+				<div class="form-label">
+					<input type="text" class="name form-control required checkLength" data-length="255" name="name" placeholder="Nom de votre adresse, ex : Maison, Parent, Copine ...">
+				</div>
+				<p class="help-block"></p>
 			</div>
 
 			<div class="form-group">
 				<label>Nom et Prénom * </label>
 				<div class="form-label">
-					<input type="text" class="form-control required checkLength" data-length="255" name="nameLastName" placeholder="Nom et Prénom">
+					<input type="text" class="nameLastName form-control required checkLength" data-length="255" name="nameLastName" placeholder="Nom et Prénom">
 				</div>
 				<p class="help-block"></p>
 			</div>
@@ -28,7 +55,7 @@
 			<div class="form-group">
 				<label>Adresse principale * </label>
 				<div class="form-label">
-					<input type="text" class="form-control required checkLength" data-length="1024" name="adressPrincipal" placeholder="Adresse principale">
+					<input type="text" class="adressPrincipal form-control required checkLength" data-length="1024" name="adressPrincipal" placeholder="Adresse principale">
 				</div>
 				<p class="help-block"></p>
 			</div>
@@ -36,7 +63,7 @@
 			<div class="form-group">
 				<label>Adresse secondaire</label>
 				<div class="form-label">
-					<input type="text" class="form-control required checkLength" data-length="1024" name="adressSecondaire" placeholder="Adresse secondaire">
+					<input type="text" class="adressSecondaire form-control checkLength" data-length="1024" name="adressSecondaire" placeholder="Adresse secondaire">
 				</div>
 				<p class="help-block"></p>
 			</div>
@@ -44,7 +71,7 @@
 			<div class="form-group">
 				<label>Région</label>
 				<div class="form-label">
-					<input type="text" class="form-control required checkLength" data-length="255" name="region" placeholder="Région">
+					<input type="text" class="region form-control checkLength" data-length="255" name="region" placeholder="Région">
 				</div>
 				<p class="help-block"></p>
 			</div>
@@ -52,14 +79,14 @@
 			<div class="form-group">
 				<label>Code postal * </label>
 				<div class="form-label">
-					<input type="text" class="form-control required checkLengthMandatory checkInt" data-length="5" name="codePostal" placeholder="Code postal">
+					<input type="text" class="codePostal form-control required checkLengthMandatory checkInt" data-length="5" name="codePostal" placeholder="Code postal">
 				</div>
 				<p class="help-block"></p>
 			</div>
 
 			<div class="form-group">
 				<label>Pays * </label>
-				<select name="pays" class="form-control required">
+				<select name="pays" class="pays form-control required">
 					<option value="">--</option>
 					<option value="ZA">Afrique du Sud</option>
 					<option value="AL">Albanie</option>
@@ -306,7 +333,7 @@
 			<div class="form-group">
 				<label>Numéros de téléphone * </label>
 				<div class="form-label">
-					<input type="text" class="form-control required checkLengthMandatory checkInt" data-length="10" name="numberPhone" placeholder="Numéros de téléphone">
+					<input type="text" class="numberPhone form-control required checkLengthMandatory checkInt" data-length="10" name="numberPhone" placeholder="Numéros de téléphone">
 				</div>
 				<p class="help-block"></p>
 			</div>

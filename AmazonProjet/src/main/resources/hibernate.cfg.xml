@@ -21,5 +21,6 @@
 		<mapping class="nozama.model.TypeSupportMovie" />
 		<mapping class="nozama.model.TypeSupportSingle" />
 		<mapping class="nozama.model.User" />
+		<mapping class="nozama.model.Adress" />
 	</session-factory>
 </hibernate-configuration>
