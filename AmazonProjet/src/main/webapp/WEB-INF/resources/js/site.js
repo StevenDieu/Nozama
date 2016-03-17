@@ -44,11 +44,97 @@ function addInCart(id, typeData) {
 	}
 }
 
+function changeBlockFormAndAddMessage(blockForm, mess) {
+	form = blockForm.parent().parent();
+	form.addClass("has-warning");
+	form.find(".help-block").html(mess);
+}
+
+function checkIfAllRequiredIsNotEmpty(thisClass) {
+	var mess_required = "Aie ! Ce champ est obligatoire.";
+
+	var submit = true;
+	thisClass.each(function() {
+		var type = $(this).attr('type');
+		if (type === "checkbox") {
+			if (!$(this).is(':checked')) {
+				changeBlockFormAndAddMessage($(this), mess_required);
+				submit = false;
+			}
+		} else {
+			if ($(this).val() == '') {
+				changeBlockFormAndAddMessage($(this), mess_required);
+				submit = false;
+			}
+		}
+	});
+	return submit;
+}
+
+function checkLength(thisClass) {
+	var submit = true;
+	thisClass.each(function() {
+		var length = $(this).data("length");
+		if (length < $(this).val().length) {
+			changeBlockFormAndAddMessage($(this), "Aie ! Ce champ ne peut pas dépasser : " + length + " caratères.");
+			submit = false;
+		}
+	});
+	return submit;
+}
+
+function checkLengthMandatory(thisClass){
+	var submit = true;
+	thisClass.each(function() {
+		var length = $(this).data("length");
+		if (length != $(this).val().length) {
+			changeBlockFormAndAddMessage($(this), "Aie ! Ce champ doi contenir : " + length + " caratères.");
+			submit = false;
+		}
+	});
+	return submit;
+}
+
+function checkInt(thisClass){
+	var submit = true;
+	thisClass.each(function() {
+		if (isNaN($(this).val())) {
+			changeBlockFormAndAddMessage($(this), "Aie ! Ce champ doit être un chiffre");
+			submit = false;
+		}
+	});
+	return submit;
+}
+
+var submit;
+
 $(document).ready(function() {
 	$('[data-toggle="tooltip"]').tooltip()
 
 	$(".addCart").on("click", function(e) {
 		e.preventDefault();
 		addInCart($(this).data("id"), $(this).data("type"));
+	});
+
+	$("form").on("submit", function(e) {
+		className = e.target.className;
+		$('.help-block').html("");
+		$('.has-warning').removeClass("has-warning");
+
+		submit = checkIfAllRequiredIsNotEmpty($("." + className + ' .required'));
+
+		if (submit) {
+			submit = checkLength($("." + className + ' .checkLength'));
+		}
+		
+		if (submit) {
+			submit = checkLengthMandatory($("." + className + ' .checkLengthMandatory'));
+		}
+		
+		if (submit) {
+			submit = checkInt($("." + className + ' .checkInt'));
+		}
+		
+		return submit;
 	});
 });

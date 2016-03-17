@@ -45,9 +45,6 @@
 
 
 			<p>
-				<c:if test="${fn:length(products.description) == 0}">
-					Pas de description...
-				</c:if>
 				<c:out escapeXml="false" value="${products.description}" />
 			</p>
 			<div class="row">

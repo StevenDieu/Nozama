@@ -37,7 +37,117 @@ public class CtrlCart {
       product.put("products", allProduct);
     }
 
-    return new ModelAndView("myCart", product);
+    return new ModelAndView("cart/myCart", product);
+  }
+
+  @RequestMapping(value = "/mon-panier-etape-connexion")
+  public ModelAndView myCartConnexion(HttpServletRequest request) {
+
+    Map<String, Object> redirect = new HashMap<String, Object>();
+    redirect.put("redirect", "/mon-panier-etape-adresse");
+
+    if (request.getSession().getAttribute("cartControlTunnel") == null
+        || request.getSession().getAttribute("cartControlTunnel") == "") {
+
+      return new ModelAndView("redirect:/mon-panier");
+
+    }
+
+    request.getSession().setAttribute("cartControlTunnel",
+        request.getSession().getAttribute("cart"));
+
+    if (request.getSession().getAttribute("User") != null) {
+      return new ModelAndView("redirect:/mon-panier-etape-adresse");
+    }
+
+    return new ModelAndView("cart/myCartConnexion", redirect);
+  }
+
+  @RequestMapping(value = "/mon-panier-etape-adresse")
+  public ModelAndView myCartAdress(HttpServletRequest request) {
+    if (request.getSession().getAttribute("cartControlTunnel") == null
+        || request.getSession().getAttribute("cartControlTunnel") == "") {
+
+      return new ModelAndView("redirect:/mon-panier");
+
+    }
+
+    if (request.getSession().getAttribute("User") == null) {
+      return new ModelAndView("redirect:/mon-panier-etape-connexion");
+    }
+
+    return new ModelAndView("cart/myCartAdresse");
+  }
+
+  @SuppressWarnings("unchecked")
+  @RequestMapping(value = "/mon-panier-etape-livraison", method = RequestMethod.POST)
+  public ModelAndView myCartDelivery(HttpServletRequest request) {
+    String idCovoit = request.getParameter("idCovoit");
+    String nameLastName = request.getParameter("nameLastName");
+    String adressPrincipal = request.getParameter("adressPrincipal");
+    String adressSecondaire = request.getParameter("adressSecondaire");
+    String region = request.getParameter("region");
+    String codePostalString = request.getParameter("codePostal");
+    String pays = request.getParameter("pays");
+    String numberPhoneString = request.getParameter("numberPhone");
+
+    if (request.getSession().getAttribute("User") == null) {
+      return new ModelAndView("redirect:/mon-panier-etape-connexion");
+    }
+
+    if (request.getSession().getAttribute("cartControlTunnel") == null
+        || request.getSession().getAttribute("cartControlTunnel") == "") {
+
+      List<Map<String, Object>> allProduct = PCS.getAllCart(
+          (List<Map<String, Object>>) request.getSession().getAttribute("cartControlTunnel"));
+
+      if (allProduct.size() == 0) {
+        return new ModelAndView("redirect:/mon-panier");
+      }
+
+    }
+
+    if (nameLastName == "" || adressPrincipal == "" || codePostalString == "" || pays == ""
+        || numberPhoneString == "") {
+      Map<String, Object> redirect = new HashMap<String, Object>();
+      redirect.put("message", "Tout les champs sont obligatoires.");
+      return new ModelAndView("cart/mon-panier-etape-adresse");
+    } else if (nameLastName.length() > 255 || adressPrincipal.length() > 1024
+        || adressSecondaire.length() > 1024 || region.length() > 255
+        || codePostalString.length() > 5 || numberPhoneString.length() > 10) {
+      Map<String, Object> redirect = new HashMap<String, Object>();
+      redirect.put("message", "Attention à la longueur des champs.");
+      return new ModelAndView("cart/mon-panier-etape-adresse");
+    }
+
+    int codePostal;
+    if (!Util.convertToInt(codePostalString)) {
+      Map<String, Object> redirect = new HashMap<String, Object>();
+      redirect.put("message", "Le code postal doit être un chiffre");
+      return new ModelAndView("cart/mon-panier-etape-adresse");
+    }
+    codePostal = Integer.parseInt(codePostalString);
+
+    int numberPhone;
+    if (!Util.convertToInt(numberPhoneString)) {
+      Map<String, Object> redirect = new HashMap<String, Object>();
+      redirect.put("message", "Le numéro de téléphone doit être un chiffre");
+      return new ModelAndView("cart/mon-panier-etape-adresse");
+    }
+    numberPhone = Integer.parseInt(numberPhoneString);
+
+
+
+    Map<String, Object> redirect = new HashMap<String, Object>();
+    redirect.put("redirect", "/mon-panier-etape-adresse");
+
+
+
+    if (request.getSession().getAttribute("User") == null) {
+      return new ModelAndView("redirect:/mon-panier-etape-connexion");
+    }
+
+    return new ModelAndView("cart/myCartDelivery");
   }
 
   @SuppressWarnings("unchecked")
