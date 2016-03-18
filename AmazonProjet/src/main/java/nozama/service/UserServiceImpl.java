@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
   }
   
   public Adress insertAdress(String name, String nameLastName, String adressPrincipal, String adressSecondaire,
-      String region, String pays, User user, int codePostal, int numberPhone) {
+      String region, String pays, User user, int codePostal, String numberPhone) {
     Adress adress = new Adress();
     adress.setName(name);
     adress.setAdressPrincipal(adressPrincipal);
@@ -72,6 +72,27 @@ public class UserServiceImpl implements UserService {
     UR.insertAdress(adress);
     
     return adress;
+  }
+  
+  public void updateAdress(int idAdress, String name, String nameLastName, String adressPrincipal,
+      String adressSecondaire, String region, String pays, User user, int codePostal,
+      String numberPhone) {
+    Adress adress = new Adress();
+    adress.setIdAdress(idAdress);
+    adress.setName(name);
+    adress.setAdressPrincipal(adressPrincipal);
+    adress.setAdressSecondaire(Util.ConvertStringToNull(adressSecondaire));
+    adress.setCodePostal(codePostal);
+    adress.setNameLastName(nameLastName);
+    adress.setNumberPhone(numberPhone);
+    adress.setPays(pays);
+    adress.setRegion(Util.ConvertStringToNull(region));
+    adress.setUser(user);
+    UR.updateAdress(adress);
+  }
+  
+  public void deleteAdress(Adress adress) {
+    UR.deleteAdress(adress);
   }
   
 
@@ -134,6 +155,10 @@ public class UserServiceImpl implements UserService {
     }
     return ipAddress;
   }
+
+
+
+
 
 
 

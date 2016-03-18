@@ -11,34 +11,35 @@
 			<em>01.</em> Récapitulatif
 		</a>
 	</li>
-	<li class="step_current second">
-		<span>
+	<li class="step_done second">
+		<a href="/mon-panier-etape-connexion">
 			<em>02.</em> Connexion
-		</span>
+		</a>
 	</li>
-	<li class="step_todo third">
-		<span>
+	<li class="step_done third">
+		<a href="/mon-panier-etape-adresse">
 			<em>03.</em> Adresse
-		</span>
+		</a>
 	</li>
-	<li class="step_todo four">
-		<span>
+	<li class="step_done four">
+		<a href="/mon-panier-etape-livraison">
 			<em>04.</em> Livraison
-		</span>
+		</a>
 	</li>
-	<li id="step_end" class="step_todo last">
+	<li class="step_current last">
 		<span>
 			<em>05.</em> Paiement
 		</span>
 	</li>
 </ul>
-
-<div class="row">
-	<div class="col-md-6">
-		<jsp:include page="../authentication/contentSignIn.jsp" />
-	</div>
-	<div class="col-md-6">
-		<jsp:include page="../authentication/contentSignUp.jsp" />
+<div class="col-md-6 col-md-offset-3">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Méthode de paiement</h3>
+		</div>
+		<div class="panel-body">
+			
+		</div>
 	</div>
 </div>
 

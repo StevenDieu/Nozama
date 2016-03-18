@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import nozama.model.Adress;
 import nozama.model.User;
 import nozama.service.UserServiceImpl;
+import nozama.util.Util;
 
 @Controller
 public class CtrlUser {
@@ -99,4 +101,77 @@ public class CtrlUser {
     request.getSession().setAttribute("User", null);
     return "redirect:/";
   }
+
+  @RequestMapping(value = "/ajaxDeleteDeleteAdress")
+  @ResponseBody
+  public String ajaxDeleteAdress(HttpServletRequest request) {
+    String idAdressString = request.getParameter("idAdress");
+    if (request.getSession().getAttribute("User") != null) {
+      User user = (User) request.getSession().getAttribute("User");
+      if (idAdressString != "" && Util.convertToInt(idAdressString)) {
+        int idAdress = Integer.parseInt(idAdressString);
+        Adress adress = US.checkAdressByUser(idAdress, user);
+        if (adress != null) {
+          US.deleteAdress(adress);
+          return "{\"statut\": \"ok\"}";
+        }
+
+      }
+    }
+    return "{\"statut\": \"nok\"}";
+  }
+
+  @RequestMapping(value = "/ajaxUpdateAdress")
+  @ResponseBody
+  public String ajaxUpdateAdress(HttpServletRequest request) throws UnsupportedEncodingException {
+    request.setCharacterEncoding("UTF-8");
+
+    String idAdressString = request.getParameter("idAdress");
+    String name = request.getParameter("name");
+    String nameLastName = request.getParameter("nameLastName");
+    String adressPrincipal = request.getParameter("adressPrincipal");
+    String adressSecondaire = request.getParameter("adressSecondaire");
+    String region = request.getParameter("region");
+    String codePostalString = request.getParameter("codePostal");
+    String pays = request.getParameter("pays");
+    String numberPhone = request.getParameter("numberPhone");
+
+    if (request.getSession().getAttribute("User") != null) {
+      User user = (User) request.getSession().getAttribute("User");
+      if (Util.convertToInt(idAdressString)) {
+        int idAdress = Integer.parseInt(idAdressString);
+        Adress adressCheck = US.checkAdressByUser(idAdress, user);
+        if (adressCheck != null) {
+          if (name == "" || nameLastName == "" || adressPrincipal == "" || codePostalString == ""
+              || pays == "" || numberPhone == "") {
+            return "{\"statut\": \"nok\"}";
+          } else if (name.length() > 255 || nameLastName.length() > 255
+              || adressPrincipal.length() > 1024 || adressSecondaire.length() > 1024
+              || region.length() > 255 || codePostalString.length() > 5
+              || numberPhone.length() > 10) {
+            return "{\"statut\": \"nok\"}";
+          }
+
+          int codePostal;
+          if (!Util.convertToInt(codePostalString)) {
+            return "{\"statut\": \"nok\"}";
+          }
+          codePostal = Integer.parseInt(codePostalString);
+
+          if (!Util.convertToInt(numberPhone)) {
+            return "{\"statut\": \"nok\"}";
+          }
+
+          US.updateAdress(idAdress, name, nameLastName, adressPrincipal, adressSecondaire, region,
+              pays, user, codePostal, numberPhone);
+
+        }
+      }
+    }
+
+    return "{\"statut\": \"nok\"}";
+  }
+
+
+
 }

@@ -105,7 +105,8 @@ public class CtrlCart {
 
   @SuppressWarnings("unchecked")
   @RequestMapping(value = "/mon-panier-etape-validation-adress", method = RequestMethod.POST)
-  public ModelAndView myCartCalidateAdress(HttpServletRequest request) throws UnsupportedEncodingException {
+  public ModelAndView myCartCalidateAdress(HttpServletRequest request)
+      throws UnsupportedEncodingException {
     request.setCharacterEncoding("UTF-8");
 
     String idAdressString = request.getParameter("idAdress");
@@ -116,7 +117,7 @@ public class CtrlCart {
     String region = request.getParameter("region");
     String codePostalString = request.getParameter("codePostal");
     String pays = request.getParameter("pays");
-    String numberPhoneString = request.getParameter("numberPhone");
+    String numberPhone = request.getParameter("numberPhone");
 
     if (request.getSession().getAttribute("User") == null) {
       return new ModelAndView("redirect:/mon-panier-etape-connexion");
@@ -154,14 +155,14 @@ public class CtrlCart {
       }
       request.getSession().setAttribute("address", adress);
     } else {
-      if (name == "" || nameLastName == "" || adressPrincipal == "" || codePostalString == "" || pays == ""
-          || numberPhoneString == "") {
+      if (name == "" || nameLastName == "" || adressPrincipal == "" || codePostalString == ""
+          || pays == "" || numberPhone == "") {
         Map<String, Object> redirect = new HashMap<String, Object>();
         redirect.put("message", "Tout les champs sont obligatoires.");
         return new ModelAndView("redirect:/mon-panier-etape-adresse", redirect);
-      } else if (name.length() > 255 || nameLastName.length() > 255 || adressPrincipal.length() > 1024
-          || adressSecondaire.length() > 1024 || region.length() > 255
-          || codePostalString.length() > 5 || numberPhoneString.length() > 10) {
+      } else if (name.length() > 255 || nameLastName.length() > 255
+          || adressPrincipal.length() > 1024 || adressSecondaire.length() > 1024
+          || region.length() > 255 || codePostalString.length() > 5 || numberPhone.length() > 10) {
         Map<String, Object> redirect = new HashMap<String, Object>();
         redirect.put("message", "Attention à la longueur des champs.");
         return new ModelAndView("redirect:/mon-panier-etape-adresse", redirect);
@@ -175,17 +176,15 @@ public class CtrlCart {
       }
       codePostal = Integer.parseInt(codePostalString);
 
-      int numberPhone;
-      if (!Util.convertToInt(numberPhoneString)) {
+      if (!Util.convertToInt(numberPhone)) {
         Map<String, Object> redirect = new HashMap<String, Object>();
         redirect.put("message", "Le numéro de téléphone doit être un chiffre");
         return new ModelAndView("redirect:/mon-panier-etape-adresse", redirect);
       }
-      numberPhone = Integer.parseInt(numberPhoneString);
 
 
-      final Adress adress = US.insertAdress(name, nameLastName, adressPrincipal, adressSecondaire, region,
-          pays, user, codePostal, numberPhone);
+      final Adress adress = US.insertAdress(name, nameLastName, adressPrincipal, adressSecondaire,
+          region, pays, user, codePostal, numberPhone);
 
       request.getSession().setAttribute("address", adress);
     }
@@ -214,6 +213,65 @@ public class CtrlCart {
     return new ModelAndView("cart/myCartDelivery");
   }
 
+
+
+  @RequestMapping(value = "/mon-panier-etape-validation-transport")
+  public ModelAndView myCartValidateTransport(HttpServletRequest request) throws UnsupportedEncodingException {
+    if (request.getSession().getAttribute("cartControlTunnel") == null
+        || request.getSession().getAttribute("cartControlTunnel") == "") {
+      return new ModelAndView("redirect:/mon-panier");
+    }
+
+    if (request.getSession().getAttribute("User") == null
+        || request.getSession().getAttribute("User") == "") {
+      return new ModelAndView("redirect:/mon-panier-etape-connexion");
+    }
+
+    if (request.getSession().getAttribute("address") == null
+        || request.getSession().getAttribute("address") == "") {
+      return new ModelAndView("redirect:/mon-panier-etape-adresse");
+    }
+    request.setCharacterEncoding("utf-8");
+    
+    String chooseTransport = request.getParameter("chooseTransport");
+    String commentaire = request.getParameter("commentaire");
+
+    if (chooseTransport == "") {
+      return new ModelAndView("redirect:/mon-panier-etape-livraison");
+    }
+
+    Map<String, Object> listTransport = new HashMap<>();
+    listTransport.put("id", chooseTransport);
+    listTransport.put("commentaire", Util.ConvertStringToNull(commentaire));
+    request.getSession().setAttribute("transport", listTransport);
+
+    return new ModelAndView("redirect:/mon-panier-etape-paiement");
+  }
+
+  @RequestMapping(value = "/mon-panier-etape-paiement")
+  public ModelAndView myCartPayment(HttpServletRequest request) {
+    if (request.getSession().getAttribute("cartControlTunnel") == null
+        || request.getSession().getAttribute("cartControlTunnel") == "") {
+      return new ModelAndView("redirect:/mon-panier");
+    }
+
+    if (request.getSession().getAttribute("User") == null
+        || request.getSession().getAttribute("User") == "") {
+      return new ModelAndView("redirect:/mon-panier-etape-connexion");
+    }
+
+    if (request.getSession().getAttribute("address") == null
+        || request.getSession().getAttribute("address") == "") {
+      return new ModelAndView("redirect:/mon-panier-etape-adresse");
+    }
+
+    if (request.getSession().getAttribute("transport") == null
+        || request.getSession().getAttribute("transport") == "") {
+      return new ModelAndView("redirect:/mon-panier-etape-livraison");
+    }
+
+    return new ModelAndView("cart/myCartPayment");
+  }
 
 
   @SuppressWarnings("unchecked")

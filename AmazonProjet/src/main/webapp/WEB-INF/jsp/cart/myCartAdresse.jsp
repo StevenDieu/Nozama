@@ -35,7 +35,6 @@
 
 <jsp:include page="../authentication/contentAdress.jsp" />
 
-
-<script src="/resources/js/cart.js"></script>
+<script src="/resources/js/cart/cart.js"></script>
 
 <jsp:include page="../templates/footer.jsp" />

@@ -34,6 +34,76 @@
 </ul>
 
 
-<script src="/resources/js/cart.js"></script>
+<div class="col-md-6 col-md-offset-3">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Méthode de livraison</h3>
+		</div>
+		<div class="panel-body">
+			<form action="mon-panier-etape-validation-transport" method="post">
+				<div class="form-group">
+					<label class="radio-inline">
+						<c:choose>
+							<c:when test="${sessionScope.transport == null}">
+								<input type="radio" name="chooseTransport" value="eco" checked />
+							</c:when>
+							<c:when test="${sessionScope.transport != null}">
+								<c:if test="${sessionScope.transport.id == 'eco'}">
+									<input type="radio" name="chooseTransport" value="eco" checked />
+								</c:if>
+								<c:if test="${sessionScope.transport.id != 'eco'}">
+									<input type="radio" name="chooseTransport" value="eco" />
+								</c:if>
+							</c:when>
+						</c:choose>
+
+						ECONOMIQUE - 10,00 €
+						<br />
+						Date de livraison estimée : 7-9 jours
+					</label>
+				</div>
+				<div class="form-group">
+
+					<label class="radio-inline">
+						<c:choose>
+							<c:when test="${sessionScope.transport == null}">
+								<input type="radio" name="chooseTransport" value="exp" />
+							</c:when>
+							<c:when test="${sessionScope.transport != null}">
+								<c:if test="${sessionScope.transport.id == 'eco'}">
+									<input type="radio" name="chooseTransport" value="exp" />
+								</c:if>
+								<c:if test="${sessionScope.transport.id != 'eco'}">
+									<input type="radio" name="chooseTransport" value="exp" checked />
+								</c:if>
+							</c:when>
+						</c:choose>
+						2016 EXPRESS & SAMEDI - 14,00 €
+						<br />
+						Date de livraison estimée : 3-4 jours
+					</label>
+				</div>
+				<div class="form-group">
+					<c:if test="${sessionScope.transport != null}">
+					<c:if test="${sessionScope.transport.commentaire != null}">
+						<textarea class="form-control" rows="3" name="commentaire" placeholder="Ajouter un commentaire pour le transporteur">${sessionScope.transport.commentaire}</textarea>
+					</c:if>
+					<c:if test="${sessionScope.transport.commentaire == null}">
+						<textarea class="form-control" rows="3" name="commentaire" placeholder="Ajouter un commentaire pour le transporteur"></textarea>
+					</c:if>
+						
+					</c:if>
+					<c:if test="${sessionScope.transport == null}">
+						<textarea class="form-control" rows="3" name="commentaire" placeholder="Ajouter un commentaire pour le transporteur"></textarea>
+					</c:if>
+
+				</div>
+				<input type="submit" class="btn btn-primary input-cart input-100" value="Continuer">
+			</form>
+		</div>
+	</div>
+</div>
+
+<script src="/resources/js/cart/cart.js"></script>
 
 <jsp:include page="../templates/footer.jsp" />

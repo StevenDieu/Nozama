@@ -38,6 +38,9 @@ function addInCart(id, typeData) {
 				showMessage(t.statut, t.message)
 
 				self.boolProgress = true;
+			},
+			error : function(){
+				self.boolProgress = true;
 			}
 			});
 		}
@@ -108,6 +111,27 @@ function checkInt(thisClass){
 
 var submit;
 
+function checkForm(className){
+	$('.help-block').html("");
+	$('.has-warning').removeClass("has-warning");
+
+	submit = checkIfAllRequiredIsNotEmpty($("." + className + ' .required'));
+
+	if (submit) {
+		submit = checkLength($("." + className + ' .checkLength'));
+	}
+	
+	if (submit) {
+		submit = checkLengthMandatory($("." + className + ' .checkLengthMandatory'));
+	}
+	
+	if (submit) {
+		submit = checkInt($("." + className + ' .checkInt'));
+	}
+	
+	return submit;
+}
+
 $(document).ready(function() {
 	$('[data-toggle="tooltip"]').tooltip()
 
@@ -117,24 +141,8 @@ $(document).ready(function() {
 	});
 
 	$("form").on("submit", function(e) {
-		className = e.target.className;
-		$('.help-block').html("");
-		$('.has-warning').removeClass("has-warning");
-
-		submit = checkIfAllRequiredIsNotEmpty($("." + className + ' .required'));
-
-		if (submit) {
-			submit = checkLength($("." + className + ' .checkLength'));
-		}
-		
-		if (submit) {
-			submit = checkLengthMandatory($("." + className + ' .checkLengthMandatory'));
-		}
-		
-		if (submit) {
-			submit = checkInt($("." + className + ' .checkInt'));
-		}
-		
-		return submit;
+		var className = e.target.className;
+		return checkForm(className);
 	});
+	
 });

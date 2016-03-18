@@ -12,7 +12,7 @@ function signUp() {
 					$.ajax({
 					type : "post",
 					url : "ajaxInscription",
-					data : "name=" + $(".name").val() + "&lastName=" + $(".lastName").val() + "&email=" + $(".emailSignUp").val() + "&password=" + $(".passwordSignUp").val() + "&gender=" + gender,
+					data : "name=" + encodeURIComponent($(".name").val()) + "&lastName=" + encodeURIComponent($(".lastName").val()) + "&email=" + encodeURIComponent($(".emailSignUp").val()) + "&password=" + encodeURIComponent($(".passwordSignUp").val()) + "&gender=" + gender,
 					success : function(t) {
 						t = JSON.parse(t);
 						if (t.statut == "ok") {
@@ -24,6 +24,9 @@ function signUp() {
 						} else {
 							self.showMessage(t.statut, t.message)
 						}
+						self.boolProgress = true;
+					},
+					error : function(){
 						self.boolProgress = true;
 					}
 					});

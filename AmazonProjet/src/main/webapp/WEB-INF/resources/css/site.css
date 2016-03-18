@@ -722,6 +722,18 @@ ul.step a:hover:after {
 	display: none;
 }
 
+@media ( min-width : 769px) {
+	.blockUpdateAdress {
+		width: 78px;
+		padding: 0;
+	}
+	.blockDeleteAdress {
+		padding-left: 15px;
+		padding-right: 0;
+		width: 107px;
+	}
+}
+
 @media ( max-width : 768px) {
 	.tbodyCart, .trTotal {
 		display: block;
