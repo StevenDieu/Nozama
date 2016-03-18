@@ -1,5 +1,6 @@
 package nozama.model;
-// Generated 2 mars 2016 20:06:10 by Hibernate Tools 4.3.1.Final
+// Generated 17 mars 2016 14:12:54 by Hibernate Tools 4.3.1.Final
+
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,99 +20,108 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "album", catalog = "nozama")
-public class Album implements java.io.Serializable,Categorie {
+public class Album implements java.io.Serializable, Categorie {
 
-	private Integer idAlbum;
-	private Artiste artiste;
-	private Product product;
-	private String type;
-	private String label;
-	private Set<TypeSupportAlbum> typeSupportAlbums = new HashSet<TypeSupportAlbum>(0);
-	private Set<AlbumHasSingle> albumHasSingles = new HashSet<AlbumHasSingle>(0);
 
-	public Album() {
-	}
+  private Integer idAlbum;
+  private Artiste artiste;
+  private Product product;
+  private String type;
+  private String label;
+  private Set<TypeSupportAlbum> typeSupportAlbums = new HashSet<TypeSupportAlbum>(0);
+  private Set<AlbumHasSingle> albumHasSingles = new HashSet<AlbumHasSingle>(0);
 
-	public Album(Artiste artiste, Product product) {
-		this.artiste = artiste;
-		this.product = product;
-	}
+  public Album() {}
 
-	public Album(Artiste artiste, Product product, String type, String label, Set<TypeSupportAlbum> typeSupportAlbums, Set<AlbumHasSingle> albumHasSingles) {
-		this.artiste = artiste;
-		this.product = product;
-		this.type = type;
-		this.label = label;
-		this.typeSupportAlbums = typeSupportAlbums;
-		this.albumHasSingles = albumHasSingles;
-	}
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
+  public Album(Artiste artiste, Product product) {
+    this.artiste = artiste;
+    this.product = product;
+  }
 
-	@Column(name = "id_album", unique = true, nullable = false)
-	public Integer getIdAlbum() {
-		return this.idAlbum;
-	}
+  public Album(Artiste artiste, Product product, String type, String label,
+      Set<TypeSupportAlbum> typeSupportAlbums, Set<AlbumHasSingle> albumHasSingles) {
+    this.artiste = artiste;
+    this.product = product;
+    this.type = type;
+    this.label = label;
+    this.typeSupportAlbums = typeSupportAlbums;
+    this.albumHasSingles = albumHasSingles;
+  }
 
-	public void setIdAlbum(Integer idAlbum) {
-		this.idAlbum = idAlbum;
-	}
+  @Id
+  @GeneratedValue(strategy = IDENTITY)
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_artiste", nullable = false)
-	public Artiste getArtiste() {
-		return this.artiste;
-	}
 
-	public void setArtiste(Artiste artiste) {
-		this.artiste = artiste;
-	}
+  @Column(name = "id_album", unique = true, nullable = false)
+  public Integer getIdAlbum() {
+    return this.idAlbum;
+  }
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_product", nullable = false)
-	public Product getProduct() {
-		return this.product;
-	}
+  public void setIdAlbum(Integer idAlbum) {
+    this.idAlbum = idAlbum;
+  }
 
-	public void setProduct(Product product) {
-		this.product = product;
-	}
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "id_artiste", nullable = false)
+  public Artiste getArtiste() {
+    return this.artiste;
+  }
 
-	@Column(name = "type", length = 45)
-	public String getType() {
-		return this.type;
-	}
+  public void setArtiste(Artiste artiste) {
+    this.artiste = artiste;
+  }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "id_product", nullable = false)
+  public Product getProduct() {
+    return this.product;
+  }
 
-	@Column(name = "label")
-	public String getLabel() {
-		return this.label;
-	}
+  public void setProduct(Product product) {
+    this.product = product;
+  }
 
-	public void setLabel(String label) {
-		this.label = label;
-	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "album")
-	public Set<TypeSupportAlbum> getTypeSupportAlbums() {
-		return this.typeSupportAlbums;
-	}
+  @Column(name = "type", length = 45)
+  public String getType() {
+    return this.type;
+  }
 
-	public void setTypeSupportAlbums(Set<TypeSupportAlbum> typeSupportAlbums) {
-		this.typeSupportAlbums = typeSupportAlbums;
-	}
+  public void setType(String type) {
+    this.type = type;
+  }
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "album")
-	public Set<AlbumHasSingle> getAlbumHasSingles() {
-		return this.albumHasSingles;
-	}
 
-	public void setAlbumHasSingles(Set<AlbumHasSingle> albumHasSingles) {
-		this.albumHasSingles = albumHasSingles;
-	}
+  @Column(name = "label")
+  public String getLabel() {
+    return this.label;
+  }
+
+  public void setLabel(String label) {
+    this.label = label;
+  }
+
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "album")
+  public Set<TypeSupportAlbum> getTypeSupportAlbums() {
+    return this.typeSupportAlbums;
+  }
+
+  public void setTypeSupportAlbums(Set<TypeSupportAlbum> typeSupportAlbums) {
+    this.typeSupportAlbums = typeSupportAlbums;
+  }
+
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "album")
+  public Set<AlbumHasSingle> getAlbumHasSingles() {
+    return this.albumHasSingles;
+  }
+
+  public void setAlbumHasSingles(Set<AlbumHasSingle> albumHasSingles) {
+    this.albumHasSingles = albumHasSingles;
+  }
+
+
 
 }
+
+

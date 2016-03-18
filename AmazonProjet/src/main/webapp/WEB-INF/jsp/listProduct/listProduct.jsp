@@ -26,9 +26,6 @@
 			</div>
 
 			<div class="descriptionProduct">
-				<c:if test="${fn:length(product.description) == 0}">
-					Pas de description...
-				</c:if>
 				<c:out value="${fn:substring(product.description, 0, 87)}" />
 				<c:if test="${fn:length(product.description) > 87}">
 					...

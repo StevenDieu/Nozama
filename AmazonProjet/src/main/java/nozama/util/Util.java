@@ -22,5 +22,12 @@ public final class Util {
 		
 		return true;
 	}
+	
+	  public static String ConvertStringToNull(String string) {
+	    if (string == null || string.equals("") || string.equals("null")) {
+	      return null;
+	    }
+	    return string;
+	  }
 
 }

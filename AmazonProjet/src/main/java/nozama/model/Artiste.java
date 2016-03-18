@@ -1,5 +1,6 @@
 package nozama.model;
-// Generated 2 mars 2016 20:06:10 by Hibernate Tools 4.3.1.Final
+// Generated 17 mars 2016 14:12:54 by Hibernate Tools 4.3.1.Final
+
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,61 +20,68 @@ import javax.persistence.Table;
 @Table(name = "artiste", catalog = "nozama")
 public class Artiste implements java.io.Serializable {
 
-	private Integer idArtiste;
-	private String name;
-	private Set<Album> albums = new HashSet<Album>(0);
-	private Set<Single> singles = new HashSet<Single>(0);
 
-	public Artiste() {
-	}
+  private Integer idArtiste;
+  private String name;
+  private Set<Album> albums = new HashSet<Album>(0);
+  private Set<Single> singles = new HashSet<Single>(0);
 
-	public Artiste(String name) {
-		this.name = name;
-	}
+  public Artiste() {}
 
-	public Artiste(String name, Set<Album> albums, Set<Single> singles) {
-		this.name = name;
-		this.albums = albums;
-		this.singles = singles;
-	}
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
+  public Artiste(String name) {
+    this.name = name;
+  }
 
-	@Column(name = "id_artiste", unique = true, nullable = false)
-	public Integer getIdArtiste() {
-		return this.idArtiste;
-	}
+  public Artiste(String name, Set<Album> albums, Set<Single> singles) {
+    this.name = name;
+    this.albums = albums;
+    this.singles = singles;
+  }
 
-	public void setIdArtiste(Integer idArtiste) {
-		this.idArtiste = idArtiste;
-	}
+  @Id
+  @GeneratedValue(strategy = IDENTITY)
 
-	@Column(name = "name", nullable = false)
-	public String getName() {
-		return this.name;
-	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
+  @Column(name = "id_artiste", unique = true, nullable = false)
+  public Integer getIdArtiste() {
+    return this.idArtiste;
+  }
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "artiste")
-	public Set<Album> getAlbums() {
-		return this.albums;
-	}
+  public void setIdArtiste(Integer idArtiste) {
+    this.idArtiste = idArtiste;
+  }
 
-	public void setAlbums(Set<Album> albums) {
-		this.albums = albums;
-	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "artiste")
-	public Set<Single> getSingles() {
-		return this.singles;
-	}
+  @Column(name = "name", nullable = false)
+  public String getName() {
+    return this.name;
+  }
 
-	public void setSingles(Set<Single> singles) {
-		this.singles = singles;
-	}
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "artiste")
+  public Set<Album> getAlbums() {
+    return this.albums;
+  }
+
+  public void setAlbums(Set<Album> albums) {
+    this.albums = albums;
+  }
+
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "artiste")
+  public Set<Single> getSingles() {
+    return this.singles;
+  }
+
+  public void setSingles(Set<Single> singles) {
+    this.singles = singles;
+  }
+
+
 
 }
+
+

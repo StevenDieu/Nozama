@@ -36,6 +36,9 @@ function testNumber(id, type, idtype) {
 		});
 		$(".priceTotal").html(totalPrice.toFixed(2));
 		self.boolProgress = true;
+	},
+	error : function() {
+		self.boolProgress = true;
 	}
 	});
 }
@@ -63,6 +66,9 @@ function deleteProduct(element, id, type) {
 
 			$(".nbCart").html(t);
 			self.boolProgress = true;
+		},
+		error : function() {
+			self.boolProgress = true;
 		}
 		});
 	}
@@ -81,10 +87,14 @@ function deleteCart() {
 			var totalPrice = 0;
 			$(".priceTotal").html(totalPrice.toFixed(2));
 			self.boolProgress = true;
+		},
+		error : function() {
+			self.boolProgress = true;
 		}
 		});
 	}
 }
+
 
 $(document).ready(function() {
 	var totalPrice = 0;
@@ -135,5 +145,7 @@ $(document).ready(function() {
 
 	$(".suppressionPanier").on("click", function() {
 		deleteCart();
-	})
+	});
+
+
 });

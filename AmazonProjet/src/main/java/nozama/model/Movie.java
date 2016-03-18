@@ -1,5 +1,6 @@
 package nozama.model;
-// Generated 2 mars 2016 20:06:10 by Hibernate Tools 4.3.1.Final
+// Generated 17 mars 2016 14:12:54 by Hibernate Tools 4.3.1.Final
+
 
 import java.util.Date;
 import java.util.HashSet;
@@ -22,77 +23,85 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "movie", catalog = "nozama")
-public class Movie implements java.io.Serializable,Categorie {
+public class Movie implements java.io.Serializable, Categorie {
 
-	private Integer idMovie;
-	private Product product;
-	private String type;
-	private Date totalTime;
-	private Set<TypeSupportMovie> typeSupportMovies = new HashSet<TypeSupportMovie>(0);
 
-	public Movie() {
-	}
+  private Integer idMovie;
+  private Product product;
+  private String type;
+  private Date totalTime;
+  private Set<TypeSupportMovie> typeSupportMovies = new HashSet<TypeSupportMovie>(0);
 
-	public Movie(Product product, String type) {
-		this.product = product;
-		this.type = type;
-	}
+  public Movie() {}
 
-	public Movie(Product product, String type, Date totalTime, Set<TypeSupportMovie> typeSupportMovies) {
-		this.product = product;
-		this.type = type;
-		this.totalTime = totalTime;
-		this.typeSupportMovies = typeSupportMovies;
-	}
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
+  public Movie(Product product, String type) {
+    this.product = product;
+    this.type = type;
+  }
 
-	@Column(name = "id_movie", unique = true, nullable = false)
-	public Integer getIdMovie() {
-		return this.idMovie;
-	}
+  public Movie(Product product, String type, Date totalTime,
+      Set<TypeSupportMovie> typeSupportMovies) {
+    this.product = product;
+    this.type = type;
+    this.totalTime = totalTime;
+    this.typeSupportMovies = typeSupportMovies;
+  }
 
-	public void setIdMovie(Integer idMovie) {
-		this.idMovie = idMovie;
-	}
+  @Id
+  @GeneratedValue(strategy = IDENTITY)
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_product", nullable = false)
-	public Product getProduct() {
-		return this.product;
-	}
 
-	public void setProduct(Product product) {
-		this.product = product;
-	}
+  @Column(name = "id_movie", unique = true, nullable = false)
+  public Integer getIdMovie() {
+    return this.idMovie;
+  }
 
-	@Column(name = "type", nullable = false)
-	public String getType() {
-		return this.type;
-	}
+  public void setIdMovie(Integer idMovie) {
+    this.idMovie = idMovie;
+  }
 
-	public void setType(String type) {
-		this.type = type;
-	}
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "id_product", nullable = false)
+  public Product getProduct() {
+    return this.product;
+  }
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "total_time", length = 10)
-	public Date getTotalTime() {
-		return this.totalTime;
-	}
+  public void setProduct(Product product) {
+    this.product = product;
+  }
 
-	public void setTotalTime(Date totalTime) {
-		this.totalTime = totalTime;
-	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "movie")
-	public Set<TypeSupportMovie> getTypeSupportMovies() {
-		return this.typeSupportMovies;
-	}
+  @Column(name = "type", nullable = false)
+  public String getType() {
+    return this.type;
+  }
 
-	public void setTypeSupportMovies(Set<TypeSupportMovie> typeSupportMovies) {
-		this.typeSupportMovies = typeSupportMovies;
-	}
+  public void setType(String type) {
+    this.type = type;
+  }
+
+  @Temporal(TemporalType.DATE)
+  @Column(name = "total_time", length = 10)
+  public Date getTotalTime() {
+    return this.totalTime;
+  }
+
+  public void setTotalTime(Date totalTime) {
+    this.totalTime = totalTime;
+  }
+
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "movie")
+  public Set<TypeSupportMovie> getTypeSupportMovies() {
+    return this.typeSupportMovies;
+  }
+
+  public void setTypeSupportMovies(Set<TypeSupportMovie> typeSupportMovies) {
+    this.typeSupportMovies = typeSupportMovies;
+  }
+
+
 
 }
+
+

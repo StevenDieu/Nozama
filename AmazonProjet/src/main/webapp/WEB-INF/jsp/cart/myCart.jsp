@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<jsp:include page="templates/header.jsp" />
+<jsp:include page="../templates/header.jsp" />
 <ul class="step clearfix" id="order_step">
 	<li class="step_current  first">
 		<span>
@@ -52,7 +52,7 @@
 							<strong>Total</strong>
 						</th>
 						<th class="center">
-							<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#popUpDeletePanier">Supprimer tout le panier</button>
+							<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#popUpDeletePanier">Tout supprimer</button>
 						</th>
 					</tr>
 				</thead>
@@ -121,8 +121,7 @@
 			</table>
 
 		</div>
-		<input type="submit" class="btn btn-primary input-cart" value="Valider mon panier" />
-
+		<a href="/mon-panier-validation-panier" class="btn btn-primary input-cart input-100">Valider mon panier</a>
 	</div>
 </div>
 <div class="modal fade" id="popUpDeletePanier" tabindex="-1" role="dialog" aria-labelledby="popUpDeletePanier">
@@ -142,6 +141,6 @@
 		</div>
 	</div>
 </div>
-<script src="/resources/js/cart.js"></script>
+<script src="/resources/js/cart/cart.js"></script>
 
-<jsp:include page="templates/footer.jsp" />
+<jsp:include page="../templates/footer.jsp" />

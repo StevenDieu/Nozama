@@ -1,5 +1,6 @@
 package nozama.model;
-// Generated 2 mars 2016 20:06:10 by Hibernate Tools 4.3.1.Final
+// Generated 17 mars 2016 14:12:54 by Hibernate Tools 4.3.1.Final
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,58 +19,65 @@ import javax.persistence.Table;
 @Table(name = "type_support_single", catalog = "nozama")
 public class TypeSupportSingle implements java.io.Serializable,TypeSupport {
 
-	private Integer idTypeSupport;
-	private Single single;
-	private String nameSupport;
-	private float price;
 
-	public TypeSupportSingle() {
-	}
+  private Integer idTypeSupport;
+  private Single single;
+  private String nameSupport;
+  private float price;
 
-	public TypeSupportSingle(Single single, String nameSupport, float price) {
-		this.single = single;
-		this.nameSupport = nameSupport;
-		this.price = price;
-	}
+  public TypeSupportSingle() {}
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
+  public TypeSupportSingle(Single single, String nameSupport, float price) {
+    this.single = single;
+    this.nameSupport = nameSupport;
+    this.price = price;
+  }
 
-	@Column(name = "id_type_support", unique = true, nullable = false)
-	public Integer getIdTypeSupport() {
-		return this.idTypeSupport;
-	}
+  @Id
+  @GeneratedValue(strategy = IDENTITY)
 
-	public void setIdTypeSupport(Integer idTypeSupport) {
-		this.idTypeSupport = idTypeSupport;
-	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_single", nullable = false)
-	public Single getSingle() {
-		return this.single;
-	}
+  @Column(name = "id_type_support", unique = true, nullable = false)
+  public Integer getIdTypeSupport() {
+    return this.idTypeSupport;
+  }
 
-	public void setSingle(Single single) {
-		this.single = single;
-	}
+  public void setIdTypeSupport(Integer idTypeSupport) {
+    this.idTypeSupport = idTypeSupport;
+  }
 
-	@Column(name = "name_support", nullable = false, length = 45)
-	public String getNameSupport() {
-		return this.nameSupport;
-	}
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "id_single", nullable = false)
+  public Single getSingle() {
+    return this.single;
+  }
 
-	public void setNameSupport(String nameSupport) {
-		this.nameSupport = nameSupport;
-	}
+  public void setSingle(Single single) {
+    this.single = single;
+  }
 
-	@Column(name = "price", nullable = false, precision = 12, scale = 0)
-	public float getPrice() {
-		return this.price;
-	}
 
-	public void setPrice(float price) {
-		this.price = price;
-	}
+  @Column(name = "name_support", nullable = false, length = 45)
+  public String getNameSupport() {
+    return this.nameSupport;
+  }
+
+  public void setNameSupport(String nameSupport) {
+    this.nameSupport = nameSupport;
+  }
+
+
+  @Column(name = "price", nullable = false, precision = 12, scale = 0)
+  public float getPrice() {
+    return this.price;
+  }
+
+  public void setPrice(float price) {
+    this.price = price;
+  }
+
+
 
 }
+
+

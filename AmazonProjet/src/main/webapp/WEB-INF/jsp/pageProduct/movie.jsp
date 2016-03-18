@@ -40,9 +40,6 @@
 
 
 			<p>
-				<c:if test="${fn:length(products.description) == 0}">
-					Pas de description...
-				</c:if>
 				<c:out value="${products.description}" />
 			</p>
 

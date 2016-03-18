@@ -1,5 +1,6 @@
 package nozama.model;
-// Generated 2 mars 2016 20:06:10 by Hibernate Tools 4.3.1.Final
+// Generated 17 mars 2016 14:12:54 by Hibernate Tools 4.3.1.Final
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,63 +19,71 @@ import javax.persistence.Table;
 @Table(name = "type_support_album", catalog = "nozama")
 public class TypeSupportAlbum implements java.io.Serializable,TypeSupport {
 
-	private Integer idTypeSupport;
-	private Album album;
-	private String nameSupport;
-	private float price;
 
-	public TypeSupportAlbum() {
-	}
+  private Integer idTypeSupport;
+  private Album album;
+  private String nameSupport;
+  private float price;
 
-	public TypeSupportAlbum(Album album, float price) {
-		this.album = album;
-		this.price = price;
-	}
+  public TypeSupportAlbum() {}
 
-	public TypeSupportAlbum(Album album, String nameSupport, float price) {
-		this.album = album;
-		this.nameSupport = nameSupport;
-		this.price = price;
-	}
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
+  public TypeSupportAlbum(Album album, float price) {
+    this.album = album;
+    this.price = price;
+  }
 
-	@Column(name = "id_type_support", unique = true, nullable = false)
-	public Integer getIdTypeSupport() {
-		return this.idTypeSupport;
-	}
+  public TypeSupportAlbum(Album album, String nameSupport, float price) {
+    this.album = album;
+    this.nameSupport = nameSupport;
+    this.price = price;
+  }
 
-	public void setIdTypeSupport(Integer idTypeSupport) {
-		this.idTypeSupport = idTypeSupport;
-	}
+  @Id
+  @GeneratedValue(strategy = IDENTITY)
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_album", nullable = false)
-	public Album getAlbum() {
-		return this.album;
-	}
 
-	public void setAlbum(Album album) {
-		this.album = album;
-	}
+  @Column(name = "id_type_support", unique = true, nullable = false)
+  public Integer getIdTypeSupport() {
+    return this.idTypeSupport;
+  }
 
-	@Column(name = "name_support", length = 45)
-	public String getNameSupport() {
-		return this.nameSupport;
-	}
+  public void setIdTypeSupport(Integer idTypeSupport) {
+    this.idTypeSupport = idTypeSupport;
+  }
 
-	public void setNameSupport(String nameSupport) {
-		this.nameSupport = nameSupport;
-	}
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "id_album", nullable = false)
+  public Album getAlbum() {
+    return this.album;
+  }
 
-	@Column(name = "price", nullable = false, precision = 12, scale = 0)
-	public float getPrice() {
-		return this.price;
-	}
+  public void setAlbum(Album album) {
+    this.album = album;
+  }
 
-	public void setPrice(float price) {
-		this.price = price;
-	}
+
+  @Column(name = "name_support", length = 45)
+  public String getNameSupport() {
+    return this.nameSupport;
+  }
+
+  public void setNameSupport(String nameSupport) {
+    this.nameSupport = nameSupport;
+  }
+
+
+  @Column(name = "price", nullable = false, precision = 12, scale = 0)
+  public float getPrice() {
+    return this.price;
+  }
+
+  public void setPrice(float price) {
+    this.price = price;
+  }
+
+
 
 }
+
+

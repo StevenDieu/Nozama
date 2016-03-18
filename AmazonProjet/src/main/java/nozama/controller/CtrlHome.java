@@ -11,8 +11,6 @@ public class CtrlHome {
 
 	@RequestMapping(value = "/")
 	public ModelAndView index(HttpServletRequest request) {
-
-
 		return new ModelAndView("index");
 	}
 	
