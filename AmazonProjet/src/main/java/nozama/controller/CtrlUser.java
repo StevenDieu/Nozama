@@ -1,5 +1,8 @@
 package nozama.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import nozama.model.User;
 import nozama.service.UserServiceImpl;
@@ -92,5 +96,15 @@ public class CtrlUser {
 	public String ajaxDisconnect(HttpServletRequest request) {
 		request.getSession().setAttribute("User", null);
 		return "redirect:/";
+	}
+	
+	@RequestMapping(value = "/mon-compte")
+	public ModelAndView monCompte(HttpServletRequest request) {
+		Map<String, Object> user = new HashMap<String, Object>();
+		if (request.getSession().getAttribute("User") != null) {
+			User myUser = (User) request.getSession().getAttribute("User");
+			user.put("user", myUser);
+		}
+		return new ModelAndView("mon-compte", user);
 	}
 }
