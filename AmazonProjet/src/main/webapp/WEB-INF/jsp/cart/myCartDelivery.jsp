@@ -57,9 +57,8 @@
 							</c:when>
 						</c:choose>
 
-						ECONOMIQUE - 10,00 €
-						<br />
-						Date de livraison estimée : 7-9 jours
+						<p>ECONOMIQUE - 10,00 €</p>
+						<p>Date de livraison estimée : 7-9 jours</p>
 					</label>
 				</div>
 				<div class="form-group">
@@ -78,9 +77,8 @@
 								</c:if>
 							</c:when>
 						</c:choose>
-						2016 EXPRESS & SAMEDI - 14,00 €
-						<br />
-						Date de livraison estimée : 3-4 jours
+						<p>2016 EXPRESS & SAMEDI - 14,00 €</p>
+						<p>Date de livraison estimée : 3-4 jours</p>
 					</label>
 				</div>
 				<div class="form-group">

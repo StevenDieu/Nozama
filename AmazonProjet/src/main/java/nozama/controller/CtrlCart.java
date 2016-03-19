@@ -216,7 +216,8 @@ public class CtrlCart {
 
 
   @RequestMapping(value = "/mon-panier-etape-validation-transport")
-  public ModelAndView myCartValidateTransport(HttpServletRequest request) throws UnsupportedEncodingException {
+  public ModelAndView myCartValidateTransport(HttpServletRequest request)
+      throws UnsupportedEncodingException {
     if (request.getSession().getAttribute("cartControlTunnel") == null
         || request.getSession().getAttribute("cartControlTunnel") == "") {
       return new ModelAndView("redirect:/mon-panier");
@@ -232,22 +233,32 @@ public class CtrlCart {
       return new ModelAndView("redirect:/mon-panier-etape-adresse");
     }
     request.setCharacterEncoding("utf-8");
-    
+
     String chooseTransport = request.getParameter("chooseTransport");
     String commentaire = request.getParameter("commentaire");
+
+
 
     if (chooseTransport == "") {
       return new ModelAndView("redirect:/mon-panier-etape-livraison");
     }
 
+
+
     Map<String, Object> listTransport = new HashMap<>();
     listTransport.put("id", chooseTransport);
     listTransport.put("commentaire", Util.ConvertStringToNull(commentaire));
+    if (chooseTransport.equals("eco")) {
+      listTransport.put("prix", 10);
+    } else {
+      listTransport.put("prix", 14);
+    }
     request.getSession().setAttribute("transport", listTransport);
 
     return new ModelAndView("redirect:/mon-panier-etape-paiement");
   }
 
+  @SuppressWarnings("unchecked")
   @RequestMapping(value = "/mon-panier-etape-paiement")
   public ModelAndView myCartPayment(HttpServletRequest request) {
     if (request.getSession().getAttribute("cartControlTunnel") == null
@@ -270,7 +281,21 @@ public class CtrlCart {
       return new ModelAndView("redirect:/mon-panier-etape-livraison");
     }
 
-    return new ModelAndView("cart/myCartPayment");
+    float calculTotalProduct = PCS.calculTotalProduct(
+        (List<Map<String, Object>>) request.getSession().getAttribute("cartControlTunnel"));
+    request.getSession().setAttribute("prixTotalProduct", calculTotalProduct);
+    Map<String, Object> transport =
+        (Map<String, Object>) request.getSession().getAttribute("transport");
+    request.getSession().setAttribute("totalPrice",
+        calculTotalProduct + (Integer) transport.get("prix"));
+
+    Map<String, Object> product = new HashMap<String, Object>();
+
+    List<Map<String, Object>> allProduct =
+        PCS.getAllCart((List<Map<String, Object>>) request.getSession().getAttribute("cart"));
+    product.put("products", allProduct);
+
+    return new ModelAndView("cart/myCartPayment", product);
   }
 
 

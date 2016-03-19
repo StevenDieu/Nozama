@@ -360,15 +360,15 @@ ol.ssMenu {
 	bottom: 0;
 	width: 100%;
 	height: 60px;
-	background-color: #464646;
-	border-color: #e7e7e7;
-	color: #fff;
+	background-color: #F8F8F8;
+	border: 1px solid #e7e7e7;
+	color: #615D5D;
 	padding-top: 20px;
-	padding-bottom: 30px
+	padding-bottom: 30px;
 }
 
 .footer a {
-	color: #fff;
+	color: #504E4E;
 	font-weight: 600;
 }
 
@@ -722,6 +722,23 @@ ul.step a:hover:after {
 	display: none;
 }
 
+.imgPaypment {
+	max-width: 120px;
+	max-height: 40px;
+}
+
+.radioFormPayment input[type="radio"] {
+	margin-top: 12px;
+}
+
+.floatRight {
+	float: right;
+}
+
+.width100 {
+	width: 100%;
+}
+
 @media ( min-width : 769px) {
 	.blockUpdateAdress {
 		width: 78px;
@@ -732,6 +749,10 @@ ul.step a:hover:after {
 		padding-right: 0;
 		width: 107px;
 	}
+}
+
+.totalCart {
+	white-space: nowrap;
 }
 
 @media ( max-width : 768px) {
@@ -802,6 +823,14 @@ ul.step a:hover:after {
 	}
 	.priceProduct1single, .totalProductBlock {
 		display: inline-block;
+	}
+	.clearBothTrCart {
+		display: block;
+		position: relative;
+		border: none !important;
+		width: 100%;
+		clear: both;
+		text-align: right;
 	}
 }
 
