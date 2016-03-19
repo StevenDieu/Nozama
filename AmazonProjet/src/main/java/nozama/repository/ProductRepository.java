@@ -10,10 +10,9 @@ import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
-import nozama.model.AlbumHasSingle;
-import nozama.model.TypeSupportAlbum;
+import nozama.model.Article;
+import nozama.model.Product;
 import nozama.model.TypeSupportMovie;
-import nozama.model.TypeSupportSingle;
 import nozama.util.HibernateUtil;
 
 @SuppressWarnings("unchecked")
@@ -21,6 +20,33 @@ import nozama.util.HibernateUtil;
 public class ProductRepository {
 
   Session openSession = HibernateUtil.getSessionFactory().openSession();
+  
+  public List<Product> getAllProductByType(String support, boolean useSupport,
+      boolean useDate, boolean useAttribut,boolean useType, Date dateYears, Date dateYearsAfter, List<String> attribut,
+      int startResult,List<String> type){
+    Criteria cr = openSession.createCriteria(Product.class);
+    cr.createAlias("article", "a");
+    cr.createAlias("attrProduct", "ap");
+    int startResultNumber = (startResult - 1) * 12;
+    cr.setFirstResult(startResultNumber);
+    cr.setMaxResults(startResultNumber + 12);
+    if(useType){
+      cr.add(Restrictions.in("type", type));
+    }
+    if (useSupport) {
+      cr.add(Restrictions.eq("a.nameSupport", support));
+    }
+    if (useDate) {
+      cr.add(Restrictions.between("dateReleased", dateYears, dateYearsAfter));
+    }
+    if (useType) {
+      cr.add(Restrictions.in("ap.attribut", attribut));
+    }
+    List<Product> listProduct = cr.list();
+    HibernateUtil.shutdown();
+
+    return listProduct;
+  }
 
   public List<TypeSupportMovie> getAllMovieBySupport(String support, boolean useSupport,
       boolean useDate, boolean useType, Date dateYears, Date dateYearsAfter, String type,

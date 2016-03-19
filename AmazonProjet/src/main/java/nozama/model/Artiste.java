@@ -1,16 +1,15 @@
 package nozama.model;
-// Generated 17 mars 2016 14:12:54 by Hibernate Tools 4.3.1.Final
+// Generated 19 mars 2016 16:01:44 by Hibernate Tools 4.3.1.Final
 
 
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -22,21 +21,14 @@ public class Artiste implements java.io.Serializable {
 
 
   private Integer idArtiste;
+  private Product product;
   private String name;
-  private Set<Album> albums = new HashSet<Album>(0);
-  private Set<Single> singles = new HashSet<Single>(0);
 
   public Artiste() {}
 
-
-  public Artiste(String name) {
+  public Artiste(Product product, String name) {
+    this.product = product;
     this.name = name;
-  }
-
-  public Artiste(String name, Set<Album> albums, Set<Single> singles) {
-    this.name = name;
-    this.albums = albums;
-    this.singles = singles;
   }
 
   @Id
@@ -52,6 +44,16 @@ public class Artiste implements java.io.Serializable {
     this.idArtiste = idArtiste;
   }
 
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "id_product", nullable = false)
+  public Product getProduct() {
+    return this.product;
+  }
+
+  public void setProduct(Product product) {
+    this.product = product;
+  }
+
 
   @Column(name = "name", nullable = false)
   public String getName() {
@@ -60,24 +62,6 @@ public class Artiste implements java.io.Serializable {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "artiste")
-  public Set<Album> getAlbums() {
-    return this.albums;
-  }
-
-  public void setAlbums(Set<Album> albums) {
-    this.albums = albums;
-  }
-
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "artiste")
-  public Set<Single> getSingles() {
-    return this.singles;
-  }
-
-  public void setSingles(Set<Single> singles) {
-    this.singles = singles;
   }
 
 
