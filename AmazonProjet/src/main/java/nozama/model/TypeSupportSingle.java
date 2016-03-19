@@ -35,8 +35,6 @@ public class TypeSupportSingle implements java.io.Serializable,TypeSupport {
 
   @Id
   @GeneratedValue(strategy = IDENTITY)
-
-
   @Column(name = "id_type_support", unique = true, nullable = false)
   public Integer getIdTypeSupport() {
     return this.idTypeSupport;

@@ -174,14 +174,15 @@ public class CtrlUser {
 
     return "{\"statut\": \"nok\"}";
   }
-	
-	@RequestMapping(value = "/mon-compte")
-	public ModelAndView monCompte(HttpServletRequest request) {
-		Map<String, Object> user = new HashMap<String, Object>();
-		if (request.getSession().getAttribute("User") != null) {
-			User myUser = (User) request.getSession().getAttribute("User");
-			user.put("user", myUser);
-		}
-		return new ModelAndView("mon-compte", user);
-	}
+
+  @RequestMapping(value = "/mon-compte")
+  public ModelAndView monCompte(HttpServletRequest request) {
+    Map<String, Object> variableParam = new HashMap<String, Object>();
+    if (request.getSession().getAttribute("User") != null) {
+      User user = (User) request.getSession().getAttribute("User");
+      variableParam.put("user", user);
+      variableParam.put("adresss", US.getAllAdressByUser(user));
+    }
+    return new ModelAndView("mon-compte", variableParam);
+  }
 }

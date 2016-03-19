@@ -19,86 +19,118 @@ import nozama.repository.ProductRepository;
 @Service
 public class ProductCartServiceImpl implements ProductCartService {
 
-	@Autowired
-	private ProductRepository PR;
-	
-	private List<Map<String, Object>> allCart;
+  @Autowired
+  private ProductRepository PR;
 
-	public List<Map<String, Object>> getAllCart(List<Map<String, Object>> allCart) {
-		this.allCart = allCart;
-		List<Map<String, Object>> allProduct = new ArrayList<Map<String, Object>>();
+  private List<Map<String, Object>> allCart;
 
-		List<Integer> allIdSingle = new ArrayList<Integer>();
-		List<Integer> allIdAlbum = new ArrayList<Integer>();
-		List<Integer> allIdMovie = new ArrayList<Integer>();
-		for (Map<String, Object> productCart : allCart) {
-			if (((String) productCart.get("type")).equals("single")) {
-				allIdSingle.add((Integer) productCart.get("id"));
-			} else if (((String) productCart.get("type")).equals("album")) {
-				allIdAlbum.add((Integer) productCart.get("id"));
-			} else if (((String) productCart.get("type")).equals("movie")) {
-				allIdMovie.add((Integer) productCart.get("id"));
-			}
-		}
+  public List<Map<String, Object>> getAllCart(List<Map<String, Object>> allCart) {
+    this.allCart = allCart;
+    List<Map<String, Object>> allProduct = new ArrayList<Map<String, Object>>();
 
-		if (allIdSingle.size() > 0) {
-			List<TypeSupportSingle> typeSupportSingle = PR.getAllSingle(allIdSingle);
-			margeAllResultTypeSupportSignle(typeSupportSingle, allProduct);
-		}
-		if (allIdAlbum.size() > 0) {
-			List<TypeSupportAlbum> typeSupportAlbums = PR.getAllAlbum(allIdAlbum);
-			margeAllResultTypeSupportAlbum(typeSupportAlbums, allProduct);
-		}
-		if (allIdMovie.size() > 0) {
-			List<TypeSupportMovie> typeSupportMovie = PR.getAllMovie(allIdMovie);
-			margeAllResultTypeSupportMovie(typeSupportMovie, allProduct);
-		}
+    List<Integer> allIdSingle = new ArrayList<Integer>();
+    List<Integer> allIdAlbum = new ArrayList<Integer>();
+    List<Integer> allIdMovie = new ArrayList<Integer>();
+    for (Map<String, Object> productCart : allCart) {
+      if (((String) productCart.get("type")).equals("single")) {
+        allIdSingle.add((Integer) productCart.get("id"));
+      } else if (((String) productCart.get("type")).equals("album")) {
+        allIdAlbum.add((Integer) productCart.get("id"));
+      } else if (((String) productCart.get("type")).equals("movie")) {
+        allIdMovie.add((Integer) productCart.get("id"));
+      }
+    }
 
-		return allProduct;
-	}
+    if (allIdSingle.size() > 0) {
+      List<TypeSupportSingle> typeSupportSingle = PR.getAllSingle(allIdSingle);
+      margeAllResultTypeSupportSignle(typeSupportSingle, allProduct);
+    }
+    if (allIdAlbum.size() > 0) {
+      List<TypeSupportAlbum> typeSupportAlbums = PR.getAllAlbum(allIdAlbum);
+      margeAllResultTypeSupportAlbum(typeSupportAlbums, allProduct);
+    }
+    if (allIdMovie.size() > 0) {
+      List<TypeSupportMovie> typeSupportMovie = PR.getAllMovie(allIdMovie);
+      margeAllResultTypeSupportMovie(typeSupportMovie, allProduct);
+    }
 
-	public void margeAllResultTypeSupportAlbum(List<TypeSupportAlbum> typeSupportAlbums, List<Map<String, Object>> allProduct) {
-		for (TypeSupportAlbum typeSupportAlbum : typeSupportAlbums) {
-			insertInProducts(allProduct, "album", "album", (TypeSupport) typeSupportAlbum, (Categorie) typeSupportAlbum.getAlbum(), "/liste-toutes-les-musiques/AllSupport/album/AllYears/ALL");
-		}
-	}
+    return allProduct;
+  }
 
-	public void margeAllResultTypeSupportMovie(List<TypeSupportMovie> typeSupportMovies, List<Map<String, Object>> allProduct) {
+  public void margeAllResultTypeSupportAlbum(List<TypeSupportAlbum> typeSupportAlbums,
+      List<Map<String, Object>> allProduct) {
+    for (TypeSupportAlbum typeSupportAlbum : typeSupportAlbums) {
+      insertInProducts(allProduct, "album", "album", (TypeSupport) typeSupportAlbum,
+          (Categorie) typeSupportAlbum.getAlbum(),
+          "/liste-toutes-les-musiques/AllSupport/album/AllYears/ALL");
+    }
+  }
 
-		for (TypeSupportMovie typeSupportMovie : typeSupportMovies) {
-			insertInProducts(allProduct, "movie", "film", (TypeSupport) typeSupportMovie, (Categorie) typeSupportMovie.getMovie(), "/liste-tous-les-films");
-		}
-	}
+  public void margeAllResultTypeSupportMovie(List<TypeSupportMovie> typeSupportMovies,
+      List<Map<String, Object>> allProduct) {
 
-	public void margeAllResultTypeSupportSignle(List<TypeSupportSingle> typeSupportSingles, List<Map<String, Object>> allProduct) {
-		for (TypeSupportSingle typeSupportSingle : typeSupportSingles) {
-			insertInProducts(allProduct, "single", "single", (TypeSupport) typeSupportSingle, (Categorie) typeSupportSingle.getSingle(), "/liste-toutes-les-musiques/AllSupport/single/AllYears/ALL");
-		}
-	}
+    for (TypeSupportMovie typeSupportMovie : typeSupportMovies) {
+      insertInProducts(allProduct, "movie", "film", (TypeSupport) typeSupportMovie,
+          (Categorie) typeSupportMovie.getMovie(), "/liste-tous-les-films");
+    }
+  }
 
-	private void insertInProducts(List<Map<String, Object>> allProduct, String type, String typeHtml, TypeSupport typeSupport, Categorie typeSupportCategorie, String urlType) {
-		Map<String, Object> newProduct = new HashMap<String, Object>();
-		newProduct.put(type, typeSupportCategorie);
-		newProduct.put("type", type);
-		newProduct.put("typeHtml", typeHtml);
-		newProduct.put("urlType", urlType);
-		newProduct.put("name", typeSupportCategorie.getProduct().getName());
-		newProduct.put("description", typeSupportCategorie.getProduct().getDescription());
-		newProduct.put("urlPicture", typeSupportCategorie.getProduct().getUrlPicture());
-		newProduct.put("dateReleased", typeSupportCategorie.getProduct().getDateReleased());
-		newProduct.put("nameTagDateReleased", typeSupportCategorie.getProduct().getNameTagDateReleased());
-		newProduct.put("price", Float.toString(typeSupport.getPrice()));
-		newProduct.put("support", typeSupport.getNameSupport());
-		newProduct.put("id", Integer.toString(typeSupport.getIdTypeSupport()));
-		for (Map<String, Object> productCart : allCart) {
-			if (((Integer) productCart.get("id")).equals(typeSupport.getIdTypeSupport()) && productCart.get("type").equals(type)) {
-				DecimalFormat df = new DecimalFormat("0.00");
-				newProduct.put("numberProduct", (Integer) productCart.get("number"));
-				newProduct.put("totalProduct", df.format(((Integer) productCart.get("number")) * typeSupport.getPrice()));
-			}
-		}
+  public void margeAllResultTypeSupportSignle(List<TypeSupportSingle> typeSupportSingles,
+      List<Map<String, Object>> allProduct) {
+    for (TypeSupportSingle typeSupportSingle : typeSupportSingles) {
+      insertInProducts(allProduct, "single", "single", (TypeSupport) typeSupportSingle,
+          (Categorie) typeSupportSingle.getSingle(),
+          "/liste-toutes-les-musiques/AllSupport/single/AllYears/ALL");
+    }
+  }
 
-		allProduct.add(newProduct);
-	}
+  private void insertInProducts(List<Map<String, Object>> allProduct, String type, String typeHtml,
+      TypeSupport typeSupport, Categorie typeSupportCategorie, String urlType) {
+    Map<String, Object> newProduct = new HashMap<String, Object>();
+    newProduct.put(type, typeSupportCategorie);
+    newProduct.put("type", type);
+    newProduct.put("typeHtml", typeHtml);
+    newProduct.put("urlType", urlType);
+    newProduct.put("name", typeSupportCategorie.getProduct().getName());
+    newProduct.put("description", typeSupportCategorie.getProduct().getDescription());
+    newProduct.put("urlPicture", typeSupportCategorie.getProduct().getUrlPicture());
+    newProduct.put("dateReleased", typeSupportCategorie.getProduct().getDateReleased());
+    newProduct.put("nameTagDateReleased",
+        typeSupportCategorie.getProduct().getNameTagDateReleased());
+    newProduct.put("price", Float.toString(typeSupport.getPrice()));
+    newProduct.put("support", typeSupport.getNameSupport());
+    newProduct.put("id", Integer.toString(typeSupport.getIdTypeSupport()));
+    for (Map<String, Object> productCart : allCart) {
+      if (((Integer) productCart.get("id")).equals(typeSupport.getIdTypeSupport())
+          && productCart.get("type").equals(type)) {
+        DecimalFormat df = new DecimalFormat("0.00");
+        newProduct.put("numberProduct", (Integer) productCart.get("number"));
+        newProduct.put("totalProduct",
+            df.format(((Integer) productCart.get("number")) * typeSupport.getPrice()));
+      }
+    }
+
+    allProduct.add(newProduct);
+  }
+
+
+  public float calculTotalProduct(List<Map<String, Object>> list) {
+    float priceTotal = 0;
+    for (Map<String, Object> product : list) {
+      int numberProduct = (Integer) product.get("number");
+      if (((String) product.get("type")).equals("single")) {
+        List<TypeSupportSingle> typeSupportSingle = PR.getSingleById((Integer) product.get("id"));
+        priceTotal = priceTotal + (numberProduct * typeSupportSingle.get(0).getPrice());
+      } else if (((String) product.get("type")).equals("album")) {
+        List<TypeSupportAlbum> typeSupportAlbum = PR.getAlbumeById((Integer) product.get("id"));
+        priceTotal = priceTotal + (numberProduct * typeSupportAlbum.get(0).getPrice());
+      } else if (((String) product.get("type")).equals("movie")) {
+        List<TypeSupportMovie> typeSupportMovie = PR.getMovieById((Integer) product.get("id"));
+        priceTotal = priceTotal + (numberProduct * typeSupportMovie.get(0).getPrice());
+      }
+    }
+    return priceTotal;
+
+  }
 
 }

@@ -101,7 +101,7 @@
 								€
 								</span>
 							</td>
-							<td class="centerVerticale center  tdDeleteProduct">
+							<td class="centerVerticale center tdDeleteProduct">
 								<span class="blockTdBeforeCart">Supprimer </span>
 
 								<button class="btn btn-danger center deleteProduct" data-type="${product.type}" data-id="${product.id}" type="button">x</button>
