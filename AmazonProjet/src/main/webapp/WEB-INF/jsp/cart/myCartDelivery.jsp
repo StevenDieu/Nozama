@@ -92,7 +92,7 @@
 						
 					</c:if>
 					<c:if test="${sessionScope.transport == null}">
-						<textarea class="form-control" rows="3" name="commentaire" placeholder="Ajouter un commentaire pour le transporteur"></textarea>
+						<textarea class="form-control" rows="3" name="commentaire" placeholder="Ajouter un commentaire pour le transporteur checkLength" data-length="255"></textarea>
 					</c:if>
 
 				</div>

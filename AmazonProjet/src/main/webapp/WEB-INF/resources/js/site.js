@@ -154,5 +154,9 @@ $(document).ready(function() {
     var className = e.target.className;
     return checkForm(className);
   });
-
+  $(".clickProduct").on("click", function(e) {
+    if(e.target.className.indexOf("addCart") != 0){
+      document.location.href= $(this).data("href");
+    }
+  })
 });

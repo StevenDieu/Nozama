@@ -8,7 +8,7 @@
 	<c:forEach var="product" items="${listProducts}" varStatus="counter">
 
 
-		<a href="/product/${product.type}/${product.nameTagDateReleased}" class="product">
+		<div data-href="/product/${product.type}/${product.nameTagDateReleased}" class="product clickProduct">
 			<div class="titleProduct">
 				<c:out value="${product.name}" />
 			</div>
@@ -39,7 +39,7 @@
 					<div class="blockProductBottom">
 						<div class="priceProduct">
 
-							<img data-toggle="tooltip" data-placement="left" title="Format : ${type.support}" src="/resources/img/${type.support}.png" />
+							<img data-toggle="tooltip" data-placement="left" title="Format : ${type.support}" src="/resources/img/${type.support}.png" alt="${type.support}"/>
 							<fmt:formatNumber value="${type.price}" type="currency" />
 						</div>
 						<div class="buttonAddCart">
@@ -49,7 +49,7 @@
 
 				</c:forEach>
 			</div>
-		</a>
+		</div>
 
 
 	</c:forEach>

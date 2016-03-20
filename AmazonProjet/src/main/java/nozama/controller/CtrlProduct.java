@@ -184,7 +184,7 @@ public class CtrlProduct {
 
 
 
-    if (type.equals("movie")) {
+    if (type.equals("film")) {
       return new ModelAndView("pageProduct/movie", product);
     } else {
       return new ModelAndView("pageProduct/music", product);

@@ -84,11 +84,11 @@ public class ProductPageServiceImpl implements ProductPageService {
     }
     for (AttrProduct attrProduct : thisProduct.getAttrProducts()) {
       if (attrProduct.getAttribut().equals("label")) {
-        product.put("label", attrProduct.getValeur());
+        product.put("label", attrProduct.getValue());
       } else if (attrProduct.getAttribut().equals("totalTime")) {
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
         try {
-          product.put("totalTime", sdf.parse(attrProduct.getValeur()));
+          product.put("totalTime", sdf.parse(attrProduct.getValue()));
         } catch (ParseException e) {
           e.printStackTrace();
         }
@@ -106,7 +106,7 @@ public class ProductPageServiceImpl implements ProductPageService {
     }
     for (AttrProduct attrProduct : thisProduct.getAttrProducts()) {
       if (attrProduct.getAttribut().equals("label")) {
-        product.put("label", attrProduct.getValeur());
+        product.put("label", attrProduct.getValue());
       }
     }
 
@@ -127,7 +127,7 @@ public class ProductPageServiceImpl implements ProductPageService {
       mapSingleChild.put("dateReleased", product.getDateReleased());
       for (AttrProduct attrProduct : product.getAttrProducts()) {
         if (attrProduct.getAttribut().equals("totalTime")) {
-            mapSingleChild.put("totalTime",attrProduct.getValeur());
+            mapSingleChild.put("totalTime",attrProduct.getValue());
         }
       }
       listMapSingleChild.add(mapSingleChild);
@@ -159,7 +159,7 @@ public class ProductPageServiceImpl implements ProductPageService {
         if (attrProduct.getAttribut().equals("totalTime")) {
           SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
           try {
-            calSingle.setTime(sdf.parse(attrProduct.getValeur()));
+            calSingle.setTime(sdf.parse(attrProduct.getValue()));
           } catch (ParseException e) {
             e.printStackTrace();
           }

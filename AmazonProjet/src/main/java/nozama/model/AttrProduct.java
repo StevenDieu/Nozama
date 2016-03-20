@@ -23,14 +23,14 @@ public class AttrProduct implements java.io.Serializable {
   private Integer idAttrProduct;
   private Product product;
   private String attribut;
-  private String valeur;
+  private String value;
 
   public AttrProduct() {}
 
-  public AttrProduct(Product product, String attribut, String valeur) {
+  public AttrProduct(Product product, String attribut, String value) {
     this.product = product;
     this.attribut = attribut;
-    this.valeur = valeur;
+    this.value = value;
   }
 
   @Id
@@ -67,13 +67,13 @@ public class AttrProduct implements java.io.Serializable {
   }
 
 
-  @Column(name = "valeur", nullable = false, length = 1024)
-  public String getValeur() {
-    return this.valeur;
+  @Column(name = "value", nullable = false, length = 1024)
+  public String getValue() {
+    return this.value;
   }
 
-  public void setValeur(String valeur) {
-    this.valeur = valeur;
+  public void setValue(String value) {
+    this.value = value;
   }
 
 

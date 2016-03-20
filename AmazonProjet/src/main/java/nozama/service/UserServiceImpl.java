@@ -39,6 +39,7 @@ public class UserServiceImpl implements UserService {
     user.setEmailAdress(emailAdress);
     user.setPassword(sha256(password));
     user.setIpAddress(ipAdress);
+
     UR.insertUser(user);
 
     return user;

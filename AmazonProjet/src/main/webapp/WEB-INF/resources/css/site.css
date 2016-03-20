@@ -739,6 +739,10 @@ ul.step a:hover:after {
 	width: 100%;
 }
 
+.clickProduct{
+	cursor: pointer;
+}
+
 @media ( min-width : 769px) {
 	.blockUpdateAdress {
 		width: 78px;

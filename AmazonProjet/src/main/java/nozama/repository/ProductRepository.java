@@ -45,7 +45,7 @@ public class ProductRepository {
     }
     if (useGenre) {
       cr.add(Restrictions.eq("ap.attribut", "genre"));
-      cr.add(Restrictions.eq("ap.valeur", genre));
+      cr.add(Restrictions.eq("ap.value", genre));
     }
     List<Product> listProduct = cr.list();
 
@@ -73,7 +73,7 @@ public class ProductRepository {
     }
     if (useGenre) {
       cr.add(Restrictions.eq("ap.attribut", "genre"));
-      cr.add(Restrictions.eq("ap.valeur", genre));
+      cr.add(Restrictions.eq("ap.value", genre));
     }
     int countProducts = ((Long) cr.setProjection(Projections.rowCount()).uniqueResult()).intValue();
 
@@ -167,7 +167,9 @@ public class ProductRepository {
 
     List<Product> listProduct = cr.list();
     openSession.close();
-    
+    if(listProduct.size() == 0){
+      return null;
+    }
     return listProduct.get(0);
   }
 
