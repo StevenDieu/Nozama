@@ -58,8 +58,9 @@
 				<div class="radio">
 					<label>
 						<input type="radio" name="choosePayment" value="PREPAYE" />
-						Compte prépayé MISYS
-						<img src="/resources/img/cart/prepaye.png" class="imgPaypment" alt="prepaye">
+						<p>Compte prépayé MISYS
+						<img src="/resources/img/cart/prepaye.png" class="imgPaypment" alt="prepaye"></p>
+						<p>Argent sur le compte : <fmt:formatNumber value="${sessionScope.User.comptePrepaye}" type="currency" /></p>
 					</label>
 				</div>
 			</div>
@@ -90,7 +91,6 @@
 					<span class="resultCommandeTotal">
 						<fmt:formatNumber value="${sessionScope.totalPrice}" type="currency" />
 					</span>
-					€
 				</span>
 			</p>
 			<br />
@@ -140,7 +140,7 @@
 					</c:if>
 					
 					<c:if test="${sessionScope.transport.commentaire != null}">
-						<p>Commentaire transporteur : ${sessionScope.transport.commentaire}</p>
+						<p class="breakWord">Commentaire transporteur : ${sessionScope.transport.commentaire}</p>
 					</c:if>
 					
 

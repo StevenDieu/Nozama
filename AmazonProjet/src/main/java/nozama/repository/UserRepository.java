@@ -23,9 +23,9 @@ public class UserRepository {
     Criteria cr = openSession.createCriteria(User.class);
     cr.add(Restrictions.eq("emailAdress", email));
     cr.add(Restrictions.eq("password", password));
-    List<User>  listUser = cr.list();
+    List<User> listUser = cr.list();
     openSession.close();
-
+    HibernateUtil.shutdown();
     return listUser;
   }
 
@@ -34,9 +34,9 @@ public class UserRepository {
 
     Criteria cr = openSession.createCriteria(User.class);
     cr.add(Restrictions.eq("emailAdress", email));
-    List<User>  listUser = cr.list();
+    List<User> listUser = cr.list();
     openSession.close();
-
+    HibernateUtil.shutdown();
     return listUser;
   }
 
@@ -54,7 +54,7 @@ public class UserRepository {
       throw e;
     }
     openSession.close();
-
+    HibernateUtil.shutdown();
   }
 
   public List<Adress> getAdressByUserAndIdAdress(int idAdress, User user) {
@@ -65,9 +65,9 @@ public class UserRepository {
 
     cr.add(Restrictions.eq("idAdress", idAdress));
     cr.add(Restrictions.eq("u.idUsers", user.getIdUsers()));
-    List<Adress>  listAdress = cr.list();
+    List<Adress> listAdress = cr.list();
     openSession.close();
-
+    HibernateUtil.shutdown();
     return listAdress;
   }
 
@@ -80,9 +80,9 @@ public class UserRepository {
 
     cr.add(Restrictions.eq("u.idUsers", user.getIdUsers()));
 
-    List<Adress>  listAdress = cr.list();
+    List<Adress> listAdress = cr.list();
     openSession.close();
-
+    HibernateUtil.shutdown();
     return listAdress;
   }
 
@@ -101,7 +101,7 @@ public class UserRepository {
       throw e;
     }
     openSession.close();
-
+    HibernateUtil.shutdown();
   }
 
   public void deleteAdress(Adress adress) {
@@ -118,7 +118,7 @@ public class UserRepository {
       throw e;
     }
     openSession.close();
-
+    HibernateUtil.shutdown();
   }
 
   public void updateAdress(Adress adress) {
@@ -136,7 +136,25 @@ public class UserRepository {
       throw e;
     }
     openSession.close();
+    HibernateUtil.shutdown();
+  }
 
+  public void updateUser(User user) {
+    Session openSession = HibernateUtil.getSessionFactory().openSession();
+
+    Transaction tx = openSession.beginTransaction();
+
+    try {
+      openSession.update(user);
+      tx.commit();
+      openSession.flush();
+
+    } catch (RuntimeException e) {
+      tx.rollback();
+      throw e;
+    }
+    openSession.close();
+    HibernateUtil.shutdown();
   }
 
 }

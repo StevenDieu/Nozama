@@ -34,7 +34,7 @@ public class User implements java.io.Serializable {
   private String password;
   private String ipAddress;
   private String genre;
-  private int comptePrepaye;
+  private float comptePrepaye;
   private Set<Adress> adresses = new HashSet<Adress>(0);
   private Set<Order> orders = new HashSet<Order>(0);
 
@@ -42,7 +42,7 @@ public class User implements java.io.Serializable {
 
 
   public User(String name, String lastname, String emailAdress, String password, String ipAddress,
-      String genre, int comptePrepaye) {
+      String genre, float comptePrepaye) {
     this.name = name;
     this.lastname = lastname;
     this.emailAdress = emailAdress;
@@ -53,7 +53,7 @@ public class User implements java.io.Serializable {
   }
 
   public User(String name, String lastname, String emailAdress, String password, String ipAddress,
-      String genre, int comptePrepaye, Set<Adress> adresses, Set<Order> orders) {
+      String genre, float comptePrepaye, Set<Adress> adresses, Set<Order> orders) {
     this.name = name;
     this.lastname = lastname;
     this.emailAdress = emailAdress;
@@ -140,11 +140,11 @@ public class User implements java.io.Serializable {
 
 
   @Column(name = "compte_prepaye", nullable = false)
-  public int getComptePrepaye() {
+  public float getComptePrepaye() {
     return this.comptePrepaye;
   }
 
-  public void setComptePrepaye(int comptePrepaye) {
+  public void setComptePrepaye(float comptePrepaye) {
     this.comptePrepaye = comptePrepaye;
   }
 

@@ -742,6 +742,9 @@ ul.step a:hover:after {
 .clickProduct{
 	cursor: pointer;
 }
+.breakWord{
+	    word-break: break-word;
+}
 
 @media ( min-width : 769px) {
 	.blockUpdateAdress {

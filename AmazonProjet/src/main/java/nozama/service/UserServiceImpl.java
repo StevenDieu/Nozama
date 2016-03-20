@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
     user.setEmailAdress(emailAdress);
     user.setPassword(sha256(password));
     user.setIpAddress(ipAdress);
-
+    user.setComptePrepaye(0);
     UR.insertUser(user);
 
     return user;
@@ -94,6 +94,10 @@ public class UserServiceImpl implements UserService {
   
   public void deleteAdress(Adress adress) {
     UR.deleteAdress(adress);
+  }
+  
+  public void updateUser(User user) {
+    UR.updateUser(user);
   }
   
 
@@ -156,6 +160,8 @@ public class UserServiceImpl implements UserService {
     }
     return ipAddress;
   }
+
+
 
 
 

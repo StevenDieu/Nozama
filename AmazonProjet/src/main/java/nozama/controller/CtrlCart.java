@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import nozama.model.Adress;
+import nozama.model.Order;
 import nozama.model.User;
 import nozama.service.ProductCartServiceImpl;
 import nozama.service.UserServiceImpl;
@@ -60,7 +61,6 @@ public class CtrlCart {
 
     Map<String, Object> redirect = new HashMap<String, Object>();
     redirect.put("redirect", "/mon-panier-etape-adresse");
-System.out.println(request.getSession().getAttribute("cartControlTunnel"));
     if (request.getSession().getAttribute("cartControlTunnel") == null
         || request.getSession().getAttribute("cartControlTunnel") == "[]") {
 
@@ -200,13 +200,11 @@ System.out.println(request.getSession().getAttribute("cartControlTunnel"));
       return new ModelAndView("redirect:/mon-panier");
     }
 
-    if (request.getSession().getAttribute("User") == null
-        || request.getSession().getAttribute("User") == "") {
+    if (request.getSession().getAttribute("User") == null) {
       return new ModelAndView("redirect:/mon-panier-etape-connexion");
     }
 
-    if (request.getSession().getAttribute("address") == null
-        || request.getSession().getAttribute("address") == "") {
+    if (request.getSession().getAttribute("address") == null) {
       return new ModelAndView("redirect:/mon-panier-etape-adresse");
     }
 
@@ -236,9 +234,9 @@ System.out.println(request.getSession().getAttribute("cartControlTunnel"));
 
     String chooseTransport = request.getParameter("chooseTransport");
     String commentaire = request.getParameter("commentaire");
-    
-    
-    if(commentaire.length() > 255){
+
+
+    if (commentaire.length() > 255) {
       return new ModelAndView("redirect:/mon-panier-etape-livraison");
     }
 
@@ -252,9 +250,11 @@ System.out.println(request.getSession().getAttribute("cartControlTunnel"));
     listTransport.put("id", chooseTransport);
     listTransport.put("commentaire", Util.ConvertStringToNull(commentaire));
     if (chooseTransport.equals("eco")) {
-      listTransport.put("prix", 10);
+      listTransport.put("prix", new Float(10));
+    } else if (chooseTransport.equals("exp")) {
+      listTransport.put("prix", new Float(14));
     } else {
-      listTransport.put("prix", 14);
+      return new ModelAndView("redirect:/mon-panier-etape-livraison");
     }
     request.getSession().setAttribute("transport", listTransport);
 
@@ -269,18 +269,15 @@ System.out.println(request.getSession().getAttribute("cartControlTunnel"));
       return new ModelAndView("redirect:/mon-panier");
     }
 
-    if (request.getSession().getAttribute("User") == null
-        || request.getSession().getAttribute("User") == "") {
+    if (request.getSession().getAttribute("User") == null) {
       return new ModelAndView("redirect:/mon-panier-etape-connexion");
     }
 
-    if (request.getSession().getAttribute("address") == null
-        || request.getSession().getAttribute("address") == "") {
+    if (request.getSession().getAttribute("address") == null) {
       return new ModelAndView("redirect:/mon-panier-etape-adresse");
     }
 
-    if (request.getSession().getAttribute("transport") == null
-        || request.getSession().getAttribute("transport") == "") {
+    if (request.getSession().getAttribute("transport") == null) {
       return new ModelAndView("redirect:/mon-panier-etape-livraison");
     }
 
@@ -290,17 +287,123 @@ System.out.println(request.getSession().getAttribute("cartControlTunnel"));
     Map<String, Object> transport =
         (Map<String, Object>) request.getSession().getAttribute("transport");
     request.getSession().setAttribute("totalPrice",
-        calculTotalProduct + (Integer) transport.get("prix"));
+        calculTotalProduct + (Float) transport.get("prix"));
 
     Map<String, Object> product = new HashMap<String, Object>();
 
-    List<Map<String, Object>> allProduct =
-        PCS.getAllCart((List<Map<String, Object>>) request.getSession().getAttribute("cartControlTunnel"));
+    List<Map<String, Object>> allProduct = PCS.getAllCart(
+        (List<Map<String, Object>>) request.getSession().getAttribute("cartControlTunnel"));
     product.put("products", allProduct);
 
     return new ModelAndView("cart/myCartPayment", product);
   }
 
+
+  @RequestMapping(value = "/ajaxValidatePayment", method = RequestMethod.POST)
+  @ResponseBody
+  public String validatePayment(HttpServletRequest request) {
+    String choosePayment = request.getParameter("choosePayment");
+
+    if (request.getSession().getAttribute("cartControlTunnel") == null
+        || request.getSession().getAttribute("cartControlTunnel") == "[]") {
+      return "{\"statut\": \"error\",\"message\":  \"Une erreur est survenue.\"}";
+    }
+
+    if (request.getSession().getAttribute("User") == null) {
+      return "{\"statut\": \"error\",\"message\":  \"Une erreur est survenue.\"}";
+    }
+
+    if (request.getSession().getAttribute("address") == null) {
+      return "{\"statut\": \"error\",\"message\":  \"Une erreur est survenue.\"}";
+    }
+
+    if (request.getSession().getAttribute("transport") == null) {
+      return "{\"statut\": \"error\",\"message\":  \"Une erreur est survenue.\"}";
+    }
+
+    if (request.getSession().getAttribute("totalPrice") == null) {
+      return "{\"statut\": \"error\",\"message\":  \"Une erreur est survenue.\"}";
+    }
+
+    User user = (User) request.getSession().getAttribute("User");
+
+
+    if (choosePayment.equals("PREPAYE") || choosePayment.equals("PAYPAL")
+        || choosePayment.equals("CB")) {
+      if (choosePayment.equals("PREPAYE")) {
+        if (user.getComptePrepaye() < (Float) request.getSession().getAttribute("totalPrice")) {
+          return "{\"statut\": \"error\",\"message\":  \"Votre compte prépayé est insuffisant.\"}";
+        }
+        request.getSession().setAttribute("payment", choosePayment);
+
+        return "{\"statut\": \"ok\",\"redirect\": \"/finalisation-commande\"}";
+      }
+      request.getSession().setAttribute("payment", choosePayment);
+
+
+    }
+
+    return "{\"statut\": \"error\",\"message\":  \"Une erreur est survenue.\"}";
+  }
+
+  @SuppressWarnings("unchecked")
+  @RequestMapping(value = "/finalisation-commande")
+  public ModelAndView finalyzeOrder(HttpServletRequest request) {
+    if (request.getSession().getAttribute("cartControlTunnel") == null
+        || request.getSession().getAttribute("cartControlTunnel") == "[]") {
+      return new ModelAndView("redirect:/mon-panier");
+    }
+
+    if (request.getSession().getAttribute("User") == null) {
+      return new ModelAndView("redirect:/mon-panier-etape-connexion");
+    }
+
+    if (request.getSession().getAttribute("address") == null) {
+      return new ModelAndView("redirect:/mon-panier-etape-adresse");
+    }
+
+    if (request.getSession().getAttribute("transport") == null) {
+      return new ModelAndView("redirect:/mon-panier-etape-livraison");
+    }
+
+    if (request.getSession().getAttribute("payment") == null) {
+      return new ModelAndView("redirect:/mon-panier-etape-paiement");
+    }
+
+
+    Map<String, Object> listTransport =
+        (Map<String, Object>) request.getSession().getAttribute("transport");
+    String modePayment = (String) request.getSession().getAttribute("payment");
+    User user = (User) request.getSession().getAttribute("User");
+    float totalPrice = (float) request.getSession().getAttribute("totalPrice");
+
+    Order order = new Order();
+    order.setAdress((Adress) request.getSession().getAttribute("address"));
+    order.setCommentDelivery(Util.ConvertStringToNull((String) listTransport.get("commentaire")));
+    order.setModeDelivery((String) listTransport.get("id"));
+    order.setModePayment(modePayment);
+    order.setTotalDelivery((float) listTransport.get("prix"));
+    order.setTotalOrder(totalPrice);
+    order.setTotalProduct((float) request.getSession().getAttribute("prixTotalProduct"));
+    order.setUser(user);
+
+    PCS.insertOrder(order);
+    if (modePayment.equals("PREPAYE")) {
+      user.setComptePrepaye(user.getComptePrepaye() - totalPrice);
+      US.updateUser(user);
+      request.getSession().setAttribute("User",user);
+    }
+    PCS.insertProductOrder((List<Map<String, Object>>) request.getSession().getAttribute("cartControlTunnel"),order);
+    request.getSession().setAttribute("cart", null);
+    request.getSession().setAttribute("cartControlTunnel", null);
+    request.getSession().setAttribute("address", null);
+    request.getSession().setAttribute("transport", null);
+    request.getSession().setAttribute("payment", null);
+    request.getSession().setAttribute("totalPrice", null);
+    request.getSession().setAttribute("prixTotalProduct", null);
+
+    return null;
+  }
 
   @SuppressWarnings("unchecked")
   @RequestMapping(value = "/ajaxDeleteProductCart", method = RequestMethod.POST)

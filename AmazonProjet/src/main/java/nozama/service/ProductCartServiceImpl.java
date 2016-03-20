@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import nozama.model.Article;
+import nozama.model.Order;
 import nozama.model.Product;
+import nozama.model.ProductOrder;
 import nozama.repository.ProductRepository;
 
 @Service
@@ -90,6 +92,30 @@ public class ProductCartServiceImpl implements ProductCartService {
      
     }
     return priceTotal;
+
+  }
+
+  
+  public void insertOrder(Order order) {
+    PR.inserOrder(order);
+  }
+
+  public void insertProductOrder(List<Map<String, Object>> carts, Order order) {
+    List<Integer> allId = new ArrayList<>();
+    for (Map<String, Object> cart : carts) {
+      allId.add((Integer) cart.get("id"));
+    }
+
+    if (allId.size() > 0) {
+      List<Article> articles = PR.getArticleById(allId);
+      for (Article article : articles) {
+        ProductOrder productOrder = new ProductOrder();
+        productOrder.setArticle(article);
+        productOrder.setOrder(order);
+        PR.inserOrderProduct(productOrder);
+      }
+
+    }
 
   }
 

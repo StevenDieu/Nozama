@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
@@ -12,7 +13,9 @@ import org.hibernate.sql.JoinType;
 import org.springframework.stereotype.Repository;
 
 import nozama.model.Article;
+import nozama.model.Order;
 import nozama.model.Product;
+import nozama.model.ProductOrder;
 import nozama.util.HibernateUtil;
 
 @SuppressWarnings("unchecked")
@@ -50,7 +53,7 @@ public class ProductRepository {
     List<Product> listProduct = cr.list();
 
     openSession.close();
-
+    HibernateUtil.shutdown();
     return listProduct;
   }
 
@@ -78,7 +81,8 @@ public class ProductRepository {
     int countProducts = ((Long) cr.setProjection(Projections.rowCount()).uniqueResult()).intValue();
 
     openSession.close();
-
+    HibernateUtil.shutdown();
+    
     return countProducts;
   }
 
@@ -99,6 +103,7 @@ public class ProductRepository {
 
     List<Product> listProduct = cr.list();
     openSession.close();
+    HibernateUtil.shutdown();
     return listProduct;
   }
 
@@ -119,6 +124,7 @@ public class ProductRepository {
 
     List<Product> listProduct = cr.list();
     openSession.close();
+    HibernateUtil.shutdown();
     return listProduct;
   }
 
@@ -133,6 +139,7 @@ public class ProductRepository {
 
     List<Product> listProduct = cr.list();
     openSession.close();
+    HibernateUtil.shutdown();
     return listProduct;
   }
 
@@ -149,7 +156,7 @@ public class ProductRepository {
 
     List<Product> listProduct = cr.list();
     openSession.close();
-    
+    HibernateUtil.shutdown();
     return listProduct.get(0);
   }
 
@@ -167,6 +174,7 @@ public class ProductRepository {
 
     List<Product> listProduct = cr.list();
     openSession.close();
+    HibernateUtil.shutdown();
     if(listProduct.size() == 0){
       return null;
     }
@@ -184,6 +192,7 @@ public class ProductRepository {
 
     List<Product> listProduct = cr.list();
     openSession.close();
+    HibernateUtil.shutdown();
     return listProduct.get(0);
   }
 
@@ -198,6 +207,7 @@ public class ProductRepository {
     List<Article> listProduct = cr.list();
     
     openSession.close();
+    HibernateUtil.shutdown();
     return listProduct;
   }
 
@@ -212,7 +222,40 @@ public class ProductRepository {
     List<Article> listProduct = cr.list();
     
     openSession.close();
+    HibernateUtil.shutdown();
     return listProduct.get(0);
+  }
+
+  public void inserOrder(Order order) {
+    Session openSession = HibernateUtil.getSessionFactory().openSession();
+    Transaction tx = openSession.beginTransaction();
+    
+    try {
+      openSession.save(order);
+
+      tx.commit();
+    } catch (RuntimeException e) {
+      tx.rollback();
+      throw e;
+    }
+    openSession.close();
+    HibernateUtil.shutdown();
+  }
+
+  public void inserOrderProduct(ProductOrder productOrder) {
+    Session openSession = HibernateUtil.getSessionFactory().openSession();
+    Transaction tx = openSession.beginTransaction();
+    
+    try {
+      openSession.save(productOrder);
+
+      tx.commit();
+    } catch (RuntimeException e) {
+      tx.rollback();
+      throw e;
+    }
+    openSession.close();
+    HibernateUtil.shutdown();    
   }
   
   
