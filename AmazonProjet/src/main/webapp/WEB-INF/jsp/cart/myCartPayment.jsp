@@ -186,7 +186,7 @@
 										</td>
 										<td class="centerVerticale tdRight tdTypeProduct">
 											<span class="blockTdBeforeCart">Type : </span>
-											<a href="${product.urlType}">${product.typeHtml}</a>
+											<a href="${product.urlType}">${product.type}</a>
 										</td>
 										<td class="centerVerticale center tdRight tdFormatProduct">
 											<img data-toggle="tooltip" data-placement="left" title="Format : ${product.support}"

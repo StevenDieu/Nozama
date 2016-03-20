@@ -292,7 +292,7 @@ public class CtrlCart {
     Map<String, Object> product = new HashMap<String, Object>();
 
     List<Map<String, Object>> allProduct =
-        PCS.getAllCart((List<Map<String, Object>>) request.getSession().getAttribute("cart"));
+        PCS.getAllCart((List<Map<String, Object>>) request.getSession().getAttribute("cartControlTunnel"));
     product.put("products", allProduct);
 
     return new ModelAndView("cart/myCartPayment", product);

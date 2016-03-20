@@ -9,263 +9,175 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import nozama.model.Categorie;
-import nozama.model.TypeSupport;
-import nozama.model.TypeSupportAlbum;
-import nozama.model.TypeSupportMovie;
-import nozama.model.TypeSupportSingle;
+import nozama.model.Article;
+import nozama.model.Product;
 import nozama.repository.ProductRepository;
 
 @Service
 public class ProductListServiceImpl implements ProductListService {
 
-	@Autowired
-	private ProductRepository PR;
+  @Autowired
+  private ProductRepository PR;
 
-	@Override
-	public List<Map<String, Object>> getAllMusicsBySupport(String support, String recordType, int years, String type, int startResult) {
-		boolean useType = true;
-		boolean useSupport = true;
+  @Override
+  public List<Map<String, Object>> getAllProductByCondition(String support, String recordType,
+      int years, String genre) {
+    List<Map<String, Object>> allProduct = new ArrayList<Map<String, Object>>();
+    List<String> listType = new ArrayList<String>();
 
-		List<Map<String, Object>> allProduct = new ArrayList<Map<String, Object>>();
+    final boolean useSupport = checkUseSupport(support);
+    final boolean useGenre = checkUseGenre(genre);
+    final boolean useType = setListType(recordType, listType);
 
-		Map<String, Object> mapForDate = new HashMap<String, Object>();
-		setMapForDate(years, mapForDate);
+    final Map<String, Object> mapForDate = setMapForDate(years);
 
-		if (type.equals("ALL")) {
-			useType = false;
-		}
+    List<Product> products = PR.getAllProductByTypeAndSupportAndAttribut(useSupport, support,
+        (boolean) mapForDate.get("useDate"), (Date) mapForDate.get("dateYears"),
+        (Date) mapForDate.get("dateYearsAfter"), useType, listType, useGenre, genre);
+    margeAllResultProduct(allProduct, products);
+    Collections.sort(allProduct, mapComparator);
+    return allProduct;
 
-		if (support.equals("AllSupport")) {
-			useSupport = false;
-		}
+  }
 
-		if (recordType.equals("single")) {
-			List<TypeSupportSingle> typeSupportSingle = PR.getAllSingleBySupportAndTypeBetweenYears(support, useSupport, (boolean) mapForDate.get("useDate"), useType, (Date) mapForDate.get("dateYears"), (Date) mapForDate.get("dateYearsAfter"), type, startResult);
-			margeAllResultTypeSupportSignle(typeSupportSingle, allProduct);
-			Collections.sort(allProduct, mapComparator);
-			return allProduct;
-		} else if (recordType.equals("album")) {
-			List<TypeSupportAlbum> typeSupportAlbum = PR.getAllAlbumBySupportAndTypBetweenYears(support, useSupport, (boolean) mapForDate.get("useDate"), useType, (Date) mapForDate.get("dateYears"), (Date) mapForDate.get("dateYearsAfter"), type, startResult);
-			margeAllResultTypeSupportAlbum(typeSupportAlbum, allProduct);
-			Collections.sort(allProduct, mapComparator);
-			return allProduct;
-		} else {
-			List<TypeSupportSingle> typeSupportSingle = PR.getAllSingleBySupportAndTypeBetweenYears(support, useSupport, (boolean) mapForDate.get("useDate"), useType, (Date) mapForDate.get("dateYears"), (Date) mapForDate.get("dateYearsAfter"), type, startResult);
-			List<TypeSupportAlbum> typeSupportAlbum = PR.getAllAlbumBySupportAndTypBetweenYears(support, useSupport, (boolean) mapForDate.get("useDate"), useType, (Date) mapForDate.get("dateYears"), (Date) mapForDate.get("dateYearsAfter"), type, startResult);
-			margeAllResultTypeSupportAlbum(typeSupportAlbum, allProduct);
-			margeAllResultTypeSupportSignle(typeSupportSingle, allProduct);
-			Collections.sort(allProduct, mapComparator);
-			return allProduct;
-		}
+  private void margeAllResultProduct(List<Map<String, Object>> allProduct, List<Product> products) {
+    for (Product product : products) {
 
-	}
+      boolean flagExisteAlbumInList = true;
+      for (Map<String, Object> productInAll : allProduct) {
+        if (productInAll.get("type").equals(product.getType())) {
+          if (product.getIdProduct() == (int) productInAll.get(product.getType())) {
+            flagExisteAlbumInList = false;
+          }
+        }
+      }
+      if (flagExisteAlbumInList) {
+        insertInProducts(allProduct, product.getType(), product.getArticles(), product);
+      }
+    }
+  }
 
-	@Override
-	public List<Map<String, Object>> getAllMovieBySupport(String support, String type, int startResult, int years) {
-		boolean useType = true;
-		boolean useSupport = true;
+  private void insertInProducts(List<Map<String, Object>> allProduct, String type,
+      Set<Article> articles, Product product) {
+    Map<String, Object> newProduct = new HashMap<String, Object>();
+    newProduct.put(type, product.getIdProduct());
+    newProduct.put("type", type);
+    if (type.equals("album")) {
+      newProduct.put("urlType", "/liste-toutes-les-musiques/AllSupport/album/AllYears/ALL");
+    } else if (type.equals("single")) {
+      newProduct.put("urlType", "/liste-toutes-les-musiques/AllSupport/single/AllYears/ALL");
+    } else if (type.equals("film")) {
+      newProduct.put("urlType", "/liste-tous-les-films");
+    }
+    newProduct.put("name", product.getName());
+    newProduct.put("description", product.getDescription());
+    newProduct.put("urlPicture", product.getUrlPicture());
+    newProduct.put("dateReleased", product.getDateReleased());
+    newProduct.put("nameTagDateReleased", product.getNameTagDateReleased());
+    List<Map<String, String>> listType = new ArrayList<Map<String, String>>();
 
-		List<Map<String, Object>> allProduct = new ArrayList<Map<String, Object>>();
-		Map<String, Object> mapForDate = new HashMap<String, Object>();
-		setMapForDate(years, mapForDate);
+    for (Article article : articles) {
+      Map<String, String> insertTypeSupportAlbum = new HashMap<String, String>();
+      insertTypeSupportAlbum.put("price", Float.toString(article.getPrice()));
+      insertTypeSupportAlbum.put("support", article.getNameSupport());
+      insertTypeSupportAlbum.put("id", Integer.toString(article.getIdArticle()));
+      listType.add(insertTypeSupportAlbum);
+      newProduct.put("listType", listType);
+    }
 
-		if (type.equals("ALL")) {
-			useType = false;
-		}
+    allProduct.add(newProduct);
+  }
 
-		if (support.equals("AllSupport")) {
-			useSupport = false;
-		}
+  public Map<String, Object> setMapForDate(int years) {
+    Map<String, Object> mapForDate = new HashMap<String, Object>();
+    boolean useDate = true;
 
-		List<TypeSupportMovie> typeSupportMovies = PR.getAllMovieBySupport(support, useSupport, (boolean) mapForDate.get("useDate"), useType, (Date) mapForDate.get("dateYears"), (Date) mapForDate.get("dateYearsAfter"), type, startResult);
+    Date dateYearsAfter = null;
+    Date dateYears = null;
 
-		margeAllResultTypeSupportMovie(typeSupportMovies, allProduct);
-		Collections.sort(allProduct, mapComparator);
+    if (years == -1) {
+      useDate = false;
+    } else {
+      dateYears = getDate(years);
+      if (years == 1939) {
+        dateYears = getDate(0);
+        dateYearsAfter = dateYears;
+      } else {
+        dateYearsAfter = getDate(years + 10);
+      }
+    }
 
-		return allProduct;
-	}
+    mapForDate.put("useDate", useDate);
+    mapForDate.put("dateYearsAfter", dateYearsAfter);
+    mapForDate.put("dateYears", dateYears);
+    return mapForDate;
+  }
 
-	@Override
-	public int getCountAllMusicBySupport(String support, String recordType, int years, String type) {
-		boolean useType = true;
-		boolean useSupport = true;
+  private Date getDate(int years) {
+    Calendar cal = Calendar.getInstance();
 
-		Map<String, Object> mapForDate = new HashMap<String, Object>();
-		setMapForDate(years, mapForDate);
+    cal.set(Calendar.YEAR, years);
+    cal.set(Calendar.MONTH, 0);
+    cal.set(Calendar.DAY_OF_MONTH, 1);
+    cal.set(Calendar.HOUR, 0);
+    cal.set(Calendar.MINUTE, 0);
 
-		if (type.equals("ALL")) {
-			useType = false;
-		}
+    return cal.getTime();
+  }
 
-		if (support.equals("AllSupport")) {
-			useSupport = false;
-		}
+  public Comparator<Map<String, Object>> mapComparator = new Comparator<Map<String, Object>>() {
+    public int compare(Map<String, Object> m1, Map<String, Object> m2) {
+      Date firstCompare = (Date) m1.get("dateReleased");
+      Date secondeCompare = (Date) m2.get("dateReleased");
+      return secondeCompare.compareTo(firstCompare);
+    }
+  };
 
-		if (recordType.equals("single")) {
-			return PR.getCountAllMusicBySupport(support, useSupport, (boolean) mapForDate.get("useDate"), useType, (Date) mapForDate.get("dateYears"), (Date) mapForDate.get("dateYearsAfter"), type);
-		} else if (recordType.equals("album")) {
-			return PR.getCountAllAlbumBySupport(support, useSupport, (boolean) mapForDate.get("useDate"), useType, (Date) mapForDate.get("dateYears"), (Date) mapForDate.get("dateYearsAfter"), type);
-		} else {
-			return PR.getCountAllMusicBySupport(support, useSupport, (boolean) mapForDate.get("useDate"), useType, (Date) mapForDate.get("dateYears"), (Date) mapForDate.get("dateYearsAfter"), type) + PR.getCountAllAlbumBySupport(support, useSupport, (boolean) mapForDate.get("useDate"), useType, (Date) mapForDate.get("dateYears"), (Date) mapForDate.get("dateYearsAfter"), type);
-		}
-	}
 
-	@Override
-	public int getCountMovieBySupport(String support, String type, int years) {
-		boolean useType = true;
-		boolean useSupport = true;
+  @Override
+  public String getParametersString(Optional<String> supportUrl, String stringDefault) {
+    String stringParameters;
+    if (supportUrl.isPresent()) {
+      stringParameters = supportUrl.get();
+    } else {
+      stringParameters = stringDefault;
+    }
+    return stringParameters;
+  }
 
-		Map<String, Object> mapForDate = new HashMap<String, Object>();
-		setMapForDate(years, mapForDate);
+  private boolean setListType(String recordType, List<String> listType) {
+    if (recordType.equals("AllType")) {
+      listType.add("single");
+      listType.add("album");
+    } else if (recordType.equals("allProduct")) {
+      return false;
+    } else {
+      listType.add(recordType);
+    }
+    return true;
+  }
 
-		if (support.equals("AllSupport")) {
-			useSupport = false;
-		}
 
-		return PR.getCountAllLovieBySupport(support, useSupport, (boolean) mapForDate.get("useDate"), useType, (Date) mapForDate.get("dateYears"), (Date) mapForDate.get("dateYearsAfter"), type);
-	}
+  private boolean checkUseGenre(String genre) {
+    if (genre.equals("ALL")) {
+      return false;
+    }
+    return true;
+  }
 
-	@Override
-	public String getParametersString(Optional<String> supportUrl, String stringDefault) {
-		String stringParameters;
-		if (supportUrl.isPresent()) {
-			stringParameters = supportUrl.get();
-		} else {
-			stringParameters = stringDefault;
-		}
-		return stringParameters;
-	}
 
-	@Override
-	public List<Map<String, Object>> getAllProduct(int years, int startResult) {
-		List<Map<String, Object>> allProduct = new ArrayList<Map<String, Object>>();
+  private boolean checkUseSupport(String support) {
+    if (support.equals("AllSupport")) {
+      return false;
+    }
+    return true;
+  }
 
-		Map<String, Object> mapForDate = new HashMap<String, Object>();
-		setMapForDate(years, mapForDate);
 
-		List<TypeSupportAlbum> typeSupportAlbums = PR.getAllAlbumByDate((boolean) mapForDate.get("useDate"), (Date) mapForDate.get("dateYears"), (Date) mapForDate.get("dateYearsAfter"));
-		List<TypeSupportMovie> typeSupportMovie = PR.getAllMovieByDate((boolean) mapForDate.get("useDate"), (Date) mapForDate.get("dateYears"), (Date) mapForDate.get("dateYearsAfter"));
-		List<TypeSupportSingle> typeSupportSingle = PR.getAllSingleByDate((boolean) mapForDate.get("useDate"), (Date) mapForDate.get("dateYears"), (Date) mapForDate.get("dateYearsAfter"));
-
-		margeAllResultTypeSupportAlbum(typeSupportAlbums, allProduct);
-		margeAllResultTypeSupportMovie(typeSupportMovie, allProduct);
-		margeAllResultTypeSupportSignle(typeSupportSingle, allProduct);
-
-		Collections.sort(allProduct, mapComparator);
-		return allProduct;
-	}
-
-	public Comparator<Map<String, Object>> mapComparator = new Comparator<Map<String, Object>>() {
-		public int compare(Map<String, Object> m1, Map<String, Object> m2) {
-			Date firstCompare = (Date) m1.get("dateReleased");
-			Date secondeCompare = (Date) m2.get("dateReleased");
-			return secondeCompare.compareTo(firstCompare);
-		}
-	};
-
-	public void margeAllResultTypeSupportAlbum(List<TypeSupportAlbum> typeSupportAlbums, List<Map<String, Object>> allProduct) {
-
-		for (TypeSupportAlbum typeSupportAlbum : typeSupportAlbums) {
-			margeAllResultSupport(allProduct, "album","album", typeSupportAlbum, typeSupportAlbum.getAlbum(),"/liste-toutes-les-musiques/AllSupport/album/AllYears/ALL");
-		}
-
-	}
-
-	public void margeAllResultTypeSupportMovie(List<TypeSupportMovie> typeSupportMovies, List<Map<String, Object>> allProduct) {
-
-		for (TypeSupportMovie typeSupportMovie : typeSupportMovies) {
-			margeAllResultSupport(allProduct, "movie","film",  typeSupportMovie, typeSupportMovie.getMovie(),"/liste-tous-les-films");
-		}
-
-	}
-
-	public void margeAllResultTypeSupportSignle(List<TypeSupportSingle> typeSupportSingles, List<Map<String, Object>> allProduct) {
-
-		for (TypeSupportSingle typeSupportSingle : typeSupportSingles) {
-			margeAllResultSupport(allProduct, "single","single",  typeSupportSingle, typeSupportSingle.getSingle(),"/liste-toutes-les-musiques/AllSupport/single/AllYears/ALL");
-		}
-
-	}
-
-	@SuppressWarnings("unchecked")
-	private void margeAllResultSupport(List<Map<String, Object>> allProduct, String type,String typeHtml, TypeSupport typeSupport, Categorie typeSupportCategorie, String urlType) {
-		boolean flagExisteAlbumInList = false;
-		for (Map<String, Object> product : allProduct) {
-			if (typeSupportCategorie == product.get(type)) {
-				flagExisteAlbumInList = true;
-				insertTypeInProducts(typeSupport, product, (List<Map<String, String>>) product.get("listType"));
-			}
-		}
-
-		if (!flagExisteAlbumInList) {
-			insertInProducts(allProduct, type,typeHtml, typeSupport, typeSupportCategorie, urlType);
-		}
-	}
-
-	private void insertInProducts(List<Map<String, Object>> allProduct, String type, String typeHtml, TypeSupport typeSupport, Categorie typeSupportCategorie, String urlType) {
-		Map<String, Object> newProduct = new HashMap<String, Object>();
-		newProduct.put(type, typeSupportCategorie);
-		newProduct.put("type", type);
-		newProduct.put("typeHtml", typeHtml);
-		newProduct.put("urlType", urlType);
-		newProduct.put("name", typeSupportCategorie.getProduct().getName());
-		newProduct.put("description", typeSupportCategorie.getProduct().getDescription());
-		newProduct.put("urlPicture", typeSupportCategorie.getProduct().getUrlPicture());
-		newProduct.put("dateReleased", typeSupportCategorie.getProduct().getDateReleased());
-		newProduct.put("nameTagDateReleased", typeSupportCategorie.getProduct().getNameTagDateReleased());
-		List<Map<String, String>> listType = new ArrayList<Map<String, String>>();
-
-		insertTypeInProducts(typeSupport, newProduct, listType);
-		allProduct.add(newProduct);
-	}
-
-	private void insertTypeInProducts(TypeSupport typeSupport, Map<String, Object> product, List<Map<String, String>> listType) {
-		Map<String, String> insertTypeSupportAlbum = new HashMap<String, String>();
-		insertTypeSupportAlbum.put("price", Float.toString(typeSupport.getPrice()));
-		insertTypeSupportAlbum.put("support", typeSupport.getNameSupport());
-		insertTypeSupportAlbum.put("id", Integer.toString(typeSupport.getIdTypeSupport()));
-		listType.add(insertTypeSupportAlbum);
-		product.put("listType", listType);
-	}
-
-	public void setMapForDate(int years, Map<String, Object> mapForDate) {
-		boolean useDate = true;
-
-		Date dateYearsAfter = null;
-		Date dateYears = null;
-
-		if (years == -1) {
-			useDate = false;
-		} else {
-			dateYears = getDate(years);
-			if (years == 1939) {
-				dateYears = getDate(0);
-				dateYearsAfter = dateYears;
-			} else {
-				dateYearsAfter = getDate(years + 10);
-			}
-		}
-
-		mapForDate.put("useDate", useDate);
-		mapForDate.put("dateYearsAfter", dateYearsAfter);
-		mapForDate.put("dateYears", dateYears);
-	}
-
-	private Date getDate(int years) {
-		Calendar cal = Calendar.getInstance();
-
-		cal.set(Calendar.YEAR, years);
-		cal.set(Calendar.MONTH, 0);
-		cal.set(Calendar.DAY_OF_MONTH, 1);
-		cal.set(Calendar.HOUR, 0);
-		cal.set(Calendar.MINUTE, 0);
-
-		return cal.getTime();
-	}
 
 }

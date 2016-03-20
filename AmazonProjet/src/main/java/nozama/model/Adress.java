@@ -32,14 +32,14 @@ public class Adress implements java.io.Serializable {
   private String region;
   private int codePostal;
   private String pays;
-  private int numberPhone;
+  private String numberPhone;
   private Set<Order> orders = new HashSet<Order>(0);
 
   public Adress() {}
 
 
   public Adress(User user, String name, String nameLastName, String adressPrincipal, int codePostal,
-      String pays, int numberPhone) {
+      String pays, String numberPhone) {
     this.user = user;
     this.name = name;
     this.nameLastName = nameLastName;
@@ -50,7 +50,7 @@ public class Adress implements java.io.Serializable {
   }
 
   public Adress(User user, String name, String nameLastName, String adressPrincipal,
-      String adressSecondaire, String region, int codePostal, String pays, int numberPhone,
+      String adressSecondaire, String region, int codePostal, String pays, String numberPhone,
       Set<Order> orders) {
     this.user = user;
     this.name = name;
@@ -159,11 +159,11 @@ public class Adress implements java.io.Serializable {
 
 
   @Column(name = "number_phone", nullable = false)
-  public int getNumberPhone() {
+  public String getNumberPhone() {
     return this.numberPhone;
   }
 
-  public void setNumberPhone(int numberPhone) {
+  public void setNumberPhone(String numberPhone) {
     this.numberPhone = numberPhone;
   }
 
