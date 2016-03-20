@@ -1,7 +1,9 @@
 package nozama.model;
-// Generated 17 mars 2016 14:12:54 by Hibernate Tools 4.3.1.Final
+// Generated 19 mars 2016 16:01:44 by Hibernate Tools 4.3.1.Final
 
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +12,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -30,13 +33,15 @@ public class Adress implements java.io.Serializable {
   private int codePostal;
   private String pays;
   private String numberPhone;
+  private Set<Order> orders = new HashSet<Order>(0);
 
   public Adress() {}
 
 
-  public Adress(User user, String nameLastName, String adressPrincipal, int codePostal, String pays,
-      String numberPhone) {
+  public Adress(User user, String name, String nameLastName, String adressPrincipal, int codePostal,
+      String pays, String numberPhone) {
     this.user = user;
+    this.name = name;
     this.nameLastName = nameLastName;
     this.adressPrincipal = adressPrincipal;
     this.codePostal = codePostal;
@@ -44,9 +49,11 @@ public class Adress implements java.io.Serializable {
     this.numberPhone = numberPhone;
   }
 
-  public Adress(User user, String nameLastName, String adressPrincipal, String adressSecondaire,
-      String region, int codePostal, String pays, String numberPhone) {
+  public Adress(User user, String name, String nameLastName, String adressPrincipal,
+      String adressSecondaire, String region, int codePostal, String pays, String numberPhone,
+      Set<Order> orders) {
     this.user = user;
+    this.name = name;
     this.nameLastName = nameLastName;
     this.adressPrincipal = adressPrincipal;
     this.adressSecondaire = adressSecondaire;
@@ -54,6 +61,7 @@ public class Adress implements java.io.Serializable {
     this.codePostal = codePostal;
     this.pays = pays;
     this.numberPhone = numberPhone;
+    this.orders = orders;
   }
 
   @Id
@@ -78,7 +86,8 @@ public class Adress implements java.io.Serializable {
   public void setUser(User user) {
     this.user = user;
   }
-  
+
+
   @Column(name = "name", nullable = false)
   public String getName() {
     return this.name;
@@ -156,6 +165,15 @@ public class Adress implements java.io.Serializable {
 
   public void setNumberPhone(String numberPhone) {
     this.numberPhone = numberPhone;
+  }
+
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "adress")
+  public Set<Order> getOrders() {
+    return this.orders;
+  }
+
+  public void setOrders(Set<Order> orders) {
+    this.orders = orders;
   }
 
 

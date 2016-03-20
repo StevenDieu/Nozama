@@ -1,5 +1,5 @@
 package nozama.model;
-// Generated 17 mars 2016 14:12:54 by Hibernate Tools 4.3.1.Final
+// Generated 19 mars 2016 16:01:44 by Hibernate Tools 4.3.1.Final
 
 
 import java.util.HashSet;
@@ -31,6 +31,7 @@ public class User implements java.io.Serializable {
   private String ipAddress;
   private String genre;
   private Set<Adress> adresses = new HashSet<Adress>(0);
+  private Set<Order> orders = new HashSet<Order>(0);
 
   public User() {}
 
@@ -46,7 +47,7 @@ public class User implements java.io.Serializable {
   }
 
   public User(String name, String lastname, String emailAdress, String password, String ipAddress,
-      String genre, Set<Adress> adresses) {
+      String genre, Set<Adress> adresses, Set<Order> orders) {
     this.name = name;
     this.lastname = lastname;
     this.emailAdress = emailAdress;
@@ -54,6 +55,7 @@ public class User implements java.io.Serializable {
     this.ipAddress = ipAddress;
     this.genre = genre;
     this.adresses = adresses;
+    this.orders = orders;
   }
 
   @Id
@@ -136,6 +138,15 @@ public class User implements java.io.Serializable {
 
   public void setAdresses(Set<Adress> adresses) {
     this.adresses = adresses;
+  }
+
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+  public Set<Order> getOrders() {
+    return this.orders;
+  }
+
+  public void setOrders(Set<Order> orders) {
+    this.orders = orders;
   }
 
 
