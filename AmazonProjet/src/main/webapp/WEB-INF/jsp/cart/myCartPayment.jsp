@@ -45,22 +45,21 @@
 					<label>
 						<input type="radio" name="choosePayment" value="CB" />
 						Carte bleu VISA
-						<img src="/resources/img/cart/visa.png" class="imgPaypment" alt="visa" class="img-rounded">
+						<img src="/resources/img/cart/visa.png" class="imgPaypment" alt="visa" >
 					</label>
 				</div>
 				<div class="radio">
 					<label>
 						<input type="radio" name="choosePayment" value="PAYPAL" />
 						Paypal
-						<img src="/resources/img/cart/paypal.png" alt="paypal" class="imgPaypment" class="img-rounded">
+						<img src="/resources/img/cart/paypal.png" alt="paypal" class="imgPaypment" >
 					</label>
 				</div>
 				<div class="radio">
 					<label>
 						<input type="radio" name="choosePayment" value="PREPAYE" />
 						Compte prépayé MISYS
-						<img src="/resources/img/cart/prepaye.png" class="imgPaypment" alt="prepaye"
-							class="img-rounded">
+						<img src="/resources/img/cart/prepaye.png" class="imgPaypment" alt="prepaye">
 					</label>
 				</div>
 			</div>
@@ -177,7 +176,7 @@
 										<td class="center tdLeft">
 											<a href="/product/${product.type}/${product.nameTagDateReleased}">
 												<img src="/resources/img/product/<c:out value="${product.urlPicture}" />"
-													class="imageCart">
+													alt="${product.urlPicture}"  class="imageCart">
 											</a>
 										</td>
 										<td class="centerVerticale tdRight tdNameProduct">
@@ -189,7 +188,7 @@
 											<a href="${product.urlType}">${product.type}</a>
 										</td>
 										<td class="centerVerticale center tdRight tdFormatProduct">
-											<img data-toggle="tooltip" data-placement="left" title="Format : ${product.support}"
+											<img data-toggle="tooltip" alt="${product.support}" data-placement="left" title="Format : ${product.support}"
 												src="/resources/img/${product.support}.png" />
 										</td>
 										<td class="centerVerticale tdLeft tdPrixProduct">

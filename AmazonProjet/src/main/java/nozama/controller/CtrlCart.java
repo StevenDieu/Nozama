@@ -60,9 +60,9 @@ public class CtrlCart {
 
     Map<String, Object> redirect = new HashMap<String, Object>();
     redirect.put("redirect", "/mon-panier-etape-adresse");
-
+System.out.println(request.getSession().getAttribute("cartControlTunnel"));
     if (request.getSession().getAttribute("cartControlTunnel") == null
-        || request.getSession().getAttribute("cartControlTunnel") == "") {
+        || request.getSession().getAttribute("cartControlTunnel") == "[]") {
 
       return new ModelAndView("redirect:/mon-panier");
 
@@ -82,7 +82,7 @@ public class CtrlCart {
 
 
     if (request.getSession().getAttribute("cartControlTunnel") == null
-        || request.getSession().getAttribute("cartControlTunnel") == "") {
+        || request.getSession().getAttribute("cartControlTunnel") == "[]") {
 
       return new ModelAndView("redirect:/mon-panier");
 
@@ -127,7 +127,7 @@ public class CtrlCart {
 
 
     if (request.getSession().getAttribute("cartControlTunnel") == null
-        || request.getSession().getAttribute("cartControlTunnel") == "") {
+        || request.getSession().getAttribute("cartControlTunnel") == "[]") {
 
       List<Map<String, Object>> allProduct = PCS.getAllCart(
           (List<Map<String, Object>>) request.getSession().getAttribute("cartControlTunnel"));
@@ -196,7 +196,7 @@ public class CtrlCart {
   @RequestMapping(value = "/mon-panier-etape-livraison")
   public ModelAndView myCartDelivery(HttpServletRequest request) {
     if (request.getSession().getAttribute("cartControlTunnel") == null
-        || request.getSession().getAttribute("cartControlTunnel") == "") {
+        || request.getSession().getAttribute("cartControlTunnel") == "[]") {
       return new ModelAndView("redirect:/mon-panier");
     }
 
@@ -236,8 +236,11 @@ public class CtrlCart {
 
     String chooseTransport = request.getParameter("chooseTransport");
     String commentaire = request.getParameter("commentaire");
-
-
+    
+    
+    if(commentaire.length() > 255){
+      return new ModelAndView("redirect:/mon-panier-etape-livraison");
+    }
 
     if (chooseTransport == "") {
       return new ModelAndView("redirect:/mon-panier-etape-livraison");
@@ -262,7 +265,7 @@ public class CtrlCart {
   @RequestMapping(value = "/mon-panier-etape-paiement")
   public ModelAndView myCartPayment(HttpServletRequest request) {
     if (request.getSession().getAttribute("cartControlTunnel") == null
-        || request.getSession().getAttribute("cartControlTunnel") == "") {
+        || request.getSession().getAttribute("cartControlTunnel") == "[]") {
       return new ModelAndView("redirect:/mon-panier");
     }
 
