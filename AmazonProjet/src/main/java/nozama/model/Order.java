@@ -1,5 +1,5 @@
 package nozama.model;
-// Generated 19 mars 2016 16:01:44 by Hibernate Tools 4.3.1.Final
+// Generated 20 mars 2016 15:42:18 by Hibernate Tools 4.3.1.Final
 
 
 import java.util.HashSet;
@@ -23,6 +23,10 @@ import javax.persistence.Table;
 public class Order implements java.io.Serializable {
 
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
   private Integer idOrder;
   private Adress adress;
   private User user;
@@ -38,7 +42,7 @@ public class Order implements java.io.Serializable {
 
 
   public Order(Adress adress, User user, String modePayment, String modeDelivery,
-      float totalProduct, float totalDelivery, float totalOrder, String commentDelivery) {
+      float totalProduct, float totalDelivery, float totalOrder) {
     this.adress = adress;
     this.user = user;
     this.modePayment = modePayment;
@@ -46,7 +50,6 @@ public class Order implements java.io.Serializable {
     this.totalProduct = totalProduct;
     this.totalDelivery = totalDelivery;
     this.totalOrder = totalOrder;
-    this.commentDelivery = commentDelivery;
   }
 
   public Order(Adress adress, User user, String modePayment, String modeDelivery,
@@ -147,7 +150,7 @@ public class Order implements java.io.Serializable {
   }
 
 
-  @Column(name = "comment_delivery", nullable = false)
+  @Column(name = "comment_delivery")
   public String getCommentDelivery() {
     return this.commentDelivery;
   }
