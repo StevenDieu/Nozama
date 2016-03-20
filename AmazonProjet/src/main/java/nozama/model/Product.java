@@ -1,5 +1,5 @@
 package nozama.model;
-// Generated 19 mars 2016 16:01:44 by Hibernate Tools 4.3.1.Final
+// Generated 20 mars 2016 15:42:18 by Hibernate Tools 4.3.1.Final
 
 
 import java.util.Date;
@@ -28,6 +28,10 @@ import javax.persistence.UniqueConstraint;
 public class Product implements java.io.Serializable {
 
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
   private Integer idProduct;
   private Product product;
   private String name;
@@ -44,10 +48,11 @@ public class Product implements java.io.Serializable {
   public Product() {}
 
 
-  public Product(String name, String nameTagDateReleased, String urlPicture, Date dateReleased,
-      String type) {
+  public Product(String name, String nameTagDateReleased, String description, String urlPicture,
+      Date dateReleased, String type) {
     this.name = name;
     this.nameTagDateReleased = nameTagDateReleased;
+    this.description = description;
     this.urlPicture = urlPicture;
     this.dateReleased = dateReleased;
     this.type = type;
@@ -113,7 +118,7 @@ public class Product implements java.io.Serializable {
   }
 
 
-  @Column(name = "description", length = 65535)
+  @Column(name = "description", nullable = false, length = 65535)
   public String getDescription() {
     return this.description;
   }

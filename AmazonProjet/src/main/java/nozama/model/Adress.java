@@ -1,5 +1,5 @@
 package nozama.model;
-// Generated 19 mars 2016 16:01:44 by Hibernate Tools 4.3.1.Final
+// Generated 20 mars 2016 15:42:18 by Hibernate Tools 4.3.1.Final
 
 
 import java.util.HashSet;
@@ -23,6 +23,10 @@ import javax.persistence.Table;
 public class Adress implements java.io.Serializable {
 
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
   private Integer idAdress;
   private User user;
   private String name;
@@ -163,8 +167,8 @@ public class Adress implements java.io.Serializable {
     return this.numberPhone;
   }
 
-  public void setNumberPhone(String numberPhone) {
-    this.numberPhone = numberPhone;
+  public void setNumberPhone(String numberPhone2) {
+    this.numberPhone = numberPhone2;
   }
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "adress")

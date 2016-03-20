@@ -1,5 +1,5 @@
 package nozama.model;
-// Generated 19 mars 2016 16:01:44 by Hibernate Tools 4.3.1.Final
+// Generated 20 mars 2016 15:42:18 by Hibernate Tools 4.3.1.Final
 
 
 import java.util.HashSet;
@@ -23,6 +23,10 @@ import javax.persistence.UniqueConstraint;
 public class User implements java.io.Serializable {
 
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
   private Integer idUsers;
   private String name;
   private String lastname;
@@ -30,6 +34,7 @@ public class User implements java.io.Serializable {
   private String password;
   private String ipAddress;
   private String genre;
+  private int comptePrepaye;
   private Set<Adress> adresses = new HashSet<Adress>(0);
   private Set<Order> orders = new HashSet<Order>(0);
 
@@ -37,23 +42,25 @@ public class User implements java.io.Serializable {
 
 
   public User(String name, String lastname, String emailAdress, String password, String ipAddress,
-      String genre) {
+      String genre, int comptePrepaye) {
     this.name = name;
     this.lastname = lastname;
     this.emailAdress = emailAdress;
     this.password = password;
     this.ipAddress = ipAddress;
     this.genre = genre;
+    this.comptePrepaye = comptePrepaye;
   }
 
   public User(String name, String lastname, String emailAdress, String password, String ipAddress,
-      String genre, Set<Adress> adresses, Set<Order> orders) {
+      String genre, int comptePrepaye, Set<Adress> adresses, Set<Order> orders) {
     this.name = name;
     this.lastname = lastname;
     this.emailAdress = emailAdress;
     this.password = password;
     this.ipAddress = ipAddress;
     this.genre = genre;
+    this.comptePrepaye = comptePrepaye;
     this.adresses = adresses;
     this.orders = orders;
   }
@@ -129,6 +136,16 @@ public class User implements java.io.Serializable {
 
   public void setGenre(String genre) {
     this.genre = genre;
+  }
+
+
+  @Column(name = "compte_prepaye", nullable = false)
+  public int getComptePrepaye() {
+    return this.comptePrepaye;
+  }
+
+  public void setComptePrepaye(int comptePrepaye) {
+    this.comptePrepaye = comptePrepaye;
   }
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
