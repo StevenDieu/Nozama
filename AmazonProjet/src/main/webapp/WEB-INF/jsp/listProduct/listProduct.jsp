@@ -2,6 +2,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <div class="rowProduct">
 
 	<c:set var="listProducts" value="${products}" />
@@ -40,7 +41,7 @@
 						<div class="priceProduct">
 
 							<img data-toggle="tooltip" data-placement="left" title="Format : ${type.support}" src="/resources/img/${type.support}.png" alt="${type.support}"/>
-							<fmt:formatNumber value="${type.price}" type="currency" />
+							<fmt:formatNumber value="${type.price}" minFractionDigits="2" type="number" /> €
 						</div>
 						<div class="buttonAddCart">
 							<input type="button" class="addCart btn btn-primary" data-id="${type.id}" data-type="${product.type}" value="Ajouter au panier" />

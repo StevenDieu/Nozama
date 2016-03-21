@@ -12,7 +12,7 @@
 		<form action="/liste-tous-les-films" class="formFilm" method="get">
 
 			<div class="blocFiltre">
-				Support : <select id="support" name="support">AllSupport
+				Support : <select id="support" name="support">
 					<option value="AllSupport" <c:if test="${support == 'AllSupport' }">selected</c:if>>Tous les supports</option>
 					<option value="DVD" <c:if test="${support == 'DVD' }">selected</c:if>>DVD</option>
 					<option value="BLUERAY" <c:if test="${support == 'BLUERAY' }">selected</c:if>>Blu-ray</option>

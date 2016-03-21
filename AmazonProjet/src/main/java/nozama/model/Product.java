@@ -27,7 +27,10 @@ import javax.persistence.UniqueConstraint;
     uniqueConstraints = @UniqueConstraint(columnNames = "name_tag_date_released") )
 public class Product implements java.io.Serializable {
 
-
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
   private Integer idProduct;
   private Product product;
   private String name;

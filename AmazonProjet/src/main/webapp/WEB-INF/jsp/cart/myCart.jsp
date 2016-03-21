@@ -80,7 +80,7 @@
 								<span class="blockTdBeforeCart">Prix unitaire: </span>
 
 								<span class="priceProduct${product.id}${product.type}" data-price="<c:out value="${product.price}" />">
-									<fmt:formatNumber value="${product.price}" type="currency" />
+									<fmt:formatNumber value="${product.price}" minFractionDigits="2" type="number" /> €
 								</span>
 							</td>
 							<td class="centerVerticale center tdLeft tdQuantiteProduct">

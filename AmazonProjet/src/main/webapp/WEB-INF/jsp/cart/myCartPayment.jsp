@@ -59,9 +59,9 @@
 				<div class="radio">
 					<label>
 						<input type="radio" name="choosePayment" value="PREPAYE"/>
-						<p>Compte prépayé MISYS
-						<img src="/resources/img/cart/prepaye.png" class="imgPaypment" alt="prepaye"></p>
-						<p>Argent sur le compte : <fmt:formatNumber value="${sessionScope.User.comptePrepaye}" type="currency" /></p>
+						Compte prépayé MISYS
+						<img src="/resources/img/cart/prepaye.png" class="imgPaypment" alt="prepaye"><br/>
+						Argent sur le compte : <fmt:formatNumber value="${sessionScope.User.comptePrepaye}" minFractionDigits="2" type="number" /> €
 					</label>
 				</div>
 			</div>
@@ -77,20 +77,20 @@
 			<p>
 				Produits :
 				<span class="floatRight">
-					<fmt:formatNumber value="${sessionScope.prixTotalProduct}" type="currency" />
+					<fmt:formatNumber value="${sessionScope.prixTotalProduct}" minFractionDigits="2" type="number" /> €
 				</span>
 			</p>
 			<p>
 				Livraison :
 				<span class="floatRight">
-					<fmt:formatNumber value="${sessionScope.transport.prix}" type="currency" />
+					<fmt:formatNumber value="${sessionScope.transport.prix}" minFractionDigits="2" type="number" /> €
 				</span>
 			</p>
 			<p>
 				Montant total :
 				<span class="floatRight">
 					<span class="resultCommandeTotal">
-						<fmt:formatNumber value="${sessionScope.totalPrice}" type="currency" />
+						<fmt:formatNumber value="${sessionScope.totalPrice}" minFractionDigits="2" type="number" /> €
 					</span>
 				</span>
 			</p>
@@ -132,7 +132,7 @@
 					</p>
 
 					<c:if test="${sessionScope.transport.id != eco}">
-						<p>2016 EXPRESS & SAMEDI - 14,00 €</p>
+						<p>2016 EXPRESS &amp; SAMEDI - 14,00 €</p>
 						<p>Date de livraison estimée : 3-4 jours</p>
 					</c:if>
 					<c:if test="${sessionScope.transport.id == eco}">
@@ -197,7 +197,7 @@
 
 											<span class="priceProduct${product.id}${product.type}"
 												data-price="<c:out value="${product.price}" />">
-												<fmt:formatNumber value="${product.price}" type="currency" />
+												<fmt:formatNumber value="${product.price}" minFractionDigits="2" type="number" /> €
 											</span>
 										</td>
 										<td class="centerVerticale center tdLeft tdQuantiteProduct">
