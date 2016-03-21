@@ -1,0 +1,1 @@
+<img src="/resources/img/cart/paypalPsp.PNG" alt="Paypal" class="img-responsive center"/>

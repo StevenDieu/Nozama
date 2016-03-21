@@ -48,7 +48,8 @@ public class ProductCartServiceImpl implements ProductCartService {
   }
 
 
-  private void insertInProducts(List<Map<String, Object>> allProduct, String type, Product product, Article article) {
+  private void insertInProducts(List<Map<String, Object>> allProduct, String type, Product product,
+      Article article) {
     Map<String, Object> newProduct = new HashMap<String, Object>();
     newProduct.put(type, product.getIdProduct());
     newProduct.put("type", type);
@@ -64,14 +65,13 @@ public class ProductCartServiceImpl implements ProductCartService {
     newProduct.put("urlPicture", product.getUrlPicture());
     newProduct.put("dateReleased", product.getDateReleased());
     newProduct.put("nameTagDateReleased", product.getNameTagDateReleased());
-    
+
     newProduct.put("price", Float.toString(article.getPrice()));
     newProduct.put("support", article.getNameSupport());
     newProduct.put("id", Integer.toString(article.getIdArticle()));
-    
+
     for (Map<String, Object> productCart : allCart) {
-      if (((Integer) productCart.get("id")).equals(article.getIdArticle())
-          && productCart.get("type").equals(type)) {
+      if (((Integer) productCart.get("id")).equals(article.getIdArticle())) {
         DecimalFormat df = new DecimalFormat("0.00");
         newProduct.put("numberProduct", (Integer) productCart.get("number"));
         newProduct.put("totalProduct",
@@ -87,15 +87,15 @@ public class ProductCartServiceImpl implements ProductCartService {
     float priceTotal = 0;
     for (Map<String, Object> product : list) {
       int numberProduct = (Integer) product.get("number");
-        Article article = PR.getArticleById((Integer) product.get("id"));
-        priceTotal = priceTotal + (numberProduct * article.getPrice());
-     
+      Article article = PR.getArticleById((Integer) product.get("id"));
+      priceTotal = priceTotal + (numberProduct * article.getPrice());
+
     }
     return priceTotal;
 
   }
 
-  
+
   public void insertOrder(Order order) {
     PR.inserOrder(order);
   }
@@ -109,9 +109,16 @@ public class ProductCartServiceImpl implements ProductCartService {
     if (allId.size() > 0) {
       List<Article> articles = PR.getArticleById(allId);
       for (Article article : articles) {
+
+
         ProductOrder productOrder = new ProductOrder();
         productOrder.setArticle(article);
         productOrder.setOrder(order);
+        for (Map<String, Object> cart : carts) {
+          if (article.getIdArticle() == (Integer) cart.get("id")) {
+            productOrder.setQuantity((Integer) cart.get("number"));
+          }
+        }
         PR.inserOrderProduct(productOrder);
       }
 

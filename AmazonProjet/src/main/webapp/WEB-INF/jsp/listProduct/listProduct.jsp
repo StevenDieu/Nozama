@@ -14,9 +14,9 @@
 			</div>
 
 			<div class="hashTagList">
-				<button data-redirect="${product.urlType}" class="btn-link">#${product.type}</button>
+				<a data-redirect="${product.urlType}" class="btn-link">#${product.type}</a>
 				<c:if test="${not empty product.artiste}">
-					<button data-redirect="/artiste/${product.artiste}" class="btn-link">#${product.artiste}</button>
+					<a href="/artiste/${product.artiste}" class="btn-link">#${product.artiste}</a>
 				</c:if>
 
 			</div>

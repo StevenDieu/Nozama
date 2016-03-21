@@ -27,6 +27,7 @@ public class ProductOrder implements java.io.Serializable {
   private Integer idProductOrder;
   private Article article;
   private Order order;
+  private Integer quantity;
 
   public ProductOrder() {}
 
@@ -66,6 +67,15 @@ public class ProductOrder implements java.io.Serializable {
 
   public void setOrder(Order order) {
     this.order = order;
+  }
+  
+  @Column(name = "quantity", nullable = false)
+  public Integer getQuantity() {
+    return this.quantity;
+  }
+
+  public void setQuantity(Integer quantity) {
+    this.quantity = quantity;
   }
 
 

@@ -43,21 +43,22 @@
 
 				<div class="radio">
 					<label>
-						<input type="radio" name="choosePayment" value="CB" />
+						<input type="radio" name="choosePayment" value="CB" <c:if test="${sessionScope.payment == 'CB'}">checked</c:if>/>
 						Carte bleu VISA
-						<img src="/resources/img/cart/visa.png" class="imgPaypment" alt="visa" >
+						<img src="/resources/img/cart/visa.png" class="imgPaypment" alt="visa"  />
+						
 					</label>
 				</div>
 				<div class="radio">
 					<label>
-						<input type="radio" name="choosePayment" value="PAYPAL" />
+						<input type="radio" name="choosePayment" value="PAYPAL" <c:if test="${sessionScope.payment == 'PAYPAL'}">checked</c:if>/>
 						Paypal
-						<img src="/resources/img/cart/paypal.png" alt="paypal" class="imgPaypment" >
+						<img src="/resources/img/cart/paypal.png" alt="paypal" class="imgPaypment" />
 					</label>
 				</div>
 				<div class="radio">
 					<label>
-						<input type="radio" name="choosePayment" value="PREPAYE" />
+						<input type="radio" name="choosePayment" value="PREPAYE"/>
 						<p>Compte prépayé MISYS
 						<img src="/resources/img/cart/prepaye.png" class="imgPaypment" alt="prepaye"></p>
 						<p>Argent sur le compte : <fmt:formatNumber value="${sessionScope.User.comptePrepaye}" type="currency" /></p>

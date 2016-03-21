@@ -340,10 +340,37 @@ public class CtrlCart {
       }
       request.getSession().setAttribute("payment", choosePayment);
 
-
+      return "{\"statut\": \"ok\",\"redirect\": \"/page-payment\"}";
     }
 
     return "{\"statut\": \"error\",\"message\":  \"Une erreur est survenue.\"}";
+  }
+  
+  @RequestMapping(value = "/page-payment")
+  public ModelAndView pagePaymentPSP(HttpServletRequest request) {
+    if (request.getSession().getAttribute("cartControlTunnel") == null
+        || request.getSession().getAttribute("cartControlTunnel") == "[]") {
+      return new ModelAndView("redirect:/mon-panier");
+    }
+
+    if (request.getSession().getAttribute("User") == null) {
+      return new ModelAndView("redirect:/mon-panier-etape-connexion");
+    }
+
+    if (request.getSession().getAttribute("address") == null) {
+      return new ModelAndView("redirect:/mon-panier-etape-adresse");
+    }
+
+    if (request.getSession().getAttribute("transport") == null) {
+      return new ModelAndView("redirect:/mon-panier-etape-livraison");
+    }
+
+    if (request.getSession().getAttribute("payment") == null) {
+      return new ModelAndView("redirect:/mon-panier-etape-paiement");
+    }
+
+    
+    return new ModelAndView("cart/myPayment");
   }
 
   @SuppressWarnings("unchecked")
@@ -401,8 +428,15 @@ public class CtrlCart {
     request.getSession().setAttribute("payment", null);
     request.getSession().setAttribute("totalPrice", null);
     request.getSession().setAttribute("prixTotalProduct", null);
+    request.getSession().setAttribute("nbCart", 0);
 
-    return null;
+    return new ModelAndView("redirect:/commande-valider");
+  }
+  
+  @RequestMapping(value = "/commande-valider")
+  public ModelAndView orderValidate(HttpServletRequest request) {
+    
+    return new ModelAndView("cart/orderValidate");
   }
 
   @SuppressWarnings("unchecked")
@@ -410,10 +444,9 @@ public class CtrlCart {
   @ResponseBody
   public String deleteProductCart(HttpServletRequest request) {
     String idString = request.getParameter("id");
-    String type = request.getParameter("type");
     List<Map<String, Object>> listMapCart = new ArrayList<Map<String, Object>>();
 
-    if (idString != "" && Util.convertToInt(idString) && type != "") {
+    if (idString != "" && Util.convertToInt(idString)) {
       int id = Integer.parseInt(idString);
 
       if (request.getSession().getAttribute("cart") != null
@@ -424,11 +457,10 @@ public class CtrlCart {
         for (Map<String, Object> cart : allCart) {
           int idSession = (int) cart.get("id");
 
-          if (!(idSession == id && cart.get("type").equals(type))) {
+          if (!(idSession == id)) {
 
             Map<String, Object> listCart = new HashMap<>();
             listCart.put("id", idSession);
-            listCart.put("type", cart.get("type"));
             listCart.put("number", (int) cart.get("number"));
             listMapCart.add(listCart);
 
@@ -454,12 +486,11 @@ public class CtrlCart {
   public String changeNumberProductCart(HttpServletRequest request) {
     String idString = request.getParameter("id");
     String numberString = request.getParameter("number");
-    String type = request.getParameter("type");
 
     int number = 1;
 
     if (idString != "" && Util.convertToInt(idString) && numberString != ""
-        && Util.convertToInt(numberString) && type != "") {
+        && Util.convertToInt(numberString)) {
       int id = Integer.parseInt(idString);
       number = Integer.parseInt(numberString);
       if (number < 0) {
@@ -477,8 +508,7 @@ public class CtrlCart {
           Map<String, Object> listCart = new HashMap<>();
           int idSession = (int) cart.get("id");
           listCart.put("id", idSession);
-          listCart.put("type", cart.get("type"));
-          if (idSession == id && cart.get("type").equals(type)) {
+          if (idSession == id) {
             listCart.put("number", number);
           } else {
             listCart.put("number", (int) cart.get("number"));
@@ -499,10 +529,9 @@ public class CtrlCart {
   public String addInMyCart(HttpServletRequest request) {
 
     String idString = request.getParameter("id");
-    String type = request.getParameter("typeData");
     Boolean newProduct = true;
 
-    if (idString != "" && type != "" && Util.convertToInt(idString)) {
+    if (idString != "" && Util.convertToInt(idString)) {
       int id = Integer.parseInt(idString);
       List<Map<String, Object>> listMapCart;
 
@@ -512,7 +541,7 @@ public class CtrlCart {
       } else {
         listMapCart = (List<Map<String, Object>>) request.getSession().getAttribute("cart");
         for (Map<String, Object> mapCart : listMapCart) {
-          if (((int) mapCart.get("id")) == id && mapCart.get("type").equals(type)) {
+          if (((int) mapCart.get("id")) == id) {
             newProduct = false;
             int number = ((int) mapCart.get("number")) + 1;
             if (number <= 100) {
@@ -526,7 +555,6 @@ public class CtrlCart {
       if (newProduct) {
         Map<String, Object> listCart = new HashMap<>();
         listCart.put("id", id);
-        listCart.put("type", type);
         listCart.put("number", 1);
         listMapCart.add(listCart);
       }
