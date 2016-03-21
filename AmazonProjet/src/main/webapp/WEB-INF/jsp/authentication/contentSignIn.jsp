@@ -7,7 +7,7 @@
 		</div>
 		<div class="panel-body">
 
-			</br>
+			<br/>
 
 			<input type="hidden" class="redirectSignIn" value="${redirect}" />
 

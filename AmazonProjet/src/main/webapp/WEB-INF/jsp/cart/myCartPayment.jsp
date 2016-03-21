@@ -43,24 +43,25 @@
 
 				<div class="radio">
 					<label>
-						<input type="radio" name="choosePayment" value="CB" />
+						<input type="radio" name="choosePayment" value="CB" <c:if test="${sessionScope.payment == 'CB'}">checked</c:if>/>
 						Carte bleu VISA
-						<img src="/resources/img/cart/visa.png" class="imgPaypment" alt="visa" class="img-rounded">
+						<img src="/resources/img/cart/visa.png" class="imgPaypment" alt="visa"  />
+						
 					</label>
 				</div>
 				<div class="radio">
 					<label>
-						<input type="radio" name="choosePayment" value="PAYPAL" />
+						<input type="radio" name="choosePayment" value="PAYPAL" <c:if test="${sessionScope.payment == 'PAYPAL'}">checked</c:if>/>
 						Paypal
-						<img src="/resources/img/cart/paypal.png" alt="paypal" class="imgPaypment" class="img-rounded">
+						<img src="/resources/img/cart/paypal.png" alt="paypal" class="imgPaypment" />
 					</label>
 				</div>
 				<div class="radio">
 					<label>
-						<input type="radio" name="choosePayment" value="PREPAYE" />
+						<input type="radio" name="choosePayment" value="PREPAYE"/>
 						Compte prépayé MISYS
-						<img src="/resources/img/cart/prepaye.png" class="imgPaypment" alt="prepaye"
-							class="img-rounded">
+						<img src="/resources/img/cart/prepaye.png" class="imgPaypment" alt="prepaye"><br/>
+						Argent sur le compte : <fmt:formatNumber value="${sessionScope.User.comptePrepaye}" minFractionDigits="2" type="number" /> €
 					</label>
 				</div>
 			</div>
@@ -76,22 +77,21 @@
 			<p>
 				Produits :
 				<span class="floatRight">
-					<fmt:formatNumber value="${sessionScope.prixTotalProduct}" type="currency" />
+					<fmt:formatNumber value="${sessionScope.prixTotalProduct}" minFractionDigits="2" type="number" /> €
 				</span>
 			</p>
 			<p>
 				Livraison :
 				<span class="floatRight">
-					<fmt:formatNumber value="${sessionScope.transport.prix}" type="currency" />
+					<fmt:formatNumber value="${sessionScope.transport.prix}" minFractionDigits="2" type="number" /> €
 				</span>
 			</p>
 			<p>
 				Montant total :
 				<span class="floatRight">
 					<span class="resultCommandeTotal">
-						<fmt:formatNumber value="${sessionScope.totalPrice}" type="currency" />
+						<fmt:formatNumber value="${sessionScope.totalPrice}" minFractionDigits="2" type="number" /> €
 					</span>
-					€
 				</span>
 			</p>
 			<br />
@@ -132,7 +132,7 @@
 					</p>
 
 					<c:if test="${sessionScope.transport.id != eco}">
-						<p>2016 EXPRESS & SAMEDI - 14,00 €</p>
+						<p>2016 EXPRESS &amp; SAMEDI - 14,00 €</p>
 						<p>Date de livraison estimée : 3-4 jours</p>
 					</c:if>
 					<c:if test="${sessionScope.transport.id == eco}">
@@ -141,7 +141,7 @@
 					</c:if>
 					
 					<c:if test="${sessionScope.transport.commentaire != null}">
-						<p>Commentaire transporteur : ${sessionScope.transport.commentaire}</p>
+						<p class="breakWord">Commentaire transporteur : ${sessionScope.transport.commentaire}</p>
 					</c:if>
 					
 
@@ -177,7 +177,7 @@
 										<td class="center tdLeft">
 											<a href="/product/${product.type}/${product.nameTagDateReleased}">
 												<img src="/resources/img/product/<c:out value="${product.urlPicture}" />"
-													class="imageCart">
+													alt="${product.urlPicture}"  class="imageCart">
 											</a>
 										</td>
 										<td class="centerVerticale tdRight tdNameProduct">
@@ -186,10 +186,10 @@
 										</td>
 										<td class="centerVerticale tdRight tdTypeProduct">
 											<span class="blockTdBeforeCart">Type : </span>
-											<a href="${product.urlType}">${product.typeHtml}</a>
+											<a href="${product.urlType}">${product.type}</a>
 										</td>
 										<td class="centerVerticale center tdRight tdFormatProduct">
-											<img data-toggle="tooltip" data-placement="left" title="Format : ${product.support}"
+											<img data-toggle="tooltip" alt="${product.support}" data-placement="left" title="Format : ${product.support}"
 												src="/resources/img/${product.support}.png" />
 										</td>
 										<td class="centerVerticale tdLeft tdPrixProduct">
@@ -197,7 +197,7 @@
 
 											<span class="priceProduct${product.id}${product.type}"
 												data-price="<c:out value="${product.price}" />">
-												<fmt:formatNumber value="${product.price}" type="currency" />
+												<fmt:formatNumber value="${product.price}" minFractionDigits="2" type="number" /> €
 											</span>
 										</td>
 										<td class="centerVerticale center tdLeft tdQuantiteProduct">

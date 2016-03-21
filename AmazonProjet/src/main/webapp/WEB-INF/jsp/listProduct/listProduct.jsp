@@ -2,21 +2,22 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <div class="rowProduct">
 
 	<c:set var="listProducts" value="${products}" />
 	<c:forEach var="product" items="${listProducts}" varStatus="counter">
 
 
-		<a href="/product/${product.type}/${product.nameTagDateReleased}" class="product">
+		<div data-href="/product/${product.type}/${product.nameTagDateReleased}" class="product clickProduct">
 			<div class="titleProduct">
 				<c:out value="${product.name}" />
 			</div>
 
 			<div class="hashTagList">
-				<button data-redirect="${product.urlType}" class="btn-link">#${product.typeHtml}</button>
+				<a data-redirect="${product.urlType}" class="btn-link">#${product.type}</a>
 				<c:if test="${not empty product.artiste}">
-					<button data-redirect="/artiste/${product.artiste}" class="btn-link">#${product.artiste}</button>
+					<a href="/artiste/${product.artiste}" class="btn-link">#${product.artiste}</a>
 				</c:if>
 
 			</div>
@@ -39,8 +40,8 @@
 					<div class="blockProductBottom">
 						<div class="priceProduct">
 
-							<img data-toggle="tooltip" data-placement="left" title="Format : ${type.support}" src="/resources/img/${type.support}.png" />
-							<fmt:formatNumber value="${type.price}" type="currency" />
+							<img data-toggle="tooltip" data-placement="left" title="Format : ${type.support}" src="/resources/img/${type.support}.png" alt="${type.support}"/>
+							<fmt:formatNumber value="${type.price}" minFractionDigits="2" type="number" /> €
 						</div>
 						<div class="buttonAddCart">
 							<input type="button" class="addCart btn btn-primary" data-id="${type.id}" data-type="${product.type}" value="Ajouter au panier" />
@@ -49,7 +50,7 @@
 
 				</c:forEach>
 			</div>
-		</a>
+		</div>
 
 
 	</c:forEach>

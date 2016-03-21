@@ -1,132 +1,176 @@
 package nozama.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import nozama.model.AlbumHasSingle;
-import nozama.model.Categorie;
-import nozama.model.TypeSupport;
-import nozama.model.TypeSupportAlbum;
-import nozama.model.TypeSupportMovie;
-import nozama.model.TypeSupportSingle;
+import nozama.model.Article;
+import nozama.model.Artiste;
+import nozama.model.AttrProduct;
+import nozama.model.Product;
 import nozama.repository.ProductRepository;
 
 @Service
 public class ProductPageServiceImpl implements ProductPageService {
 
-	@Autowired
-	private ProductRepository PR;
+  @Autowired
+  private ProductRepository PR;
 
-	@Override
-	public Map<String, Object> getProduct(String nameTagDateReleased, String type) {
-		Map<String, Object> product = new HashMap<String, Object>();
-		if (type.equals("single")) {
-			List<TypeSupportSingle> typeSupportSingles = PR.getProductSingle(nameTagDateReleased);
-			margeAllResultTypeSupportSingle(typeSupportSingles, product);
-		} else if (type.equals("album")) {
-			List<TypeSupportAlbum> typeSupportAlbums = PR.getProductAlbum(nameTagDateReleased);
-			margeAllResultTypeSupportAlbum(typeSupportAlbums, product);
-		} else {
-			List<TypeSupportMovie> typeSupportMovies = PR.getProductMovie(nameTagDateReleased);
-			margeAllResultTypeSupportMovie(typeSupportMovies, product);
-		}
-		return product;
-	}
+  @Override
+  public Map<String, Object> getProduct(String nameTagDateReleased) {
+    Map<String, Object> product = new HashMap<String, Object>();
 
-	@SuppressWarnings("unchecked")
-	private void margeAllResultTypeSupportAlbum(List<TypeSupportAlbum> typeSupportAlbums, Map<String, Object> product) {
-		if (typeSupportAlbums.size() >= 1) {
-			TypeSupportAlbum typeSupport = typeSupportAlbums.get(0);
-			margeAllResultSupport(product, "album", typeSupport, typeSupport.getAlbum());
+    Product thisProduct = PR.getProductByNameTagDate(nameTagDateReleased);
+    margeAllResult(thisProduct, product);
 
-			for (TypeSupportAlbum typeSupportAlbum : typeSupportAlbums) {
-				insertTypeInProducts(typeSupportAlbum, product, (List<Map<String, String>>) product.get("listType"));
-			}
-			List<AlbumHasSingle> allSingle = PR.getAllSingle(typeSupport.getAlbum().getIdAlbum());
+    return product;
+  }
 
-			product.put("artisteName", typeSupport.getAlbum().getArtiste().getName());
-			product.put("label", typeSupport.getAlbum().getLabel());
-			product.put("allSingle", allSingle);
-			product.put("totalTime", getTimeAlbum(allSingle));
-		}
-	}
+  private void margeAllResult(Product thisProduct, Map<String, Object> product) {
+    if (thisProduct != null) {
 
-	@SuppressWarnings("unchecked")
-	private void margeAllResultTypeSupportMovie(List<TypeSupportMovie> typeSupportMovies, Map<String, Object> product) {
-		if (typeSupportMovies.size() >= 1) {
+      margeAllResultSupport(product, thisProduct);
 
-			TypeSupportMovie typeSupport = typeSupportMovies.get(0);
-			margeAllResultSupport(product, "film", typeSupport, typeSupport.getMovie());
+      insertTypeInProducts(thisProduct.getArticles(), product);
 
-			for (TypeSupportMovie typeSupportMovie : typeSupportMovies) {
-				insertTypeInProducts(typeSupportMovie, product, (List<Map<String, String>>) product.get("listType"));
-			}
-		}
-	}
 
-	@SuppressWarnings("unchecked")
-	private void margeAllResultTypeSupportSingle(List<TypeSupportSingle> typeSupportSingles, Map<String, Object> product) {
-		if (typeSupportSingles.size() >= 1) {
+    }
+  }
 
-			TypeSupportSingle typeSupport = typeSupportSingles.get(0);
-			margeAllResultSupport(product, "single", typeSupport, typeSupport.getSingle());
+  private void insertTypeInProducts(Set<Article> articles, Map<String, Object> product) {
+    List<Map<String, String>> listType = new ArrayList<Map<String, String>>();
+    for (Article article : articles) {
+      Map<String, String> insertTypeSupportAlbum = new HashMap<String, String>();
+      insertTypeSupportAlbum.put("price", Float.toString(article.getPrice()));
+      insertTypeSupportAlbum.put("support", article.getNameSupport());
+      insertTypeSupportAlbum.put("id", Integer.toString(article.getIdArticle()));
+      listType.add(insertTypeSupportAlbum);
+    }
 
-			for (TypeSupportSingle typeSupportSingle : typeSupportSingles) {
-				insertTypeInProducts(typeSupportSingle, product, (List<Map<String, String>>) product.get("listType"));
-			}
-			List<AlbumHasSingle> allAlbum = PR.getNameAlbumBySingle(typeSupport.getSingle().getIdSingle());
+    product.put("listType", listType);
+  }
 
-			product.put("artisteName", typeSupport.getSingle().getArtiste().getName());
-			product.put("label", typeSupport.getSingle().getLabel());
-			product.put("totalTime", typeSupport.getSingle().getTotalTime());
-			product.put("albumName", allAlbum);
-		}
-	}
+  private void margeAllResultSupport(Map<String, Object> product, Product thisProduct) {
+    product.put(thisProduct.getType(), thisProduct);
+    product.put("type", thisProduct.getType());
+    product.put("name", thisProduct.getName());
+    product.put("description", thisProduct.getDescription());
+    product.put("urlPicture", thisProduct.getUrlPicture());
+    product.put("dateReleased", thisProduct.getDateReleased());
+    product.put("nameTagDateReleased", thisProduct.getNameTagDateReleased());
+    if (thisProduct.getType().equals("single")) {
+      elementForJustSinglePage(product, thisProduct);
+    } else if (thisProduct.getType().equals("album")) {
+      elementForJustAlbumPage(product, thisProduct);
+    } else if (thisProduct.getType().equals("film")) {
 
-	private void margeAllResultSupport(Map<String, Object> product, String Type, TypeSupport typeSupport, Categorie typeSupportCategorie) {
-		product.put(Type, typeSupportCategorie);
-		product.put("type", Type);
-		product.put("name", typeSupportCategorie.getProduct().getName());
-		product.put("description", typeSupportCategorie.getProduct().getDescription());
-		product.put("urlPicture", typeSupportCategorie.getProduct().getUrlPicture());
-		product.put("dateReleased", typeSupportCategorie.getProduct().getDateReleased());
-		product.put("nameTagDateReleased", typeSupportCategorie.getProduct().getNameTagDateReleased());
-		List<Map<String, String>> listType = new ArrayList<Map<String, String>>();
-		product.put("listType", listType);
-	}
-	
-	private Date getTimeAlbum(List<AlbumHasSingle> allSingle) {
-		Calendar cal = Calendar.getInstance();
+    }
+    List<Map<String, String>> listType = new ArrayList<Map<String, String>>();
+    product.put("listType", listType);
+  }
 
-		cal.set(Calendar.HOUR_OF_DAY, 0);
-		cal.set(Calendar.MINUTE, 0);
-		cal.set(Calendar.SECOND, 0);
+  private void elementForJustSinglePage(Map<String, Object> product, Product thisProduct) {
+    for (Artiste artiste : thisProduct.getArtistes()) {
+      product.put("artisteName", artiste.getName());
+    }
+    for (AttrProduct attrProduct : thisProduct.getAttrProducts()) {
+      if (attrProduct.getAttribut().equals("label")) {
+        product.put("label", attrProduct.getValue());
+      } else if (attrProduct.getAttribut().equals("totalTime")) {
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
+        try {
+          product.put("totalTime", sdf.parse(attrProduct.getValue()));
+        } catch (ParseException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+    Product productParent = PR.getProductParent(thisProduct.getIdProduct());
+    if (productParent != null) {
+      product.put("albumName", productParent);
+    }
+  }
 
-		for(AlbumHasSingle albumHasSingle : allSingle){
-			Calendar calSingle = Calendar.getInstance();
-			calSingle.setTime(albumHasSingle.getSingle().getTotalTime());
-			cal.add(Calendar.HOUR_OF_DAY, calSingle.get(Calendar.HOUR_OF_DAY));
-			cal.add(Calendar.MINUTE, calSingle.get(Calendar.MINUTE));
-			cal.add(Calendar.SECOND, calSingle.get(Calendar.SECOND));
-		}
-		
-		return cal.getTime();
-	}
+  private void elementForJustAlbumPage(Map<String, Object> product, Product thisProduct) {
+    for (Artiste artiste : thisProduct.getArtistes()) {
+      product.put("artisteName", artiste.getName());
+    }
+    for (AttrProduct attrProduct : thisProduct.getAttrProducts()) {
+      if (attrProduct.getAttribut().equals("label")) {
+        product.put("label", attrProduct.getValue());
+      }
+    }
 
-	private void insertTypeInProducts(TypeSupport typeSupport, Map<String, Object> product, List<Map<String, String>> listType) {
-		Map<String, String> insertTypeSupportAlbum = new HashMap<String, String>();
-		insertTypeSupportAlbum.put("price", Float.toString(typeSupport.getPrice()));
-		insertTypeSupportAlbum.put("support", typeSupport.getNameSupport());
-		insertTypeSupportAlbum.put("id", Integer.toString(typeSupport.getIdTypeSupport()));
-		listType.add(insertTypeSupportAlbum);
-		product.put("listType", listType);
-	}
+    List<Product> listeProductChild = getProductsChild(thisProduct.getProducts());
+    if (listeProductChild.size() > 0) {
+      product.put("totalTime", getTimeAlbum(listeProductChild));
+      product.put("allSingle", createListMapSingleChild(listeProductChild));
+    }
+  }
+
+  private List<Map<String, Object>> createListMapSingleChild(List<Product> listeProductChild) {
+
+    List<Map<String, Object>> listMapSingleChild = new ArrayList<Map<String, Object>>();
+    for (Product product : listeProductChild) {
+      Map<String, Object> mapSingleChild = new HashMap<String, Object>();
+      mapSingleChild.put("nameTagDateReleased", product.getNameTagDateReleased());
+      mapSingleChild.put("name", product.getName());
+      mapSingleChild.put("dateReleased", product.getDateReleased());
+      for (AttrProduct attrProduct : product.getAttrProducts()) {
+        if (attrProduct.getAttribut().equals("totalTime")) {
+            mapSingleChild.put("totalTime",attrProduct.getValue());
+        }
+      }
+      listMapSingleChild.add(mapSingleChild);
+    }
+
+    return listMapSingleChild;
+
+  }
+
+
+  private List<Product> getProductsChild(Set<Product> productChilds) {
+    List<Product> listProductChild = new ArrayList<>();
+    for (Product product : productChilds) {
+      listProductChild.add(PR.getProductById(product.getIdProduct()));
+    }
+    return listProductChild;
+  }
+
+  private Date getTimeAlbum(List<Product> listeProductChild) {
+    Calendar cal = Calendar.getInstance();
+
+    cal.set(Calendar.HOUR_OF_DAY, 0);
+    cal.set(Calendar.MINUTE, 0);
+    cal.set(Calendar.SECOND, 0);
+
+    for (Product product : listeProductChild) {
+      Calendar calSingle = Calendar.getInstance();
+      for (AttrProduct attrProduct : product.getAttrProducts()) {
+        if (attrProduct.getAttribut().equals("totalTime")) {
+          SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
+          try {
+            calSingle.setTime(sdf.parse(attrProduct.getValue()));
+          } catch (ParseException e) {
+            e.printStackTrace();
+          }
+          cal.add(Calendar.HOUR_OF_DAY, calSingle.get(Calendar.HOUR_OF_DAY));
+          cal.add(Calendar.MINUTE, calSingle.get(Calendar.MINUTE));
+          cal.add(Calendar.SECOND, calSingle.get(Calendar.SECOND));
+        }
+
+      }
+    }
+    return cal.getTime();
+  }
 
 }

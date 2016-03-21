@@ -62,7 +62,7 @@
 						<tr class="productCart">
 							<td class="center tdLeft">
 								<a href="/product/${product.type}/${product.nameTagDateReleased}">
-									<img src="/resources/img/product/<c:out value="${product.urlPicture}" />" class="imageCart">
+									<img src="/resources/img/product/<c:out value="${product.urlPicture}" />" alt="${product.urlPicture}" class="imageCart">
 								</a>
 							</td>
 							<td class="centerVerticale tdRight tdNameProduct">
@@ -71,16 +71,16 @@
 							</td>
 							<td class="centerVerticale tdRight tdTypeProduct">
 								<span class="blockTdBeforeCart">Type : </span>
-								<a href="${product.urlType}">${product.typeHtml}</a>
+								<a href="${product.urlType}">${product.type}</a>
 							</td>
 							<td class="centerVerticale center tdRight tdFormatProduct">
-								<img data-toggle="tooltip" data-placement="left" title="Format : ${product.support}" src="/resources/img/${product.support}.png" />
+								<img data-toggle="tooltip" alt="${product.support}" data-placement="left" title="Format : ${product.support}" src="/resources/img/${product.support}.png" />
 							</td>
 							<td class="centerVerticale tdLeft tdPrixProduct">
 								<span class="blockTdBeforeCart">Prix unitaire: </span>
 
 								<span class="priceProduct${product.id}${product.type}" data-price="<c:out value="${product.price}" />">
-									<fmt:formatNumber value="${product.price}" type="currency" />
+									<fmt:formatNumber value="${product.price}" minFractionDigits="2" type="number" /> €
 								</span>
 							</td>
 							<td class="centerVerticale center tdLeft tdQuantiteProduct">

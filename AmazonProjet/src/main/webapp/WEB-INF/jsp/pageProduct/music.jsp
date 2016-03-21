@@ -55,8 +55,8 @@
 
 						<div class="col-md-12 price-product">
 							<div class="priceProduct">
-								<img data-toggle="tooltip" data-placement="left" title="Format : ${type.support}" src="/resources/img/${type.support}.png" />
-								<fmt:formatNumber value="${type.price}" type="currency" />
+								<img data-toggle="tooltip" data-placement="left" alt="${type.support}" title="Format : ${type.support}" src="/resources/img/${type.support}.png" />
+								<fmt:formatNumber value="${type.price}" minFractionDigits="2" type="number" /> €
 							</div>
 							<button class="addCart btn btn-primary" data-id="${type.id}" data-type="${products.type}">Ajouter au panier</button>
 						</div>
@@ -82,15 +82,12 @@
 	<br />
 	<br />
 	<c:if test="${not empty products.albumName}">
-		<c:set var="albumHasSingles" value="${products.albumName}" />
-		<c:forEach var="albumHasSingle" items="${albumHasSingles}" varStatus="counter">
 			<p>
 				Album :
-				<a href="/product/album/${albumHasSingle.album.product.nameTagDateReleased}" class="linkBold">
-					<c:out value="${albumHasSingle.album.product.name}" />
+				<a href="/product/album/${products.albumName.nameTagDateReleased}" class="linkBold">
+					<c:out value="${products.albumName.name}" />
 				</a>
 			</p>
-		</c:forEach>
 	</c:if>
 	<c:if test="${not empty products.totalTime}">
 		<p>
@@ -117,18 +114,18 @@
 				</thead>
 				<tbody>
 
-					<c:set var="AlbumHasSingles" value="${products.allSingle}" />
-					<c:forEach var="AlbumHasSingle" items="${AlbumHasSingles}" varStatus="counter">
+					<c:set var="singles" value="${products.allSingle}" />
+					<c:forEach var="single" items="${singles}" varStatus="counter">
 
 						<tr>
 							<td>
-								<a href="/product/single/${AlbumHasSingle.single.product.nameTagDateReleased}">
-									<strong>${AlbumHasSingle.single.product.name}</strong>
+								<a href="/product/single/${single.nameTagDateReleased}">
+									<strong>${single.name}</strong>
 								</a>
 							</td>
-							<td>${AlbumHasSingle.single.totalTime}</td>
+							<td>${single.totalTime}</td>
 							<td>
-								<fmt:formatDate pattern="dd/MM/yyyy" value="${AlbumHasSingle.single.product.dateReleased}" />
+								<fmt:formatDate pattern="dd/MM/yyyy" value="${single.dateReleased}" />
 							</td>
 						</tr>
 

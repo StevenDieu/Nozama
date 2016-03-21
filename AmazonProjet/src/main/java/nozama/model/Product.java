@@ -1,5 +1,5 @@
 package nozama.model;
-// Generated 17 mars 2016 14:12:54 by Hibernate Tools 4.3.1.Final
+// Generated 21 mars 2016 08:24:02 by Hibernate Tools 4.3.1.Final
 
 
 import java.util.Date;
@@ -11,6 +11,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -25,37 +27,50 @@ import javax.persistence.UniqueConstraint;
     uniqueConstraints = @UniqueConstraint(columnNames = "name_tag_date_released") )
 public class Product implements java.io.Serializable {
 
-
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
   private Integer idProduct;
+  private Product product;
   private String name;
   private String nameTagDateReleased;
   private String description;
   private String urlPicture;
   private Date dateReleased;
-  private Set<Movie> movies = new HashSet<Movie>(0);
-  private Set<Album> albums = new HashSet<Album>(0);
-  private Set<Single> singles = new HashSet<Single>(0);
+  private String type;
+  private Set<Product> products = new HashSet<Product>(0);
+  private Set<Article> articles = new HashSet<Article>(0);
+  private Set<AttrProduct> attrProducts = new HashSet<AttrProduct>(0);
+  private Set<Artiste> artistes = new HashSet<Artiste>(0);
 
   public Product() {}
 
 
-  public Product(String name, String nameTagDateReleased, String urlPicture, Date dateReleased) {
-    this.name = name;
-    this.nameTagDateReleased = nameTagDateReleased;
-    this.urlPicture = urlPicture;
-    this.dateReleased = dateReleased;
-  }
-
   public Product(String name, String nameTagDateReleased, String description, String urlPicture,
-      Date dateReleased, Set<Movie> movies, Set<Album> albums, Set<Single> singles) {
+      Date dateReleased, String type) {
     this.name = name;
     this.nameTagDateReleased = nameTagDateReleased;
     this.description = description;
     this.urlPicture = urlPicture;
     this.dateReleased = dateReleased;
-    this.movies = movies;
-    this.albums = albums;
-    this.singles = singles;
+    this.type = type;
+  }
+
+  public Product(Product product, String name, String nameTagDateReleased, String description,
+      String urlPicture, Date dateReleased, String type, Set<Product> products,
+      Set<Article> articles, Set<AttrProduct> attrProducts, Set<Artiste> artistes) {
+    this.product = product;
+    this.name = name;
+    this.nameTagDateReleased = nameTagDateReleased;
+    this.description = description;
+    this.urlPicture = urlPicture;
+    this.dateReleased = dateReleased;
+    this.type = type;
+    this.products = products;
+    this.articles = articles;
+    this.attrProducts = attrProducts;
+    this.artistes = artistes;
   }
 
   @Id
@@ -69,6 +84,16 @@ public class Product implements java.io.Serializable {
 
   public void setIdProduct(Integer idProduct) {
     this.idProduct = idProduct;
+  }
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "id_product_parent")
+  public Product getProduct() {
+    return this.product;
+  }
+
+  public void setProduct(Product product) {
+    this.product = product;
   }
 
 
@@ -92,7 +117,7 @@ public class Product implements java.io.Serializable {
   }
 
 
-  @Column(name = "description", length = 65535)
+  @Column(name = "description", nullable = false, length = 65535)
   public String getDescription() {
     return this.description;
   }
@@ -121,31 +146,50 @@ public class Product implements java.io.Serializable {
     this.dateReleased = dateReleased;
   }
 
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
-  public Set<Movie> getMovies() {
-    return this.movies;
+
+  @Column(name = "type", nullable = false, length = 45)
+  public String getType() {
+    return this.type;
   }
 
-  public void setMovies(Set<Movie> movies) {
-    this.movies = movies;
-  }
-
-  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
-  public Set<Album> getAlbums() {
-    return this.albums;
-  }
-
-  public void setAlbums(Set<Album> albums) {
-    this.albums = albums;
+  public void setType(String type) {
+    this.type = type;
   }
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
-  public Set<Single> getSingles() {
-    return this.singles;
+  public Set<Product> getProducts() {
+    return this.products;
   }
 
-  public void setSingles(Set<Single> singles) {
-    this.singles = singles;
+  public void setProducts(Set<Product> products) {
+    this.products = products;
+  }
+
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
+  public Set<Article> getArticles() {
+    return this.articles;
+  }
+
+  public void setArticles(Set<Article> articles) {
+    this.articles = articles;
+  }
+
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
+  public Set<AttrProduct> getAttrProducts() {
+    return this.attrProducts;
+  }
+
+  public void setAttrProducts(Set<AttrProduct> attrProducts) {
+    this.attrProducts = attrProducts;
+  }
+
+  @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
+  public Set<Artiste> getArtistes() {
+    return this.artistes;
+  }
+
+  public void setArtistes(Set<Artiste> artistes) {
+    this.artistes = artistes;
   }
 
 

@@ -1,5 +1,4 @@
-<%@ taglib prefix="c"
-	uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <form class="formAdresse"
 	action="mon-panier-etape-validation-adress"
@@ -218,7 +217,7 @@
 				Russie</option>
 			<option value="FJ">Fidji</option>
 			<option value="FI">Finlande</option>
-			<option value="FR" selected="">France</option>
+			<option value="FR" selected>France</option>
 			<option value="GA">Gabon</option>
 			<option value="GM">Gambie</option>
 			<option value="GE">Géorgie</option>
@@ -624,7 +623,7 @@
 								Russie</option>
 							<option value="FJ">Fidji</option>
 							<option value="FI">Finlande</option>
-							<option value="FR" selected="">France</option>
+							<option value="FR" selected>France</option>
 							<option value="GA">Gabon</option>
 							<option value="GM">Gambie</option>
 							<option value="GE">Géorgie</option>
