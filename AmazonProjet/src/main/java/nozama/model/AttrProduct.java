@@ -19,7 +19,10 @@ import javax.persistence.Table;
 @Table(name = "attr_product", catalog = "nozama")
 public class AttrProduct implements java.io.Serializable {
 
-
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
   private Integer idAttrProduct;
   private Product product;
   private String attribut;

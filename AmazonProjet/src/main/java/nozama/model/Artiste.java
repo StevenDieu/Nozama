@@ -20,6 +20,10 @@ import javax.persistence.Table;
 public class Artiste implements java.io.Serializable {
 
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
   private Integer idArtiste;
   private Product product;
   private String name;

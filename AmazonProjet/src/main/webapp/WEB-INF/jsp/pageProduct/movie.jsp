@@ -53,7 +53,7 @@
 						<div class="col-md-12 price-product">
 							<div class="priceProduct">
 								<img data-toggle="tooltip" data-placement="left" alt="${type.support}"  title="Format : ${type.support}" src="/resources/img/${type.support}.png" />
-								<fmt:formatNumber value="${type.price}" type="currency" />
+								<fmt:formatNumber value="${type.price}" minFractionDigits="2" type="number" /> €
 							</div>
 							<button class="addCart btn btn-primary" data-id="${type.id}" data-type="${products.type}">Ajouter au panier</button>
 						</div>

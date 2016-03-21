@@ -25,7 +25,10 @@ import javax.persistence.UniqueConstraint;
     uniqueConstraints = @UniqueConstraint(columnNames = "emailAdress") )
 public class User implements java.io.Serializable {
 
-
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
   private Integer idUsers;
   private String name;
   private String lastname;

@@ -91,6 +91,8 @@ public class CtrlUser {
     } else if (name.length() > 255 || lastName.length() > 255 || email.length() > 255
         || password.length() > 255) {
       return "{\"statut\": \"nok\",\"message\":  \"Attention à la longueur des champs.\"}";
+    } else if (gender != "H" && gender != "F"){
+      return "{\"statut\": \"nok\",\"message\":  \"Une erreur est survenue.\"}";
     }
 
     User user = US.register(gender, name, lastName, email, password, US.getIpAdresse(request));
@@ -104,7 +106,26 @@ public class CtrlUser {
     request.getSession().setAttribute("User", null);
     return "redirect:/";
   }
-
+  
+  
+  @RequestMapping(value = "/ajaxAddMoneyAccount")
+  @ResponseBody
+  public String ajaxAddMoneyAccount(HttpServletRequest request) {
+    String numberAddAccountString = request.getParameter("numberAddAccount");
+    if (request.getSession().getAttribute("User") != null) {  
+      if(Util.convertToFloat(numberAddAccountString) && Util.isPrice(numberAddAccountString)){
+        float numberAddAcount = Float.parseFloat(numberAddAccountString);
+         if(numberAddAcount >= 5 && numberAddAcount <= 1000){
+           User user = (User) request.getSession().getAttribute("User");
+           user.setComptePrepaye(user.getComptePrepaye() + numberAddAcount);
+           US.updateUser(user);
+           return "{\"statut\": \"succes\",\"message\":  \"Compte crédité !\",\"argent\":  " + user.getComptePrepaye() + "}";
+         }
+      }
+    }
+    return "{\"statut\": \"error\",\"message\":  \"Une erreur est survenue.\"}";
+  }
+  
   @RequestMapping(value = "/ajaxDeleteDeleteAdress")
   @ResponseBody
   public String ajaxDeleteAdress(HttpServletRequest request) {
@@ -174,6 +195,9 @@ public class CtrlUser {
 
     return "{\"statut\": \"nok\"}";
   }
+  
+  
+  
 
   @RequestMapping(value = "/mon-compte")
   public ModelAndView monCompte(HttpServletRequest request) {
@@ -182,7 +206,8 @@ public class CtrlUser {
       User user = (User) request.getSession().getAttribute("User");
       variableParam.put("user", user);
       variableParam.put("adresss", US.getAllAdressByUser(user));
+      return new ModelAndView("mon-compte", variableParam);
     }
-    return new ModelAndView("mon-compte", variableParam);
+    return new ModelAndView("redirect:/", variableParam);
   }
 }

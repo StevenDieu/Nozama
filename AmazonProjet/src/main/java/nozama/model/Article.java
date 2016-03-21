@@ -23,6 +23,10 @@ import javax.persistence.Table;
 public class Article implements java.io.Serializable {
 
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
   private Integer idArticle;
   private Product product;
   private String nameSupport;

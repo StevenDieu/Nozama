@@ -19,7 +19,10 @@ import javax.persistence.Table;
 @Table(name = "product_order", catalog = "nozama")
 public class ProductOrder implements java.io.Serializable {
 
-
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
   private Integer idProductOrder;
   private Article article;
   private Order order;

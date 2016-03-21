@@ -681,6 +681,17 @@ ul.step a:hover {
 	border-color: black;
 }
 
+.input-compte-prepaye {
+	width: 100px;
+	display: inline-block;
+}
+
+.btn-compte-prepaye {
+	display: inline-block;
+	margin-left: 10px;
+    margin-top: -3px;
+}
+
 ul.step a:hover:after {
 	border-top-color: black !important;
 	border-right-color: black !important;
@@ -739,11 +750,12 @@ ul.step a:hover:after {
 	width: 100%;
 }
 
-.clickProduct{
+.clickProduct {
 	cursor: pointer;
 }
-.breakWord{
-	    word-break: break-word;
+
+.breakWord {
+	word-break: break-word;
 }
 
 @media ( min-width : 769px) {
