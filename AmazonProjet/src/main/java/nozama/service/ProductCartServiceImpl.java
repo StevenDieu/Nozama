@@ -2,6 +2,7 @@ package nozama.service;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,11 +10,14 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import nozama.model.Adress;
 import nozama.model.Article;
 import nozama.model.Order;
 import nozama.model.Product;
 import nozama.model.ProductOrder;
+import nozama.model.User;
 import nozama.repository.ProductRepository;
+import nozama.util.Util;
 
 @Service
 public class ProductCartServiceImpl implements ProductCartService {
@@ -95,10 +99,24 @@ public class ProductCartServiceImpl implements ProductCartService {
 
   }
 
-
-  public void insertOrder(Order order) {
+  public Order insertOrder(Adress adress, Map<String, Object> listTransport, String modePayment,
+      User user, float totalPrice, float prixTotalProduct) {
+    Order order = new Order();
+    order.setAdress(adress);
+    order.setCommentDelivery(Util.ConvertStringToNull((String) listTransport.get("commentaire")));
+    order.setModeDelivery((String) listTransport.get("id"));
+    order.setModePayment(modePayment);
+    order.setTotalDelivery((float) listTransport.get("prix"));
+    order.setTotalOrder(totalPrice);
+    order.setTotalProduct(prixTotalProduct);
+    order.setUser(user);
+    order.setCreateTime(new Date());
+    order.setUpdateTime(new Date());
     PR.inserOrder(order);
+
+    return order;
   }
+  
 
   public void insertProductOrder(List<Map<String, Object>> carts, Order order) {
     List<Integer> allId = new ArrayList<>();

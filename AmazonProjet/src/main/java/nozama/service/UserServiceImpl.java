@@ -1,6 +1,7 @@
 package nozama.service;
 
 import java.security.MessageDigest;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -40,6 +41,7 @@ public class UserServiceImpl implements UserService {
     user.setPassword(sha256(password));
     user.setIpAddress(ipAdress);
     user.setComptePrepaye(0);
+    user.setCreateTime(new Date());
     UR.insertUser(user);
 
     return user;

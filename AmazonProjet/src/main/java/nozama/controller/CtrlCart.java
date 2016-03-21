@@ -398,23 +398,18 @@ public class CtrlCart {
     }
 
 
+    Adress adress = (Adress) request.getSession().getAttribute("address");
     Map<String, Object> listTransport =
         (Map<String, Object>) request.getSession().getAttribute("transport");
     String modePayment = (String) request.getSession().getAttribute("payment");
     User user = (User) request.getSession().getAttribute("User");
     float totalPrice = (float) request.getSession().getAttribute("totalPrice");
+    float prixTotalProduct = (float) request.getSession().getAttribute("prixTotalProduct");
 
-    Order order = new Order();
-    order.setAdress((Adress) request.getSession().getAttribute("address"));
-    order.setCommentDelivery(Util.ConvertStringToNull((String) listTransport.get("commentaire")));
-    order.setModeDelivery((String) listTransport.get("id"));
-    order.setModePayment(modePayment);
-    order.setTotalDelivery((float) listTransport.get("prix"));
-    order.setTotalOrder(totalPrice);
-    order.setTotalProduct((float) request.getSession().getAttribute("prixTotalProduct"));
-    order.setUser(user);
 
-    PCS.insertOrder(order);
+    Order order =
+        PCS.insertOrder(adress, listTransport, modePayment, user, totalPrice, prixTotalProduct);
+
     if (modePayment.equals("PREPAYE")) {
       user.setComptePrepaye(user.getComptePrepaye() - totalPrice);
       US.updateUser(user);
@@ -429,12 +424,16 @@ public class CtrlCart {
     request.getSession().setAttribute("totalPrice", null);
     request.getSession().setAttribute("prixTotalProduct", null);
     request.getSession().setAttribute("nbCart", 0);
+    request.getSession().setAttribute("lastOrder", order);
 
     return new ModelAndView("redirect:/commande-valider");
   }
-  
+
   @RequestMapping(value = "/commande-valider")
   public ModelAndView orderValidate(HttpServletRequest request) {
+    if(request.getSession().getAttribute("lastOrder") == null){
+      return new ModelAndView("redirect:/mon-panier");
+    }
     
     return new ModelAndView("cart/orderValidate");
   }

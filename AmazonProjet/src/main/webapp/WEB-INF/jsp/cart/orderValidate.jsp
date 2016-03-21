@@ -3,11 +3,17 @@
 
 <jsp:include page="../templates/header.jsp" />
 
-VOTRE COMMANDE N° ${sessionScope.order.idOrder}
-DU 20/03/16
- 
+<h1>
+	VOTRE COMMANDE N° ${sessionScope.lastOrder.idOrder} DU
+	<fmt:formatDate pattern="yyyy-MM-dd" value="${sessionScope.lastOrder.createTime}" />
+</h1>
 
-Nous avons le plaisir de vous confirmer la validation de votre commande Nº${sessionScope.order.idOrder}, passée le 20/03/16 à 18:01 sur decathlon.fr
+Nous avons le plaisir de vous confirmer la validation de votre commande
+Nº${sessionScope.lastOrder.idOrder}, passée le
+<fmt:formatDate pattern="yyyy-MM-dd" value="${sessionScope.lastOrder.createTime}" />
+à
+<fmt:formatDate type="time" value="${sessionScope.lastOrder.createTime}" />
+sur misys.fr
 
 
 <a class="btn btn-primary center100" href="/">Retour page d'accueil</a>

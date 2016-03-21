@@ -1,5 +1,5 @@
 package nozama.model;
-// Generated 20 mars 2016 15:42:18 by Hibernate Tools 4.3.1.Final
+// Generated 21 mars 2016 08:24:02 by Hibernate Tools 4.3.1.Final
 
 
 import java.util.HashSet;
@@ -23,10 +23,6 @@ import javax.persistence.Table;
 public class Article implements java.io.Serializable {
 
 
-  /**
-   * 
-   */
-  private static final long serialVersionUID = 1L;
   private Integer idArticle;
   private Product product;
   private String nameSupport;
