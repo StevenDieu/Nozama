@@ -1,5 +1,5 @@
 package nozama.model;
-// Generated 20 mars 2016 15:42:18 by Hibernate Tools 4.3.1.Final
+// Generated 21 mars 2016 08:24:02 by Hibernate Tools 4.3.1.Final
 
 
 import javax.persistence.Column;
@@ -20,19 +20,17 @@ import javax.persistence.Table;
 public class ProductOrder implements java.io.Serializable {
 
 
-  /**
-   * 
-   */
-  private static final long serialVersionUID = 1L;
   private Integer idProductOrder;
   private Article article;
   private Order order;
+  private int quantity;
 
   public ProductOrder() {}
 
-  public ProductOrder(Article article, Order order) {
+  public ProductOrder(Article article, Order order, int quantity) {
     this.article = article;
     this.order = order;
+    this.quantity = quantity;
   }
 
   @Id
@@ -66,6 +64,16 @@ public class ProductOrder implements java.io.Serializable {
 
   public void setOrder(Order order) {
     this.order = order;
+  }
+
+
+  @Column(name = "quantity", nullable = false)
+  public int getQuantity() {
+    return this.quantity;
+  }
+
+  public void setQuantity(int quantity) {
+    this.quantity = quantity;
   }
 
 

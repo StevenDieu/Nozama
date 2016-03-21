@@ -1,7 +1,8 @@
 package nozama.model;
-// Generated 20 mars 2016 15:42:18 by Hibernate Tools 4.3.1.Final
+// Generated 21 mars 2016 08:24:02 by Hibernate Tools 4.3.1.Final
 
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
@@ -12,6 +13,8 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
 /**
@@ -23,10 +26,6 @@ import javax.persistence.UniqueConstraint;
 public class User implements java.io.Serializable {
 
 
-  /**
-   * 
-   */
-  private static final long serialVersionUID = 1L;
   private Integer idUsers;
   private String name;
   private String lastname;
@@ -34,7 +33,8 @@ public class User implements java.io.Serializable {
   private String password;
   private String ipAddress;
   private String genre;
-  private int comptePrepaye;
+  private float comptePrepaye;
+  private Date createTime;
   private Set<Adress> adresses = new HashSet<Adress>(0);
   private Set<Order> orders = new HashSet<Order>(0);
 
@@ -42,7 +42,7 @@ public class User implements java.io.Serializable {
 
 
   public User(String name, String lastname, String emailAdress, String password, String ipAddress,
-      String genre, int comptePrepaye) {
+      String genre, float comptePrepaye, Date createTime) {
     this.name = name;
     this.lastname = lastname;
     this.emailAdress = emailAdress;
@@ -50,10 +50,11 @@ public class User implements java.io.Serializable {
     this.ipAddress = ipAddress;
     this.genre = genre;
     this.comptePrepaye = comptePrepaye;
+    this.createTime = createTime;
   }
 
   public User(String name, String lastname, String emailAdress, String password, String ipAddress,
-      String genre, int comptePrepaye, Set<Adress> adresses, Set<Order> orders) {
+      String genre, float comptePrepaye, Date createTime, Set<Adress> adresses, Set<Order> orders) {
     this.name = name;
     this.lastname = lastname;
     this.emailAdress = emailAdress;
@@ -61,6 +62,7 @@ public class User implements java.io.Serializable {
     this.ipAddress = ipAddress;
     this.genre = genre;
     this.comptePrepaye = comptePrepaye;
+    this.createTime = createTime;
     this.adresses = adresses;
     this.orders = orders;
   }
@@ -139,13 +141,23 @@ public class User implements java.io.Serializable {
   }
 
 
-  @Column(name = "compte_prepaye", nullable = false)
-  public int getComptePrepaye() {
+  @Column(name = "compte_prepaye", nullable = false, precision = 12, scale = 0)
+  public float getComptePrepaye() {
     return this.comptePrepaye;
   }
 
-  public void setComptePrepaye(int comptePrepaye) {
+  public void setComptePrepaye(float comptePrepaye) {
     this.comptePrepaye = comptePrepaye;
+  }
+
+  @Temporal(TemporalType.TIMESTAMP)
+  @Column(name = "create_time", nullable = false, length = 19)
+  public Date getCreateTime() {
+    return this.createTime;
+  }
+
+  public void setCreateTime(Date createTime) {
+    this.createTime = createTime;
   }
 
   @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")

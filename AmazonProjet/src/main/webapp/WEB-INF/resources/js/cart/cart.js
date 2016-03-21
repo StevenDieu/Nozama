@@ -95,12 +95,36 @@ function deleteCart() {
   }
 }
 
-function validCart(){
-  if($('input[name=choosePayment]:checked').val() != undefined){
-    
-  }else{
-    self.showMessage("error", "Veuillez choisir un moyen de paiement.")
+function validCart() {
+  var chosePayment = $('input[name=choosePayment]:checked').val()
+  if(boolProgress){
+    if (chosePayment != undefined) {
+      boolProgress = false;
+      var seld= this;
+      $.ajax({
+        type: "post",
+        url: "ajaxValidatePayment",
+        data: "choosePayment=" + chosePayment,
+        success: function(t) {
+          t = JSON.parse(t);
+
+          if (t.statut == "ok") {
+            document.location.href = t.redirect;
+          } else {
+            self.showMessage(t.statut, t.message)
+          }
+
+          self.boolProgress = true;
+        },
+        error: function() {
+          self.boolProgress = true;
+        }
+      });
+    } else {
+      self.showMessage("error", "Veuillez choisir un moyen de paiement.")
+    }
   }
+
 }
 
 $(document).ready(
@@ -166,9 +190,9 @@ $(document).ready(
           $(".suppressionPanier").on("click", function() {
             deleteCart();
           });
-          
-          $(".validCart").on("click",function(){
+
+          $(".validCart").on("click", function() {
             validCart();
-          })
+          });
 
         });

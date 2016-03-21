@@ -84,15 +84,24 @@
 				<div class="form-group">
 					<c:if test="${sessionScope.transport != null}">
 					<c:if test="${sessionScope.transport.commentaire != null}">
-						<textarea class="form-control" rows="3" name="commentaire" placeholder="Ajouter un commentaire pour le transporteur">${sessionScope.transport.commentaire}</textarea>
+						<div class="form-label">
+							<textarea class="form-control checkLength" data-length="255" rows="3" name="commentaire" placeholder="Ajouter un commentaire pour le transporteur (max : 255 charatères)">${sessionScope.transport.commentaire}</textarea>
+						</div>
+						<p class="help-block"></p>
 					</c:if>
 					<c:if test="${sessionScope.transport.commentaire == null}">
-						<textarea class="form-control" rows="3" name="commentaire" placeholder="Ajouter un commentaire pour le transporteur"></textarea>
+						<div class="form-label">
+							<textarea class="form-control checkLength" data-length="255" rows="3" name="commentaire" placeholder="Ajouter un commentaire pour le transporteur (max : 255 charatères)"></textarea>
+						</div>
+						<p class="help-block"></p>
 					</c:if>
 						
 					</c:if>
 					<c:if test="${sessionScope.transport == null}">
-						<textarea class="form-control" rows="3" name="commentaire" placeholder="Ajouter un commentaire pour le transporteur checkLength" data-length="255"></textarea>
+						<div class="form-label">
+							<textarea class="form-control checkLength" data-length="255" rows="3" name="commentaire" placeholder="Ajouter un commentaire pour le transporteur (max : 255 charatères)"></textarea>
+						</div>
+						<p class="help-block"></p>
 					</c:if>
 
 				</div>

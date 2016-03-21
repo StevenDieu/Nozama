@@ -125,18 +125,21 @@ function checkForm(className) {
   $('.help-block').html("");
   $('.has-warning').removeClass("has-warning");
 
-  submit = checkIfAllRequiredIsNotEmpty($("." + className + ' .required'));
+  if(className !== ""){
+    className = "." + className;
+  }
+  submit = checkIfAllRequiredIsNotEmpty($(className+ ' .required'));
 
   if (submit) {
-    submit = checkLength($("." + className + ' .checkLength'));
+    submit = checkLength($(className+ ' .checkLength'));
   }
 
   if (submit) {
-    submit = checkLengthMandatory($("." + className + ' .checkLengthMandatory'));
+    submit = checkLengthMandatory($(className+ ' .checkLengthMandatory'));
   }
 
   if (submit) {
-    submit = checkInt($("." + className + ' .checkInt'));
+    submit = checkInt($(className + ' .checkInt'));
   }
 
   return submit;

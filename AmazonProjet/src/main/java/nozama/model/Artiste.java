@@ -1,5 +1,5 @@
 package nozama.model;
-// Generated 20 mars 2016 15:42:18 by Hibernate Tools 4.3.1.Final
+// Generated 21 mars 2016 08:24:02 by Hibernate Tools 4.3.1.Final
 
 
 import javax.persistence.Column;
@@ -20,10 +20,6 @@ import javax.persistence.Table;
 public class Artiste implements java.io.Serializable {
 
 
-  /**
-   * 
-   */
-  private static final long serialVersionUID = 1L;
   private Integer idArtiste;
   private Product product;
   private String name;
