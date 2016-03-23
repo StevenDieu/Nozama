@@ -689,7 +689,7 @@ ul.step a:hover {
 .btn-compte-prepaye {
 	display: inline-block;
 	margin-left: 10px;
-    margin-top: -3px;
+	margin-top: -3px;
 }
 
 ul.step a:hover:after {
@@ -856,5 +856,10 @@ ul.step a:hover:after {
 @media ( max-width : 767px) {
 	.input-100 {
 		width: 100%
+	}
+	.btn-compte-prepaye {
+		display: block;
+		margin-left: 0;
+		margin-top: 12px;
 	}
 }

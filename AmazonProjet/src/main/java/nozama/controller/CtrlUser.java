@@ -87,12 +87,12 @@ public class CtrlUser {
     } else if (!US.isEmailAdress(email)) {
       return "{\"statut\": \"error\",\"message\":  \"L'adresse email n'est pas valide.\"}";
     } else if (US.checkEmail(email)) {
-      return "{\"statut\": \"nok\",\"message\":  \"Cette adresse email est déja utilisé.\"}";
+      return "{\"statut\": \"error\",\"message\":  \"Cette adresse email est déja utilisé.\"}";
     } else if (name.length() > 255 || lastName.length() > 255 || email.length() > 255
         || password.length() > 255) {
-      return "{\"statut\": \"nok\",\"message\":  \"Attention à la longueur des champs.\"}";
-    } else if (gender != "H" && gender != "F"){
-      return "{\"statut\": \"nok\",\"message\":  \"Une erreur est survenue.\"}";
+      return "{\"statut\": \"error\",\"message\":  \"Attention à la longueur des champs.\"}";
+    } else if (gender.equals("H") && gender.equals("F")){
+      return "{\"statut\": \"error\",\"message\":  \"Une erreur est survenue.\"}";
     }
 
     User user = US.register(gender, name, lastName, email, password, US.getIpAdresse(request));
