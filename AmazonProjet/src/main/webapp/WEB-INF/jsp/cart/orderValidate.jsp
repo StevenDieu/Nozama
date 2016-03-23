@@ -4,7 +4,7 @@
 
 <jsp:include page="../templates/header.jsp" />
 
-<div class="panel panel-default">
+<div class="panel panel-primary">
 	<div class="panel-heading">
 		<h3 class="panel-title">Confirmation de votre commande</h3>
 	</div>

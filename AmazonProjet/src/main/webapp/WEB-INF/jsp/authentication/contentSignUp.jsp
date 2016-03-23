@@ -1,7 +1,7 @@
 
 <form class="signUp " method="post">
 
-	<div class="panel panel-default">
+	<div class="panel panel-primary">
 
 		<input type="hidden" class="redirectSignUp" value="${redirect}" />
 

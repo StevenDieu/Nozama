@@ -8,7 +8,7 @@
 
 
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-	<div class="panel panel-default">
+	<div class="panel panel-primary">
 		<div class="panel-heading" role="tab" id="headingOne">
 			<h4 class="panel-title">
 				<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
@@ -29,7 +29,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="panel panel-default">
+	<div class="panel panel-primary">
 		<div class="panel-heading" role="tab" id="headingTwo">
 			<h4 class="panel-title">
 				<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
@@ -40,7 +40,7 @@
 			<div class="panel-body">Toutes mes commandes</div>
 		</div>
 	</div>
-	<div class="panel panel-default">
+	<div class="panel panel-primary">
 		<div class="panel-heading" role="tab" id="headingThree">
 			<h4 class="panel-title">
 				<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
@@ -62,7 +62,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="panel panel-default">
+	<div class="panel panel-primary">
 		<div class="panel-heading" role="tab">
 			<h4 class="panel-title">
 				<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"

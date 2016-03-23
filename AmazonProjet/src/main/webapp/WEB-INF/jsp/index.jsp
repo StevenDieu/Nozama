@@ -41,6 +41,10 @@
 		<span class="sr-only">Next</span>
 	</a>
 </div>
-<h1>Nozama</h1>
+<h1>Films du moment</h1>
+
+<h1>Singles du moment</h1>
+
+<h1>Albums du moment</h1>
 
 <jsp:include page="templates/footer.jsp" />

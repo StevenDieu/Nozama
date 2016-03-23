@@ -33,7 +33,7 @@
 	</li>
 </ul>
 
-<div class="panel panel-default">
+<div class="panel panel-primary">
 	<div class="panel-heading">Mon Panier</div>
 	<div class="panel-body">
 		<div class="table-responsive">

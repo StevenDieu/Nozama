@@ -1,7 +1,7 @@
 
 <form class="singnIn" name="singnIn" method="post">
 
-	<div class="panel panel-default">
+	<div class="panel panel-primary">
 		<div class="panel-heading">
 			<h3 class="panel-title">Connexion</h3>
 		</div>
