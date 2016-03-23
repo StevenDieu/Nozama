@@ -4,8 +4,9 @@
 <html>
 <head lang="fr">
 <meta charset="UTF-8" />
+<link rel="icon" type="image/png" href="/resources/img/logo.png" />
 <title>Nozama</title>
-<meta name="description" content="Site d'association" />
+<meta name="description" content="Site de vente de musique et de film pour tout les passionnées" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="robots" content="index, follow" />
 <meta name="googlebot" content="index, follow" />

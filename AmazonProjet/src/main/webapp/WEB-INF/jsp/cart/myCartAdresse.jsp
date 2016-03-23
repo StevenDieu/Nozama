@@ -53,19 +53,17 @@
 				<br />
 			</c:forEach>
 
-			<form class="formAdresse" action="mon-panier-etape-validation-adress" name="singnIn"
-				method="post">
+
 
 				<jsp:include page="../authentication/contentAdress.jsp" />
 
-				<div class="form-group">
-					<input type="submit" class="btn btn-primary input-cart input-100" value="Continuer">
-				</div>
-			</form>
+				
 		</div>
 
 	</div>
 </div>
+<script src="/resources/js/cart/cartAdress.js"></script>
+
 <script src="/resources/js/cart/cart.js"></script>
 
 <jsp:include page="../templates/footer.jsp" />
