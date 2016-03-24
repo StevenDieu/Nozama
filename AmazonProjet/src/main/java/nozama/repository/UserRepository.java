@@ -11,6 +11,8 @@ import org.springframework.stereotype.Repository;
 
 import nozama.model.Adress;
 import nozama.model.Order;
+import nozama.model.Product;
+import nozama.model.ProductOrder;
 import nozama.model.User;
 import nozama.util.HibernateUtil;
 
@@ -95,10 +97,8 @@ public class UserRepository {
 
     Criteria cr = openSession.createCriteria(Order.class);
     cr.createAlias("user", "u", JoinType.LEFT_OUTER_JOIN);
-    //cr.createAlias("product_order", "po", JoinType.LEFT_OUTER_JOIN);
     cr.createAlias("adress", "ad", JoinType.LEFT_OUTER_JOIN);
 
-    
     cr.add(Restrictions.eq("u.idUsers", user.getIdUsers()));
 
     List<Order> listOrders = cr.list();
@@ -107,6 +107,21 @@ public class UserRepository {
     return listOrders;
   }
 
+  public List<Product> getProductCmd(Order order){
+	  Session openSession = HibernateUtil.getSessionFactory().openSession();
+
+    Criteria cr = openSession.createCriteria(ProductOrder.class);
+    cr.createAlias("order", "o", JoinType.LEFT_OUTER_JOIN);
+    cr.createAlias("article", "ar", JoinType.LEFT_OUTER_JOIN);
+    cr.createAlias("ar.product", "pr", JoinType.LEFT_OUTER_JOIN);
+
+    cr.add(Restrictions.eq("o.idOrder", order.getIdOrder()));
+
+    List<Product> listProduct = cr.list();
+    openSession.close();
+    HibernateUtil.shutdown();
+    return listProduct;
+  }
 
   public void insertAdress(Adress adress) {
     Session openSession = HibernateUtil.getSessionFactory().openSession();

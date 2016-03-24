@@ -41,29 +41,32 @@
 				<c:set var="listeCommandes" value="${commandes}" />
 				<div class="form-group">
 					<c:if test="${commandes != null}">
-						<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+						<div class="panel-group" id="accordionCommande" role="tablist" aria-multiselectable="true">
 	  						<div class="panel panel-default">
 								<c:forEach var="commande" items="${listeCommandes}" varStatus="counter">
-									<div class="panel-heading" role="tab" id="headingOne">
+									<div class="panel-heading" role="tab">
 								      <h4 class="panel-title">
-								        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+								        <a role="button" data-toggle="collapse" data-parent="#accordionCommande" href="#${commande.idOrder}" aria-expanded="true" aria-controls="collapseOne">
 								          Commande n°<c:out value="${commande.idOrder}"/>
 								        </a>
 								      </h4>
 								    </div>
-								    <div class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-								      <div class="panel-body">
-								        <p>Total produit : <c:out value="${commande.totalProduct}"/></p>
-										<p>Frais de livraison : <c:out value="${commande.totalDelivery}"/></p>
-										<p>Coût total : <c:out value="${commande.totalOrder}"/></p>
-										<p>Mode de payement : <c:out value="${commande.modePayment}"/></p>
-									</div>
-									<div class="panel-body">
-								        <p>Adresse : <c:out value="${commande.adress.adressPrincipal}"/></p>
-										<p><c:out value="${commande.adress.adressSecondaire}"/></p>
-										<p>Code postal : <c:out value="${commande.adress.codePostal}"/></p>
-<%-- 										<p>Ville : <c:out value="${commande.adress.city}"/></p> --%>
-								      </div>
+								    <div id="${commande.idOrder}"  class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+								      	<div class="panel-body">
+									        <p>Total produit : <c:out value="${commande.totalProduct}"/></p>
+											<p>Frais de livraison : <c:out value="${commande.totalDelivery}"/></p>
+											<p>Coût total : <c:out value="${commande.totalOrder}"/></p>
+											<p>Mode de payement : <c:out value="${commande.modePayment}"/></p>
+										</div>
+										<div class="panel-body">
+									        <p>Adresse : <c:out value="${commande.adress.adressPrincipal}"/></p>
+											<p><c:out value="${commande.adress.adressSecondaire}"/></p>
+											<p>Code postal : <c:out value="${commande.adress.codePostal}"/></p>
+											<%--<p>Ville : <c:out value="${commande.adress.city}"/></p> --%>
+									    </div>
+									    <button type="button" class="btn btn-primary btn-lg btn-voitPrd" data-id="${commande.idOrder}" data-toggle="modal" data-target="#myModal">
+										  Voir mes produits
+										</button>
 								    </div>
 								</c:forEach>
 							</div>
@@ -135,6 +138,19 @@
 			</div>
 		</div>
 	</div>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Mes produits</h4>
+      </div>
+      <div class="modal-body body-article">
+        
+      </div>
+    </div>
+  </div>
 </div>
 
 <jsp:include page="templates/footer.jsp" />

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import nozama.model.Adress;
 import nozama.model.Order;
+import nozama.model.Product;
 import nozama.model.User;
 import nozama.repository.UserRepository;
 import nozama.util.Util;
@@ -34,6 +35,11 @@ public class UserServiceImpl implements UserService {
   
   public List<Order> getOrder(User user){
 	  return UR.getOrdersUser(user);
+  }
+  
+  public List<Product> getProductCmd(Order order){
+	  List<Product> productCmd = UR.getProductCmd(order);
+	return productCmd;
   }
 
   public User register(String gender, String name, String lastName, String emailAdress,

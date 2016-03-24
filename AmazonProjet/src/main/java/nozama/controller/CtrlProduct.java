@@ -14,13 +14,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import nozama.model.Order;
+import nozama.model.Product;
+import nozama.model.User;
 import nozama.service.ProductListServiceImpl;
 import nozama.service.ProductPageServiceImpl;
+import nozama.service.UserServiceImpl;
 import nozama.util.Util;
 
 @Controller
 public class CtrlProduct {
 
+	@Autowired
+	private UserServiceImpl US;
+	
   @Autowired
   private ProductListServiceImpl PLS;
 
@@ -189,5 +196,23 @@ public class CtrlProduct {
     } else {
       return new ModelAndView("pageProduct/music", product);
     }
+  }
+  
+  @RequestMapping(value = "/seeProduct", method = RequestMethod.POST)
+  public ModelAndView seeProduct(HttpServletRequest request) {
+	  
+	String id = request.getParameter("id");
+	
+	Map<String, Object> variableParam = new HashMap<String, Object>();
+	if (request.getSession().getAttribute("User") != null) {
+		Order order = new Order();
+		order.setIdOrder(Integer.parseInt(id));
+	  List<Product> products = US.getProductCmd(order);
+	  if(products.size() > 0){
+	      variableParam.put("products", products);
+	  }
+	  return new ModelAndView("modaleProduct", variableParam);
+	}
+	return new ModelAndView("redirect:/", variableParam);
   }
 }

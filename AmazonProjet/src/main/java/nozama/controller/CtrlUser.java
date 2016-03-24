@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import nozama.model.Adress;
 import nozama.model.Order;
+import nozama.model.Product;
 import nozama.model.User;
 import nozama.service.UserServiceImpl;
 import nozama.util.Util;

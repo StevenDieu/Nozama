@@ -15,6 +15,11 @@ a:hover {
 	text-decoration: none;
 }
 
+.btn-voitPrd{
+    float: right;
+    margin: -13% 1% 0 0;
+}
+
 a:focus {
 	color: black;
 	text-decoration: none;
@@ -279,8 +284,12 @@ ol.ssMenu {
 }
 
 .imageCart {
-	width: 100px;
+	width: auto;
 	height: 100px;
+}
+
+.modal-content .centerVerticale{
+	text-align: center;
 }
 
 .center {

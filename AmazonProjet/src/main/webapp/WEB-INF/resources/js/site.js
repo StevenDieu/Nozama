@@ -52,6 +52,22 @@ function addInCart(id, typeData) {
   }
 }
 
+
+function seeProduct(id) {
+	$(".body-article").html("<img alt='Spinner' class='center' src='/resources/img/spinner.gif'/>");
+  $.ajax({
+    type: "post",
+    url: "/seeProduct",
+    data: "id=" + id,
+    success: function(t) {
+    	$(".body-article").html(t);
+    },
+    error: function() {
+      self.boolProgress = true;
+    }
+  });
+}
+
 function changeBlockFormAndAddMessage(blockForm, mess) {
   form = blockForm.parent().parent();
   form.addClass("has-warning");
@@ -220,5 +236,8 @@ $(document).ready(function() {
   });
   $(".btn-compte-prepaye").on("click", function() {
     addMoneyAccount($(".input-compte-prepaye"));
+  })
+  $(".btn-voitPrd").on("click", function(){
+	  seeProduct($(this).data("id"));
   })
 });
