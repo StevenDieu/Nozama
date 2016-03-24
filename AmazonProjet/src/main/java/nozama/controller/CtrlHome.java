@@ -1,5 +1,6 @@
 package nozama.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,12 +21,35 @@ public class CtrlHome {
 
   @RequestMapping(value = "/")
   public ModelAndView index(HttpServletRequest request) {
-//    List<Map<String, Object>> allProduct =
-//        PLS.getAllProductByCondition(support, recordType, years, genre);
-//
-//    product.put("products", allProduct.subList(((startResult - 1) * 12), toIndexEndPagination));
+    List<Map<String, Object>> singles = PLS.getProductHomeByCondition("single");
+    List<Map<String, Object>> albums = PLS.getProductHomeByCondition("album");
+    List<Map<String, Object>> movies = PLS.getProductHomeByCondition("film");
 
-    return new ModelAndView("index");
+    Map<String, Object> product = new HashMap<String, Object>();
+
+    int sizeSingles = 3;
+    if (singles.size() < 3) {
+      sizeSingles = singles.size();
+    }
+    int sizeAlbums = 3;
+    if (albums.size() < 3) {
+      sizeAlbums = albums.size();
+    }
+    int sizeMovies = 3;
+    if (movies.size() < 3) {
+      sizeMovies = movies.size();
+    }
+    
+    if (sizeSingles != 0) {
+      product.put("singles", singles.subList(0, sizeSingles));
+    }
+    if (sizeAlbums != 0) {
+      product.put("albums", albums.subList(0, sizeAlbums));
+    }
+    if (sizeMovies != 0) {
+      product.put("movies", movies.subList(0, sizeMovies));
+    }
+    return new ModelAndView("index", product);
   }
 
 

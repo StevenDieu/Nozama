@@ -191,6 +191,16 @@ INSERT INTO `nozama`.`attr_product` (`attribut`,`id_product`,`value`) VALUES ('g
 INSERT INTO `nozama`.`attr_product` (`attribut`,`id_product`,`value`) VALUES ('genre',27,'ComedieDramatique');
 INSERT INTO `nozama`.`attr_product` (`attribut`,`id_product`,`value`) VALUES ('genre',29,'Drame');
 
+INSERT INTO `nozama`.`attr_product` (`attribut`,`value`,`id_product`) VALUES ('home','home',1);
+INSERT INTO `nozama`.`attr_product` (`attribut`,`value`,`id_product`) VALUES ('home','home',2);
+INSERT INTO `nozama`.`attr_product` (`attribut`,`value`,`id_product`) VALUES ('home','home',6);
+INSERT INTO `nozama`.`attr_product` (`attribut`,`value`,`id_product`) VALUES ('home','home',3);
+INSERT INTO `nozama`.`attr_product` (`attribut`,`value`,`id_product`) VALUES ('home','home',4);
+INSERT INTO `nozama`.`attr_product` (`attribut`,`value`,`id_product`) VALUES ('home','home',17);
+INSERT INTO `nozama`.`attr_product` (`attribut`,`value`,`id_product`) VALUES ('home','home',5);
+INSERT INTO `nozama`.`attr_product` (`attribut`,`value`,`id_product`) VALUES ('home','home',32);
+INSERT INTO `nozama`.`attr_product` (`attribut`,`value`,`id_product`) VALUES ('home','home',33);
+
 INSERT INTO `nozama`.`article` (`name_support`,`price`,`id_product`) VALUES ('DVD',15,3);
 INSERT INTO `nozama`.`article` (`name_support`,`price`,`id_product`) VALUES ('DVD',5,4);
 INSERT INTO `nozama`.`article` (`name_support`,`price`,`id_product`) VALUES ('DVD',5,18);

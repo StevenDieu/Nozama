@@ -178,6 +178,21 @@ public class ProductListServiceImpl implements ProductListService {
     return true;
   }
 
+  public List<Map<String, Object>> getProductHomeByCondition(String type) {
+    List<String> listType = new ArrayList<String>();
+    listType.add(type);
+
+    List<Map<String, Object>> allProduct = new ArrayList<Map<String, Object>>();
+
+    List<Product> products = PR.getAllProductByTypeAndAttribut(listType,"home");
+
+    margeAllResultProduct(allProduct, products);
+
+    Collections.sort(allProduct, mapComparator);
+
+    return allProduct;
+  }
+
 
 
 }

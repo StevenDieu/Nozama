@@ -24,19 +24,19 @@ public class ProductRepository {
 
 
   public List<Product> getAllProductByTypeAndSupportAndAttribut(boolean useSupport, String support,
-      boolean useDate, Date dateYears, Date dateYearsAfter, boolean useType,
-      List<String> type, boolean useGenre, String genre) {
+      boolean useDate, Date dateYears, Date dateYearsAfter, boolean useType, List<String> type,
+      boolean useGenre, String genre) {
     Session openSession = HibernateUtil.getSessionFactory().openSession();
 
-    
+
     Criteria cr = openSession.createCriteria(Product.class);
 
 
     cr.createAlias("articles", "a", JoinType.LEFT_OUTER_JOIN);
     cr.createAlias("attrProducts", "ap", JoinType.LEFT_OUTER_JOIN);
-    
+
     cr.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-    
+
     if (useType) {
       cr.add(Restrictions.in("type", type));
     }
@@ -57,9 +57,9 @@ public class ProductRepository {
     return listProduct;
   }
 
-  public int getCountAllProductBySupport(boolean useSupport, String support,
-      boolean useDate, Date dateYears, Date dateYearsAfter, boolean useType,
-      List<String> type, boolean useGenre, String genre) {
+  public int getCountAllProductBySupport(boolean useSupport, String support, boolean useDate,
+      Date dateYears, Date dateYearsAfter, boolean useType, List<String> type, boolean useGenre,
+      String genre) {
     Session openSession = HibernateUtil.getSessionFactory().openSession();
 
     Criteria cr = openSession.createCriteria(Product.class);
@@ -82,7 +82,7 @@ public class ProductRepository {
 
     openSession.close();
     HibernateUtil.shutdown();
-    
+
     return countProducts;
   }
 
@@ -170,12 +170,12 @@ public class ProductRepository {
     cr.createAlias("products", "prod", JoinType.LEFT_OUTER_JOIN);
     cr.add(Restrictions.eq("prod.idProduct", idProduct));
 
-    
+
 
     List<Product> listProduct = cr.list();
     openSession.close();
     HibernateUtil.shutdown();
-    if(listProduct.size() == 0){
+    if (listProduct.size() == 0) {
       return null;
     }
     return listProduct.get(0);
@@ -205,7 +205,7 @@ public class ProductRepository {
     cr.add(Restrictions.in("idArticle", allId));
 
     List<Article> listProduct = cr.list();
-    
+
     openSession.close();
     HibernateUtil.shutdown();
     return listProduct;
@@ -220,7 +220,7 @@ public class ProductRepository {
     cr.add(Restrictions.eq("idArticle", id));
 
     List<Article> listProduct = cr.list();
-    
+
     openSession.close();
     HibernateUtil.shutdown();
     return listProduct.get(0);
@@ -229,7 +229,7 @@ public class ProductRepository {
   public void inserOrder(Order order) {
     Session openSession = HibernateUtil.getSessionFactory().openSession();
     Transaction tx = openSession.beginTransaction();
-    
+
     try {
       openSession.save(order);
 
@@ -245,7 +245,7 @@ public class ProductRepository {
   public void inserOrderProduct(ProductOrder productOrder) {
     Session openSession = HibernateUtil.getSessionFactory().openSession();
     Transaction tx = openSession.beginTransaction();
-    
+
     try {
       openSession.save(productOrder);
 
@@ -255,8 +255,30 @@ public class ProductRepository {
       throw e;
     }
     openSession.close();
-    HibernateUtil.shutdown();    
+    HibernateUtil.shutdown();
   }
-  
-  
+
+  public List<Product> getAllProductByTypeAndAttribut(List<String> type, String attrProduct) {
+    Session openSession = HibernateUtil.getSessionFactory().openSession();
+
+
+    Criteria cr = openSession.createCriteria(Product.class);
+
+
+    cr.createAlias("articles", "a", JoinType.LEFT_OUTER_JOIN);
+    cr.createAlias("attrProducts", "ap", JoinType.LEFT_OUTER_JOIN);
+
+    cr.add(Restrictions.in("type", type));
+
+    cr.add(Restrictions.eq("ap.attribut", attrProduct));
+    cr.add(Restrictions.eq("ap.value", attrProduct));
+
+    List<Product> listProduct = cr.list();
+
+    openSession.close();
+    HibernateUtil.shutdown();
+    return listProduct;
+  }
+
+
 }
