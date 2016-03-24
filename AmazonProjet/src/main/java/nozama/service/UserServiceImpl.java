@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import nozama.model.Adress;
+import nozama.model.Order;
 import nozama.model.User;
 import nozama.repository.UserRepository;
 import nozama.util.Util;
@@ -29,6 +30,10 @@ public class UserServiceImpl implements UserService {
     } else {
       return null;
     }
+  }
+  
+  public List<Order> getOrder(User user){
+	  return UR.getOrdersUser(user);
   }
 
   public User register(String gender, String name, String lastName, String emailAdress,

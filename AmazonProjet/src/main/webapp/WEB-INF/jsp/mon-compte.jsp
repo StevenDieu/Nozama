@@ -37,7 +37,40 @@
 			</h4>
 		</div>
 		<div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-			<div class="panel-body">Toutes mes commandes</div>
+			<div class="panel-body">
+				<c:set var="listeCommandes" value="${commandes}" />
+				<div class="form-group">
+					<c:if test="${commandes != null}">
+						<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+	  						<div class="panel panel-default">
+								<c:forEach var="commande" items="${listeCommandes}" varStatus="counter">
+									<div class="panel-heading" role="tab" id="headingOne">
+								      <h4 class="panel-title">
+								        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+								          Commande n°<c:out value="${commande.idOrder}"/>
+								        </a>
+								      </h4>
+								    </div>
+								    <div class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+								      <div class="panel-body">
+								        <p>Total produit : <c:out value="${commande.totalProduct}"/></p>
+										<p>Frais de livraison : <c:out value="${commande.totalDelivery}"/></p>
+										<p>Coût total : <c:out value="${commande.totalOrder}"/></p>
+										<p>Mode de payement : <c:out value="${commande.modePayment}"/></p>
+									</div>
+									<div class="panel-body">
+								        <p>Adresse : <c:out value="${commande.adress.adressPrincipal}"/></p>
+										<p><c:out value="${commande.adress.adressSecondaire}"/></p>
+										<p>Code postal : <c:out value="${commande.adress.codePostal}"/></p>
+<%-- 										<p>Ville : <c:out value="${commande.adress.city}"/></p> --%>
+								      </div>
+								    </div>
+								</c:forEach>
+							</div>
+						</div>
+					</c:if>
+				</div>
+			</div>
 		</div>
 	</div>
 	<div class="panel panel-primary">

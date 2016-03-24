@@ -2,6 +2,7 @@ package nozama.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import nozama.model.Adress;
+import nozama.model.Order;
 import nozama.model.User;
 import nozama.service.UserServiceImpl;
 import nozama.util.Util;
@@ -196,8 +198,6 @@ public class CtrlUser {
     return "{\"statut\": \"nok\"}";
   }
   
-  
-  
 
   @RequestMapping(value = "/mon-compte")
   public ModelAndView monCompte(HttpServletRequest request) {
@@ -206,6 +206,10 @@ public class CtrlUser {
       User user = (User) request.getSession().getAttribute("User");
       variableParam.put("user", user);
       variableParam.put("adresss", US.getAllAdressByUser(user));
+      List<Order> orders = US.getOrder(user);
+      if(orders.size() > 0){
+          variableParam.put("commandes", orders);
+      }
       return new ModelAndView("mon-compte", variableParam);
     }
     return new ModelAndView("redirect:/", variableParam);

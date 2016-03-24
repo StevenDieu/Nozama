@@ -293,10 +293,6 @@ ol.ssMenu {
 }
 
 .centerVerticale a {
-	
-}
-
-.centerVerticale a {
 	font-weight: 600;
 }
 
@@ -312,6 +308,10 @@ ol.ssMenu {
 
 .alert-fixed {
 	display: inline-block;
+}
+
+#hover-blue:hover{
+	color: 337ab7;
 }
 
 .block-alert-fixe {

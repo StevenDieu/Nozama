@@ -190,24 +190,24 @@
 					<c:choose>
 						<c:when test="${sessionScope.User != null}">
 							<li>
-								<a href="/mon-compte">Mon compte</a>
+								<a id="hover-blue" href="/mon-compte">Mon compte</a>
 							</li>
 							<li>
-								<a href="/se-deconnecter">Se deconnecter</a>
+								<a id="hover-blue" href="/se-deconnecter">Se deconnecter</a>
 							</li>
 						</c:when>
 						<c:when test="${sessionScope.User == null}">
 							<li>
-								<a href="/connexion">Connexion</a>
+								<a id="hover-blue" href="/connexion">Connexion</a>
 							</li>
 							<li>
-								<a href="/inscription">Inscription</a>
+								<a id="hover-blue" href="/inscription">Inscription</a>
 							</li>
 						</c:when>
 					</c:choose>
 					<li>
 
-						<a href="/mon-panier">
+						<a id="hover-blue" href="/mon-panier">
 							<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
 							<span class="badge nbCart">
 								<c:choose>

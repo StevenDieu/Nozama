@@ -6,9 +6,11 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.sql.JoinType;
 import org.springframework.stereotype.Repository;
 
 import nozama.model.Adress;
+import nozama.model.Order;
 import nozama.model.User;
 import nozama.util.HibernateUtil;
 
@@ -23,6 +25,7 @@ public class UserRepository {
     Criteria cr = openSession.createCriteria(User.class);
     cr.add(Restrictions.eq("emailAdress", email));
     cr.add(Restrictions.eq("password", password));
+
     List<User> listUser = cr.list();
     openSession.close();
     HibernateUtil.shutdown();
@@ -84,6 +87,24 @@ public class UserRepository {
     openSession.close();
     HibernateUtil.shutdown();
     return listAdress;
+  }
+  
+  
+  public List<Order> getOrdersUser(User user) {
+    Session openSession = HibernateUtil.getSessionFactory().openSession();
+
+    Criteria cr = openSession.createCriteria(Order.class);
+    cr.createAlias("user", "u", JoinType.LEFT_OUTER_JOIN);
+    //cr.createAlias("product_order", "po", JoinType.LEFT_OUTER_JOIN);
+    cr.createAlias("adress", "ad", JoinType.LEFT_OUTER_JOIN);
+
+    
+    cr.add(Restrictions.eq("u.idUsers", user.getIdUsers()));
+
+    List<Order> listOrders = cr.list();
+    openSession.close();
+    HibernateUtil.shutdown();
+    return listOrders;
   }
 
 
