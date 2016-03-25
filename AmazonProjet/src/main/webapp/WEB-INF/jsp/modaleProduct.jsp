@@ -45,7 +45,7 @@
 						<span class="blockTdBeforeCart">Prix unitaire : </span>
 						${product.article.price}
 					</td>
-					<td class="centerVerticale tdRight tdTypeQuantite">
+					<td class="centerVerticale tdPrixTotalProduct clearBothTrCart">
 						<span class="blockTdBeforeCart">Quantité : </span>
 						${product.quantity}
 					</td>

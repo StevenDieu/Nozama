@@ -32,14 +32,17 @@ public class ProductCartServiceImpl implements ProductCartService {
     List<Map<String, Object>> allProduct = new ArrayList<Map<String, Object>>();
 
     List<Integer> allId = new ArrayList<Integer>();
-    for (Map<String, Object> productCart : allCart) {
-      allId.add((Integer) productCart.get("id"));
+    if(allCart != null && allCart.size() == 0){
+      for (Map<String, Object> productCart : allCart) {
+        allId.add((Integer) productCart.get("id"));
+      }
+
+      if (allId.size() > 0) {
+        List<Article> articles = PR.getArticleById(allId);
+        margeAllResultTypeSupport(articles, allProduct);
+      }
     }
 
-    if (allId.size() > 0) {
-      List<Article> articles = PR.getArticleById(allId);
-      margeAllResultTypeSupport(articles, allProduct);
-    }
 
     return allProduct;
   }

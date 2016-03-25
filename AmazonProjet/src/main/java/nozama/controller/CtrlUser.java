@@ -93,7 +93,7 @@ public class CtrlUser {
     } else if (name.length() > 255 || lastName.length() > 255 || email.length() > 255
         || password.length() > 255) {
       return "{\"statut\": \"error\",\"message\":  \"Attention à la longueur des champs.\"}";
-    } else if (gender.equals("H") && gender.equals("F")){
+    } else if (gender.equals("H") && gender.equals("F")) {
       return "{\"statut\": \"error\",\"message\":  \"Une erreur est survenue.\"}";
     }
 
@@ -108,26 +108,27 @@ public class CtrlUser {
     request.getSession().setAttribute("User", null);
     return "redirect:/";
   }
-  
-  
+
+
   @RequestMapping(value = "/ajaxAddMoneyAccount")
   @ResponseBody
   public String ajaxAddMoneyAccount(HttpServletRequest request) {
     String numberAddAccountString = request.getParameter("numberAddAccount");
-    if (request.getSession().getAttribute("User") != null) {  
-      if(Util.convertToFloat(numberAddAccountString) && Util.isPrice(numberAddAccountString)){
+    if (request.getSession().getAttribute("User") != null) {
+      if (Util.convertToFloat(numberAddAccountString) && Util.isPrice(numberAddAccountString)) {
         float numberAddAcount = Float.parseFloat(numberAddAccountString);
-         if(numberAddAcount >= 5 && numberAddAcount <= 1000){
-           User user = (User) request.getSession().getAttribute("User");
-           user.setComptePrepaye(user.getComptePrepaye() + numberAddAcount);
-           US.updateUser(user);
-           return "{\"statut\": \"succes\",\"message\":  \"Compte crédité !\",\"argent\":  " + user.getComptePrepaye() + "}";
-         }
+        if (numberAddAcount >= 5 && numberAddAcount <= 1000) {
+          User user = (User) request.getSession().getAttribute("User");
+          user.setComptePrepaye(user.getComptePrepaye() + numberAddAcount);
+          US.updateUser(user);
+          return "{\"statut\": \"succes\",\"message\":  \"Compte crédité !\",\"argent\":  "
+              + user.getComptePrepaye() + "}";
+        }
       }
     }
     return "{\"statut\": \"error\",\"message\":  \"Une erreur est survenue.\"}";
   }
-  
+
   @RequestMapping(value = "/ajaxDeleteDeleteAdress")
   @ResponseBody
   public String ajaxDeleteAdress(HttpServletRequest request) {
@@ -197,9 +198,10 @@ public class CtrlUser {
 
     return "{\"statut\": \"nok\"}";
   }
-  
+
 
   @RequestMapping(value = "/mon-compte")
+  @ResponseBody
   public ModelAndView monCompte(HttpServletRequest request) {
     Map<String, Object> variableParam = new HashMap<String, Object>();
     if (request.getSession().getAttribute("User") != null) {
@@ -207,11 +209,61 @@ public class CtrlUser {
       variableParam.put("user", user);
       variableParam.put("adresss", US.getAllAdressByUser(user));
       List<Order> orders = US.getOrder(user);
-      if(orders.size() > 0){
-          variableParam.put("commandes", orders);
+      if (orders.size() > 0) {
+        variableParam.put("commandes", orders);
       }
       return new ModelAndView("mon-compte", variableParam);
     }
     return new ModelAndView("redirect:/", variableParam);
   }
+
+  @RequestMapping(value = "/ajaxAjoutAdresse", method = RequestMethod.POST)
+  @ResponseBody
+  public String myCartCalidateAdress(HttpServletRequest request)
+      throws UnsupportedEncodingException {
+    request.setCharacterEncoding("UTF-8");
+
+    String name = request.getParameter("name");
+    String nameLastName = request.getParameter("nameLastName");
+    String adressPrincipal = request.getParameter("adressPrincipal");
+    String adressSecondaire = request.getParameter("adressSecondaire");
+    String region = request.getParameter("region");
+    String codePostalString = request.getParameter("codePostal");
+    String pays = request.getParameter("pays");
+    String numberPhone = request.getParameter("numberPhone");
+
+    if (request.getSession().getAttribute("User") == null) {
+      return "{\"statut\": \"error\",\"message\":  \"Vous n'êtes plus connecter.\"}";
+    }
+
+    User user = (User) request.getSession().getAttribute("User");
+
+
+    if (name == "" || nameLastName == "" || adressPrincipal == "" || codePostalString == ""
+        || pays == "" || numberPhone == "") {
+      return "{\"statut\": \"error\",\"message\":  \"Tout les champs sont obligatoires.\"}";
+    } else if (name.length() > 255 || nameLastName.length() > 255 || adressPrincipal.length() > 1024
+        || adressSecondaire.length() > 1024 || region.length() > 255
+        || codePostalString.length() > 5 || numberPhone.length() > 10) {
+      return "{\"statut\": \"error\",\"message\":  \"Attention à la longueur des champs.\"}";
+    }
+
+    int codePostal;
+    if (!Util.convertToInt(codePostalString)) {
+      return "{\"statut\": \"error\",\"message\":  \"Le code postal doit être un chiffre.\"}";
+    }
+    codePostal = Integer.parseInt(codePostalString);
+
+    if (!Util.convertToInt(numberPhone)) {
+      return "{\"statut\": \"error\",\"message\":  \"Le numéro de téléphone doit être un chiffre.\"}";
+    }
+
+    final Adress adress = US.insertAdress(name, nameLastName, adressPrincipal, adressSecondaire,
+        region, pays, user, codePostal, numberPhone);
+
+    request.getSession().setAttribute("address", adress);
+
+    return "{\"statut\": \"success\", \"id\": " + adress.getIdAdress() + " }";
+  }
+
 }

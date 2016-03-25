@@ -352,7 +352,7 @@
 	</div>
 
 	<div class="form-group">
-		<input type="submit" class="btn btn-primary input-cart input-100" value="Continuer">
+		<input type="submit" class="btn btn-primary input-cart input-100 btn-continue" value="Continuer">
 	</div>
 
 	* Champs obligatoire

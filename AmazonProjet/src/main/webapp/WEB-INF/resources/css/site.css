@@ -15,9 +15,9 @@ a:hover {
 	text-decoration: none;
 }
 
-.btn-voitPrd{
-    float: right;
-    margin: -13% 1% 0 0;
+.btn-voitPrd {
+	float: right;
+	margin: -57px 11px 0 0;
 }
 
 a:focus {
@@ -288,7 +288,7 @@ ol.ssMenu {
 	height: 100px;
 }
 
-.modal-content .centerVerticale{
+.modal-content .centerVerticale {
 	text-align: center;
 }
 
@@ -319,7 +319,7 @@ ol.ssMenu {
 	display: inline-block;
 }
 
-#hover-blue:hover{
+#hover-blue:hover {
 	color: 337ab7;
 }
 
@@ -863,6 +863,10 @@ ul.step a:hover:after {
 }
 
 @media ( max-width : 767px) {
+	.btn-voitPrd {
+		float: none;
+		margin: -12px 0 15px 0;
+	}
 	.input-100 {
 		width: 100%
 	}

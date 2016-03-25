@@ -64,7 +64,7 @@
 											<p>Code postal : <c:out value="${commande.adress.codePostal}"/></p>
 											<%--<p>Ville : <c:out value="${commande.adress.city}"/></p> --%>
 									    </div>
-									    <button type="button" class="btn btn-primary btn-lg btn-voitPrd" data-id="${commande.idOrder}" data-toggle="modal" data-target="#myModal">
+									    <button type="button" class="btn btn-primary btn-lg btn-voitPrd input-100" data-id="${commande.idOrder}" data-toggle="modal" data-target="#myModal">
 										  Voir mes produits
 										</button>
 								    </div>
@@ -86,15 +86,9 @@
 		<div id="collapseThree" class="panel-collapse collapse" role="tabpanel"
 			aria-labelledby="headingThree">
 			<div class="panel-body">
-				<form class="formAdresseMyAccount" name="singnIn"
-					method="post">
 
 					<jsp:include page="authentication/contentAdress.jsp" />
-
-					<div class="form-group">
-						<input type="submit" class="btn btn-primary input-cart input-100" value="Continuer">
-					</div>
-				</form>
+					
 			</div>
 		</div>
 	</div>
@@ -152,5 +146,7 @@
     </div>
   </div>
 </div>
+
+<script src="/resources/js/account/accountAdress.js"></script>
 
 <jsp:include page="templates/footer.jsp" />
