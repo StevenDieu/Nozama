@@ -21,11 +21,11 @@
 			sur misys.fr
 		</p>
 		<br />
-		<p>Cette référence vous servira pour suivre l'état de votre commande depuis la rubrique <a href="/mon-compte">Mon compte</a>.</p>
+		<p>Cette référence vous servira pour suivre l'état de votre commande depuis la rubrique <a class="colorBlueA" href="/mon-compte">Mon compte</a> puis onglet "Mes commandes".</p>
 		<br />
 		<p>Nous vous remercions de votre visite sur misys.fr.</p>
 		<br/><br/>
-		<a class="btn btn-primary center100" href="/">Retour page d'accueil</a>
+		<a class="btn btn-primary center100 " href="/">Retour page d'accueil</a>
 		
 	</div>
 </div>

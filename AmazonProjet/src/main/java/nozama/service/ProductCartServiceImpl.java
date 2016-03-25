@@ -32,16 +32,16 @@ public class ProductCartServiceImpl implements ProductCartService {
     List<Map<String, Object>> allProduct = new ArrayList<Map<String, Object>>();
 
     List<Integer> allId = new ArrayList<Integer>();
-    if(allCart != null && allCart.size() == 0){
+    if (allCart != null) {
       for (Map<String, Object> productCart : allCart) {
         allId.add((Integer) productCart.get("id"));
       }
-
-      if (allId.size() > 0) {
-        List<Article> articles = PR.getArticleById(allId);
-        margeAllResultTypeSupport(articles, allProduct);
-      }
     }
+    if (allId.size() > 0) {
+      List<Article> articles = PR.getArticleById(allId);
+      margeAllResultTypeSupport(articles, allProduct);
+    }
+
 
 
     return allProduct;
@@ -119,7 +119,7 @@ public class ProductCartServiceImpl implements ProductCartService {
 
     return order;
   }
-  
+
 
   public void insertProductOrder(List<Map<String, Object>> carts, Order order) {
     List<Integer> allId = new ArrayList<>();
