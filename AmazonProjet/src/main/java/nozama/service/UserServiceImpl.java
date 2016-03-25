@@ -72,7 +72,7 @@ public class UserServiceImpl implements UserService {
   }
   
   public Adress insertAdress(String name, String nameLastName, String adressPrincipal, String adressSecondaire,
-      String region, String pays, User user, int codePostal, String numberPhone) {
+      String region, String pays, User user, int codePostal, String numberPhone, String city) {
     Adress adress = new Adress();
     adress.setName(name);
     adress.setAdressPrincipal(adressPrincipal);
@@ -83,6 +83,7 @@ public class UserServiceImpl implements UserService {
     adress.setPays(pays);
     adress.setRegion(Util.ConvertStringToNull(region));
     adress.setUser(user);
+    adress.setCity(city);
     UR.insertAdress(adress);
     
     return adress;
@@ -90,7 +91,7 @@ public class UserServiceImpl implements UserService {
   
   public void updateAdress(int idAdress, String name, String nameLastName, String adressPrincipal,
       String adressSecondaire, String region, String pays, User user, int codePostal,
-      String numberPhone) {
+      String numberPhone, String city) {
     Adress adress = new Adress();
     adress.setIdAdress(idAdress);
     adress.setName(name);
@@ -102,6 +103,8 @@ public class UserServiceImpl implements UserService {
     adress.setPays(pays);
     adress.setRegion(Util.ConvertStringToNull(region));
     adress.setUser(user);
+    adress.setCity(city);
+
     UR.updateAdress(adress);
   }
   

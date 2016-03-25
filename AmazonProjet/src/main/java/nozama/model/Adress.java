@@ -36,6 +36,7 @@ public class Adress implements java.io.Serializable {
   private String region;
   private int codePostal;
   private String pays;
+  private String city;
   private String numberPhone;
   private Set<Order> orders = new HashSet<Order>(0);
 
@@ -161,6 +162,14 @@ public class Adress implements java.io.Serializable {
     this.pays = pays;
   }
 
+  @Column(name = "city", nullable = false)
+  public String getCity() {
+    return this.city;
+  }
+
+  public void setCity(String city) {
+    this.city = city;
+  }
 
   @Column(name = "number_phone", nullable = false)
   public String getNumberPhone() {

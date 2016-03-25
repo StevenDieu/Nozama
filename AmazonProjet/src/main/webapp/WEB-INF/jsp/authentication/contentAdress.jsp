@@ -15,6 +15,7 @@
 							data-region="<c:out value="${adress.region}"/>"
 							data-codePostal="<c:out value="${adress.codePostal}"/>"
 							data-pays="<c:out value="${adress.pays}"/>"
+							data-city="<c:out value="${adress.city}"/>"
 							data-numberPhone="<c:out value="${adress.numberPhone}"/>"
 							<c:if test="${sessionScope.address != null && sessionScope.address.idAdress == adress.idAdress}">
 									selected
@@ -92,6 +93,15 @@
 		<div class="form-label">
 			<input type="text" class="codePostal form-control required checkLengthMandatory checkInt"
 				data-length="5" name="codePostal" placeholder="Code postal">
+		</div>
+		<p class="help-block"></p>
+	</div>
+
+	<div class="form-group">
+		<label>Ville * </label>
+		<div class="form-label">
+			<input type="text" class="city form-control required checkLength" data-length="255" name="city"
+				placeholder="Ville">
 		</div>
 		<p class="help-block"></p>
 	</div>
@@ -445,6 +455,16 @@
 						</div>
 						<p class="help-block"></p>
 					</div>
+
+					<div class="form-group">
+						<label>Ville * </label>
+						<div class="form-label">
+							<input type="text" class="city update form-control required checkLength" data-length="255"
+								name="city" placeholder="Ville">
+						</div>
+						<p class="help-block"></p>
+					</div>
+
 
 					<div class="form-group">
 						<label>Pays * </label>

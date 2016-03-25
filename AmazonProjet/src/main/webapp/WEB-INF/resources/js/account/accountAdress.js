@@ -1,7 +1,7 @@
 var boolProgress = true;
 var inputAdress = ["name", "nameLastName", "adressPrincipal",
     "adressPrincipal", "adressSecondaire", "region", "codePostal", "pays",
-    "numberPhone"]
+    "numberPhone", "city"]
 
 function addInputAdress(selectId) {
   if (selectId.val() == "") {
@@ -79,6 +79,7 @@ function udapteAdress() {
             + encodeURIComponent($(".formUpdateAdress .region").val())
             + "&codePostal="
             + encodeURIComponent($(".formUpdateAdress .codePostal").val())
+            + "&city=" + encodeURIComponent($(".formAdresse .city").val())
             + "&pays=" + encodeURIComponent($(".formUpdateAdress .pays").val())
             + "&numberPhone="
             + encodeURIComponent($(".formUpdateAdress .numberPhone").val());
@@ -128,6 +129,7 @@ function ajoutAdresse() {
             + "&adressSecondaire="
             + encodeURIComponent($(".formAdresse .adressSecondaire").val())
             + "&region=" + encodeURIComponent($(".formAdresse .region").val())
+            + "&city=" + encodeURIComponent($(".formAdresse .city").val())
             + "&codePostal="
             + encodeURIComponent($(".formAdresse .codePostal").val())
             + "&pays=" + encodeURIComponent($(".formAdresse .pays").val())
@@ -153,7 +155,8 @@ function ajoutAdresse() {
             selectAdress.attr("data-" + input, $(".formAdresse ." + input)
                     .val());
           });
-          $(".selectAdress option[value='" + t.id + "']").attr('selected', 'selected');
+          $(".selectAdress option[value='" + t.id + "']").attr('selected',
+                  'selected');
 
           self.showMessage("succes", "Adresse ajoutée avec succés.")
         } else {

@@ -1,7 +1,7 @@
 var boolProgress = true;
 var inputAdress = ["name", "nameLastName", "adressPrincipal",
     "adressPrincipal", "adressSecondaire", "region", "codePostal", "pays",
-    "numberPhone"]
+    "numberPhone", "city"]
 
 function addInputAdress(selectId) {
   if (selectId.val() == "") {
@@ -77,6 +77,7 @@ function udapteAdress() {
             + "&codePostal="
             + encodeURIComponent($(".formUpdateAdress .codePostal").val())
             + "&pays=" + encodeURIComponent($(".formUpdateAdress .pays").val())
+            + "&city=" + encodeURIComponent($(".formUpdateAdress .city").val())
             + "&numberPhone="
             + encodeURIComponent($(".formUpdateAdress .numberPhone").val());
     boolProgress = false;

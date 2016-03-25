@@ -54,7 +54,7 @@ public class CtrlUser {
       return "{\"statut\": \"ok\"}";
     } else if (!US.isEmailAdress(email)) {
       return "{\"statut\": \"error\",\"message\":  \"L'adresse email n'est pas valide.\"}";
-    } else if (email == "" || password == "") {
+    } else if (email.equals("") || password.equals("")) {
       return "{\"statut\": \"error\",\"message\":  \"Tout les champs sont obligatoires.\"}";
     }
 
@@ -84,7 +84,8 @@ public class CtrlUser {
       return "{\"statut\": \"ok\"}";
     } else if (password.length() < 6) {
       return "{\"statut\": \"error\",\"message\":  \"Votre mot de passe doit contenir au minimun 6 caratères.\"}";
-    } else if (gender == "" || name == "" || lastName == "" || email == "" || password == "") {
+    } else if (gender.equals("") || name.equals("") || lastName.equals("") || email.equals("")
+        || password.equals("")) {
       return "{\"statut\": \"error\",\"message\":  \"Tout les champs sont obligatoires.\"}";
     } else if (!US.isEmailAdress(email)) {
       return "{\"statut\": \"error\",\"message\":  \"L'adresse email n'est pas valide.\"}";
@@ -106,6 +107,14 @@ public class CtrlUser {
   @RequestMapping(value = "/se-deconnecter")
   public String ajaxDisconnect(HttpServletRequest request) {
     request.getSession().setAttribute("User", null);
+    request.getSession().setAttribute("cartControlTunnel", null);
+    request.getSession().setAttribute("address", null);
+    request.getSession().setAttribute("transport", null);
+    request.getSession().setAttribute("payment", null);
+    request.getSession().setAttribute("totalPrice", null);
+    request.getSession().setAttribute("prixTotalProduct", null);
+    request.getSession().setAttribute("lastOrder", null);
+
     return "redirect:/";
   }
 
@@ -162,6 +171,7 @@ public class CtrlUser {
     String codePostalString = request.getParameter("codePostal");
     String pays = request.getParameter("pays");
     String numberPhone = request.getParameter("numberPhone");
+    String city = request.getParameter("city");
 
     if (request.getSession().getAttribute("User") != null) {
       User user = (User) request.getSession().getAttribute("User");
@@ -169,13 +179,14 @@ public class CtrlUser {
         int idAdress = Integer.parseInt(idAdressString);
         Adress adressCheck = US.checkAdressByUser(idAdress, user);
         if (adressCheck != null) {
-          if (name == "" || nameLastName == "" || adressPrincipal == "" || codePostalString == ""
-              || pays == "" || numberPhone == "") {
+          if (name.equals("") || nameLastName.equals("") || adressPrincipal.equals("")
+              || codePostalString.equals("") || pays.equals("") || numberPhone.equals("")
+              || city.equals("")) {
             return "{\"statut\": \"nok\"}";
           } else if (name.length() > 255 || nameLastName.length() > 255
               || adressPrincipal.length() > 1024 || adressSecondaire.length() > 1024
-              || region.length() > 255 || codePostalString.length() > 5
-              || numberPhone.length() > 10) {
+              || region.length() > 255 || codePostalString.length() > 5 || numberPhone.length() > 10
+              || city.length() > 255) {
             return "{\"statut\": \"nok\"}";
           }
 
@@ -190,7 +201,7 @@ public class CtrlUser {
           }
 
           US.updateAdress(idAdress, name, nameLastName, adressPrincipal, adressSecondaire, region,
-              pays, user, codePostal, numberPhone);
+              pays, user, codePostal, numberPhone, city);
 
         }
       }
@@ -231,6 +242,7 @@ public class CtrlUser {
     String codePostalString = request.getParameter("codePostal");
     String pays = request.getParameter("pays");
     String numberPhone = request.getParameter("numberPhone");
+    String city = request.getParameter("city");
 
     if (request.getSession().getAttribute("User") == null) {
       return "{\"statut\": \"error\",\"message\":  \"Vous n'êtes plus connecter.\"}";
@@ -239,12 +251,13 @@ public class CtrlUser {
     User user = (User) request.getSession().getAttribute("User");
 
 
-    if (name == "" || nameLastName == "" || adressPrincipal == "" || codePostalString == ""
-        || pays == "" || numberPhone == "") {
+    if (name.equals("") || nameLastName.equals("") || adressPrincipal.equals("")
+        || codePostalString.equals("") || pays.equals("") || numberPhone.equals("")
+        || city.equals("")) {
       return "{\"statut\": \"error\",\"message\":  \"Tout les champs sont obligatoires.\"}";
     } else if (name.length() > 255 || nameLastName.length() > 255 || adressPrincipal.length() > 1024
         || adressSecondaire.length() > 1024 || region.length() > 255
-        || codePostalString.length() > 5 || numberPhone.length() > 10) {
+        || codePostalString.length() > 5 || numberPhone.length() > 10 || city.length() > 255) {
       return "{\"statut\": \"error\",\"message\":  \"Attention à la longueur des champs.\"}";
     }
 
@@ -259,7 +272,7 @@ public class CtrlUser {
     }
 
     final Adress adress = US.insertAdress(name, nameLastName, adressPrincipal, adressSecondaire,
-        region, pays, user, codePostal, numberPhone);
+        region, pays, user, codePostal, numberPhone, city);
 
     request.getSession().setAttribute("address", adress);
 
