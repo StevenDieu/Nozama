@@ -52,15 +52,17 @@ function addInCart(id, typeData) {
   }
 }
 
-
 function seeProduct(id) {
-	$(".body-article").html("<img alt='Spinner' class='center' src='/resources/img/spinner.gif'/>");
+  $(".body-article").addClass("center");
+  $(".body-article").html(
+          "<img alt='Spinner' src='/resources/img/spinner.gif'/>");
   $.ajax({
     type: "post",
     url: "/seeProduct",
     data: "id=" + id,
     success: function(t) {
-    	$(".body-article").html(t);
+      $(".body-article").removeClass("center");
+      $(".body-article").html(t);
     },
     error: function() {
       self.boolProgress = true;
@@ -162,7 +164,7 @@ function checkForm(className) {
 }
 
 function addMoneyAccount(theThis) {
-  
+
   var number = theThis.val().replace(",", ".");
   if (number !== "") {
     if (!isNaN(number)) {
@@ -237,7 +239,7 @@ $(document).ready(function() {
   $(".btn-compte-prepaye").on("click", function() {
     addMoneyAccount($(".input-compte-prepaye"));
   })
-  $(".btn-voitPrd").on("click", function(){
-	  seeProduct($(this).data("id"));
+  $(".btn-voitPrd").on("click", function() {
+    seeProduct($(this).data("id"));
   })
 });
