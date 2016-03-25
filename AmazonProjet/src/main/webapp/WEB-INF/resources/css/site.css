@@ -66,6 +66,16 @@ ol.ssMenu {
 	text-decoration: none;
 }
 
+.colorBlueA {
+	color: #337ab7;
+	text-decoration: none;
+}
+
+.colorBlueA:HOVER {
+	color: #2e6da4;
+}
+
+
 .ssMenu li a:HOVER {
 	color: #FF9800;
 	font-size: 14px;

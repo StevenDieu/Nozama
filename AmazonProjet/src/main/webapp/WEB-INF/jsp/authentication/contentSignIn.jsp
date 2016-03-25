@@ -29,12 +29,6 @@
 
 			</div>
 
-			<div class="checkbox">
-				<label>
-					<input type="checkbox" name="rememberMe" class="checkbox">
-					Se souvenir de moi
-				</label>
-			</div>
 			<div class="form-group">
 				<a href="inscription">Pas encore inscrit ?</a>
 			</div>
