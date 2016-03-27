@@ -12,7 +12,7 @@ function signIn() {
               + encodeURIComponent($(".pwd").val()),
       success: function(t) {
         t = JSON.parse(t);
-        if (t.statut == "ok") {
+        if (t.statut == "success") {
           if ($(".redirectSignIn").val() != "") {
             document.location.href = $(".redirectSignIn").val();
             return;

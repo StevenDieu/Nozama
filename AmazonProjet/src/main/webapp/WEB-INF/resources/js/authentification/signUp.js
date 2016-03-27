@@ -15,7 +15,7 @@ function signUp() {
 					data : "name=" + encodeURIComponent($(".name").val()) + "&lastName=" + encodeURIComponent($(".lastName").val()) + "&email=" + encodeURIComponent($(".emailSignUp").val()) + "&password=" + encodeURIComponent($(".passwordSignUp").val()) + "&gender=" + gender,
 					success : function(t) {
 						t = JSON.parse(t);
-						if (t.statut == "ok") {
+						if (t.statut == "success") {
 							if ($(".redirectSignUp").val() != "") {
 								document.location.href = $(".redirectSignUp").val();
 								return;

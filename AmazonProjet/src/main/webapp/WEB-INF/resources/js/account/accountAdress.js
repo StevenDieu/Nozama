@@ -104,7 +104,7 @@ function udapteAdress() {
                   .val());
         });
 
-        self.showMessage("succes", "Adresse modifiée avec succés.")
+        self.showMessage("success", "Adresse modifiée avec succés.")
 
         self.boolProgress = true;
       },
@@ -158,7 +158,7 @@ function ajoutAdresse() {
           $(".selectAdress option[value='" + t.id + "']").attr('selected',
                   'selected');
 
-          self.showMessage("succes", "Adresse ajoutée avec succés.")
+          self.showMessage("success", "Adresse ajoutée avec succés.")
         } else {
           self.showMessage("error", t.message)
         }

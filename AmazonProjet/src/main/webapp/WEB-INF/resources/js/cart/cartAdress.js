@@ -101,7 +101,7 @@ function udapteAdress() {
                   .val());
         });
 
-        self.showMessage("succes", "Adresse modifiée avec succés.")
+        self.showMessage("success", "Adresse modifiée avec succés.")
 
         self.boolProgress = true;
       },

@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -83,12 +84,9 @@ public class CtrlCart {
     Map<String, Object> redirect = new HashMap<String, Object>();
     redirect.put("redirect", "/mon-panier-etape-adresse");// redirect after singin or signup
 
-    if (request.getSession().getAttribute("cartControlTunnel") == null) {
-      return new ModelAndView("redirect:/mon-panier");
-    }
-
-    if (request.getSession().getAttribute("User") != null) {
-      return new ModelAndView("redirect:/mon-panier-etape-adresse");
+    Map<String, Object> conditionCart = Util.conditionCart(1, request);
+    if ((boolean) conditionCart.get("checkCondition")) {
+      return new ModelAndView("redirect:/" + (String) conditionCart.get("redirect"));
     }
 
     return new ModelAndView("cart/myCartConnexion", redirect);
@@ -103,13 +101,9 @@ public class CtrlCart {
   @RequestMapping(value = "/mon-panier-etape-adresse")
   public ModelAndView myCartAdress(HttpServletRequest request) {
 
-
-    if (request.getSession().getAttribute("cartControlTunnel") == null) {
-      return new ModelAndView("redirect:/mon-panier");
-    }
-
-    if (request.getSession().getAttribute("User") == null) {
-      return new ModelAndView("redirect:/mon-panier-etape-connexion");
+    Map<String, Object> conditionCart = Util.conditionCart(2, request);
+    if ((boolean) conditionCart.get("checkCondition")) {
+      return new ModelAndView("redirect:/" + (String) conditionCart.get("redirect"));
     }
 
     User user = (User) request.getSession().getAttribute("User");
@@ -148,16 +142,9 @@ public class CtrlCart {
     String numberPhone = request.getParameter("numberPhone");
     String city = request.getParameter("city");
 
-    if (request.getSession().getAttribute("User") == null) {
-      return new ModelAndView("redirect:/mon-panier-etape-connexion");
-    }
-
-    if (request.getSession().getAttribute("cartControlTunnel") == null) {
-      return new ModelAndView("redirect:/mon-panier");
-    }
-
-    if (request.getSession().getAttribute("cartControlTunnel") == null) {
-      return new ModelAndView("redirect:/mon-panier");
+    Map<String, Object> conditionCart = Util.conditionCart(2, request);
+    if ((boolean) conditionCart.get("checkCondition")) {
+      return new ModelAndView("redirect:/" + (String) conditionCart.get("redirect"));
     }
 
     User user = (User) request.getSession().getAttribute("User");
@@ -181,10 +168,10 @@ public class CtrlCart {
           || city.isEmpty()) {
         return new ModelAndView("redirect:/mon-panier-etape-adresse",
             Util.returnMessage("Tout les champs sont obligatoires."));
-      } else if (name.length() > 255 || nameLastName.length() > 255
-          || adressPrincipal.length() > 1024 || adressSecondaire.length() > 1024
-          || region.length() > 255 || codePostalString.length() > 5 || numberPhone.length() > 10
-          || city.length() > 255) {
+      } else
+        if (name.length() > 255 || nameLastName.length() > 255 || adressPrincipal.length() > 1024
+            || adressSecondaire.length() > 1024 || region.length() > 255
+            || codePostalString.length() > 5 || numberPhone.length() > 10 || city.length() > 255) {
         return new ModelAndView("redirect:/mon-panier-etape-adresse",
             Util.returnMessage("Attention à la longueur des champs."));
       }
@@ -226,16 +213,9 @@ public class CtrlCart {
       messageError.put("message", message);
     }
 
-    if (request.getSession().getAttribute("cartControlTunnel") == null) {
-      return new ModelAndView("redirect:/mon-panier");
-    }
-
-    if (request.getSession().getAttribute("User") == null) {
-      return new ModelAndView("redirect:/mon-panier-etape-connexion");
-    }
-
-    if (request.getSession().getAttribute("address") == null) {
-      return new ModelAndView("redirect:/mon-panier-etape-adresse");
+    Map<String, Object> conditionCart = Util.conditionCart(3, request);
+    if ((boolean) conditionCart.get("checkCondition")) {
+      return new ModelAndView("redirect:/" + (String) conditionCart.get("redirect"));
     }
 
     return new ModelAndView("cart/myCartDelivery", messageError);
@@ -253,17 +233,11 @@ public class CtrlCart {
   public ModelAndView myCartValidateTransport(HttpServletRequest request)
       throws UnsupportedEncodingException {
 
-    if (request.getSession().getAttribute("cartControlTunnel") == null) {
-      return new ModelAndView("redirect:/mon-panier");
+    Map<String, Object> conditionCart = Util.conditionCart(3, request);
+    if ((boolean) conditionCart.get("checkCondition")) {
+      return new ModelAndView("redirect:/" + (String) conditionCart.get("redirect"));
     }
 
-    if (request.getSession().getAttribute("User") == null) {
-      return new ModelAndView("redirect:/mon-panier-etape-connexion");
-    }
-
-    if (request.getSession().getAttribute("address") == null) {
-      return new ModelAndView("redirect:/mon-panier-etape-adresse");
-    }
     request.setCharacterEncoding("utf-8");
     String chooseTransport = request.getParameter("chooseTransport");
     String commentaire = request.getParameter("commentaire");
@@ -281,7 +255,7 @@ public class CtrlCart {
     Map<String, Object> listTransport = new HashMap<>();
     listTransport.put("id", chooseTransport);
     listTransport.put("commentaire", Util.ConvertStringToNull(commentaire));
-    
+
     if (chooseTransport.equals("eco")) {
       listTransport.put("prix", new Float(10));
     } else if (chooseTransport.equals("exp")) {
@@ -290,7 +264,7 @@ public class CtrlCart {
       return new ModelAndView("redirect:/mon-panier-etape-livraison",
           Util.returnMessage("Une erreur est survenue."));
     }
-    
+
     request.getSession().setAttribute("transport", listTransport);
 
     return new ModelAndView("redirect:/mon-panier-etape-paiement");
@@ -298,32 +272,23 @@ public class CtrlCart {
 
   /**
    * [Ctrl] Step 5 choose your payment for validate a cart
+   * 
    * @param request
    * @return view myCartPayment
    */
   @SuppressWarnings("unchecked")
   @RequestMapping(value = "/mon-panier-etape-paiement")
   public ModelAndView myCartPayment(HttpServletRequest request) {
-    if (request.getSession().getAttribute("cartControlTunnel") == null) {
-      return new ModelAndView("redirect:/mon-panier");
+
+    Map<String, Object> conditionCart = Util.conditionCart(4, request);
+    if ((boolean) conditionCart.get("checkCondition")) {
+      return new ModelAndView("redirect:/" + (String) conditionCart.get("redirect"));
     }
 
-    if (request.getSession().getAttribute("User") == null) {
-      return new ModelAndView("redirect:/mon-panier-etape-connexion");
-    }
+    List<Map<String, Object>> cartControlTunnel =
+        (List<Map<String, Object>>) request.getSession().getAttribute("cartControlTunnel");
 
-    if (request.getSession().getAttribute("address") == null) {
-      return new ModelAndView("redirect:/mon-panier-etape-adresse");
-    }
-
-    if (request.getSession().getAttribute("transport") == null) {
-      return new ModelAndView("redirect:/mon-panier-etape-livraison");
-    }
-
-    List<Map<String, Object>> cartControlTunnel = (List<Map<String, Object>>) request.getSession().getAttribute("cartControlTunnel");
-    
-    float calculTotalProduct = PCS.calculTotalProduct(
-        cartControlTunnel);
+    float calculTotalProduct = PCS.calculTotalProduct(cartControlTunnel);
     request.getSession().setAttribute("prixTotalProduct", calculTotalProduct);
     Map<String, Object> transport =
         (Map<String, Object>) request.getSession().getAttribute("transport");
@@ -332,8 +297,7 @@ public class CtrlCart {
 
     Map<String, Object> products = new HashMap<String, Object>();
 
-    final List<Map<String, Object>> allProduct = PCS.getAllCart(
-        cartControlTunnel);
+    final List<Map<String, Object>> allProduct = PCS.getAllCart(cartControlTunnel);
     products.put("products", allProduct);
 
     return new ModelAndView("cart/myCartPayment", products);
@@ -341,33 +305,21 @@ public class CtrlCart {
 
 
   /**
+   * 
    * [Ctrl] [Ajax] Validate a payment and choose the ctrl suitable
+   * 
    * @param request
    * @return a json for javascript
+   * @throws JSONException
    */
   @RequestMapping(value = "/ajaxValidatePayment", method = RequestMethod.POST)
   @ResponseBody
-  public String validatePayment(HttpServletRequest request) {
+  public String validatePayment(HttpServletRequest request) throws JSONException {
     String choosePayment = request.getParameter("choosePayment");
 
-    if (request.getSession().getAttribute("cartControlTunnel") == null) {
-      return "{\"statut\": \"error\",\"message\":  \"Une erreur est survenue.\"}";
-    }
-
-    if (request.getSession().getAttribute("User") == null) {
-      return "{\"statut\": \"error\",\"message\":  \"Une erreur est survenue.\"}";
-    }
-
-    if (request.getSession().getAttribute("address") == null) {
-      return "{\"statut\": \"error\",\"message\":  \"Une erreur est survenue.\"}";
-    }
-
-    if (request.getSession().getAttribute("transport") == null) {
-      return "{\"statut\": \"error\",\"message\":  \"Une erreur est survenue.\"}";
-    }
-
-    if (request.getSession().getAttribute("totalPrice") == null) {
-      return "{\"statut\": \"error\",\"message\":  \"Une erreur est survenue.\"}";
+    Map<String, Object> conditionCart = Util.conditionCart(5, request);
+    if ((boolean) conditionCart.get("checkCondition")) {
+      return Util.getJsonStatutRedirect("success", (String) conditionCart.get("redirect"));
     }
 
     User user = (User) request.getSession().getAttribute("User");
@@ -376,43 +328,24 @@ public class CtrlCart {
         || choosePayment.equals("CB")) {
       if (choosePayment.equals("PREPAYE")) {
         if (user.getComptePrepaye() < (Float) request.getSession().getAttribute("totalPrice")) {
-          return "{\"statut\": \"error\",\"message\":  \"Votre compte prépayé est insuffisant.\"}";
+          return Util.getJsonStatutMessage("error", "Votre compte prépayé est insuffisant.");
         }
         request.getSession().setAttribute("payment", choosePayment);
-
-        return "{\"statut\": \"ok\",\"redirect\": \"/finalisation-commande\"}";
+        return Util.getJsonStatutRedirect("success", "finalisation-commande");
       }
       request.getSession().setAttribute("payment", choosePayment);
-
-      return "{\"statut\": \"ok\",\"redirect\": \"/page-payment\"}";
+      return Util.getJsonStatutRedirect("success", "page-payment");
     }
-
-    return "{\"statut\": \"error\",\"message\":  \"Une erreur est survenue.\"}";
+    return Util.getJsonStatutMessage("error", "Une erreur est survenue.");
   }
 
   @RequestMapping(value = "/page-payment")
   public ModelAndView pagePaymentPSP(HttpServletRequest request) {
-    if (request.getSession().getAttribute("cartControlTunnel") == null
-        || request.getSession().getAttribute("cartControlTunnel") == "[]") {
-      return new ModelAndView("redirect:/mon-panier");
-    }
 
-    if (request.getSession().getAttribute("User") == null) {
-      return new ModelAndView("redirect:/mon-panier-etape-connexion");
+    Map<String, Object> conditionCart = Util.conditionCart(5, request);
+    if ((boolean) conditionCart.get("checkCondition")) {
+      return new ModelAndView("redirect:/" + (String) conditionCart.get("redirect"));
     }
-
-    if (request.getSession().getAttribute("address") == null) {
-      return new ModelAndView("redirect:/mon-panier-etape-adresse");
-    }
-
-    if (request.getSession().getAttribute("transport") == null) {
-      return new ModelAndView("redirect:/mon-panier-etape-livraison");
-    }
-
-    if (request.getSession().getAttribute("payment") == null) {
-      return new ModelAndView("redirect:/mon-panier-etape-paiement");
-    }
-
 
     return new ModelAndView("cart/myPayment");
   }
@@ -420,27 +353,10 @@ public class CtrlCart {
   @SuppressWarnings("unchecked")
   @RequestMapping(value = "/finalisation-commande")
   public ModelAndView finalyzeOrder(HttpServletRequest request) {
-    if (request.getSession().getAttribute("cartControlTunnel") == null
-        || request.getSession().getAttribute("cartControlTunnel") == "[]") {
-      return new ModelAndView("redirect:/mon-panier");
+    Map<String, Object> conditionCart = Util.conditionCart(6, request);
+    if ((boolean) conditionCart.get("checkCondition")) {
+      return new ModelAndView("redirect:/" + (String) conditionCart.get("redirect"));
     }
-
-    if (request.getSession().getAttribute("User") == null) {
-      return new ModelAndView("redirect:/mon-panier-etape-connexion");
-    }
-
-    if (request.getSession().getAttribute("address") == null) {
-      return new ModelAndView("redirect:/mon-panier-etape-adresse");
-    }
-
-    if (request.getSession().getAttribute("transport") == null) {
-      return new ModelAndView("redirect:/mon-panier-etape-livraison");
-    }
-
-    if (request.getSession().getAttribute("payment") == null) {
-      return new ModelAndView("redirect:/mon-panier-etape-paiement");
-    }
-
 
     Adress adress = (Adress) request.getSession().getAttribute("address");
     Map<String, Object> listTransport =
@@ -532,7 +448,7 @@ public class CtrlCart {
   @SuppressWarnings("unchecked")
   @RequestMapping(value = "/ajaxChangeNumberProductCart", method = RequestMethod.POST)
   @ResponseBody
-  public String changeNumberProductCart(HttpServletRequest request) {
+  public String changeNumberProductCart(HttpServletRequest request) throws JSONException {
     String idString = request.getParameter("id");
     String numberString = request.getParameter("number");
 
@@ -569,13 +485,14 @@ public class CtrlCart {
       }
     }
 
-    return "{\"number\": " + number + "}";
+
+    return Util.getJsonNumber(number);
   }
 
   @SuppressWarnings("unchecked")
   @RequestMapping(value = "/ajaxAddCart", method = RequestMethod.POST)
   @ResponseBody
-  public String addInMyCart(HttpServletRequest request) {
+  public String addInMyCart(HttpServletRequest request) throws JSONException {
 
     String idString = request.getParameter("id");
     Boolean newProduct = true;
@@ -611,10 +528,10 @@ public class CtrlCart {
 
       request.getSession().setAttribute("nbCart", listMapCart.size());
 
-      return "{\"statut\": \"succes\",\"nbCart\" : " + listMapCart.size()
-          + ",\"message\":  \"Votre produit à été ajouté au panier.\"}";
+      return Util.getJsonStatutMessageNbCart("success", "Votre produit à été ajouté au panier.",
+          listMapCart.size());
     } else {
-      return "{\"statut\": \"error\",\"message\":  \"Une erreur est survenue.\"}";
+      return Util.getJsonStatutMessage("error", "Une erreur est survenue.");
     }
 
   }

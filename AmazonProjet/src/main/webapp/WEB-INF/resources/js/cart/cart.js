@@ -108,7 +108,7 @@ function validCart() {
         success: function(t) {
           t = JSON.parse(t);
 
-          if (t.statut == "ok") {
+          if (t.statut == "success") {
             document.location.href = t.redirect;
           } else {
             self.showMessage(t.statut, t.message)

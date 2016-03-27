@@ -37,7 +37,7 @@ function addInCart(id, typeData) {
         data: "id=" + id + "&typeData=" + typeData,
         success: function(t) {
           t = JSON.parse(t);
-          if (t.statut == "succes") {
+          if (t.statut == "success") {
             $(".nbCart").html(t.nbCart);
           }
           showMessage(t.statut, t.message)
@@ -177,7 +177,7 @@ function addMoneyAccount(theThis) {
               data: "numberAddAccount=" + number,
               success: function(t) {
                 t = JSON.parse(t);
-                if (t.statut == "succes") {
+                if (t.statut == "success") {
                   $(".argent").html(t.argent.toFixed(2).replace(".", ","));
                   theThis.val("")
                 }

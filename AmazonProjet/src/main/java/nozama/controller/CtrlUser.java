@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,34 +45,32 @@ public class CtrlUser {
 
   @RequestMapping(value = "/ajaxConnexion", method = RequestMethod.POST)
   @ResponseBody
-  public String ajaxSignIn(HttpServletRequest request) throws UnsupportedEncodingException {
+  public String ajaxSignIn(HttpServletRequest request) throws UnsupportedEncodingException, JSONException {
     request.setCharacterEncoding("UTF-8");
 
     String email = request.getParameter("email");
     String password = request.getParameter("pwd");
 
     if (request.getSession().getAttribute("User") != null) {
-      return "{\"statut\": \"ok\"}";
+      return Util.getJsonStatut("success");
     } else if (!US.isEmailAdress(email)) {
-      return "{\"statut\": \"error\",\"message\":  \"L'adresse email n'est pas valide.\"}";
+      return Util.getJsonStatutMessage("error","L'adresse email n'est pas valide.");
     } else if (email.equals("") || password.equals("")) {
-      return "{\"statut\": \"error\",\"message\":  \"Tout les champs sont obligatoires.\"}";
+      return Util.getJsonStatutMessage("error","Tout les champs sont obligatoires.");
     }
 
     User user = US.connexion(email, password);
     if (user == null) {
-      return "{\"statut\": \"error\",\"message\":  \"une erreur est survenue.\"}";
+      return Util.getJsonStatutMessage("error","une erreur est survenue.");
     }
 
     request.getSession().setAttribute("User", user);
-
-    return "{\"statut\": \"ok\",\"redirect\": \"/\"}";
-
+    return Util.getJsonStatutRedirect("success","");
   }
 
   @RequestMapping(value = "/ajaxInscription", method = RequestMethod.POST)
   @ResponseBody
-  public String ajaxSignUp(HttpServletRequest request) throws UnsupportedEncodingException {
+  public String ajaxSignUp(HttpServletRequest request) throws UnsupportedEncodingException, JSONException {
     request.setCharacterEncoding("UTF-8");
 
     String gender = request.getParameter("gender");
@@ -81,27 +80,27 @@ public class CtrlUser {
     String password = request.getParameter("password");
 
     if (request.getSession().getAttribute("User") != null) {
-      return "{\"statut\": \"ok\"}";
+      return Util.getJsonStatut("success");
     } else if (password.length() < 6) {
-      return "{\"statut\": \"error\",\"message\":  \"Votre mot de passe doit contenir au minimun 6 caratères.\"}";
+      return Util.getJsonStatutMessage("error","Votre mot de passe doit contenir au minimun 6 caratères.");
     } else if (gender.equals("") || name.equals("") || lastName.equals("") || email.equals("")
         || password.equals("")) {
-      return "{\"statut\": \"error\",\"message\":  \"Tout les champs sont obligatoires.\"}";
+      return Util.getJsonStatutMessage("error","Tout les champs sont obligatoires.");
     } else if (!US.isEmailAdress(email)) {
-      return "{\"statut\": \"error\",\"message\":  \"L'adresse email n'est pas valide.\"}";
+      return Util.getJsonStatutMessage("error","L'adresse email n'est pas valide.");
     } else if (US.checkEmail(email)) {
-      return "{\"statut\": \"error\",\"message\":  \"Cette adresse email est déja utilisé.\"}";
+      return Util.getJsonStatutMessage("error","Cette adresse email est déja utilisé.");
     } else if (name.length() > 255 || lastName.length() > 255 || email.length() > 255
         || password.length() > 255) {
-      return "{\"statut\": \"error\",\"message\":  \"Attention à la longueur des champs.\"}";
+      return Util.getJsonStatutMessage("error","Attention à la longueur des champs.");
     } else if (gender.equals("H") && gender.equals("F")) {
-      return "{\"statut\": \"error\",\"message\":  \"Une erreur est survenue.\"}";
+      return Util.getJsonStatutMessage("error","Une erreur est survenue.");
     }
 
     User user = US.register(gender, name, lastName, email, password, US.getIpAdresse(request));
     request.getSession().setAttribute("User", user);
 
-    return "{\"statut\": \"ok\",\"redirect\": \"/\"}";
+    return Util.getJsonStatutRedirect("success","");
   }
 
   @RequestMapping(value = "/se-deconnecter")
@@ -121,7 +120,7 @@ public class CtrlUser {
 
   @RequestMapping(value = "/ajaxAddMoneyAccount")
   @ResponseBody
-  public String ajaxAddMoneyAccount(HttpServletRequest request) {
+  public String ajaxAddMoneyAccount(HttpServletRequest request) throws JSONException {
     String numberAddAccountString = request.getParameter("numberAddAccount");
     if (request.getSession().getAttribute("User") != null) {
       if (Util.checkConvertToFloat(numberAddAccountString) && Util.isPrice(numberAddAccountString)) {
@@ -130,17 +129,16 @@ public class CtrlUser {
           User user = (User) request.getSession().getAttribute("User");
           user.setComptePrepaye(user.getComptePrepaye() + numberAddAcount);
           US.updateUser(user);
-          return "{\"statut\": \"succes\",\"message\":  \"Compte crédité !\",\"argent\":  "
-              + user.getComptePrepaye() + "}";
+          return Util.getJsonStatutMessageArgent("success","Compte crédité !",user.getComptePrepaye());
         }
       }
     }
-    return "{\"statut\": \"error\",\"message\":  \"Une erreur est survenue.\"}";
+    return Util.getJsonStatutMessage("error","Une erreur est survenue.");
   }
 
   @RequestMapping(value = "/ajaxDeleteDeleteAdress")
   @ResponseBody
-  public String ajaxDeleteAdress(HttpServletRequest request) {
+  public String ajaxDeleteAdress(HttpServletRequest request) throws JSONException {
     String idAdressString = request.getParameter("idAdress");
     if (request.getSession().getAttribute("User") != null) {
       User user = (User) request.getSession().getAttribute("User");
@@ -149,17 +147,17 @@ public class CtrlUser {
         Adress adress = US.checkAdressByUser(idAdress, user);
         if (adress != null) {
           US.deleteAdress(adress);
-          return "{\"statut\": \"ok\"}";
+          return Util.getJsonStatut("success");
         }
 
       }
     }
-    return "{\"statut\": \"nok\"}";
+    return Util.getJsonStatut("error");
   }
 
   @RequestMapping(value = "/ajaxUpdateAdress")
   @ResponseBody
-  public String ajaxUpdateAdress(HttpServletRequest request) throws UnsupportedEncodingException {
+  public String ajaxUpdateAdress(HttpServletRequest request) throws UnsupportedEncodingException, JSONException {
     request.setCharacterEncoding("UTF-8");
 
     String idAdressString = request.getParameter("idAdress");
@@ -182,32 +180,33 @@ public class CtrlUser {
           if (name.equals("") || nameLastName.equals("") || adressPrincipal.equals("")
               || codePostalString.equals("") || pays.equals("") || numberPhone.equals("")
               || city.equals("")) {
-            return "{\"statut\": \"nok\"}";
+            return Util.getJsonStatutMessage("error","Tout les champs sont obligatoires.");
           } else if (name.length() > 255 || nameLastName.length() > 255
               || adressPrincipal.length() > 1024 || adressSecondaire.length() > 1024
               || region.length() > 255 || codePostalString.length() > 5 || numberPhone.length() > 10
               || city.length() > 255) {
-            return "{\"statut\": \"nok\"}";
+            return Util.getJsonStatutMessage("error","Attention à la longueur des champs.");
           }
 
           int codePostal;
           if (!Util.checkConvertToInt(codePostalString)) {
-            return "{\"statut\": \"nok\"}";
+            return Util.getJsonStatutMessage("error","Le code postal doit être un chiffre.");
           }
           codePostal = Integer.parseInt(codePostalString);
 
           if (!Util.checkConvertToInt(numberPhone)) {
-            return "{\"statut\": \"nok\"}";
+            return Util.getJsonStatutMessage("error","Le numéro de téléphone doit être un chiffre.");
           }
 
           US.updateAdress(idAdress, name, nameLastName, adressPrincipal, adressSecondaire, region,
               pays, user, codePostal, numberPhone, city);
+          return Util.getJsonStatut("success");
 
         }
       }
     }
 
-    return "{\"statut\": \"nok\"}";
+    return Util.getJsonStatut("error");
   }
 
 
@@ -231,7 +230,7 @@ public class CtrlUser {
   @RequestMapping(value = "/ajaxAjoutAdresse", method = RequestMethod.POST)
   @ResponseBody
   public String myCartCalidateAdress(HttpServletRequest request)
-      throws UnsupportedEncodingException {
+      throws UnsupportedEncodingException, JSONException {
     request.setCharacterEncoding("UTF-8");
 
     String name = request.getParameter("name");
@@ -245,7 +244,7 @@ public class CtrlUser {
     String city = request.getParameter("city");
 
     if (request.getSession().getAttribute("User") == null) {
-      return "{\"statut\": \"error\",\"message\":  \"Vous n'êtes plus connecter.\"}";
+      return Util.getJsonStatutMessage("error","Vous n'êtes plus connecter.");
     }
 
     User user = (User) request.getSession().getAttribute("User");
@@ -254,21 +253,21 @@ public class CtrlUser {
     if (name.equals("") || nameLastName.equals("") || adressPrincipal.equals("")
         || codePostalString.equals("") || pays.equals("") || numberPhone.equals("")
         || city.equals("")) {
-      return "{\"statut\": \"error\",\"message\":  \"Tout les champs sont obligatoires.\"}";
+      return Util.getJsonStatutMessage("error","Tout les champs sont obligatoires.");
     } else if (name.length() > 255 || nameLastName.length() > 255 || adressPrincipal.length() > 1024
         || adressSecondaire.length() > 1024 || region.length() > 255
         || codePostalString.length() > 5 || numberPhone.length() > 10 || city.length() > 255) {
-      return "{\"statut\": \"error\",\"message\":  \"Attention à la longueur des champs.\"}";
+      return Util.getJsonStatutMessage("error","Attention à la longueur des champs.");
     }
 
     int codePostal;
     if (!Util.checkConvertToInt(codePostalString)) {
-      return "{\"statut\": \"error\",\"message\":  \"Le code postal doit être un chiffre.\"}";
+      return Util.getJsonStatutMessage("error","Le code postal doit être un chiffre.");
     }
     codePostal = Integer.parseInt(codePostalString);
 
     if (!Util.checkConvertToInt(numberPhone)) {
-      return "{\"statut\": \"error\",\"message\":  \"Le numéro de téléphone doit être un chiffre.\"}";
+      return Util.getJsonStatutMessage("error","Le numéro de téléphone doit être un chiffre.");
     }
 
     final Adress adress = US.insertAdress(name, nameLastName, adressPrincipal, adressSecondaire,
@@ -276,7 +275,7 @@ public class CtrlUser {
 
     request.getSession().setAttribute("address", adress);
 
-    return "{\"statut\": \"success\", \"id\": " + adress.getIdAdress() + " }";
+    return Util.getJsonStatutId("success",adress.getIdAdress());
   }
 
 }
