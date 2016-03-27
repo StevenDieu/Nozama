@@ -1,11 +1,13 @@
 package nozama.util;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class Util {
 
-  public static boolean convertToInt(String text) {
+  public static boolean checkConvertToInt(String text) {
 
     try {
       Integer.parseInt(text);
@@ -16,7 +18,7 @@ public final class Util {
 
   }
 
-  public static boolean convertToFloat(String text) {
+  public static boolean checkConvertToFloat(String text) {
 
     try {
       Float.parseFloat(text);
@@ -27,7 +29,7 @@ public final class Util {
 
   }
 
-  public static boolean convertToShort(String sYearBirth) {
+  public static boolean checkConvertToShort(String sYearBirth) {
     try {
       Short.parseShort(sYearBirth);
     } catch (Exception e) {
@@ -54,6 +56,12 @@ public final class Util {
     Pattern p = Pattern.compile("^[0-9]{1,}(,[0-9]{1,2}|[.][0-9]{1,2}){0,1}$");
     Matcher m = p.matcher(price);
     return m.matches();
+  }
+
+  public static Map<String, Object> returnMessage(String message) {
+    Map<String, Object> redirect = new HashMap<String, Object>();
+    redirect.put("message", message);
+    return redirect;
   }
 
 

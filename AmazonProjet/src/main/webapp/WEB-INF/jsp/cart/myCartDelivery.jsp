@@ -40,6 +40,19 @@
 			<h3 class="panel-title">Méthode de livraison</h3>
 		</div>
 		<div class="panel-body">
+
+			<br />
+			<c:set var="messageInfos" value="${message}" />
+			<c:forEach var="messageInfo" items="${messageInfos}" varStatus="counter">
+				<div class="alert alert-info" style="display: block" role="alert">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<strong>Aie !</strong>
+					<c:out value="${messageInfo}" />
+				</div>
+				<br />
+			</c:forEach>
 			<form action="mon-panier-etape-validation-transport" method="post">
 				<div class="form-group">
 					<label class="radio-inline">
@@ -57,7 +70,8 @@
 							</c:when>
 						</c:choose>
 
-						ECONOMIQUE - 10,00 €<br/>
+						ECONOMIQUE - 10,00 €
+						<br />
 						Date de livraison estimée : 7-9 jours
 					</label>
 				</div>
@@ -77,29 +91,33 @@
 								</c:if>
 							</c:when>
 						</c:choose>
-						2016 EXPRESS &amp; SAMEDI - 14,00 €<br/>
+						2016 EXPRESS &amp; SAMEDI - 14,00 €
+						<br />
 						Date de livraison estimée : 3-4 jours
 					</label>
 				</div>
 				<div class="form-group">
 					<c:if test="${sessionScope.transport != null}">
-					<c:if test="${sessionScope.transport.commentaire != null}">
-						<div class="form-label">
-							<textarea class="form-control checkLength" data-length="255" rows="3" name="commentaire" placeholder="Ajouter un commentaire pour le transporteur (max : 255 charatères)">${sessionScope.transport.commentaire}</textarea>
-						</div>
-						<p class="help-block"></p>
-					</c:if>
-					<c:if test="${sessionScope.transport.commentaire == null}">
-						<div class="form-label">
-							<textarea class="form-control checkLength" data-length="255" rows="3" name="commentaire" placeholder="Ajouter un commentaire pour le transporteur (max : 255 charatères)"></textarea>
-						</div>
-						<p class="help-block"></p>
-					</c:if>
-						
+						<c:if test="${sessionScope.transport.commentaire != null}">
+							<div class="form-label">
+								<textarea class="form-control checkLength" data-length="255" rows="3" name="commentaire"
+									placeholder="Ajouter un commentaire pour le transporteur (max : 255 charatères)">${sessionScope.transport.commentaire}</textarea>
+							</div>
+							<p class="help-block"></p>
+						</c:if>
+						<c:if test="${sessionScope.transport.commentaire == null}">
+							<div class="form-label">
+								<textarea class="form-control checkLength" data-length="255" rows="3" name="commentaire"
+									placeholder="Ajouter un commentaire pour le transporteur (max : 255 charatères)"></textarea>
+							</div>
+							<p class="help-block"></p>
+						</c:if>
+
 					</c:if>
 					<c:if test="${sessionScope.transport == null}">
 						<div class="form-label">
-							<textarea class="form-control checkLength" data-length="255" rows="3" name="commentaire" placeholder="Ajouter un commentaire pour le transporteur (max : 255 charatères)"></textarea>
+							<textarea class="form-control checkLength" data-length="255" rows="3" name="commentaire"
+								placeholder="Ajouter un commentaire pour le transporteur (max : 255 charatères)"></textarea>
 						</div>
 						<p class="help-block"></p>
 					</c:if>

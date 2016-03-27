@@ -5,6 +5,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <div class="rowProduct">
 	<c:set var="listProducts" value="${products}" />
+	<c:if test="${empty listProducts}">
+		Oups ! il n'y a aucun résultat.
+	</c:if>
 	<c:forEach var="product" items="${listProducts}" varStatus="counter">
 
 

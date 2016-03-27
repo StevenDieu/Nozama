@@ -42,32 +42,67 @@
 				<div class="form-group">
 					<c:if test="${commandes != null}">
 						<div class="panel-group" id="accordionCommande" role="tablist" aria-multiselectable="true">
-	  						<div class="panel panel-default">
+							<div class="panel panel-default">
 								<c:forEach var="commande" items="${listeCommandes}" varStatus="counter">
 									<div class="panel-heading" role="tab">
-								      <h4 class="panel-title">
-								        <a role="button" data-toggle="collapse" data-parent="#accordionCommande" href="#${commande.idOrder}" aria-expanded="true" aria-controls="collapseOne">
-								          Commande n°<c:out value="${commande.idOrder}"/>
-								        </a>
-								      </h4>
-								    </div>
-								    <div id="${commande.idOrder}"  class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
-								      	<div class="panel-body">
-									        <p>Total produit : <c:out value="${commande.totalProduct}"/></p>
-											<p>Frais de livraison : <c:out value="${commande.totalDelivery}"/></p>
-											<p>Coût total : <c:out value="${commande.totalOrder}"/></p>
-											<p>Mode de payement : <c:out value="${commande.modePayment}"/></p>
+										<h4 class="panel-title">
+											<a role="button" data-toggle="collapse" data-parent="#accordionCommande"
+												href="#${commande.idOrder}" aria-expanded="true" aria-controls="collapseOne">
+												Commande n°
+												<c:out value="${commande.idOrder}" />
+											</a>
+										</h4>
+									</div>
+									<div id="${commande.idOrder}" class="panel-collapse collapse" role="tabpanel"
+										aria-labelledby="headingOne">
+										<div class="panel-body">
+											<p>
+												Mode de payement :
+												<c:out value="${commande.modePayment}" />
+											</p>
+											<p>
+												Date de création :
+												<fmt:formatDate pattern="yyyy-MM-dd" value="${commande.createTime}" />
+												à
+												<fmt:formatDate pattern="HH:mm:ss" value="${commande.createTime}" />
+											</p>
+											<p>
+												Total produits :
+												<c:out value="${commande.totalProduct}" />
+												€
+											</p>
+											<p>
+												Frais de livraison :
+												<c:out value="${commande.totalDelivery}" />
+												€
+											</p>
+											<p>
+												<strong class="colorBlueA">Coût total : <c:out value="${commande.totalOrder}" /> €
+												</strong>
+											</p>
+
 										</div>
 										<div class="panel-body">
-									        <p>Adresse : <c:out value="${commande.adress.adressPrincipal}"/></p>
-											<p><c:out value="${commande.adress.adressSecondaire}"/></p>
-											<p>Code postal : <c:out value="${commande.adress.codePostal}"/></p>
-											<%--<p>Ville : <c:out value="${commande.adress.city}"/></p> --%>
-									    </div>
-									    <button type="button" class="btn btn-primary btn-lg btn-voitPrd input-100" data-id="${commande.idOrder}" data-toggle="modal" data-target="#myModal">
-										  Voir mes produits
-										</button>
-								    </div>
+											<p>
+												Adresse :
+												<c:out value="${commande.adress.adressPrincipal}" />
+											</p>
+											<p>
+												<c:out value="${commande.adress.adressSecondaire}" />
+											</p>
+											<p>
+												Code postal :
+												<c:out value="${commande.adress.codePostal}" />
+											</p>
+											<p>
+												Ville :
+												<c:out value="${commande.adress.city}" />
+											</p>
+										</div>
+										<button type="button" class="btn btn-primary btn-lg btn-voitPrd input-100"
+											data-id="${commande.idOrder}" data-toggle="modal" data-target="#myModal">Voir
+											mes produits</button>
+									</div>
 								</c:forEach>
 							</div>
 						</div>
@@ -87,8 +122,8 @@
 			aria-labelledby="headingThree">
 			<div class="panel-body">
 
-					<jsp:include page="authentication/contentAdress.jsp" />
-					
+				<jsp:include page="authentication/contentAdress.jsp" />
+
 			</div>
 		</div>
 	</div>
@@ -134,17 +169,17 @@
 	</div>
 </div>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Mes produits</h4>
-      </div>
-      <div class="modal-body body-article">
-        
-      </div>
-    </div>
-  </div>
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Mes produits</h4>
+			</div>
+			<div class="modal-body body-article"></div>
+		</div>
+	</div>
 </div>
 
 <script src="/resources/js/account/accountAdress.js"></script>

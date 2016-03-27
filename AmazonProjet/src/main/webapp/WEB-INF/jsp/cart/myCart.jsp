@@ -135,7 +135,7 @@
 			</div>
 			<div class="modal-body">Voulez-vous réellement supprimer le panier ?</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-danger suppressionPanier" data-dismiss="modal">Oui</button>
+				<button type="button" class="btn btn-success suppressionPanier" data-dismiss="modal">Oui</button>
 				<button type="button" class="btn btn-primary" data-dismiss="modal">Non</button>
 			</div>
 		</div>

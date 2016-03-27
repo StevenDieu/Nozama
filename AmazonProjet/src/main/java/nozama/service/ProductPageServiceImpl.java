@@ -29,8 +29,12 @@ public class ProductPageServiceImpl implements ProductPageService {
   public Map<String, Object> getProduct(String nameTagDateReleased) {
     Map<String, Object> product = new HashMap<String, Object>();
 
-    Product thisProduct = PR.getProductByNameTagDate(nameTagDateReleased);
-    margeAllResult(thisProduct, product);
+    try{
+      Product thisProduct = PR.getProductByNameTagDate(nameTagDateReleased);
+      margeAllResult(thisProduct, product);
+    }catch(Exception e){
+      
+    }
 
     return product;
   }

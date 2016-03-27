@@ -124,7 +124,7 @@ public class CtrlUser {
   public String ajaxAddMoneyAccount(HttpServletRequest request) {
     String numberAddAccountString = request.getParameter("numberAddAccount");
     if (request.getSession().getAttribute("User") != null) {
-      if (Util.convertToFloat(numberAddAccountString) && Util.isPrice(numberAddAccountString)) {
+      if (Util.checkConvertToFloat(numberAddAccountString) && Util.isPrice(numberAddAccountString)) {
         float numberAddAcount = Float.parseFloat(numberAddAccountString);
         if (numberAddAcount >= 5 && numberAddAcount <= 1000) {
           User user = (User) request.getSession().getAttribute("User");
@@ -144,7 +144,7 @@ public class CtrlUser {
     String idAdressString = request.getParameter("idAdress");
     if (request.getSession().getAttribute("User") != null) {
       User user = (User) request.getSession().getAttribute("User");
-      if (idAdressString != "" && Util.convertToInt(idAdressString)) {
+      if (idAdressString != "" && Util.checkConvertToInt(idAdressString)) {
         int idAdress = Integer.parseInt(idAdressString);
         Adress adress = US.checkAdressByUser(idAdress, user);
         if (adress != null) {
@@ -175,7 +175,7 @@ public class CtrlUser {
 
     if (request.getSession().getAttribute("User") != null) {
       User user = (User) request.getSession().getAttribute("User");
-      if (Util.convertToInt(idAdressString)) {
+      if (Util.checkConvertToInt(idAdressString)) {
         int idAdress = Integer.parseInt(idAdressString);
         Adress adressCheck = US.checkAdressByUser(idAdress, user);
         if (adressCheck != null) {
@@ -191,12 +191,12 @@ public class CtrlUser {
           }
 
           int codePostal;
-          if (!Util.convertToInt(codePostalString)) {
+          if (!Util.checkConvertToInt(codePostalString)) {
             return "{\"statut\": \"nok\"}";
           }
           codePostal = Integer.parseInt(codePostalString);
 
-          if (!Util.convertToInt(numberPhone)) {
+          if (!Util.checkConvertToInt(numberPhone)) {
             return "{\"statut\": \"nok\"}";
           }
 
@@ -262,12 +262,12 @@ public class CtrlUser {
     }
 
     int codePostal;
-    if (!Util.convertToInt(codePostalString)) {
+    if (!Util.checkConvertToInt(codePostalString)) {
       return "{\"statut\": \"error\",\"message\":  \"Le code postal doit être un chiffre.\"}";
     }
     codePostal = Integer.parseInt(codePostalString);
 
-    if (!Util.convertToInt(numberPhone)) {
+    if (!Util.checkConvertToInt(numberPhone)) {
       return "{\"statut\": \"error\",\"message\":  \"Le numéro de téléphone doit être un chiffre.\"}";
     }
 

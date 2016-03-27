@@ -25,29 +25,44 @@ import nozama.util.Util;
 @Controller
 public class CtrlCart {
 
+  /**
+   * It's a singleton for the service @ProductCartServiceImpl
+   */
   @Autowired
   private ProductCartServiceImpl PCS;
 
+  /**
+   * It's a singleton for the service @UserServiceImpl
+   */
   @Autowired
   private UserServiceImpl US;
 
+  /**
+   * [Ctrl] go to the recapitulatif cart
+   * 
+   * @param request
+   * @return view my cart
+   */
   @SuppressWarnings("unchecked")
   @RequestMapping(value = "/mon-panier")
   public ModelAndView myCart(HttpServletRequest request) {
+    Map<String, Object> products = new HashMap<String, Object>();
 
-    Map<String, Object> product = new HashMap<String, Object>();
-
-    if (request.getSession().getAttribute("cart") != null
-        && request.getSession().getAttribute("cart") != "") {
-
-      List<Map<String, Object>> allProduct =
-          PCS.getAllCart((List<Map<String, Object>>) request.getSession().getAttribute("cart"));
-      product.put("products", allProduct);
+    if (request.getSession().getAttribute("cart") != null) {
+      products.put("products",
+          PCS.getAllCart((List<Map<String, Object>>) request.getSession().getAttribute("cart")));
     }
 
-    return new ModelAndView("cart/myCart", product);
+    return new ModelAndView("cart/myCart", products);
   }
 
+  /**
+   * [Ctrl] After the recapitulatif of cart for initialise a new variable session cartControlTunnel
+   * 
+   * @param request
+   * @return redirect in mon-panier-etape-connexion (with us a etape and redirection for using F5
+   *         and don't reload action)
+   */
   @RequestMapping(value = "/mon-panier-validation-panier")
   public ModelAndView myCartValidation(HttpServletRequest request) {
     request.getSession().setAttribute("cartControlTunnel",
@@ -56,16 +71,20 @@ public class CtrlCart {
     return new ModelAndView("redirect:/mon-panier-etape-connexion");
   }
 
+  /**
+   * [Ctrl] Step 2 of cart for signup or signin
+   * 
+   * @param request
+   * @return
+   */
   @RequestMapping(value = "/mon-panier-etape-connexion")
-  public ModelAndView myCartConnexion(HttpServletRequest request) {
+  public ModelAndView myCartSignInOrSignUp(HttpServletRequest request) {
 
     Map<String, Object> redirect = new HashMap<String, Object>();
-    redirect.put("redirect", "/mon-panier-etape-adresse");
-    if (request.getSession().getAttribute("cartControlTunnel") == null
-        || request.getSession().getAttribute("cartControlTunnel") == "[]") {
+    redirect.put("redirect", "/mon-panier-etape-adresse");// redirect after singin or signup
 
+    if (request.getSession().getAttribute("cartControlTunnel") == null) {
       return new ModelAndView("redirect:/mon-panier");
-
     }
 
     if (request.getSession().getAttribute("User") != null) {
@@ -75,17 +94,18 @@ public class CtrlCart {
     return new ModelAndView("cart/myCartConnexion", redirect);
   }
 
+  /**
+   * [Ctrl] Step 3 for create or using a adress
+   * 
+   * @param request
+   * @return view myCartAdresse or redirect if we don't have information
+   */
   @RequestMapping(value = "/mon-panier-etape-adresse")
   public ModelAndView myCartAdress(HttpServletRequest request) {
 
-    String message = request.getParameter("message");
 
-
-    if (request.getSession().getAttribute("cartControlTunnel") == null
-        || request.getSession().getAttribute("cartControlTunnel") == "[]") {
-
+    if (request.getSession().getAttribute("cartControlTunnel") == null) {
       return new ModelAndView("redirect:/mon-panier");
-
     }
 
     if (request.getSession().getAttribute("User") == null) {
@@ -96,6 +116,8 @@ public class CtrlCart {
 
     Map<String, Object> adress = new HashMap<String, Object>();
     adress.put("adresss", US.getAllAdressByUser(user));
+    String message = request.getParameter("message"); // It's a message the register adress have an
+                                                      // error
     if (message != "") {
       adress.put("message", message);
     }
@@ -103,7 +125,13 @@ public class CtrlCart {
     return new ModelAndView("cart/myCartAdresse", adress);
   }
 
-  @SuppressWarnings("unchecked")
+  /**
+   * [Ctrl] Create or using an adress
+   * 
+   * @param request
+   * @return redirect in mon-panier-etape-livraison or redirect if error
+   * @throws UnsupportedEncodingException
+   */
   @RequestMapping(value = "/mon-panier-etape-validation-adress", method = RequestMethod.POST)
   public ModelAndView myCartCalidateAdress(HttpServletRequest request)
       throws UnsupportedEncodingException {
@@ -123,69 +151,58 @@ public class CtrlCart {
     if (request.getSession().getAttribute("User") == null) {
       return new ModelAndView("redirect:/mon-panier-etape-connexion");
     }
-    User user = (User) request.getSession().getAttribute("User");
 
-
-
-    if (request.getSession().getAttribute("cartControlTunnel") == null
-        || request.getSession().getAttribute("cartControlTunnel") == "[]") {
-
-      List<Map<String, Object>> allProduct = PCS.getAllCart(
-          (List<Map<String, Object>>) request.getSession().getAttribute("cartControlTunnel"));
-
-      if (allProduct.size() == 0) {
-        return new ModelAndView("redirect:/mon-panier");
-      }
-
+    if (request.getSession().getAttribute("cartControlTunnel") == null) {
+      return new ModelAndView("redirect:/mon-panier");
     }
 
+    if (request.getSession().getAttribute("cartControlTunnel") == null) {
+      return new ModelAndView("redirect:/mon-panier");
+    }
+
+    User user = (User) request.getSession().getAttribute("User");
 
     if (idAdressString != "") {
-      if (!Util.convertToInt(idAdressString)) {
-        Map<String, Object> redirect = new HashMap<String, Object>();
-        redirect.put("message", "Une erreur est survenue.");
-        return new ModelAndView("redirect:/mon-panier-etape-adresse", redirect);
+      if (!Util.checkConvertToInt(idAdressString)) {
+        return new ModelAndView("redirect:/mon-panier-etape-adresse",
+            Util.returnMessage("Une erreur est survenue."));
       }
 
       int idAdress = Integer.parseInt(idAdressString);
       Adress adress = US.checkAdressByUser(idAdress, user);
       if (adress == null) {
-        Map<String, Object> redirect = new HashMap<String, Object>();
-        redirect.put("message", "Une erreur est survenue.");
-        return new ModelAndView("redirect:/mon-panier-etape-adresse/", redirect);
+        return new ModelAndView("redirect:/mon-panier-etape-adresse/",
+            Util.returnMessage("Une erreur est survenue."));
       }
       request.getSession().setAttribute("address", adress);
     } else {
-      if (name.equals("") || nameLastName.equals("") || adressPrincipal.equals("") || codePostalString.equals("")
-          || pays.equals("") || numberPhone.equals("") || city.equals("")) {
-        Map<String, Object> redirect = new HashMap<String, Object>();
-        redirect.put("message", "Tout les champs sont obligatoires.");
-        return new ModelAndView("redirect:/mon-panier-etape-adresse", redirect);
+      if (name.isEmpty() || nameLastName.isEmpty() || adressPrincipal.isEmpty()
+          || codePostalString.isEmpty() || pays.isEmpty() || numberPhone.isEmpty()
+          || city.isEmpty()) {
+        return new ModelAndView("redirect:/mon-panier-etape-adresse",
+            Util.returnMessage("Tout les champs sont obligatoires."));
       } else if (name.length() > 255 || nameLastName.length() > 255
           || adressPrincipal.length() > 1024 || adressSecondaire.length() > 1024
-          || region.length() > 255 || codePostalString.length() > 5 || numberPhone.length() > 10 || city.length() > 255) {
-        Map<String, Object> redirect = new HashMap<String, Object>();
-        redirect.put("message", "Attention à la longueur des champs.");
-        return new ModelAndView("redirect:/mon-panier-etape-adresse", redirect);
+          || region.length() > 255 || codePostalString.length() > 5 || numberPhone.length() > 10
+          || city.length() > 255) {
+        return new ModelAndView("redirect:/mon-panier-etape-adresse",
+            Util.returnMessage("Attention à la longueur des champs."));
       }
 
       int codePostal;
-      if (!Util.convertToInt(codePostalString)) {
-        Map<String, Object> redirect = new HashMap<String, Object>();
-        redirect.put("message", "Le code postal doit être un chiffre");
-        return new ModelAndView("redirect:/mon-panier-etape-adresse", redirect);
+      if (!Util.checkConvertToInt(codePostalString)) {
+        return new ModelAndView("redirect:/mon-panier-etape-adresse",
+            Util.returnMessage("Le code postal doit être un chiffre"));
       }
       codePostal = Integer.parseInt(codePostalString);
 
-      if (!Util.convertToInt(numberPhone)) {
-        Map<String, Object> redirect = new HashMap<String, Object>();
-        redirect.put("message", "Le numéro de téléphone doit être un chiffre");
-        return new ModelAndView("redirect:/mon-panier-etape-adresse", redirect);
+      if (!Util.checkConvertToInt(numberPhone)) {
+        return new ModelAndView("redirect:/mon-panier-etape-adresse",
+            Util.returnMessage("Le numéro de téléphone doit être un chiffre"));
       }
 
-
       final Adress adress = US.insertAdress(name, nameLastName, adressPrincipal, adressSecondaire,
-          region, pays, user, codePostal, numberPhone,city);
+          region, pays, user, codePostal, numberPhone, city);
 
       request.getSession().setAttribute("address", adress);
     }
@@ -194,10 +211,22 @@ public class CtrlCart {
   }
 
 
+  /**
+   * [Ctrl] Step 4 for choose delivery
+   * 
+   * @param request
+   * @return view myCartDelivery or redirect if error
+   */
   @RequestMapping(value = "/mon-panier-etape-livraison")
   public ModelAndView myCartDelivery(HttpServletRequest request) {
-    if (request.getSession().getAttribute("cartControlTunnel") == null
-        || request.getSession().getAttribute("cartControlTunnel") == "[]") {
+    Map<String, Object> messageError = new HashMap<String, Object>();
+    String message = request.getParameter("message"); // It's a message the register adress have an
+                                                      // error
+    if (message != "") {
+      messageError.put("message", message);
+    }
+
+    if (request.getSession().getAttribute("cartControlTunnel") == null) {
       return new ModelAndView("redirect:/mon-panier");
     }
 
@@ -209,64 +238,73 @@ public class CtrlCart {
       return new ModelAndView("redirect:/mon-panier-etape-adresse");
     }
 
-    return new ModelAndView("cart/myCartDelivery");
+    return new ModelAndView("cart/myCartDelivery", messageError);
   }
 
 
-
+  /**
+   * [Ctrl] validation delivery and redirect to view myCartDelivery
+   * 
+   * @param request
+   * @return mon-panier-etape-paiement or redirect if error
+   * @throws UnsupportedEncodingException
+   */
   @RequestMapping(value = "/mon-panier-etape-validation-transport")
   public ModelAndView myCartValidateTransport(HttpServletRequest request)
       throws UnsupportedEncodingException {
-    if (request.getSession().getAttribute("cartControlTunnel") == null
-        || request.getSession().getAttribute("cartControlTunnel").equals("")) {
+
+    if (request.getSession().getAttribute("cartControlTunnel") == null) {
       return new ModelAndView("redirect:/mon-panier");
     }
 
-    if (request.getSession().getAttribute("User") == null
-        || request.getSession().getAttribute("User").equals("")) {
+    if (request.getSession().getAttribute("User") == null) {
       return new ModelAndView("redirect:/mon-panier-etape-connexion");
     }
 
-    if (request.getSession().getAttribute("address") == null
-        || request.getSession().getAttribute("address").equals("")) {
+    if (request.getSession().getAttribute("address") == null) {
       return new ModelAndView("redirect:/mon-panier-etape-adresse");
     }
     request.setCharacterEncoding("utf-8");
-
     String chooseTransport = request.getParameter("chooseTransport");
     String commentaire = request.getParameter("commentaire");
 
-
     if (commentaire.length() > 255) {
-      return new ModelAndView("redirect:/mon-panier-etape-livraison");
+      return new ModelAndView("redirect:/mon-panier-etape-livraison",
+          Util.returnMessage("Vérifier la longueur des champs."));
     }
 
-    if (chooseTransport.equals("")) {
-      return new ModelAndView("redirect:/mon-panier-etape-livraison");
+    if (chooseTransport.isEmpty()) {
+      return new ModelAndView("redirect:/mon-panier-etape-livraison",
+          Util.returnMessage("Le choix d'un transporteur est obligatoire."));
     }
-
-
 
     Map<String, Object> listTransport = new HashMap<>();
     listTransport.put("id", chooseTransport);
     listTransport.put("commentaire", Util.ConvertStringToNull(commentaire));
+    
     if (chooseTransport.equals("eco")) {
       listTransport.put("prix", new Float(10));
     } else if (chooseTransport.equals("exp")) {
       listTransport.put("prix", new Float(14));
     } else {
-      return new ModelAndView("redirect:/mon-panier-etape-livraison");
+      return new ModelAndView("redirect:/mon-panier-etape-livraison",
+          Util.returnMessage("Une erreur est survenue."));
     }
+    
     request.getSession().setAttribute("transport", listTransport);
 
     return new ModelAndView("redirect:/mon-panier-etape-paiement");
   }
 
+  /**
+   * [Ctrl] Step 5 choose your payment for validate a cart
+   * @param request
+   * @return view myCartPayment
+   */
   @SuppressWarnings("unchecked")
   @RequestMapping(value = "/mon-panier-etape-paiement")
   public ModelAndView myCartPayment(HttpServletRequest request) {
-    if (request.getSession().getAttribute("cartControlTunnel") == null
-        || request.getSession().getAttribute("cartControlTunnel") == "[]") {
+    if (request.getSession().getAttribute("cartControlTunnel") == null) {
       return new ModelAndView("redirect:/mon-panier");
     }
 
@@ -282,31 +320,37 @@ public class CtrlCart {
       return new ModelAndView("redirect:/mon-panier-etape-livraison");
     }
 
+    List<Map<String, Object>> cartControlTunnel = (List<Map<String, Object>>) request.getSession().getAttribute("cartControlTunnel");
+    
     float calculTotalProduct = PCS.calculTotalProduct(
-        (List<Map<String, Object>>) request.getSession().getAttribute("cartControlTunnel"));
+        cartControlTunnel);
     request.getSession().setAttribute("prixTotalProduct", calculTotalProduct);
     Map<String, Object> transport =
         (Map<String, Object>) request.getSession().getAttribute("transport");
     request.getSession().setAttribute("totalPrice",
         calculTotalProduct + (Float) transport.get("prix"));
 
-    Map<String, Object> product = new HashMap<String, Object>();
+    Map<String, Object> products = new HashMap<String, Object>();
 
-    List<Map<String, Object>> allProduct = PCS.getAllCart(
-        (List<Map<String, Object>>) request.getSession().getAttribute("cartControlTunnel"));
-    product.put("products", allProduct);
+    final List<Map<String, Object>> allProduct = PCS.getAllCart(
+        cartControlTunnel);
+    products.put("products", allProduct);
 
-    return new ModelAndView("cart/myCartPayment", product);
+    return new ModelAndView("cart/myCartPayment", products);
   }
 
 
+  /**
+   * [Ctrl] [Ajax] Validate a payment and choose the ctrl suitable
+   * @param request
+   * @return a json for javascript
+   */
   @RequestMapping(value = "/ajaxValidatePayment", method = RequestMethod.POST)
   @ResponseBody
   public String validatePayment(HttpServletRequest request) {
     String choosePayment = request.getParameter("choosePayment");
 
-    if (request.getSession().getAttribute("cartControlTunnel") == null
-        || request.getSession().getAttribute("cartControlTunnel") == "[]") {
+    if (request.getSession().getAttribute("cartControlTunnel") == null) {
       return "{\"statut\": \"error\",\"message\":  \"Une erreur est survenue.\"}";
     }
 
@@ -328,7 +372,6 @@ public class CtrlCart {
 
     User user = (User) request.getSession().getAttribute("User");
 
-
     if (choosePayment.equals("PREPAYE") || choosePayment.equals("PAYPAL")
         || choosePayment.equals("CB")) {
       if (choosePayment.equals("PREPAYE")) {
@@ -346,7 +389,7 @@ public class CtrlCart {
 
     return "{\"statut\": \"error\",\"message\":  \"Une erreur est survenue.\"}";
   }
-  
+
   @RequestMapping(value = "/page-payment")
   public ModelAndView pagePaymentPSP(HttpServletRequest request) {
     if (request.getSession().getAttribute("cartControlTunnel") == null
@@ -370,7 +413,7 @@ public class CtrlCart {
       return new ModelAndView("redirect:/mon-panier-etape-paiement");
     }
 
-    
+
     return new ModelAndView("cart/myPayment");
   }
 
@@ -414,9 +457,10 @@ public class CtrlCart {
     if (modePayment.equals("PREPAYE")) {
       user.setComptePrepaye(user.getComptePrepaye() - totalPrice);
       US.updateUser(user);
-      request.getSession().setAttribute("User",user);
+      request.getSession().setAttribute("User", user);
     }
-    PCS.insertProductOrder((List<Map<String, Object>>) request.getSession().getAttribute("cartControlTunnel"),order);
+    PCS.insertProductOrder(
+        (List<Map<String, Object>>) request.getSession().getAttribute("cartControlTunnel"), order);
     request.getSession().setAttribute("cart", null);
     request.getSession().setAttribute("cartControlTunnel", null);
     request.getSession().setAttribute("address", null);
@@ -432,10 +476,10 @@ public class CtrlCart {
 
   @RequestMapping(value = "/commande-valider")
   public ModelAndView orderValidate(HttpServletRequest request) {
-    if(request.getSession().getAttribute("lastOrder") == null){
+    if (request.getSession().getAttribute("lastOrder") == null) {
       return new ModelAndView("redirect:/mon-panier");
     }
-    
+
     return new ModelAndView("cart/orderValidate");
   }
 
@@ -446,7 +490,7 @@ public class CtrlCart {
     String idString = request.getParameter("id");
     List<Map<String, Object>> listMapCart = new ArrayList<Map<String, Object>>();
 
-    if (idString != "" && Util.convertToInt(idString)) {
+    if (idString != "" && Util.checkConvertToInt(idString)) {
       int id = Integer.parseInt(idString);
 
       if (request.getSession().getAttribute("cart") != null
@@ -467,9 +511,14 @@ public class CtrlCart {
           }
         }
         request.getSession().setAttribute("nbCart", listMapCart.size());
-        request.getSession().setAttribute("cart", listMapCart);
+        if (listMapCart.size() == 0) {
+          request.getSession().setAttribute("cart", null);
+        } else {
+          request.getSession().setAttribute("cart", listMapCart);
+        }
       }
     }
+
     return Integer.toString(listMapCart.size());
   }
 
@@ -489,8 +538,8 @@ public class CtrlCart {
 
     int number = 1;
 
-    if (idString != "" && Util.convertToInt(idString) && numberString != ""
-        && Util.convertToInt(numberString)) {
+    if (idString != "" && Util.checkConvertToInt(idString) && numberString != ""
+        && Util.checkConvertToInt(numberString)) {
       int id = Integer.parseInt(idString);
       number = Integer.parseInt(numberString);
       if (number < 0) {
@@ -531,12 +580,11 @@ public class CtrlCart {
     String idString = request.getParameter("id");
     Boolean newProduct = true;
 
-    if (idString != "" && Util.convertToInt(idString)) {
+    if (idString != "" && Util.checkConvertToInt(idString)) {
       int id = Integer.parseInt(idString);
       List<Map<String, Object>> listMapCart;
 
-      if (request.getSession().getAttribute("cart") == null
-          || request.getSession().getAttribute("cart").equals("")) {
+      if (request.getSession().getAttribute("cart") == null) {
         listMapCart = new ArrayList<Map<String, Object>>();
       } else {
         listMapCart = (List<Map<String, Object>>) request.getSession().getAttribute("cart");

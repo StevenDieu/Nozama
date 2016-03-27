@@ -4,7 +4,7 @@
 	<div class="container">
 		<p>
 			@Copyright
-			<a href="http://www.misys.com/">Misys</a>
+			<a href="/">Misys</a>
 		</p>
 	</div>
 </footer>

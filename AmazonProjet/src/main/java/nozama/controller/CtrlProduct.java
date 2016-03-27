@@ -52,12 +52,12 @@ public class CtrlProduct {
     String startResultString = PLS.getParametersString(startResultUrl, "1");
 
     int years = -1;
-    if (Util.convertToInt(stringYears)) {
+    if (Util.checkConvertToInt(stringYears)) {
       years = Integer.parseInt(stringYears);
     }
 
     int startResult = 1;
-    if (Util.convertToInt(startResultString)) {
+    if (Util.checkConvertToInt(startResultString)) {
       startResult = Integer.parseInt(startResultString);
     }
     
@@ -99,12 +99,12 @@ public class CtrlProduct {
     String stringYears = PLS.getParametersString(yearsUrl, "default");
 
     int startResult = 1;
-    if (Util.convertToInt(startResultString)) {
+    if (Util.checkConvertToInt(startResultString)) {
       startResult = Integer.parseInt(startResultString);
     }
 
     int years = -1;
-    if (Util.convertToInt(stringYears)) {
+    if (Util.checkConvertToInt(stringYears)) {
       years = Integer.parseInt(stringYears);
     }
 
@@ -137,12 +137,12 @@ public class CtrlProduct {
     String startResultString = PLS.getParametersString(startResultUrl, "1");
 
     int startResult = 1;
-    if (Util.convertToInt(startResultString)) {
+    if (Util.checkConvertToInt(startResultString)) {
       startResult = Integer.parseInt(startResultString);
     }
 
     int years = -1;
-    if (Util.convertToInt(stringYears)) {
+    if (Util.checkConvertToInt(stringYears)) {
       years = Integer.parseInt(stringYears);
     }
 

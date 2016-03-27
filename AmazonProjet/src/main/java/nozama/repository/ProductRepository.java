@@ -157,6 +157,7 @@ public class ProductRepository {
     List<Product> listProduct = cr.list();
     openSession.close();
     HibernateUtil.shutdown();
+
     return listProduct.get(0);
   }
 
