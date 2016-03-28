@@ -18,6 +18,10 @@ import nozama.model.Product;
 import nozama.model.ProductOrder;
 import nozama.util.HibernateUtil;
 
+/**
+ * It's repository for request in BDD for Product
+ *
+ */
 @SuppressWarnings("unchecked")
 @Repository
 public class ProductRepository {
@@ -117,8 +121,7 @@ public class ProductRepository {
   }
 
   /**
-   * Select one product by conditions :
-   * nameTagDateReleased
+   * Select one product parent by idProduct :
    * 
    * join : 
    * articles
@@ -127,7 +130,7 @@ public class ProductRepository {
    * products
    * 
    * @param idProduct
-   * @return
+   * @return Product
    */
   public Product getProductParent(int idProduct) {
     Session openSession = HibernateUtil.getSessionFactory().openSession();
@@ -148,6 +151,17 @@ public class ProductRepository {
     return listProduct.get(0);
   }
 
+  /**
+   * Select one product by list idProduct :
+   * 
+   * 
+   * join : 
+   * articles
+   * attrProducts
+   * 
+   * @param idProduct
+   * @return List<Product>
+   */
   public List<Product> getProductById(List<Integer> idProduct) {
     Session openSession = HibernateUtil.getSessionFactory().openSession();
 
@@ -163,6 +177,17 @@ public class ProductRepository {
     return listProduct;
   }
 
+  /**
+   * Select one product by idProduct :
+   * 
+   * 
+   * join : 
+   * articles
+   * attrProducts
+   * 
+   * @param idProduct
+   * @return Product
+   */
   public Product getProductById(Integer idProduct) {
     Session openSession = HibernateUtil.getSessionFactory().openSession();
 
@@ -181,13 +206,22 @@ public class ProductRepository {
     return listProduct.get(0);
   }
 
-  public List<Article> getArticleById(List<Integer> allId) {
+  /**
+   * Select list article by idProduct :
+   * 
+   * join : 
+   * product
+   * 
+   * @param idArticle
+   * @return List<Article>
+   */
+  public List<Article> getArticleById(List<Integer> idArticle) {
     Session openSession = HibernateUtil.getSessionFactory().openSession();
 
     Criteria cr = openSession.createCriteria(Article.class);
     cr.createAlias("product", "p", JoinType.LEFT_OUTER_JOIN);
 
-    cr.add(Restrictions.in("idArticle", allId));
+    cr.add(Restrictions.in("idArticle", idArticle));
 
     List<Article> listProduct = cr.list();
 
@@ -196,13 +230,22 @@ public class ProductRepository {
     return listProduct;
   }
 
-  public Article getArticleById(Integer id) {
+  /**
+   * Select one article by idProduct :
+   * 
+   * join : 
+   * product
+   * 
+   * @param idArticle
+   * @return Article
+   */
+  public Article getArticleById(Integer idArticle) {
     Session openSession = HibernateUtil.getSessionFactory().openSession();
 
     Criteria cr = openSession.createCriteria(Article.class);
     cr.createAlias("product", "p", JoinType.LEFT_OUTER_JOIN);
 
-    cr.add(Restrictions.eq("idArticle", id));
+    cr.add(Restrictions.eq("idArticle", idArticle));
 
     List<Article> listProduct = cr.list();
 
@@ -215,6 +258,11 @@ public class ProductRepository {
     return listProduct.get(0);
   }
 
+  /**
+   * Insert Order in Bdd
+   * 
+   * @param order
+   */
   public void inserOrder(Order order) {
     Session openSession = HibernateUtil.getSessionFactory().openSession();
     Transaction tx = openSession.beginTransaction();
@@ -232,6 +280,11 @@ public class ProductRepository {
     HibernateUtil.shutdown();
   }
 
+  /**
+   * Insert productOrder in Bdd
+   * 
+   * @param productOrder
+   */
   public void inserOrderProduct(ProductOrder productOrder) {
     Session openSession = HibernateUtil.getSessionFactory().openSession();
     Transaction tx = openSession.beginTransaction();
@@ -249,6 +302,13 @@ public class ProductRepository {
     HibernateUtil.shutdown();
   }
 
+  /**
+   * get all product by type and Attribut for the home page
+   * 
+   * @param type
+   * @param attrProduct
+   * @return List<Product>
+   */
   public List<Product> getAllProductByTypeAndAttribut(List<String> type, String attrProduct) {
     Session openSession = HibernateUtil.getSessionFactory().openSession();
 

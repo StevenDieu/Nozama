@@ -21,6 +21,10 @@ import nozama.service.ProductPageServiceImpl;
 import nozama.service.UserServiceImpl;
 import nozama.util.Util;
 
+/**
+ * All controller for List product or page Product
+ *
+ */
 @Controller
 public class CtrlProduct {
 
@@ -66,11 +70,11 @@ public class CtrlProduct {
       @PathVariable("type") Optional<String> typeUrl,
       @PathVariable("startResult") Optional<String> startResultUrl) {
 
-    String support = PLS.getParametersString(supportUrl, "AllSupport");
-    String recordType = PLS.getParametersString(recordTypeUrl, "AllType");
-    String stringYears = PLS.getParametersString(yearsUrl, "default");
-    String genre = PLS.getParametersString(typeUrl, "ALL");
-    String startResultString = PLS.getParametersString(startResultUrl, "1");
+    String support = Util.getParametersString(supportUrl, "AllSupport");
+    String recordType = Util.getParametersString(recordTypeUrl, "AllType");
+    String stringYears = Util.getParametersString(yearsUrl, "default");
+    String genre = Util.getParametersString(typeUrl, "ALL");
+    String startResultString = Util.getParametersString(startResultUrl, "1");
 
     int years = -1;
     if (Util.checkConvertToInt(stringYears)) {
@@ -126,10 +130,10 @@ public class CtrlProduct {
       @PathVariable("years") Optional<String> yearsUrl,
       @PathVariable("startResult") Optional<String> startResultUrl) {
 
-    String support = PLS.getParametersString(supportUrl, "AllSupport");
-    String genre = PLS.getParametersString(typeUrl, "ALL");
-    String startResultString = PLS.getParametersString(startResultUrl, "1");
-    String stringYears = PLS.getParametersString(yearsUrl, "default");
+    String support = Util.getParametersString(supportUrl, "AllSupport");
+    String genre = Util.getParametersString(typeUrl, "ALL");
+    String startResultString = Util.getParametersString(startResultUrl, "1");
+    String stringYears = Util.getParametersString(yearsUrl, "default");
 
     int startResult = 1;
     if (Util.checkConvertToInt(startResultString)) {
@@ -176,8 +180,8 @@ public class CtrlProduct {
   public ModelAndView listAllProducts(HttpServletRequest request,
       @PathVariable("years") Optional<String> yearsUrl,
       @PathVariable("startResult") Optional<String> startResultUrl) {
-    String stringYears = PLS.getParametersString(yearsUrl, "default");
-    String startResultString = PLS.getParametersString(startResultUrl, "1");
+    String stringYears = Util.getParametersString(yearsUrl, "default");
+    String startResultString = Util.getParametersString(startResultUrl, "1");
 
     int startResult = 1;
     if (Util.checkConvertToInt(startResultString)) {
@@ -221,19 +225,19 @@ public class CtrlProduct {
   public ModelAndView pageProduct(HttpServletRequest request,
       @PathVariable("nameTagDateReleased") Optional<String> nameTagDateReleasedUrl,
       @PathVariable("type") Optional<String> typeUrl) {
-    String nameTagDateReleased = PLS.getParametersString(nameTagDateReleasedUrl, "");
-    String type = PLS.getParametersString(typeUrl, "");
+    String nameTagDateReleased = Util.getParametersString(nameTagDateReleasedUrl, "");
+    String type = Util.getParametersString(typeUrl, "");
 
     if (Util.checkStringIsNull(type)) {
-      return new ModelAndView("redirect:/");
+      return new ModelAndView("redirect:/404");
     }
 
     if (Util.checkStringIsNull(nameTagDateReleased)) {
-      return new ModelAndView("redirect:/");
+      return new ModelAndView("redirect:/404");
     }
     Map<String, Object> productItem = PPS.getProduct(nameTagDateReleased);
     if (productItem.size() <= 0) {
-      return new ModelAndView("redirect:/");
+      return new ModelAndView("redirect:/404");
     }
     Map<String, Object> product = new HashMap<String, Object>();
     product.put("products", productItem);
@@ -269,6 +273,6 @@ public class CtrlProduct {
       }
       return new ModelAndView("account/modaleProduct", variableParam);
     }
-    return new ModelAndView("redirect:/", variableParam);
+    return new ModelAndView("redirect:/404", variableParam);
   }
 }

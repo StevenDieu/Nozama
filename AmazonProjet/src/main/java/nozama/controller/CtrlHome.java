@@ -13,6 +13,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import nozama.service.ProductListServiceImpl;
 
+/**
+ * All controller for home or error page
+ *
+ */
 @Controller
 public class CtrlHome {
 

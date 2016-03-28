@@ -2,18 +2,16 @@ package nozama.service;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 @Service
 public interface ProductListService {
 
-  public String getParametersString(Optional<String> supportUrl, String stringDefault);
+  public List<Map<String, Object>> getAllProductByCondition(String support, String recordType,
+      int years, String genre);
 
+  public Map<String, Object> setMapForDate(int years);
 
-  List<Map<String, Object>> getAllProductByCondition(String support, String recordType, int years,
-      String genre);
-
-
+  public List<Map<String, Object>> getProductHomeByCondition(String type);
 }

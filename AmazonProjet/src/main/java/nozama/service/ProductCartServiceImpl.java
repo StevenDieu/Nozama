@@ -19,15 +19,28 @@ import nozama.model.User;
 import nozama.repository.ProductRepository;
 import nozama.util.Util;
 
+/**
+ * All method for cart or control tunnel
+ *
+ */
 @Service
 public class ProductCartServiceImpl implements ProductCartService {
 
+  /**
+   * It's a singleton for the service @ProductRepository
+   */
   @Autowired
   private ProductRepository PR;
 
   private List<Map<String, Object>> allCart;
 
-  public List<Map<String, Object>> getAllCart(List<Map<String, Object>> allCart) {
+  /**
+   * Get all article reference in the cart
+   * 
+   * @param allCart
+   * @return List<Map<String, Object>>
+   */
+  public List<Map<String, Object>> getAllArticleInTheCart(List<Map<String, Object>> allCart) {
     this.allCart = allCart;
     List<Map<String, Object>> allProduct = new ArrayList<Map<String, Object>>();
 
@@ -37,16 +50,21 @@ public class ProductCartServiceImpl implements ProductCartService {
         allId.add((Integer) productCart.get("id"));
       }
     }
+
     if (allId.size() > 0) {
       List<Article> articles = PR.getArticleById(allId);
       margeAllResultTypeSupport(articles, allProduct);
     }
 
-
-
     return allProduct;
   }
 
+  /**
+   * Marge all articles for get a map
+   * 
+   * @param articles
+   * @param allProduct
+   */
   private void margeAllResultTypeSupport(List<Article> articles,
       List<Map<String, Object>> allProduct) {
     for (Article article : articles) {
@@ -54,7 +72,14 @@ public class ProductCartServiceImpl implements ProductCartService {
     }
   }
 
-
+  /**
+   * Insert map in list product the last map
+   * 
+   * @param allProduct
+   * @param type
+   * @param product
+   * @param article
+   */
   private void insertInProducts(List<Map<String, Object>> allProduct, String type, Product product,
       Article article) {
     Map<String, Object> newProduct = new HashMap<String, Object>();
@@ -90,6 +115,12 @@ public class ProductCartServiceImpl implements ProductCartService {
   }
 
 
+  /**
+   * Calcul the total price of the cart
+   * 
+   * @param list
+   * @return float
+   */
   public float calculTotalProduct(List<Map<String, Object>> list) {
     float priceTotal = 0;
     for (Map<String, Object> product : list) {
@@ -102,6 +133,17 @@ public class ProductCartServiceImpl implements ProductCartService {
 
   }
 
+  /**
+   * The method create and insert order in bdd
+   * 
+   * @param adress
+   * @param listTransport
+   * @param modePayment
+   * @param user
+   * @param totalPrice
+   * @param prixTotalProduct
+   * @return
+   */
   public Order insertOrder(Adress adress, Map<String, Object> listTransport, String modePayment,
       User user, float totalPrice, float prixTotalProduct) {
     Order order = new Order();
@@ -120,7 +162,12 @@ public class ProductCartServiceImpl implements ProductCartService {
     return order;
   }
 
-
+  /**
+   * The method create and insert ProductOrder in bdd
+   * 
+   * @param carts
+   * @param order
+   */
   public void insertProductOrder(List<Map<String, Object>> carts, Order order) {
     List<Integer> allId = new ArrayList<>();
     for (Map<String, Object> cart : carts) {
@@ -130,7 +177,6 @@ public class ProductCartServiceImpl implements ProductCartService {
     if (allId.size() > 0) {
       List<Article> articles = PR.getArticleById(allId);
       for (Article article : articles) {
-
 
         ProductOrder productOrder = new ProductOrder();
         productOrder.setArticle(article);
@@ -142,9 +188,6 @@ public class ProductCartServiceImpl implements ProductCartService {
         }
         PR.inserOrderProduct(productOrder);
       }
-
     }
-
   }
-
 }

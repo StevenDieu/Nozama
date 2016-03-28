@@ -21,6 +21,10 @@ import nozama.model.User;
 import nozama.service.UserServiceImpl;
 import nozama.util.Util;
 
+/**
+ * All controller for user
+ *
+ */
 @Controller
 public class CtrlUser {
 

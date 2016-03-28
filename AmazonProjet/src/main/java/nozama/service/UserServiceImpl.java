@@ -19,13 +19,28 @@ import nozama.model.User;
 import nozama.repository.UserRepository;
 import nozama.util.Util;
 
+/**
+ * All method for user
+ *
+ */
 @Service
 public class UserServiceImpl implements UserService {
 
+  /**
+   * It's a singleton for the service @UserRepository
+   */
   @Autowired
-  private UserRepository UR;
-  private static Logger log = Logger.getLogger(UserServiceImpl.class.getName());
+  public UserRepository UR;
 
+  public static Logger log = Logger.getLogger(UserServiceImpl.class.getName());
+
+  /**
+   * Get user if the email and password is correct
+   * 
+   * @param email
+   * @param password
+   * @return User
+   */
   public User connexion(String email, String password) {
     List<User> users = UR.getUserByEmailAndPwd(email, sha256(password));
     if (users.size() == 1) {
@@ -34,16 +49,39 @@ public class UserServiceImpl implements UserService {
       return null;
     }
   }
-  
-  public List<Order> getOrder(User user){
-	  return UR.getOrdersUser(user);
-  }
-  
-  public List<Product> getProductCmd(Order order){
-	  List<Product> productCmd = UR.getProductCmd(order);
-	return productCmd;
+
+  /**
+   * Get order for an user
+   * 
+   * @param user
+   * @return List<Order>
+   */
+  public List<Order> getOrder(User user) {
+    return UR.getOrdersUser(user);
   }
 
+  /**
+   * Get product by order
+   * 
+   * @param order
+   * @return
+   */
+  public List<Product> getProductCmd(Order order) {
+    List<Product> productCmd = UR.getProductCmd(order);
+    return productCmd;
+  }
+
+  /**
+   * register an user
+   * 
+   * @param gender
+   * @param name
+   * @param lastName
+   * @param emailAdress
+   * @param password
+   * @param ipAdress
+   * @return Current User
+   */
   public User register(String gender, String name, String lastName, String emailAdress,
       String password, String ipAdress) {
     User user = new User();
@@ -59,22 +97,51 @@ public class UserServiceImpl implements UserService {
 
     return user;
   }
-  
+
+  /**
+   * Get all address by one user
+   * 
+   * @param user
+   * @return List<Adress>
+   */
   public List<Adress> getAllAdressByUser(User user) {
     List<Adress> adresss = UR.getAdressByUser(user);
     return adresss;
   }
 
+  /**
+   * Chek if address exist for on user
+   * 
+   * @param idAdress
+   * @param user
+   * @return Adress
+   */
   public Adress checkAdressByUser(int idAdress, User user) {
-    List<Adress> adresss = UR.getAdressByUserAndIdAdress(idAdress,user);
-    if(adresss.size() == 1){
+    List<Adress> adresss = UR.getAdressByUserAndIdAdress(idAdress, user);
+    if (adresss.size() == 1) {
       return adresss.get(0);
     }
     return null;
   }
-  
-  public Adress insertAdress(String name, String nameLastName, String adressPrincipal, String adressSecondaire,
-      String region, String pays, User user, int codePostal, String numberPhone, String city) {
+
+  /**
+   * Insert address in BDD
+   * 
+   * @param name
+   * @param nameLastName
+   * @param adressPrincipal
+   * @param adressSecondaire
+   * @param region
+   * @param pays
+   * @param user
+   * @param codePostal
+   * @param numberPhone
+   * @param city
+   * @return Current Address
+   */
+  public Adress insertAdress(String name, String nameLastName, String adressPrincipal,
+      String adressSecondaire, String region, String pays, User user, int codePostal,
+      String numberPhone, String city) {
     Adress adress = new Adress();
     adress.setName(name);
     adress.setAdressPrincipal(adressPrincipal);
@@ -87,10 +154,25 @@ public class UserServiceImpl implements UserService {
     adress.setUser(user);
     adress.setCity(city);
     UR.insertAdress(adress);
-    
+
     return adress;
   }
-  
+
+  /**
+   * Update address in BDD
+   * 
+   * @param idAdress
+   * @param name
+   * @param nameLastName
+   * @param adressPrincipal
+   * @param adressSecondaire
+   * @param region
+   * @param pays
+   * @param user
+   * @param codePostal
+   * @param numberPhone
+   * @param city
+   */
   public void updateAdress(int idAdress, String name, String nameLastName, String adressPrincipal,
       String adressSecondaire, String region, String pays, User user, int codePostal,
       String numberPhone, String city) {
@@ -109,16 +191,32 @@ public class UserServiceImpl implements UserService {
 
     UR.updateAdress(adress);
   }
-  
+
+  /**
+   * Delete address in BDD
+   * 
+   * @param adress
+   */
   public void deleteAdress(Adress adress) {
     UR.deleteAdress(adress);
   }
-  
+
+  /**
+   * Update user in BDD
+   * 
+   * @param user
+   */
   public void updateUser(User user) {
     UR.updateUser(user);
   }
-  
 
+
+  /**
+   * Check if Email exist in BDD
+   * 
+   * @param email
+   * @return
+   */
   public boolean checkEmail(String email) {
     List<User> users = UR.getUserByEmail(email);
     if (users.size() == 1) {
@@ -179,16 +277,4 @@ public class UserServiceImpl implements UserService {
     }
     return ipAddress;
   }
-
-
-
-
-
-
-
-
-
-
-
-
 }

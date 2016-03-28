@@ -55,7 +55,7 @@ public class CtrlCart {
 
     if (request.getSession().getAttribute("cart") != null) {
       products.put("products",
-          PCS.getAllCart((List<Map<String, Object>>) request.getSession().getAttribute("cart")));
+          PCS.getAllArticleInTheCart((List<Map<String, Object>>) request.getSession().getAttribute("cart")));
     }
 
     return new ModelAndView("cart/myCart", products);
@@ -301,7 +301,7 @@ public class CtrlCart {
 
     Map<String, Object> products = new HashMap<String, Object>();
 
-    final List<Map<String, Object>> allProduct = PCS.getAllCart(cartControlTunnel);
+    final List<Map<String, Object>> allProduct = PCS.getAllArticleInTheCart(cartControlTunnel);
     products.put("products", allProduct);
 
     return new ModelAndView("cart/myCartPayment", products);

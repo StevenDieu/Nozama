@@ -8,7 +8,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +17,28 @@ import nozama.model.Article;
 import nozama.model.Product;
 import nozama.repository.ProductRepository;
 
+/**
+ * All method for List product
+ *
+ */
 @Service
 public class ProductListServiceImpl implements ProductListService {
 
+  /**
+   * It's a singleton for the service @ProductRepository
+   */
   @Autowired
   private ProductRepository PR;
 
-  @Override
+  /**
+   * get all product for the list page
+   * 
+   * @param support
+   * @param recordType
+   * @param years
+   * @param genre
+   * @return List<Map<String, Object>>
+   */
   public List<Map<String, Object>> getAllProductByCondition(String support, String recordType,
       int years, String genre) {
     List<Map<String, Object>> allProduct = new ArrayList<Map<String, Object>>();
@@ -45,6 +59,12 @@ public class ProductListServiceImpl implements ProductListService {
 
   }
 
+  /**
+   * Marge all result of product in the List<Map>
+   * 
+   * @param allProduct
+   * @param products
+   */
   private void margeAllResultProduct(List<Map<String, Object>> allProduct, List<Product> products) {
     for (Product product : products) {
 
@@ -62,6 +82,14 @@ public class ProductListServiceImpl implements ProductListService {
     }
   }
 
+  /**
+   * Insert Product in the list<Map>
+   * 
+   * @param allProduct
+   * @param type
+   * @param articles
+   * @param product
+   */
   private void insertInProducts(List<Map<String, Object>> allProduct, String type,
       Set<Article> articles, Product product) {
     Map<String, Object> newProduct = new HashMap<String, Object>();
@@ -94,6 +122,12 @@ public class ProductListServiceImpl implements ProductListService {
     allProduct.add(newProduct);
   }
 
+  /**
+   * Cehck if we have condition with date
+   * 
+   * @param years
+   * @return Map<String, Object>
+   */
   public Map<String, Object> setMapForDate(int years) {
     Map<String, Object> mapForDate = new HashMap<String, Object>();
     boolean useDate = true;
@@ -119,6 +153,12 @@ public class ProductListServiceImpl implements ProductListService {
     return mapForDate;
   }
 
+  /**
+   * get date by year (int)
+   * 
+   * @param years
+   * @return Date
+   */
   private Date getDate(int years) {
     Calendar cal = Calendar.getInstance();
 
@@ -131,31 +171,35 @@ public class ProductListServiceImpl implements ProductListService {
     return cal.getTime();
   }
 
-  public Comparator<Map<String, Object>> mapComparator = new Comparator<Map<String, Object>>() {
+  /**
+   * Sort by dateReleased
+   */
+  private Comparator<Map<String, Object>> mapComparator = new Comparator<Map<String, Object>>() {
     public int compare(Map<String, Object> m1, Map<String, Object> m2) {
       Date firstCompare = (Date) m1.get("dateReleased");
       Date secondeCompare = (Date) m2.get("dateReleased");
       return secondeCompare.compareTo(firstCompare);
     }
   };
-  
-  public Comparator<Map<String, String>> mapComparatorSupport = new Comparator<Map<String, String>>() {
-    public int compare(Map<String, String> m1, Map<String, String> m2) {
-      return m1.get("support").compareTo(m2.get("support"));
-    }
-  };
 
-  @Override
-  public String getParametersString(Optional<String> supportUrl, String stringDefault) {
-    String stringParameters;
-    if (supportUrl.isPresent()) {
-      stringParameters = supportUrl.get();
-    } else {
-      stringParameters = stringDefault;
-    }
-    return stringParameters;
-  }
+  /**
+   * Sort by support
+   */
+  private Comparator<Map<String, String>> mapComparatorSupport =
+      new Comparator<Map<String, String>>() {
+        public int compare(Map<String, String> m1, Map<String, String> m2) {
+          return m1.get("support").compareTo(m2.get("support"));
+        }
+      };
 
+
+  /**
+   * Check if we use genre and add type in list
+   * 
+   * @param recordType
+   * @param listType
+   * @return boolean
+   */
   private boolean setListType(String recordType, List<String> listType) {
     if (recordType.equals("AllType")) {
       listType.add("single");
@@ -168,7 +212,12 @@ public class ProductListServiceImpl implements ProductListService {
     return true;
   }
 
-
+  /**
+   * Check if we use genre
+   * 
+   * @param genre
+   * @return boolean
+   */
   private boolean checkUseGenre(String genre) {
     if (genre.equals("ALL")) {
       return false;
@@ -176,7 +225,12 @@ public class ProductListServiceImpl implements ProductListService {
     return true;
   }
 
-
+  /**
+   * Check if we use support
+   * 
+   * @param support
+   * @return boolean
+   */
   private boolean checkUseSupport(String support) {
     if (support.equals("AllSupport")) {
       return false;
@@ -184,13 +238,19 @@ public class ProductListServiceImpl implements ProductListService {
     return true;
   }
 
+  /**
+   * Get product for the home page
+   * 
+   * @param type
+   * @return List<Map<String, Object>>
+   */
   public List<Map<String, Object>> getProductHomeByCondition(String type) {
     List<String> listType = new ArrayList<String>();
     listType.add(type);
 
     List<Map<String, Object>> allProduct = new ArrayList<Map<String, Object>>();
 
-    List<Product> products = PR.getAllProductByTypeAndAttribut(listType,"home");
+    List<Product> products = PR.getAllProductByTypeAndAttribut(listType, "home");
 
     margeAllResultProduct(allProduct, products);
 

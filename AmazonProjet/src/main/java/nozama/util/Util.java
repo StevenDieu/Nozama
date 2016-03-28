@@ -2,6 +2,7 @@ package nozama.util;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -267,6 +268,23 @@ public final class Util {
    */
   public static boolean checkStringIsNull(String string) {
     return !checkStringNotNull(string);
+  }
+  
+  /**
+   * get parameters optionnal of URL if is null insert default value
+   * 
+   * @param supportUrl
+   * @param stringDefault
+   * @return
+   */
+  public static String getParametersString(Optional<String> supportUrl, String stringDefault) {
+    String stringParameters;
+    if (supportUrl.isPresent()) {
+      stringParameters = supportUrl.get();
+    } else {
+      stringParameters = stringDefault;
+    }
+    return stringParameters;
   }
 
 }

@@ -22,14 +22,27 @@ import nozama.model.AttrProduct;
 import nozama.model.Product;
 import nozama.repository.ProductRepository;
 
+/**
+ * All method for page product
+ *
+ */
 @Service
 public class ProductPageServiceImpl implements ProductPageService {
 
+  /**
+   * It's a singleton for the service @ProductRepository
+   */
   @Autowired
   private ProductRepository PR;
+  
   private static Logger log = Logger.getLogger(ProductPageServiceImpl.class.getName());
 
-  @Override
+  /**
+   * Get product for the page of product
+   * 
+   * @param nameTagDateReleased
+   * @return Map<String, Object>
+   */
   public Map<String, Object> getProduct(String nameTagDateReleased) {
     Map<String, Object> product = new HashMap<String, Object>();
 
@@ -37,20 +50,35 @@ public class ProductPageServiceImpl implements ProductPageService {
       Product thisProduct = PR.getProductByNameTagDate(nameTagDateReleased);
       margeAllResult(thisProduct, product);
     } catch (Exception e) {
-      log.error("[ProductPageServiceImpl] Error in the method getProduct impossible to get Product by NameTagDate");
+      log.error(
+          "[ProductPageServiceImpl] Error in the method getProduct impossible to get Product by NameTagDate");
     }
 
     return product;
   }
 
+  /**
+   * Marge all result of product in the List<Map>
+   * 
+   * @param allProduct
+   * @param products
+   */
   private void margeAllResult(Product thisProduct, Map<String, Object> product) {
     if (thisProduct != null) {
       margeAllResultSupport(product, thisProduct);
-      insertTypeInProducts(thisProduct.getArticles(), product);
+      insertInProducts(thisProduct.getArticles(), product);
     }
   }
 
-  private void insertTypeInProducts(Set<Article> articles, Map<String, Object> product) {
+  /**
+   * Insert Product in the list<Map>
+   * 
+   * @param allProduct
+   * @param type
+   * @param articles
+   * @param product
+   */
+  private void insertInProducts(Set<Article> articles, Map<String, Object> product) {
     List<Map<String, String>> listType = new ArrayList<Map<String, String>>();
     for (Article article : articles) {
       Map<String, String> insertTypeSupportAlbum = new HashMap<String, String>();
@@ -64,6 +92,12 @@ public class ProductPageServiceImpl implements ProductPageService {
     product.put("listType", listType);
   }
 
+  /**
+   * Marge all result of product in the List<Map>
+   * 
+   * @param allProduct
+   * @param products
+   */
   private void margeAllResultSupport(Map<String, Object> product, Product thisProduct) {
     product.put(thisProduct.getType(), thisProduct);
     product.put("type", thisProduct.getType());
@@ -83,21 +117,33 @@ public class ProductPageServiceImpl implements ProductPageService {
     product.put("listType", listType);
   }
 
+  /**
+   * Element of page just for Movie
+   * 
+   * @param product
+   * @param thisProduct
+   */
   private void elementForJustMoviePage(Map<String, Object> product, Product thisProduct) {
     List<String> genreList = new ArrayList<String>();
 
     for (AttrProduct attrProduct : thisProduct.getAttrProducts()) {
       if (attrProduct.getAttribut().equals("genre")) {
         genreList.add(attrProduct.getValue());
-      } 
+      }
     }
-    
+
     if (genreList.size() > 0) {
       Collections.sort(genreList);
       product.put("genre", genreList);
     }
   }
 
+  /**
+   * Element of page just for Single
+   * 
+   * @param product
+   * @param thisProduct
+   */
   private void elementForJustSinglePage(Map<String, Object> product, Product thisProduct) {
     for (Artiste artiste : thisProduct.getArtistes()) {
       product.put("artisteName", artiste.getName());
@@ -114,7 +160,8 @@ public class ProductPageServiceImpl implements ProductPageService {
         try {
           product.put("totalTime", sdf.parse(attrProduct.getValue()));
         } catch (ParseException e) {
-          log.error("[ProductPageServiceImpl] Error in the method elementForJustSinglePage impossible to convert date");
+          log.error(
+              "[ProductPageServiceImpl] Error in the method elementForJustSinglePage impossible to convert date");
           e.printStackTrace();
         }
       }
@@ -129,6 +176,12 @@ public class ProductPageServiceImpl implements ProductPageService {
     }
   }
 
+  /**
+   * Element of page just for Album
+   * 
+   * @param product
+   * @param thisProduct
+   */
   private void elementForJustAlbumPage(Map<String, Object> product, Product thisProduct) {
     for (Artiste artiste : thisProduct.getArtistes()) {
       product.put("artisteName", artiste.getName());
@@ -137,7 +190,7 @@ public class ProductPageServiceImpl implements ProductPageService {
     for (AttrProduct attrProduct : thisProduct.getAttrProducts()) {
       if (attrProduct.getAttribut().equals("genre")) {
         genreList.add(attrProduct.getValue());
-      }else if (attrProduct.getAttribut().equals("label")) {
+      } else if (attrProduct.getAttribut().equals("label")) {
         product.put("label", attrProduct.getValue());
       }
     }
@@ -153,6 +206,46 @@ public class ProductPageServiceImpl implements ProductPageService {
     }
   }
 
+  /**
+   * get time album with additional all time of single
+   * 
+   * @param listeProductChild
+   * @return
+   */
+  private Date getTimeAlbum(List<Product> listeProductChild) {
+    Calendar cal = Calendar.getInstance();
+
+    cal.set(Calendar.HOUR_OF_DAY, 0);
+    cal.set(Calendar.MINUTE, 0);
+    cal.set(Calendar.SECOND, 0);
+
+    for (Product product : listeProductChild) {
+      Calendar calSingle = Calendar.getInstance();
+      for (AttrProduct attrProduct : product.getAttrProducts()) {
+        if (attrProduct.getAttribut().equals("totalTime")) {
+          SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
+          try {
+            calSingle.setTime(sdf.parse(attrProduct.getValue()));
+          } catch (ParseException e) {
+            log.error(
+                "[ProductPageServiceImpl] Error in the method getTimeAlbum impossible to convert date");
+            e.printStackTrace();
+          }
+          cal.add(Calendar.HOUR_OF_DAY, calSingle.get(Calendar.HOUR_OF_DAY));
+          cal.add(Calendar.MINUTE, calSingle.get(Calendar.MINUTE));
+          cal.add(Calendar.SECOND, calSingle.get(Calendar.SECOND));
+        }
+      }
+    }
+    return cal.getTime();
+  }
+
+  /**
+   * Create a list with all child (example an album have multi child)
+   * 
+   * @param listeProductChild
+   * @return List<Map<String, Object>>
+   */
   private List<Map<String, Object>> createListMapSingleChild(List<Product> listeProductChild) {
 
     List<Map<String, Object>> listMapSingleChild = new ArrayList<Map<String, Object>>();
@@ -173,7 +266,12 @@ public class ProductPageServiceImpl implements ProductPageService {
 
   }
 
-
+  /**
+   * Get list of id child product
+   * 
+   * @param productChilds
+   * @return
+   */
   private List<Product> getProductsChild(Set<Product> productChilds) {
     List<Product> listProductChild = new ArrayList<>();
     for (Product product : productChilds) {
@@ -182,37 +280,14 @@ public class ProductPageServiceImpl implements ProductPageService {
     return listProductChild;
   }
 
-  private Date getTimeAlbum(List<Product> listeProductChild) {
-    Calendar cal = Calendar.getInstance();
-
-    cal.set(Calendar.HOUR_OF_DAY, 0);
-    cal.set(Calendar.MINUTE, 0);
-    cal.set(Calendar.SECOND, 0);
-
-    for (Product product : listeProductChild) {
-      Calendar calSingle = Calendar.getInstance();
-      for (AttrProduct attrProduct : product.getAttrProducts()) {
-        if (attrProduct.getAttribut().equals("totalTime")) {
-          SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
-          try {
-            calSingle.setTime(sdf.parse(attrProduct.getValue()));
-          } catch (ParseException e) {
-            log.error("[ProductPageServiceImpl] Error in the method getTimeAlbum impossible to convert date");
-            e.printStackTrace();
-          }
-          cal.add(Calendar.HOUR_OF_DAY, calSingle.get(Calendar.HOUR_OF_DAY));
-          cal.add(Calendar.MINUTE, calSingle.get(Calendar.MINUTE));
-          cal.add(Calendar.SECOND, calSingle.get(Calendar.SECOND));
+  /**
+   * Sort by support
+   */
+  private Comparator<Map<String, String>> mapComparatorSupport =
+      new Comparator<Map<String, String>>() {
+        public int compare(Map<String, String> m1, Map<String, String> m2) {
+          return m1.get("support").compareTo(m2.get("support"));
         }
-      }
-    }
-    return cal.getTime();
-  }
-  
-  public Comparator<Map<String, String>> mapComparatorSupport = new Comparator<Map<String, String>>() {
-    public int compare(Map<String, String> m1, Map<String, String> m2) {
-      return m1.get("support").compareTo(m2.get("support"));
-    }
-  };
+      };
 
 }
