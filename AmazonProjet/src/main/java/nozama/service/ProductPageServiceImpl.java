@@ -4,12 +4,15 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,16 +27,17 @@ public class ProductPageServiceImpl implements ProductPageService {
 
   @Autowired
   private ProductRepository PR;
+  private static Logger log = Logger.getLogger(ProductPageServiceImpl.class.getName());
 
   @Override
   public Map<String, Object> getProduct(String nameTagDateReleased) {
     Map<String, Object> product = new HashMap<String, Object>();
 
-    try{
+    try {
       Product thisProduct = PR.getProductByNameTagDate(nameTagDateReleased);
       margeAllResult(thisProduct, product);
-    }catch(Exception e){
-      
+    } catch (Exception e) {
+      log.error("[ProductPageServiceImpl] Error in the method getProduct impossible to get Product by NameTagDate");
     }
 
     return product;
@@ -41,12 +45,8 @@ public class ProductPageServiceImpl implements ProductPageService {
 
   private void margeAllResult(Product thisProduct, Map<String, Object> product) {
     if (thisProduct != null) {
-
       margeAllResultSupport(product, thisProduct);
-
       insertTypeInProducts(thisProduct.getArticles(), product);
-
-
     }
   }
 
@@ -59,6 +59,7 @@ public class ProductPageServiceImpl implements ProductPageService {
       insertTypeSupportAlbum.put("id", Integer.toString(article.getIdArticle()));
       listType.add(insertTypeSupportAlbum);
     }
+    Collections.sort(listType, mapComparatorSupport);
 
     product.put("listType", listType);
   }
@@ -76,27 +77,51 @@ public class ProductPageServiceImpl implements ProductPageService {
     } else if (thisProduct.getType().equals("album")) {
       elementForJustAlbumPage(product, thisProduct);
     } else if (thisProduct.getType().equals("film")) {
-
+      elementForJustMoviePage(product, thisProduct);
     }
     List<Map<String, String>> listType = new ArrayList<Map<String, String>>();
     product.put("listType", listType);
+  }
+
+  private void elementForJustMoviePage(Map<String, Object> product, Product thisProduct) {
+    List<String> genreList = new ArrayList<String>();
+
+    for (AttrProduct attrProduct : thisProduct.getAttrProducts()) {
+      if (attrProduct.getAttribut().equals("genre")) {
+        genreList.add(attrProduct.getValue());
+      } 
+    }
+    
+    if (genreList.size() > 0) {
+      Collections.sort(genreList);
+      product.put("genre", genreList);
+    }
   }
 
   private void elementForJustSinglePage(Map<String, Object> product, Product thisProduct) {
     for (Artiste artiste : thisProduct.getArtistes()) {
       product.put("artisteName", artiste.getName());
     }
+    List<String> genreList = new ArrayList<String>();
+
     for (AttrProduct attrProduct : thisProduct.getAttrProducts()) {
-      if (attrProduct.getAttribut().equals("label")) {
+      if (attrProduct.getAttribut().equals("genre")) {
+        genreList.add(attrProduct.getValue());
+      } else if (attrProduct.getAttribut().equals("label")) {
         product.put("label", attrProduct.getValue());
       } else if (attrProduct.getAttribut().equals("totalTime")) {
         SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
         try {
           product.put("totalTime", sdf.parse(attrProduct.getValue()));
         } catch (ParseException e) {
+          log.error("[ProductPageServiceImpl] Error in the method elementForJustSinglePage impossible to convert date");
           e.printStackTrace();
         }
       }
+    }
+    if (genreList.size() > 0) {
+      Collections.sort(genreList);
+      product.put("genre", genreList);
     }
     Product productParent = PR.getProductParent(thisProduct.getIdProduct());
     if (productParent != null) {
@@ -108,10 +133,17 @@ public class ProductPageServiceImpl implements ProductPageService {
     for (Artiste artiste : thisProduct.getArtistes()) {
       product.put("artisteName", artiste.getName());
     }
+    List<String> genreList = new ArrayList<String>();
     for (AttrProduct attrProduct : thisProduct.getAttrProducts()) {
-      if (attrProduct.getAttribut().equals("label")) {
+      if (attrProduct.getAttribut().equals("genre")) {
+        genreList.add(attrProduct.getValue());
+      }else if (attrProduct.getAttribut().equals("label")) {
         product.put("label", attrProduct.getValue());
       }
+    }
+    if (genreList.size() > 0) {
+      Collections.sort(genreList);
+      product.put("genre", genreList);
     }
 
     List<Product> listeProductChild = getProductsChild(thisProduct.getProducts());
@@ -131,7 +163,7 @@ public class ProductPageServiceImpl implements ProductPageService {
       mapSingleChild.put("dateReleased", product.getDateReleased());
       for (AttrProduct attrProduct : product.getAttrProducts()) {
         if (attrProduct.getAttribut().equals("totalTime")) {
-            mapSingleChild.put("totalTime",attrProduct.getValue());
+          mapSingleChild.put("totalTime", attrProduct.getValue());
         }
       }
       listMapSingleChild.add(mapSingleChild);
@@ -165,16 +197,22 @@ public class ProductPageServiceImpl implements ProductPageService {
           try {
             calSingle.setTime(sdf.parse(attrProduct.getValue()));
           } catch (ParseException e) {
+            log.error("[ProductPageServiceImpl] Error in the method getTimeAlbum impossible to convert date");
             e.printStackTrace();
           }
           cal.add(Calendar.HOUR_OF_DAY, calSingle.get(Calendar.HOUR_OF_DAY));
           cal.add(Calendar.MINUTE, calSingle.get(Calendar.MINUTE));
           cal.add(Calendar.SECOND, calSingle.get(Calendar.SECOND));
         }
-
       }
     }
     return cal.getTime();
   }
+  
+  public Comparator<Map<String, String>> mapComparatorSupport = new Comparator<Map<String, String>>() {
+    public int compare(Map<String, String> m1, Map<String, String> m2) {
+      return m1.get("support").compareTo(m2.get("support"));
+    }
+  };
 
 }

@@ -23,6 +23,10 @@ import nozama.service.ProductCartServiceImpl;
 import nozama.service.UserServiceImpl;
 import nozama.util.Util;
 
+/**
+ * All controller for cart or control tunnel
+ *
+ */
 @Controller
 public class CtrlCart {
 
@@ -112,7 +116,7 @@ public class CtrlCart {
     adress.put("adresss", US.getAllAdressByUser(user));
     String message = request.getParameter("message"); // It's a message the register adress have an
                                                       // error
-    if (message != "") {
+    if (Util.checkStringNotNull(message)) {
       adress.put("message", message);
     }
 
@@ -149,7 +153,7 @@ public class CtrlCart {
 
     User user = (User) request.getSession().getAttribute("User");
 
-    if (idAdressString != "") {
+    if (Util.checkStringNotNull(idAdressString)) {
       if (!Util.checkConvertToInt(idAdressString)) {
         return new ModelAndView("redirect:/mon-panier-etape-adresse",
             Util.returnMessage("Une erreur est survenue."));
@@ -163,9 +167,9 @@ public class CtrlCart {
       }
       request.getSession().setAttribute("address", adress);
     } else {
-      if (name.isEmpty() || nameLastName.isEmpty() || adressPrincipal.isEmpty()
-          || codePostalString.isEmpty() || pays.isEmpty() || numberPhone.isEmpty()
-          || city.isEmpty()) {
+      if (Util.checkStringIsNull(name) || Util.checkStringIsNull(nameLastName) || Util.checkStringIsNull(adressPrincipal)
+          || Util.checkStringIsNull(codePostalString) || Util.checkStringIsNull(pays) || Util.checkStringIsNull(numberPhone)
+          || Util.checkStringIsNull(city)) {
         return new ModelAndView("redirect:/mon-panier-etape-adresse",
             Util.returnMessage("Tout les champs sont obligatoires."));
       } else
@@ -209,7 +213,7 @@ public class CtrlCart {
     Map<String, Object> messageError = new HashMap<String, Object>();
     String message = request.getParameter("message"); // It's a message the register adress have an
                                                       // error
-    if (message != "") {
+    if (Util.checkStringNotNull(message)) {
       messageError.put("message", message);
     }
 
@@ -339,6 +343,12 @@ public class CtrlCart {
     return Util.getJsonStatutMessage("error", "Une erreur est survenue.");
   }
 
+  /**
+   * [Ctrl] page payment for CB or Paypal
+   * 
+   * @param request
+   * @return View myPayment
+   */
   @RequestMapping(value = "/page-payment")
   public ModelAndView pagePaymentPSP(HttpServletRequest request) {
 
@@ -350,6 +360,12 @@ public class CtrlCart {
     return new ModelAndView("cart/myPayment");
   }
 
+  /**
+   * [Ctrl] finalisation of commande for create a orderId and delete all session
+   * 
+   * @param request
+   * @return redirect to commande-valider
+   */
   @SuppressWarnings("unchecked")
   @RequestMapping(value = "/finalisation-commande")
   public ModelAndView finalyzeOrder(HttpServletRequest request) {
@@ -390,6 +406,12 @@ public class CtrlCart {
     return new ModelAndView("redirect:/commande-valider");
   }
 
+  /**
+   * [Ctrl] redirection to the page of orderId
+   * 
+   * @param request
+   * @return view orderValidate
+   */
   @RequestMapping(value = "/commande-valider")
   public ModelAndView orderValidate(HttpServletRequest request) {
     if (request.getSession().getAttribute("lastOrder") == null) {
@@ -399,6 +421,12 @@ public class CtrlCart {
     return new ModelAndView("cart/orderValidate");
   }
 
+  /**
+   * [Ctrl] [Ajax] Delete a Product in cart
+   * 
+   * @param request
+   * @return JSON
+   */
   @SuppressWarnings("unchecked")
   @RequestMapping(value = "/ajaxDeleteProductCart", method = RequestMethod.POST)
   @ResponseBody
@@ -406,11 +434,10 @@ public class CtrlCart {
     String idString = request.getParameter("id");
     List<Map<String, Object>> listMapCart = new ArrayList<Map<String, Object>>();
 
-    if (idString != "" && Util.checkConvertToInt(idString)) {
+    if (Util.checkStringNotNull(idString) && Util.checkConvertToInt(idString)) {
       int id = Integer.parseInt(idString);
 
-      if (request.getSession().getAttribute("cart") != null
-          && request.getSession().getAttribute("cart") != "") {
+      if (request.getSession().getAttribute("cart") != null) {
         List<Map<String, Object>> allCart =
             (List<Map<String, Object>>) request.getSession().getAttribute("cart");
 
@@ -438,6 +465,12 @@ public class CtrlCart {
     return Integer.toString(listMapCart.size());
   }
 
+  /**
+   * [Ctrl] [Ajax] Delete all Product in cart
+   * 
+   * @param request
+   * @return JSON
+   */
   @RequestMapping(value = "/ajaxDeleteAllProductCart", method = RequestMethod.POST)
   @ResponseBody
   public void deleteAllProductCart(HttpServletRequest request) {
@@ -445,6 +478,12 @@ public class CtrlCart {
     request.getSession().setAttribute("cart", null);
   }
 
+  /**
+   * [Ctrl] [Ajax] Delete change number of product for a cart
+   * 
+   * @param request
+   * @return JSON
+   */
   @SuppressWarnings("unchecked")
   @RequestMapping(value = "/ajaxChangeNumberProductCart", method = RequestMethod.POST)
   @ResponseBody
@@ -454,7 +493,7 @@ public class CtrlCart {
 
     int number = 1;
 
-    if (idString != "" && Util.checkConvertToInt(idString) && numberString != ""
+    if (Util.checkStringNotNull(idString) && Util.checkConvertToInt(idString) && Util.checkStringNotNull(numberString)
         && Util.checkConvertToInt(numberString)) {
       int id = Integer.parseInt(idString);
       number = Integer.parseInt(numberString);
@@ -463,8 +502,7 @@ public class CtrlCart {
       } else if (number > 100) {
         number = 1;
       }
-      if (request.getSession().getAttribute("cart") != null
-          && request.getSession().getAttribute("cart") != "") {
+      if (request.getSession().getAttribute("cart") != null) {
         List<Map<String, Object>> allCart =
             (List<Map<String, Object>>) request.getSession().getAttribute("cart");
         List<Map<String, Object>> listMapCart = new ArrayList<Map<String, Object>>();
@@ -489,6 +527,13 @@ public class CtrlCart {
     return Util.getJsonNumber(number);
   }
 
+
+  /**
+   * [Ctrl] [Ajax] Add product in cart
+   * 
+   * @param request
+   * @return JSON
+   */
   @SuppressWarnings("unchecked")
   @RequestMapping(value = "/ajaxAddCart", method = RequestMethod.POST)
   @ResponseBody
@@ -497,7 +542,7 @@ public class CtrlCart {
     String idString = request.getParameter("id");
     Boolean newProduct = true;
 
-    if (idString != "" && Util.checkConvertToInt(idString)) {
+    if (Util.checkStringNotNull(idString) && Util.checkConvertToInt(idString)) {
       int id = Integer.parseInt(idString);
       List<Map<String, Object>> listMapCart;
 
@@ -533,7 +578,6 @@ public class CtrlCart {
     } else {
       return Util.getJsonStatutMessage("error", "Une erreur est survenue.");
     }
-
   }
 
 }

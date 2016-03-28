@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<jsp:include page="templates/header.jsp" />
+<jsp:include page="../templates/header.jsp" />
 
 
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -122,7 +122,7 @@
 			aria-labelledby="headingThree">
 			<div class="panel-body">
 
-				<jsp:include page="authentication/contentAdress.jsp" />
+				<jsp:include page="../authentication/contentAdress.jsp" />
 
 			</div>
 		</div>
@@ -184,4 +184,4 @@
 
 <script src="/resources/js/account/accountAdress.js"></script>
 
-<jsp:include page="templates/footer.jsp" />
+<jsp:include page="../templates/footer.jsp" />

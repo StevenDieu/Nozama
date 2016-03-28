@@ -41,7 +41,7 @@ function deleteAdress() {
     boolProgress = false;
     $.ajax({
       type: "post",
-      url: "ajaxDeleteDeleteAdress",
+      url: "ajaxDeleteAdress",
       data: "idAdress=" + idSelect,
       success: function(t) {
         $(".selectAdress").val("")

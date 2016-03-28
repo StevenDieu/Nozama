@@ -36,7 +36,7 @@ public class ProductListServiceImpl implements ProductListService {
 
     final Map<String, Object> mapForDate = setMapForDate(years);
 
-    List<Product> products = PR.getAllProductByTypeAndSupportAndAttribut(useSupport, support,
+    List<Product> products = PR.getAllProductByTypeAndSupportAndDateAndGenre(useSupport, support,
         (boolean) mapForDate.get("useDate"), (Date) mapForDate.get("dateYears"),
         (Date) mapForDate.get("dateYearsAfter"), useType, listType, useGenre, genre);
     margeAllResultProduct(allProduct, products);
@@ -87,9 +87,10 @@ public class ProductListServiceImpl implements ProductListService {
       insertTypeSupportAlbum.put("support", article.getNameSupport());
       insertTypeSupportAlbum.put("id", Integer.toString(article.getIdArticle()));
       listType.add(insertTypeSupportAlbum);
-      newProduct.put("listType", listType);
     }
+    Collections.sort(listType, mapComparatorSupport);
 
+    newProduct.put("listType", listType);
     allProduct.add(newProduct);
   }
 
@@ -137,7 +138,12 @@ public class ProductListServiceImpl implements ProductListService {
       return secondeCompare.compareTo(firstCompare);
     }
   };
-
+  
+  public Comparator<Map<String, String>> mapComparatorSupport = new Comparator<Map<String, String>>() {
+    public int compare(Map<String, String> m1, Map<String, String> m2) {
+      return m1.get("support").compareTo(m2.get("support"));
+    }
+  };
 
   @Override
   public String getParametersString(Optional<String> supportUrl, String stringDefault) {

@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,7 @@ public class UserServiceImpl implements UserService {
 
   @Autowired
   private UserRepository UR;
+  private static Logger log = Logger.getLogger(UserServiceImpl.class.getName());
 
   public User connexion(String email, String password) {
     List<User> users = UR.getUserByEmailAndPwd(email, sha256(password));
@@ -159,6 +161,7 @@ public class UserServiceImpl implements UserService {
 
       return hexString.toString();
     } catch (Exception ex) {
+      log.error("[UserServiceImpl] Error in the method sha256 impossible to get sha256");
       throw new RuntimeException(ex);
     }
   }

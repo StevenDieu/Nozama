@@ -3,10 +3,10 @@ package nozama.repository;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Property;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;
@@ -22,15 +22,38 @@ import nozama.util.HibernateUtil;
 @Repository
 public class ProductRepository {
 
+  private static Logger log = Logger.getLogger(ProductRepository.class.getName());
 
-  public List<Product> getAllProductByTypeAndSupportAndAttribut(boolean useSupport, String support,
+  /**
+   * Select all product by conditions :
+   * Type
+   * Support
+   * Date
+   * Genre
+   * 
+   * join : 
+   * articles
+   * attrProducts
+   * 
+   * All facultative
+   * 
+   * @param useSupport boolean
+   * @param support
+   * @param useDate boolean
+   * @param dateYears
+   * @param dateYearsAfter
+   * @param useType boolean
+   * @param type
+   * @param useGenre boolean
+   * @param genre
+   * @return List<@Product>
+   */
+  public List<Product> getAllProductByTypeAndSupportAndDateAndGenre(boolean useSupport, String support,
       boolean useDate, Date dateYears, Date dateYearsAfter, boolean useType, List<String> type,
       boolean useGenre, String genre) {
     Session openSession = HibernateUtil.getSessionFactory().openSession();
 
-
     Criteria cr = openSession.createCriteria(Product.class);
-
 
     cr.createAlias("articles", "a", JoinType.LEFT_OUTER_JOIN);
     cr.createAlias("attrProducts", "ap", JoinType.LEFT_OUTER_JOIN);
@@ -57,75 +80,72 @@ public class ProductRepository {
     return listProduct;
   }
 
-  public int getCountAllProductBySupport(boolean useSupport, String support, boolean useDate,
-      Date dateYears, Date dateYearsAfter, boolean useType, List<String> type, boolean useGenre,
-      String genre) {
+  /**
+   * Select one product by conditions :
+   * nameTagDateReleased
+   * 
+   * join : 
+   * articles
+   * attrProducts
+   * artistes
+   * products
+   * 
+   * @param nameTagDateReleased
+   * @return @Product
+   */
+  public Product getProductByNameTagDate(String nameTagDateReleased) {
     Session openSession = HibernateUtil.getSessionFactory().openSession();
 
     Criteria cr = openSession.createCriteria(Product.class);
     cr.createAlias("articles", "a", JoinType.LEFT_OUTER_JOIN);
     cr.createAlias("attrProducts", "ap", JoinType.LEFT_OUTER_JOIN);
-    if (useType) {
-      cr.add(Restrictions.in("type", type));
-    }
-    if (useSupport) {
-      cr.add(Restrictions.eq("a.nameSupport", support));
-    }
-    if (useDate) {
-      cr.add(Restrictions.between("dateReleased", dateYears, dateYearsAfter));
-    }
-    if (useGenre) {
-      cr.add(Restrictions.eq("ap.attribut", "genre"));
-      cr.add(Restrictions.eq("ap.value", genre));
-    }
-    int countProducts = ((Long) cr.setProjection(Projections.rowCount()).uniqueResult()).intValue();
-
-    openSession.close();
-    HibernateUtil.shutdown();
-
-    return countProducts;
-  }
-
-  public List<Product> getAllProductByDate(boolean useType, List<String> type, boolean useDate,
-      Date dateYears, Date dateYearsAfter) {
-    Session openSession = HibernateUtil.getSessionFactory().openSession();
-
-    Criteria cr = openSession.createCriteria(Product.class);
-    cr.createAlias("articles", "a", JoinType.LEFT_OUTER_JOIN);
-    cr.createAlias("attrProducts", "ap", JoinType.LEFT_OUTER_JOIN);
-    cr.addOrder(Property.forName("a.nameSupport").asc());
-    if (useType) {
-      cr.add(Restrictions.in("type", type));
-    }
-    if (useDate) {
-      cr.add(Restrictions.between("dateReleased", dateYears, dateYearsAfter));
-    }
-
-    List<Product> listProduct = cr.list();
-    openSession.close();
-    HibernateUtil.shutdown();
-    return listProduct;
-  }
-
-
-  public List<Product> getProducts(boolean UserArtiste, List<String> type,
-      String nameTagDateReleased) {
-    Session openSession = HibernateUtil.getSessionFactory().openSession();
-
-    Criteria cr = openSession.createCriteria(Product.class);
-    cr.createAlias("articles", "a", JoinType.LEFT_OUTER_JOIN);
-    cr.createAlias("attrProducts", "ap", JoinType.LEFT_OUTER_JOIN);
-    if (UserArtiste) {
-      cr.createAlias("artistes", "art");
-    }
-    cr.add(Restrictions.in("type", type));
-
+    cr.createAlias("artistes", "art", JoinType.LEFT_OUTER_JOIN);
+    cr.createAlias("products", "prod", JoinType.LEFT_OUTER_JOIN);
+    
     cr.add(Restrictions.eq("nameTagDateReleased", nameTagDateReleased));
 
+    cr.addOrder(Property.forName("attrProducts").asc());
+    cr.addOrder(Property.forName("ap.value").asc());
+    
     List<Product> listProduct = cr.list();
     openSession.close();
     HibernateUtil.shutdown();
-    return listProduct;
+    if (listProduct.size() == 0) {
+      return null;
+    }
+    return listProduct.get(0);
+  }
+
+  /**
+   * Select one product by conditions :
+   * nameTagDateReleased
+   * 
+   * join : 
+   * articles
+   * attrProducts
+   * artistes
+   * products
+   * 
+   * @param idProduct
+   * @return
+   */
+  public Product getProductParent(int idProduct) {
+    Session openSession = HibernateUtil.getSessionFactory().openSession();
+
+    Criteria cr = openSession.createCriteria(Product.class);
+    cr.createAlias("articles", "a", JoinType.LEFT_OUTER_JOIN);
+    cr.createAlias("attrProducts", "ap", JoinType.LEFT_OUTER_JOIN);
+    cr.createAlias("artistes", "art", JoinType.LEFT_OUTER_JOIN);
+    cr.createAlias("products", "prod", JoinType.LEFT_OUTER_JOIN);
+    cr.add(Restrictions.eq("prod.idProduct", idProduct));
+
+    List<Product> listProduct = cr.list();
+    openSession.close();
+    HibernateUtil.shutdown();
+    if (listProduct.size() == 0) {
+      return null;
+    }
+    return listProduct.get(0);
   }
 
   public List<Product> getProductById(List<Integer> idProduct) {
@@ -143,45 +163,6 @@ public class ProductRepository {
     return listProduct;
   }
 
-  public Product getProductByNameTagDate(String nameTagDateReleased) {
-    Session openSession = HibernateUtil.getSessionFactory().openSession();
-
-    Criteria cr = openSession.createCriteria(Product.class);
-    cr.createAlias("articles", "a", JoinType.LEFT_OUTER_JOIN);
-    cr.createAlias("attrProducts", "ap", JoinType.LEFT_OUTER_JOIN);
-    cr.createAlias("artistes", "art", JoinType.LEFT_OUTER_JOIN);
-    cr.createAlias("products", "prod", JoinType.LEFT_OUTER_JOIN);
-
-    cr.add(Restrictions.eq("nameTagDateReleased", nameTagDateReleased));
-
-    List<Product> listProduct = cr.list();
-    openSession.close();
-    HibernateUtil.shutdown();
-
-    return listProduct.get(0);
-  }
-
-  public Product getProductParent(int idProduct) {
-    Session openSession = HibernateUtil.getSessionFactory().openSession();
-
-    Criteria cr = openSession.createCriteria(Product.class);
-    cr.createAlias("articles", "a", JoinType.LEFT_OUTER_JOIN);
-    cr.createAlias("attrProducts", "ap", JoinType.LEFT_OUTER_JOIN);
-    cr.createAlias("artistes", "art", JoinType.LEFT_OUTER_JOIN);
-    cr.createAlias("products", "prod", JoinType.LEFT_OUTER_JOIN);
-    cr.add(Restrictions.eq("prod.idProduct", idProduct));
-
-
-
-    List<Product> listProduct = cr.list();
-    openSession.close();
-    HibernateUtil.shutdown();
-    if (listProduct.size() == 0) {
-      return null;
-    }
-    return listProduct.get(0);
-  }
-
   public Product getProductById(Integer idProduct) {
     Session openSession = HibernateUtil.getSessionFactory().openSession();
 
@@ -194,6 +175,9 @@ public class ProductRepository {
     List<Product> listProduct = cr.list();
     openSession.close();
     HibernateUtil.shutdown();
+    if (listProduct.size() == 0) {
+      return null;
+    }
     return listProduct.get(0);
   }
 
@@ -224,6 +208,10 @@ public class ProductRepository {
 
     openSession.close();
     HibernateUtil.shutdown();
+    
+    if (listProduct.size() == 0) {
+      return null;
+    }
     return listProduct.get(0);
   }
 
@@ -236,6 +224,7 @@ public class ProductRepository {
 
       tx.commit();
     } catch (RuntimeException e) {
+      log.error("[ProductRepository] impossible to insert order in bdd");
       tx.rollback();
       throw e;
     }
@@ -252,6 +241,7 @@ public class ProductRepository {
 
       tx.commit();
     } catch (RuntimeException e) {
+      log.error("[ProductRepository] impossible to insert productOrder in bdd");
       tx.rollback();
       throw e;
     }

@@ -24,15 +24,36 @@ import nozama.util.Util;
 @Controller
 public class CtrlProduct {
 
-	@Autowired
-	private UserServiceImpl US;
-	
+  /**
+   * It's a singleton for the service @UserServiceImpl
+   */
+  @Autowired
+  private UserServiceImpl US;
+
+  /**
+   * It's a singleton for the service @ProductListServiceImpl
+   */
   @Autowired
   private ProductListServiceImpl PLS;
 
+  /**
+   * It's a singleton for the service @ProductPageServiceImpl
+   */
   @Autowired
   private ProductPageServiceImpl PPS;
 
+  /**
+   * 
+   * [Ctrl] generate a page with all musics
+   * 
+   * @param request
+   * @param supportUrl
+   * @param recordTypeUrl
+   * @param yearsUrl
+   * @param typeUrl
+   * @param startResultUrl
+   * @return view listProductMusic
+   */
   @RequestMapping(
       value = {"/liste-toutes-les-musiques", "/liste-toutes-les-musiques/{type}",
           "/liste-toutes-les-musiques/{support}/{recordType}/{years}/{type}",
@@ -60,15 +81,17 @@ public class CtrlProduct {
     if (Util.checkConvertToInt(startResultString)) {
       startResult = Integer.parseInt(startResultString);
     }
-    
-    List<Map<String, Object>> allProduct = PLS.getAllProductByCondition(support, recordType, years, genre);
+
+    List<Map<String, Object>> allProduct =
+        PLS.getAllProductByCondition(support, recordType, years, genre);
 
     if (((startResult - 1) * 12) > allProduct.size() - 1 || startResult <= 0) {
-        startResult = 1;
+      startResult = 1;
     }
 
     Map<String, Object> product = new HashMap<String, Object>();
-    int toIndexEndPagination = (startResult * 12) > allProduct.size() ? allProduct.size() : (startResult * 12);
+    int toIndexEndPagination =
+        (startResult * 12) > allProduct.size() ? allProduct.size() : (startResult * 12);
 
     product.put("products", allProduct.subList(((startResult - 1) * 12), toIndexEndPagination));
     product.put("recordType", recordType);
@@ -82,6 +105,16 @@ public class CtrlProduct {
     return new ModelAndView("listProduct/listProductMusic", product);
   }
 
+  /**
+   * 
+   * [Ctrl] generate a page with all movies
+   * 
+   * @param request
+   * @param supportUrl
+   * @param yearsUrl
+   * @param startResultUrl
+   * @return view listProductMusic
+   */
   @RequestMapping(
       value = {"/liste-tous-les-films", "/liste-tous-les-films/{type}",
           "/liste-tous-les-films/{support}/{years}/{type}",
@@ -108,14 +141,16 @@ public class CtrlProduct {
       years = Integer.parseInt(stringYears);
     }
 
-    List<Map<String, Object>> allProduct = PLS.getAllProductByCondition(support, "film", years, genre);
+    List<Map<String, Object>> allProduct =
+        PLS.getAllProductByCondition(support, "film", years, genre);
 
     if (((startResult - 1) * 12) > allProduct.size() - 1 || startResult <= 0) {
-        startResult = 1;
+      startResult = 1;
     }
 
     Map<String, Object> product = new HashMap<String, Object>();
-    int toIndexEndPagination = (startResult * 12) > allProduct.size() ? allProduct.size() : (startResult * 12);
+    int toIndexEndPagination =
+        (startResult * 12) > allProduct.size() ? allProduct.size() : (startResult * 12);
 
     product.put("products", allProduct.subList(((startResult - 1) * 12), toIndexEndPagination));
     product.put("support", support);
@@ -123,11 +158,19 @@ public class CtrlProduct {
     product.put("type", genre);
     product.put("numberPage", Math.ceil((double) allProduct.size() / 12));
     product.put("startPage", startResult);
-    
+
 
     return new ModelAndView("listProduct/listProductMovie", product);
   }
 
+  /**
+   * [Ctrl] generate a page with all liste products
+   * 
+   * @param request
+   * @param yearsUrl
+   * @param startResultUrl
+   * @return view listAll
+   */
   @RequestMapping(value = {"/liste-tous-les-produits", "/liste-tous-les-produits/{years}",
       "/liste-tous-les-produits/{years}/{startResult}"}, method = RequestMethod.GET)
   public ModelAndView listAllProducts(HttpServletRequest request,
@@ -166,6 +209,14 @@ public class CtrlProduct {
     return new ModelAndView("listProduct/listAll", product);
   }
 
+  /**
+   * [Ctrl] generate a page product for music or movie
+   * 
+   * @param request
+   * @param nameTagDateReleasedUrl
+   * @param typeUrl
+   * @return view movie or music
+   */
   @RequestMapping(value = {"/product/{type}/{nameTagDateReleased}"}, method = RequestMethod.GET)
   public ModelAndView pageProduct(HttpServletRequest request,
       @PathVariable("nameTagDateReleased") Optional<String> nameTagDateReleasedUrl,
@@ -173,11 +224,11 @@ public class CtrlProduct {
     String nameTagDateReleased = PLS.getParametersString(nameTagDateReleasedUrl, "");
     String type = PLS.getParametersString(typeUrl, "");
 
-    if (type.equals("")) {
+    if (Util.checkStringIsNull(type)) {
       return new ModelAndView("redirect:/");
     }
 
-    if (nameTagDateReleased.equals("")) {
+    if (Util.checkStringIsNull(nameTagDateReleased)) {
       return new ModelAndView("redirect:/");
     }
     Map<String, Object> productItem = PPS.getProduct(nameTagDateReleased);
@@ -196,22 +247,28 @@ public class CtrlProduct {
       return new ModelAndView("pageProduct/music", product);
     }
   }
-  
+
+  /**
+   * [Ctrl] generate a modal with all product in account
+   * 
+   * @param request
+   * @return view modaleProduct
+   */
   @RequestMapping(value = "/seeProduct", method = RequestMethod.POST)
   public ModelAndView seeProduct(HttpServletRequest request) {
-	  
-	String id = request.getParameter("id");
-	
-	Map<String, Object> variableParam = new HashMap<String, Object>();
-	if (request.getSession().getAttribute("User") != null) {
-		Order order = new Order();
-		order.setIdOrder(Integer.parseInt(id));
-	  List<Product> products = US.getProductCmd(order);
-	  if(products.size() > 0){
-	      variableParam.put("products", products);
-	  }
-	  return new ModelAndView("modaleProduct", variableParam);
-	}
-	return new ModelAndView("redirect:/", variableParam);
+
+    String id = request.getParameter("id");
+
+    Map<String, Object> variableParam = new HashMap<String, Object>();
+    if (request.getSession().getAttribute("User") != null) {
+      Order order = new Order();
+      order.setIdOrder(Integer.parseInt(id));
+      List<Product> products = US.getProductCmd(order);
+      if (products.size() > 0) {
+        variableParam.put("products", products);
+      }
+      return new ModelAndView("account/modaleProduct", variableParam);
+    }
+    return new ModelAndView("redirect:/", variableParam);
   }
 }

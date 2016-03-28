@@ -15,14 +15,14 @@
 				Années :
 				<select id="years" name="years">
 					<option value="AllYears">Toutes les années</option>
-					<option value="2010" <c:if test="${years == '2010' }">selected</c:if>>Années 2010</option>
-					<option value="2000" <c:if test="${years == '2000' }">selected</c:if>>Années 2000</option>
-					<option value="1990" <c:if test="${years == '1990' }">selected</c:if>>Années 90</option>
-					<option value="1980" <c:if test="${years == '1980' }">selected</c:if>>Années 80</option>
-					<option value="1970" <c:if test="${years == '1970' }">selected</c:if>>Années 70</option>
-					<option value="1960" <c:if test="${years == '1960' }">selected</c:if>>Années 60</option>
-					<option value="1950" <c:if test="${years == '1950' }">selected</c:if>>Années 50</option>
-					<option value="1940" <c:if test="${years == '1940' }">selected</c:if>>Années 40</option>
+					<option value="2010" <c:if test="${years == '2010' }">selected</c:if>>Années 2010 et +</option>
+					<option value="2000" <c:if test="${years == '2000' }">selected</c:if>>Années 2000 - 2009</option>
+					<option value="1990" <c:if test="${years == '1990' }">selected</c:if>>Années 1990 - 1999</option>
+					<option value="1980" <c:if test="${years == '1980' }">selected</c:if>>Années 1980 - 1989</option>
+					<option value="1970" <c:if test="${years == '1970' }">selected</c:if>>Années 1970 - 1979</option>
+					<option value="1960" <c:if test="${years == '1960' }">selected</c:if>>Années 1960 - 1969</option>
+					<option value="1950" <c:if test="${years == '1950' }">selected</c:if>>Années 1950 - 1959</option>
+					<option value="1940" <c:if test="${years == '1940' }">selected</c:if>>Années 1940 - 1949</option>
 					<option value="1939" <c:if test="${years == '1939' }">selected</c:if>>Années antérieur</option>
 				</select>
 			</div>

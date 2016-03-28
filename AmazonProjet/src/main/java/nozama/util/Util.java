@@ -148,6 +148,13 @@ public final class Util {
     return conditionCart;
   }
 
+  /**
+   * Generate a Json with a message and Statut
+   * @param statut
+   * @param message
+   * @return Json in String
+   * @throws JSONException
+   */
   public static String getJsonStatutMessage(String statut, String message) throws JSONException {
     JSONObject json = new JSONObject();
     json.put("statut", statut);
@@ -155,6 +162,13 @@ public final class Util {
     return json.toString();
   }
 
+  /**
+   * Generate a Json with a redirect and Statut
+   * @param statut
+   * @param redirect
+   * @return Json in String
+   * @throws JSONException
+   */
   public static String getJsonStatutRedirect(String statut, String redirect) throws JSONException {
     JSONObject json = new JSONObject();
     json.put("statut", statut);
@@ -162,12 +176,24 @@ public final class Util {
     return json.toString();
   }
 
+  /**
+   * Generate a Json with a number
+   * @param number
+   * @return Json in String
+   * @throws JSONException
+   */
   public static String getJsonNumber(int number) throws JSONException {
     JSONObject json = new JSONObject();
     json.put("number", number);
     return json.toString();
   }
 
+  /**
+   * Generate a Json with a statut, message and nomber of object in cart
+   * @param number
+   * @return Json in String
+   * @throws JSONException
+   */
   public static String getJsonStatutMessageNbCart(String statut, String message, int nbCart)
       throws JSONException {
     JSONObject json = new JSONObject();
@@ -177,26 +203,70 @@ public final class Util {
     return json.toString();
   }
 
+  /**
+   * Generate a Json with a statut
+   * @param statut
+   * @return Json in String
+   * @throws JSONException
+   */
   public static String getJsonStatut(String statut) throws JSONException {
     JSONObject json = new JSONObject();
     json.put("statut", statut);
     return json.toString();
   }
 
+  /**
+   * Generate a Json with a statut, message and argent in account prepaye
+   * @param statut
+   * @param message
+   * @param argent
+   * @return Json in String
+   * @throws JSONException
+   */
   public static String getJsonStatutMessageArgent(String statut, String message,
       float argent) throws JSONException {
     JSONObject json = new JSONObject();
     json.put("statut", statut);
     json.put("message", message);
     json.put("argent", argent);
-    return null;
+    return json.toString();
   }
 
+  /**
+   * Generate a Json with a statut, id
+   * @param statut
+   * @param id
+   * @return Json in String
+   * @throws JSONException
+   */
   public static String getJsonStatutId(String statut, Integer id) throws JSONException {
     JSONObject json = new JSONObject();
     json.put("statut", statut);
     json.put("id", id);
     return json.toString();
+  }
+
+  /**
+   * Check if the string is null and not empty
+   * 
+   * @param string
+   * @return Boolean
+   */
+  public static boolean checkStringNotNull(String string) {
+    if(string == null || string.equals("") || string.equals("{}") || string.equals("null")){
+      return false;
+    }
+    return true;
+  }
+  
+  /**
+   * Check if the string is not null and not empty
+   * 
+   * @param string
+   * @return Boolean
+   */
+  public static boolean checkStringIsNull(String string) {
+    return !checkStringNotNull(string);
   }
 
 }

@@ -2,6 +2,7 @@ package nozama.repository;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -20,6 +21,7 @@ import nozama.util.HibernateUtil;
 @Repository
 public class UserRepository {
 
+  private static Logger log = Logger.getLogger(UserRepository.class.getName());
 
   public List<User> getUserByEmailAndPwd(String email, String password) {
     Session openSession = HibernateUtil.getSessionFactory().openSession();
@@ -45,16 +47,18 @@ public class UserRepository {
     return listUser;
   }
 
-  public void insertUser(User users) {
+  public void insertUser(User user) {
     Session openSession = HibernateUtil.getSessionFactory().openSession();
 
     Transaction tx = openSession.beginTransaction();
 
     try {
-      openSession.save(users);
+      openSession.save(user);
 
       tx.commit();
     } catch (RuntimeException e) {
+      log.error("[UserRepository] impossible to insert user in bdd");
+
       tx.rollback();
       throw e;
     }
@@ -133,6 +137,7 @@ public class UserRepository {
 
       tx.commit();
     } catch (RuntimeException e) {
+      log.error("[UserRepository] impossible to insert adress in bdd");
       tx.rollback();
       throw e;
     }
@@ -150,6 +155,7 @@ public class UserRepository {
 
       tx.commit();
     } catch (RuntimeException e) {
+      log.error("[UserRepository] impossible to delete adress in bdd");
       tx.rollback();
       throw e;
     }
@@ -168,6 +174,7 @@ public class UserRepository {
       openSession.flush();
 
     } catch (RuntimeException e) {
+      log.error("[UserRepository] impossible to update adress in bdd");
       tx.rollback();
       throw e;
     }
@@ -186,6 +193,7 @@ public class UserRepository {
       openSession.flush();
 
     } catch (RuntimeException e) {
+      log.error("[UserRepository] impossible to update user in bdd");
       tx.rollback();
       throw e;
     }

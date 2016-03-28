@@ -16,9 +16,18 @@ import nozama.service.ProductListServiceImpl;
 @Controller
 public class CtrlHome {
 
+  /**
+   * It's a singleton for the service @ProductListServiceImpl
+   */
   @Autowired
   private ProductListServiceImpl PLS;
 
+  /**
+   * [Ctrl] redirect to home page
+   * 
+   * @param request
+   * @return view index
+   */
   @RequestMapping(value = "/")
   public ModelAndView index(HttpServletRequest request) {
     List<Map<String, Object>> singles = PLS.getProductHomeByCondition("single");
@@ -39,7 +48,7 @@ public class CtrlHome {
     if (movies.size() < 3) {
       sizeMovies = movies.size();
     }
-    
+
     if (sizeSingles != 0) {
       product.put("singles", singles.subList(0, sizeSingles));
     }
@@ -52,6 +61,9 @@ public class CtrlHome {
     return new ModelAndView("index", product);
   }
 
-
+  @RequestMapping(value = "/404")
+  public String error404() {
+    return "404";
+  }
 
 }
