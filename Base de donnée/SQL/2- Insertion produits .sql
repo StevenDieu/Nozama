@@ -255,6 +255,8 @@ INSERT INTO `nozama`.`article` ( `name_support`, `price`, `id_product`) VALUES (
 INSERT INTO `nozama`.`article` ( `name_support`, `price`, `id_product`) VALUES ( 'CD', '4.5', 14);
 INSERT INTO `nozama`.`article` ( `name_support`, `price`, `id_product`) VALUES ( 'Telechargement', '1.29', 15);
 INSERT INTO `nozama`.`article` ( `name_support`, `price`, `id_product`) VALUES ( 'CD', '4.5', 15);
+INSERT INTO `nozama`.`article` ( `name_support`, `price`, `id_product`) VALUES ( 'Telechargement', '1.29', 16);
+INSERT INTO `nozama`.`article` ( `name_support`, `price`, `id_product`) VALUES ( 'CD', '4.5', 16);
 
 INSERT INTO `nozama`.`article` ( `name_support`, `price`, `id_product`) VALUES ( 'Telechargement', '12.80', 30);
 INSERT INTO `nozama`.`article` ( `name_support`, `price`, `id_product`) VALUES ('CD', '17.80', 30);
