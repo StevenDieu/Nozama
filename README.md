@@ -2,13 +2,14 @@
 
 ## Prérequis
 
-Ps: Tout les liens rediriges vers des pages pour un systeme d'exploitation Windows.
+1. Mysql
+2. Workench
+3. Eclipse Mars J2ee
+4. jre1.8
+5. Tomcat 8
 
-1. Mysql : [Lien de téléchargement](https://dev.mysql.com/downloads/installer/).
-2. Workench : [Lien de téléchargement] (http://dev.mysql.com/downloads/workbench/).
-3. Eclipse Mars J2ee : [Lien de téléchargement] (http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/mars2).
-4. jre1.8 : [Lien de téléchargement] (http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
-5. Tomcat 8 : [Lien de téléchargement] (https://tomcat.apache.org/download-80.cgi).
+**/!\ ATTENTION /!\** : Tous les prérequis ci-dessous sont à télécharger pour un systeme d'exploitation Windows. Vous trouverez les procédures de téléchargement dans les sections suivantes.
+
 
 ## Installation de Mysql
 
