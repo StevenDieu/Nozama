@@ -92,6 +92,10 @@ public class CtrlCart {
     if ((boolean) conditionCart.get("checkCondition")) {
       return new ModelAndView("redirect:/" + (String) conditionCart.get("redirect"));
     }
+    
+    if (request.getSession().getAttribute("User") != null) {
+      return new ModelAndView("redirect:/mon-panier-etape-adresse" );
+    }
 
     return new ModelAndView("cart/myCartConnexion", redirect);
   }
